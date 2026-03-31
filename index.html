@@ -3,173 +3,1494 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>生命角色规划工具</title>
+    <title>必维职业发展规划测评 | Bureau Veritas Career Development</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        :root { --primary-color: #5e54c7; --secondary-color: #28d8a3; --danger-color: #ff6b6b; --light-gray: #f0f0f0; --dark-gray: #888; --text-color: #333; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; margin: 0; background: linear-gradient(135deg, #747def, var(--primary-color)); color: var(--text-color); display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 20px; box-sizing: border-box; }
-        .container { width: 100%; max-width: 450px; margin: auto; }
-        .card { background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); text-align: center; margin-bottom: 20px; }
-        h1, h2, h3 { font-weight: 600; margin-top: 0; }
-        h1 { font-size: 24px; } h2 { font-size: 18px; text-align: left; margin-bottom: 20px;} h3 { font-size: 16px; color: #555; margin-bottom: 10px; }
-        .description { color: var(--dark-gray); margin-bottom: 30px; }
-        .input-field { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; box-sizing: border-box; margin-bottom: 15px; font-size: 16px; }
-        .btn { padding: 15px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; }
-        .btn-full { width: 100%; }
-        .btn-primary { background-color: var(--secondary-color); color: white; }
-        .btn-primary:hover { background-color: #22b88a; }
-        .btn-secondary { background-color: transparent; color: var(--primary-color); font-weight: normal; margin-top: 20px; }
-        .btn-danger { background-color: var(--danger-color); color: white; }
-        #app-header { color: white; text-align: center; font-size: 22px; font-weight: bold; margin-bottom: 20px; }
-        .charts-wrapper { display: flex; gap: 10px; }
-        .chart-container { width: 50%; text-align: center; }
-        .toggle-buttons { display: flex; justify-content: center; margin-bottom: 20px; }
-        .toggle-buttons button { padding: 8px 20px; border: 1px solid #ccc; background-color: var(--light-gray); cursor: pointer; font-size: 14px; }
-        .toggle-buttons button:first-child { border-radius: 15px 0 0 15px; }
-        .toggle-buttons button:last-child { border-radius: 0 15px 15px 0; border-left: none;}
-        .toggle-buttons button.active { background-color: var(--primary-color); color: white; border-color: var(--primary-color); }
-        .role-manager-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .add-btn { width: 36px; height: 36px; background-color: var(--secondary-color); color: white; border: none; border-radius: 50%; font-size: 24px; display: flex; justify-content: center; align-items: center; line-height: 1; cursor: pointer; }
-        .role-item { display: flex; align-items: center; margin-bottom: 15px; }
-        .role-color-dot { width: 12px; height: 12px; border-radius: 50%; margin-right: 15px; flex-shrink: 0; }
-        .role-name { flex-grow: 1; text-align: left; font-weight: 500; }
-        .role-slider-container { flex-grow: 2; display: flex; align-items: center; }
-        .role-slider { width: 100%; margin: 0 10px; cursor: pointer; }
-        .role-percentage { min-width: 45px; text-align: right; font-weight: 500; }
-        .delete-btn { width: 24px; height: 24px; background-color: var(--danger-color); color: white; border: none; border-radius: 50%; font-size: 18px; cursor: pointer; margin-left: 15px; line-height: 1; }
-        .total-percentage { margin-top: 20px; font-weight: bold; font-size: 16px; }
-        .total-percentage.error { color: var(--danger-color); }
-        .actions-container { display: flex; gap: 10px; margin-top: 20px; }
-        .actions-container .btn { flex: 1; }
-        .student-record-card { background: white; border-radius: 15px; padding: 20px; margin-bottom: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); position: relative; }
-        .delete-record-btn { position: absolute; top: 15px; right: 15px; width: 30px; height: 30px; border-radius: 50%; border: none; background-color: var(--danger-color); color: white; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; line-height: 1; }
-        .student-record-header { font-size: 18px; font-weight: bold; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--light-gray); text-align: left; }
-        .student-record-header .timestamp { font-size: 12px; font-weight: normal; color: var(--dark-gray); display: block; margin-top: 4px; }
-        .admin-charts-wrapper { display: flex; gap: 20px; }
-        .admin-chart-block { width: 50%; text-align: center; }
-        .role-details-list { list-style: none; padding: 0; margin-top: 15px; text-align: left; font-size: 14px; }
-        .role-details-list li { display: flex; align-items: center; margin-bottom: 5px; }
-        .hidden { display: none; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1e3a5f;
+            --secondary: #2c5282;
+            --accent: #d4af37;
+            --accent-light: #f4d03f;
+            --bv-blue: #0055a4;
+            --bv-light: #e6f0f8;
+            --bg-light: #f8fafc;
+            --text-dark: #1a202c;
+            --text-gray: #4a5568;
+            --white: #ffffff;
+            --shadow: 0 10px 40px rgba(30, 58, 95, 0.1);
+            --shadow-hover: 0 20px 60px rgba(30, 58, 95, 0.15);
+        }
+
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e6f0f8 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* 首页样式 */
+        .intro-section {
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--bv-blue), var(--primary));
+            border-radius: 20px;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: var(--accent);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            font-weight: 700;
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .context-banner {
+            background: linear-gradient(135deg, var(--bv-blue), var(--secondary));
+            color: white;
+            padding: 20px 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            text-align: left;
+            box-shadow: var(--shadow);
+        }
+
+        .context-banner h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .context-banner p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        .intro-card {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            text-align: left;
+            border: 1px solid rgba(30, 58, 95, 0.05);
+        }
+
+        .intro-card h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .intro-card p {
+            color: var(--text-gray);
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .top-model {
+            background: var(--bv-light);
+            border-radius: 16px;
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 4px solid var(--bv-blue);
+        }
+
+        .top-model h4 {
+            color: var(--bv-blue);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .top-model ul {
+            margin-left: 20px;
+            color: var(--text-gray);
+            line-height: 1.8;
+        }
+
+        .top-model li {
+            margin-bottom: 8px;
+        }
+
+        .input-group {
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--bv-blue);
+            box-shadow: 0 0 0 3px rgba(0, 85, 164, 0.1);
+        }
+
+        .input-hint {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            margin-top: 8px;
+        }
+
+        .codes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .code-item {
+            background: linear-gradient(135deg, var(--bg-light), #fff);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .code-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .code-letter {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+        }
+
+        .code-name {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            margin-top: 5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--bv-blue), var(--secondary));
+            color: var(--white);
+            border: none;
+            padding: 18px 60px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 85, 164, 0.3);
+            font-weight: 600;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(0, 85, 164, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        /* 测评页面 */
+        .quiz-section {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .progress-container {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .progress-text {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+
+        .progress-percentage {
+            font-size: 1.2rem;
+            color: var(--bv-blue);
+            font-weight: 700;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--bv-blue), var(--accent));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: progressShine 2s infinite;
+        }
+
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .question-card {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 50px 40px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--bv-blue), var(--accent));
+        }
+
+        .question-number {
+            font-size: 0.9rem;
+            color: var(--bv-blue);
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .question-text {
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin-bottom: 40px;
+            font-weight: 500;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .option-btn {
+            background: var(--bg-light);
+            border: 2px solid transparent;
+            padding: 18px 30px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            font-size: 1rem;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-btn::before {
+            content: '';
+            width: 24px;
+            height: 24px;
+            border: 2px solid #cbd5e0;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .option-btn:hover {
+            background: #fff;
+            border-color: var(--bv-blue);
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .option-btn:hover::before {
+            border-color: var(--bv-blue);
+            background: var(--bv-light);
+        }
+
+        .option-btn.selected {
+            background: linear-gradient(135deg, var(--bv-blue), var(--secondary));
+            color: var(--white);
+            border-color: var(--bv-blue);
+        }
+
+        .option-btn.selected::before {
+            border-color: var(--accent);
+            background: var(--accent);
+        }
+
+        .option-score {
+            margin-left: auto;
+            font-size: 0.85rem;
+            opacity: 0.7;
+            font-weight: 600;
+        }
+
+        /* 结果页面 */
+        .result-section {
+            display: none;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .result-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .result-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: var(--primary);
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+            letter-spacing: 2px;
+        }
+
+        .result-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .result-code {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--bv-blue), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 5px;
+            margin: 20px 0;
+        }
+
+        .position-display {
+            background: var(--bv-light);
+            color: var(--bv-blue);
+            padding: 12px 30px;
+            border-radius: 25px;
+            display: inline-block;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border: 2px solid var(--bv-blue);
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .chart-container {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .chart-title {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .scores-container {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .score-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: var(--bg-light);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .score-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .score-letter {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--bv-blue), var(--secondary));
+            color: var(--white);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .score-info {
+            flex: 1;
+        }
+
+        .score-name {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .score-bar-bg {
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .score-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--bv-blue), var(--accent));
+            border-radius: 3px;
+            transition: width 1s ease;
+        }
+
+        .score-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--bv-blue);
+            margin-left: 15px;
+            min-width: 40px;
+            text-align: right;
+        }
+
+        .recommendations-section {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--bv-blue);
+        }
+
+        .recommendations-section h3 {
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .recommendation-card {
+            background: linear-gradient(135deg, var(--bv-light), #fff);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--bv-blue);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .recommendation-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .recommendation-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .recommendation-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 85, 164, 0.1);
+        }
+
+        .rec-number {
+            display: inline-block;
+            background: var(--bv-blue);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+        }
+
+        .rec-title {
+            font-size: 1.1rem;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .rec-content {
+            color: var(--text-gray);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .rec-action {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed rgba(0, 85, 164, 0.2);
+            color: var(--bv-blue);
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contribution-model {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .contribution-model h4 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .contribution-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .contribution-step {
+            flex: 1;
+            min-width: 140px;
+            padding: 20px 15px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        .contribution-step::after {
+            content: '→';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+            font-size: 1.5rem;
+        }
+
+        .contribution-step:last-child::after {
+            display: none;
+        }
+
+        .step-1 { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .step-2 { background: linear-gradient(135deg, #f39c12, #d68910); }
+        .step-3 { background: linear-gradient(135deg, #27ae60, #1e8449); }
+        .step-4 { background: linear-gradient(135deg, #8e44ad, #6c3483); }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--bv-blue);
+            border: 2px solid var(--bv-blue);
+            padding: 15px 40px;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            margin-right: 15px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--bv-blue);
+            color: var(--white);
+        }
+
+        .btn-group {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            .context-banner {
+                padding: 15px 20px;
+            }
+
+            .codes-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .question-card {
+                padding: 30px 20px;
+            }
+
+            .question-text {
+                font-size: 1.2rem;
+            }
+
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .result-code {
+                font-size: 2.5rem;
+            }
+
+            .contribution-flow {
+                flex-direction: column;
+            }
+
+            .contribution-step::after {
+                content: '↓';
+                right: 50%;
+                top: 100%;
+                transform: translateX(50%);
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                margin-bottom: 10px;
+                margin-right: 0;
+            }
+        }
+
+        .fade-out {
+            animation: fadeOut 0.3s ease-out forwards;
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        .vuca-note {
+            background: linear-gradient(135deg, #fff9e6, #fff);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .vuca-note h4 {
+            color: var(--accent);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .vuca-note p {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
     </style>
+<base target="_blank">
 </head>
 <body>
-
     <div class="container">
-        <!-- 欢迎页面 -->
-        <div id="welcome-page">
-            <div id="app-header" style="visibility: hidden;">生命角色饼图</div>
-            <div class="card">
-                <h1>欢迎来到生命角色规划工具</h1>
-                <p class="description">请输入姓名和密码开始规划</p>
-                <input type="text" id="name-input" class="input-field" placeholder="请输入您的姓名">
-                <!-- *** 修改点在这里：去掉了placeholder中的密码提示 *** -->
-                <input type="password" id="student-password-input" class="input-field" placeholder="请输入密码">
-                <button id="start-btn" class="btn btn-full btn-primary">开始规划</button>
-                <button id="admin-login-btn" class="btn btn-full btn-secondary">规划师入口</button>
+        <!-- 首页介绍 -->
+        <section class="intro-section" id="introSection">
+            <div class="logo">BV</div>
+            <h1>必维职业发展规划测评</h1>
+            <p class="subtitle">在VUCA时代探索您的可持续职业发展路径</p>
+            
+            <div class="context-banner">
+                <h3>🎯 培训背景与目标</h3>
+                <p>在VUCA（易变、不确定、复杂、模糊）环境下，公司正在经历组织架构变革。本测评帮助您理解：<strong>在如何在现有岗位的日常工作中，通过调整贡献方式来找到实现可持续的职业发展的抓手。</strong>。</p>
             </div>
-        </div>
+            
+            <div class="intro-card">
+                <h2>💡 TOP模型：职业巅峰状态</h2>
+                <p>可持续职业发展的关键在于找到三个要素的交汇点：</p>
+                
+                <div class="top-model">
+                    <h4>您的职业巅峰状态 =</h4>
+                    <ul>
+                        <li><strong>T - Talent（天赋技能）：</strong>您天生擅长且乐在其中的能力</li>
+                        <li><strong>O - Organizational Needs（组织需求）：</strong>必维当前及未来需要的能力</li>
+                        <li><strong>P - Passion（工作热情）：</strong>您真正热爱并愿意投入的工作内容</li>
+                    </ul>
+                </div>
+                
+                <p>本测评通过<strong>霍兰德职业兴趣理论</strong>帮助您识别个人天赋与热情，结合您的岗位特点，为您提供三条具体的贡献方式调整建议。</p>
+                
+                <div class="vuca-note">
+                    <h4>⚡ 为什么关注"贡献方式"而非"职位"？</h4>
+                    <p>在组织变革期，职位边界变得模糊，但组织始终需要价值创造。通过调整贡献方式（依靠他人→独立→通过他人→战略层面），您可以在当前岗位上创造更大影响力，实现个人成长与组织发展的双赢。</p>
+                </div>
 
-        <!-- 主应用页面 -->
-        <div id="main-app" class="hidden">
-            <div id="app-header">生命角色饼图</div>
-            <div class="card">
-                <div class="charts-wrapper">
-                    <div class="chart-container"><h3>当下</h3><canvas id="present-pie-chart"></canvas></div>
-                    <div class="chart-container"><h3>2031年</h3><canvas id="future-pie-chart"></canvas></div>
+                <div class="input-group">
+                    <label for="positionInput">请输入您当前的岗位名称</label>
+                    <input type="text" id="positionInput" placeholder="例如：质量工程师、项目经理、销售代表..." required>
+                    <p class="input-hint">这将帮助我们为您生成更精准的发展建议</p>
                 </div>
             </div>
-            <div class="card role-management-section">
-                <div class="toggle-buttons">
-                    <button id="toggle-present" class="active">当下</button>
-                    <button id="toggle-future">2031年</button>
+
+            <button class="btn-primary" id="startBtn" onclick="startQuiz()">开始测评</button>
+        </section>
+
+        <!-- 测评页面 -->
+        <section class="quiz-section" id="quizSection">
+            <div class="progress-container">
+                <div class="progress-header">
+                    <span class="progress-text">测评进度</span>
+                    <span class="progress-percentage" id="progressPercentage">0%</span>
                 </div>
-                <div class="role-manager-header"><h2>角色管理</h2><button id="add-role-btn" class="add-btn">+</button></div>
-                <div id="roles-list"></div>
-                <div id="total-percentage" class="total-percentage"></div>
-                <div class="actions-container">
-                    <button id="exit-btn" class="btn btn-danger hidden">退出</button>
-                    <button id="reset-btn" class="btn" style="background-color: #aaa; color: white;">重置</button>
-                    <button id="save-btn" class="btn btn-primary">保存数据</button>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
                 </div>
             </div>
-        </div>
-        
-        <!-- 管理员后台页面 -->
-        <div id="admin-page" class="hidden">
-            <div id="app-header">规划师后台</div>
-            <div id="admin-data-container"></div>
-            <button onclick="showWelcomePage()" class="btn btn-full btn-primary" style="margin-top: 10px;">返回首页</button>
-            <button id="clear-data-btn" class="btn btn-full btn-danger" style="margin-top: 10px;">清空所有学员数据</button>
-        </div>
+
+            <div class="question-card" id="questionCard">
+                <div class="question-number" id="questionNumber">Question 1 / 60</div>
+                <div class="question-text" id="questionText">加载中...</div>
+                <div class="options-container" id="optionsContainer">
+                    <!-- 选项将通过JS生成 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 结果页面 -->
+        <section class="result-section" id="resultSection">
+            <div class="result-header">
+                <div class="result-badge">测评完成</div>
+                <div class="position-display" id="positionDisplay">岗位：--</div>
+                <h2 class="result-title">您的霍兰德职业兴趣代码是</h2>
+                <div class="result-code" id="resultCode">---</div>
+                <p class="subtitle" id="resultSubtitle">正在计算...</p>
+            </div>
+
+            <div class="result-grid">
+                <div class="chart-container">
+                    <div class="chart-title">兴趣分布雷达图</div>
+                    <canvas id="radarChart"></canvas>
+                </div>
+                <div class="scores-container" id="scoresContainer">
+                    <!-- 分数项将通过JS生成 -->
+                </div>
+            </div>
+
+            <div class="contribution-model">
+                <h4>四种贡献模式演进路径</h4>
+                <div class="contribution-flow">
+                    <div class="contribution-step step-1">依靠他人<br>做出贡献</div>
+                    <div class="contribution-step step-2">独立<br>做出贡献</div>
+                    <div class="contribution-step step-3">通过他人<br>做出贡献</div>
+                    <div class="contribution-step step-4">在组织战略上<br>发挥贡献</div>
+                </div>
+            </div>
+
+            <div class="recommendations-section" id="recommendationsSection">
+                <h3>🎯 基于您的岗位与兴趣代码的发展建议</h3>
+                <div id="recommendationsList">
+                    <!-- 建议将通过JS生成 -->
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn-secondary" onclick="restartQuiz()">重新测评</button>
+                <button class="btn-primary" onclick="window.print()">保存报告</button>
+            </div>
+        </section>
     </div>
 
     <script>
-        const DB_KEY = 'lifePieSubmissions_v4';
-        const page = { welcome: document.getElementById('welcome-page'), app: document.getElementById('main-app'), admin: document.getElementById('admin-page'), };
-        const input = { name: document.getElementById('name-input'), password: document.getElementById('student-password-input'), };
-        const btn = { start: document.getElementById('start-btn'), adminLogin: document.getElementById('admin-login-btn'), clearData: document.getElementById('clear-data-btn'), togglePresent: document.getElementById('toggle-present'), toggleFuture: document.getElementById('toggle-future'), reset: document.getElementById('reset-btn'), save: document.getElementById('save-btn'), exit: document.getElementById('exit-btn'), addRole: document.getElementById('add-role-btn'), };
+        // 霍兰德代码定义
+        const hollandCodes = {
+            R: { name: '实际型', description: '喜欢动手操作，擅长使用工具和机械，注重实际效果。', strengths: ['技术实操', '问题解决', '流程优化'] },
+            I: { name: '研究型', description: '喜欢思考分析，追求知识，善于解决复杂问题。', strengths: ['数据分析', '创新研究', '系统思考'] },
+            A: { name: '艺术型', description: '富有创造力，追求自我表达，重视审美和原创性。', strengths: ['创意设计', '品牌塑造', '用户体验'] },
+            S: { name: '社会型', description: '乐于助人，善于沟通，关注他人福祉和成长。', strengths: ['团队协作', '人才培养', '客户关系'] },
+            E: { name: '企业型', description: '具有领导力，善于说服他人，追求成就和影响力。', strengths: ['项目管理', '业务拓展', '变革推动'] },
+            C: { name: '常规型', description: '注重细节，喜欢条理和秩序，擅长数据处理。', strengths: ['质量控制', '合规管理', '运营效率'] }
+        };
 
-        let presentPieChart, futurePieChart;
-        const getInitialState = () => ({ userName: '', activeView: 'present', present: { roles: [ { name: '员工', value: 40, color: '#ff6384' }, { name: '配偶', value: 20, color: '#36a2eb' }, { name: '子女', value: 15, color: '#4bc0c0' }, { name: '自我', value: 15, color: '#9966ff' }, { name: '朋友', value: 10, color: '#ffcd56' } ] }, future: { roles: [ { name: '员工', value: 25, color: '#ff6384' }, { name: '配偶', value: 25, color: '#36a2eb' }, { name: '子女', value: 10, color: '#4bc0c0' }, { name: '自我', value: 30, color: '#9966ff' }, { name: '朋友', value: 10, color: '#ffcd56' } ] }, timestamp: null });
-        let state = getInitialState();
-        const defaultColors = ['#ff6384', '#36a2eb', '#ffcd56', '#4bc0c0', '#9966ff', '#ff9f40', '#c9cbcf'];
-        
-        function createChart(canvasId, rolesData) { const ctx = document.getElementById(canvasId).getContext('2d'); return new Chart(ctx, { type: 'pie', data: { labels: rolesData.map(r => r.name), datasets: [{ data: rolesData.map(r => r.value), backgroundColor: rolesData.map(r => r.color), borderWidth: 2, borderColor: '#fff' }] }, options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false }, tooltip: { callbacks: { label: context => `${context.label}: ${context.raw}%` } } } } }); }
-        function renderAllForUser() { if (presentPieChart) presentPieChart.destroy(); if (futurePieChart) futurePieChart.destroy(); presentPieChart = createChart('present-pie-chart', state.present.roles); futurePieChart = createChart('future-pie-chart', state.future.roles); renderRoleManagement(); updateToggleButtons(); }
-        function renderRoleManagement() { const activeRoles = state[state.activeView].roles; const rolesList = document.getElementById('roles-list'); rolesList.innerHTML = ''; activeRoles.forEach((role, index) => { const roleItem = document.createElement('div'); roleItem.className = 'role-item'; roleItem.innerHTML = `<div class="role-color-dot" style="background-color: ${role.color};"></div><div class="role-name">${role.name}</div><div class="role-slider-container"><input type="range" min="0" max="100" value="${role.value}" class="role-slider" data-index="${index}"></div><div class="role-percentage">${role.value}%</div><button class="delete-btn" data-index="${index}">-</button>`; rolesList.appendChild(roleItem); }); updateTotal(); }
-        function updateTotal() { const total = state[state.activeView].roles.reduce((sum, role) => sum + role.value, 0); document.getElementById('total-percentage').textContent = `总计：${total}%`; document.getElementById('total-percentage').classList.toggle('error', total > 100); }
-        function updateToggleButtons() { btn.togglePresent.classList.toggle('active', state.activeView === 'present'); btn.toggleFuture.classList.toggle('active', state.activeView === 'future'); }
-        function formatTimestamp(isoString) { if (!isoString) return ''; const date = new Date(isoString); const pad = num => num.toString().padStart(2, '0'); return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`; }
-        function renderAdminPage() { const container = document.getElementById('admin-data-container'); container.innerHTML = ''; const allSubmissions = Object.values(JSON.parse(localStorage.getItem(DB_KEY) || '{}')).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)); if (allSubmissions.length === 0) { container.innerHTML = '<p style="text-align:center; color:#888;">暂无学员提交数据</p>'; return; } allSubmissions.forEach((submission, index) => { const card = document.createElement('div'); card.className = 'student-record-card'; let presentDetailsHTML = submission.present.roles.map(r => `<li><div class="role-color-dot" style="background-color:${r.color};"></div> &nbsp; ${r.name}: ${r.value}%</li>`).join(''); let futureDetailsHTML = submission.future.roles.map(r => `<li><div class="role-color-dot" style="background-color:${r.color};"></div> &nbsp; ${r.name}: ${r.value}%</li>`).join(''); card.innerHTML = `<button class="delete-record-btn" data-username="${submission.userName}">×</button><div class="student-record-header">${submission.userName}<span class="timestamp">最后更新: ${formatTimestamp(submission.timestamp)}</span></div><div class="admin-charts-wrapper"><div class="admin-chart-block"><h3>当下</h3><canvas id="admin-present-chart-${index}"></canvas><ul class="role-details-list">${presentDetailsHTML}</ul></div><div class="admin-chart-block"><h3>2031年</h3><canvas id="admin-future-chart-${index}"></canvas><ul class="role-details-list">${futureDetailsHTML}</ul></div></div>`; container.appendChild(card); }); setTimeout(() => allSubmissions.forEach((s, i) => { createChart(`admin-present-chart-${i}`, s.present.roles); createChart(`admin-future-chart-${i}`, s.future.roles); }), 0); }
-        
-        btn.start.addEventListener('click', () => {
-            const name = input.name.value.trim(); const password = input.password.value;
-            if (!name) { alert('请输入您的姓名！'); return; }
-            if (password !== '2026') { alert('密码错误！'); return; }
-            state.userName = name;
-            page.welcome.classList.add('hidden'); page.app.classList.remove('hidden');
-            renderAllForUser();
-        });
+        // 60道题目（每个代码10题）
+        const questions = [
+            // R - 实际型 (Realistic)
+            { code: 'R', text: '我喜欢使用工具进行实际操作，比如修理设备或优化工作流程' },
+            { code: 'R', text: '我喜欢在现场解决具体的技术问题' },
+            { code: 'R', text: '我对机械设备和检测工具的工作原理很感兴趣' },
+            { code: 'R', text: '我喜欢动手制作原型或测试样品' },
+            { code: 'R', text: '我更喜欢执行具体明确的任务，而不是抽象规划' },
+            { code: 'R', text: '我喜欢在实验室或现场环境中工作' },
+            { code: 'R', text: '我擅长使用各种专业设备和软件工具' },
+            { code: 'R', text: '我喜欢解决实际的技术难题' },
+            { code: 'R', text: '我对改进工艺和提升效率感兴趣' },
+            { code: 'R', text: '我喜欢看到工作的具体成果，比如完成检测或修复设备' },
 
-        btn.adminLogin.addEventListener('click', () => { const password = prompt("请输入规划师密码："); if (password === '0411') { page.welcome.classList.add('hidden'); page.admin.classList.remove('hidden'); renderAdminPage(); } else if (password !== null) { alert('密码错误！'); } });
-        btn.clearData.addEventListener('click', () => { if (confirm('您确定要清空所有已保存的学员数据吗？此操作不可撤销！')) { localStorage.removeItem(DB_KEY); renderAdminPage(); alert('所有学员数据已清空。'); } });
-        btn.togglePresent.addEventListener('click', () => { state.activeView = 'present'; renderAllForUser(); });
-        btn.toggleFuture.addEventListener('click', () => { state.activeView = 'future'; renderAllForUser(); });
-        btn.exit.addEventListener('click', showWelcomePage);
-        
-        btn.reset.addEventListener('click', () => {
-            if (confirm('您确定要重置所有角色和比例为初始状态吗？')) {
-                const currentName = state.userName;
-                state = getInitialState();
-                state.userName = currentName;
-                renderAllForUser();
-                btn.exit.classList.add('hidden');
+            // I - 研究型 (Investigative)
+            { code: 'I', text: '我喜欢研究新的检测技术和行业标准' },
+            { code: 'I', text: '我喜欢阅读技术文献和学术报告' },
+            { code: 'I', text: '我喜欢进行实验和数据分析来验证假设' },
+            { code: 'I', text: '我对复杂系统的逻辑和原理很感兴趣' },
+            { code: 'I', text: '我喜欢独立思考和解决复杂技术问题' },
+            { code: 'I', text: '我对新技术应用和数字化转型感兴趣' },
+            { code: 'I', text: '我喜欢分析业务数据并发现改进机会' },
+            { code: 'I', text: '我喜欢探索新的方法论和最佳实践' },
+            { code: 'I', text: '我倾向于用科学方法解决业务问题' },
+            { code: 'I', text: '我喜欢在安静的环境中专注于深度研究' },
+
+            // A - 艺术型 (Artistic)
+            { code: 'A', text: '我喜欢设计美观的报告展示和可视化方案' },
+            { code: 'A', text: '我喜欢撰写有创意的技术文档或培训材料' },
+            { code: 'A', text: '我喜欢用创新的方式呈现复杂的检测数据' },
+            { code: 'A', text: '我重视工作中的原创性和独特视角' },
+            { code: 'A', text: '我喜欢设计更好的客户体验流程' },
+            { code: 'A', text: '我具有丰富的想象力和创新思维' },
+            { code: 'A', text: '我喜欢非传统的、灵活的问题解决方法' },
+            { code: 'A', text: '我对品牌建设和视觉传达很敏感' },
+            { code: 'A', text: '我喜欢通过创意方式提升服务质量' },
+            { code: 'A', text: '我不喜欢被僵化的流程所束缚' },
+
+            // S - 社会型 (Social)
+            { code: 'S', text: '我喜欢培训指导团队成员，帮助他们成长' },
+            { code: 'S', text: '我喜欢与客户深入交流并理解他们的需求' },
+            { code: 'S', text: '我善于理解同事和客户的感受和期望' },
+            { code: 'S', text: '我喜欢教导新人掌握专业技能' },
+            { code: 'S', text: '我对团队协作和人际沟通很感兴趣' },
+            { code: 'S', text: '我喜欢参与跨部门合作项目' },
+            { code: 'S', text: '我擅长调解冲突并促进团队合作' },
+            { code: 'S', text: '我喜欢支持他人并帮助他们成功' },
+            { code: 'S', text: '我重视建立良好的人际关系和信任' },
+            { code: 'S', text: '我喜欢在团队中扮演协调者的角色' },
+
+            // E - 企业型 (Enterprising)
+            { code: 'E', text: '我喜欢推动业务拓展和新客户开发' },
+            { code: 'E', text: '我喜欢领导项目并推动变革落地' },
+            { code: 'E', text: '我善于说服客户接受我们的解决方案' },
+            { code: 'E', text: '我对业务战略和市场机会很感兴趣' },
+            { code: 'E', text: '我喜欢竞争并追求业务目标' },
+            { code: 'E', text: '我善于组织和协调跨部门资源' },
+            { code: 'E', text: '我喜欢参与公司战略规划和决策' },
+            { code: 'E', text: '我具有商业敏感度和风险承担意愿' },
+            { code: 'E', text: '我喜欢制定目标并带领团队实现' },
+            { code: 'E', text: '我重视业务成果和职业成就' },
+
+            // C - 常规型 (Conventional)
+            { code: 'C', text: '我喜欢确保工作流程标准化和规范化' },
+            { code: 'C', text: '我喜欢处理数据并保证准确无误' },
+            { code: 'C', text: '我擅长使用办公软件和管理系统' },
+            { code: 'C', text: '我喜欢遵循既定的质量标准和程序' },
+            { code: 'C', text: '我对合规管理和风险控制感兴趣' },
+            { code: 'C', text: '我喜欢有条理地组织文档和信息' },
+            { code: 'C', text: '我注重细节，很少在报告中出错' },
+            { code: 'C', text: '我喜欢在稳定、可预测的环境中工作' },
+            { code: 'C', text: '我擅长处理财务数据和预算管理' },
+            { code: 'C', text: '我喜欢完成有明确标准的工作任务' }
+        ];
+
+        // 贡献方式建议库
+        const contributionStrategies = {
+            // R型建议（实际型）
+            R: {
+                general: [
+                    {
+                        title: '成为技术专家与内部顾问',
+                        content: '在您的岗位上建立"技术权威"地位，不仅完成日常检测/工作，更要主动识别技术难题并提供解决方案。',
+                        action: '每周选择一个技术痛点，深入研究并提出改进方案，向团队分享您的发现。'
+                    },
+                    {
+                        title: '开发标准化工具与模板',
+                        content: '将您的实操经验转化为可复用的工具、检查清单或自动化脚本，提升整个团队的效率。',
+                        action: '创建一个您岗位的标准操作工具包，并培训3位同事使用，成为内部"工具大师"。'
+                    },
+                    {
+                        title: '跨部门技术支持角色',
+                        content: '主动承担跨部门的技术支持工作，帮助其他团队解决设备或流程问题，扩大影响力。',
+                        action: '每月主动询问一个其他部门的技术需求，提供2小时免费技术支持。'
+                    }
+                ]
+            },
+            // I型建议（研究型）
+            I: {
+                general: [
+                    {
+                        title: '建立知识管理与研究枢纽',
+                        content: '将您的研究能力用于建立团队知识库，跟踪行业趋势，成为团队的信息中枢。',
+                        action: '每月撰写一份"行业趋势简报"，分享给团队，并建立团队知识共享平台。'
+                    },
+                    {
+                        title: '数据驱动的改进倡议',
+                        content: '运用您的分析能力，识别业务流程中的数据模式，提出基于证据的改进建议。',
+                        action: '选择一个业务指标，进行深度数据分析，向管理层提交一份数据洞察报告。'
+                    },
+                    {
+                        title: '方法论创新与最佳实践推广',
+                        content: '研究并引入新的方法论或技术框架，成为组织内部的方法论倡导者。',
+                        action: '学习一个新的行业方法论，设计试点项目，并在成功后撰写案例研究推广。'
+                    }
+                ]
+            },
+            // A型建议（艺术型）
+            A: {
+                general: [
+                    {
+                        title: '客户体验与服务设计创新',
+                        content: '运用您的创意能力，重新设计客户接触点的体验流程，提升客户满意度。',
+                        action: '绘制当前客户旅程地图，识别3个痛点，设计并实施一个创新解决方案。'
+                    },
+                    {
+                        title: '内部品牌与文化建设',
+                        content: '主导团队或部门的视觉识别、文化氛围营造，提升团队凝聚力和专业形象。',
+                        action: '发起一个"团队文化项目"，设计团队标识、内部分享会形式或办公环境优化。'
+                    },
+                    {
+                        title: '复杂信息的可视化与传播',
+                        content: '将复杂的技术或业务信息转化为易懂的视觉内容，提升沟通效率。',
+                        action: '为团队创建一个可视化模板库，将标准报告转化为信息图表或交互式展示。'
+                    }
+                ]
+            },
+            // S型建议（社会型）
+            S: {
+                general: [
+                    {
+                        title: '人才培养与导师计划',
+                        content: '建立正式的导师制度，系统性地培养新人，将您的经验转化为组织能力。',
+                        action: '主动申请成为2-3位新人的导师，制定培养计划，每月进行至少一次深度辅导。'
+                    },
+                    {
+                        title: '跨部门协作与关系网络构建',
+                        content: '成为部门间的"连接器"，主动促进不同团队间的协作与信息共享。',
+                        action: '每月组织一次跨部门午餐会或知识分享会，建立非正式沟通渠道。'
+                    },
+                    {
+                        title: '客户成功与关系深耕',
+                        content: '超越 transactional 关系，建立长期的客户伙伴关系，成为客户信赖的顾问。',
+                        action: '为5个重点客户建立"成功计划"，定期主动沟通，提供增值服务。'
+                    }
+                ]
+            },
+            // E型建议（企业型）
+            E: {
+                general: [
+                    {
+                        title: '内部创业与业务创新',
+                        content: '在现有岗位上识别新业务机会，像内部创业者一样推动创新项目落地。',
+                        action: '撰写一份"业务创新提案"，包含市场分析、资源需求和实施计划，向管理层汇报。'
+                    },
+                    {
+                        title: '变革管理与转型推动',
+                        content: '主动承担组织变革的推动者角色，帮助团队适应新的工作方式和流程。',
+                        action: '成为某个变革项目的"变革大使"，组织沟通会议，收集反馈，消除阻力。'
+                    },
+                    {
+                        title: '战略资源整合与联盟构建',
+                        content: '识别并整合内外部资源，建立战略伙伴关系，为组织创造协同价值。',
+                        action: '识别3个潜在的战略合作伙伴或内部资源，设计合作方案并推动初步接触。'
+                    }
+                ]
+            },
+            // C型建议（常规型）
+            C: {
+                general: [
+                    {
+                        title: '质量管理体系与流程优化',
+                        content: '建立或优化质量管理体系，确保合规的同时提升运营效率。',
+                        action: '审核当前流程，识别5个合规风险点或效率瓶颈，制定并实施改进计划。'
+                    },
+                    {
+                        title: '数据治理与知识资产管理',
+                        content: '建立系统的数据管理和文档标准，确保组织知识资产的安全和可追溯。',
+                        action: '设计并实施一个文档管理标准，培训团队使用，定期审计执行情况。'
+                    },
+                    {
+                        title: '运营卓越与成本控制',
+                        content: '通过精细化的运营管理，识别成本节约机会，提升资源利用效率。',
+                        action: '进行一项成本分析，识别10%的成本节约机会，制定实施路线图。'
+                    }
+                ]
             }
+        };
+
+        // 打乱题目顺序
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        let shuffledQuestions = [];
+        let currentQuestion = 0;
+        let scores = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
+        let userPosition = '';
+        let chart = null;
+
+        const options = [
+            { text: '完全没兴趣', score: 1 },
+            { text: '有一些兴趣', score: 2 },
+            { text: '有兴趣', score: 3 },
+            { text: '比较感兴趣', score: 4 },
+            { text: '非常感兴趣', score: 5 }
+        ];
+
+        // 检查岗位输入
+        document.getElementById('positionInput').addEventListener('input', function(e) {
+            const btn = document.getElementById('startBtn');
+            btn.disabled = e.target.value.trim() === '';
         });
 
-        btn.save.addEventListener('click', () => {
-            const totalPresent = state.present.roles.reduce((sum, r) => sum + r.value, 0); const totalFuture = state.future.roles.reduce((sum, r) => sum + r.value, 0);
-            if (totalPresent > 100 || totalFuture > 100) { alert('“当下”或“2031年”的总比例超过了100%，请调整后再保存！'); return; }
-            if ((totalPresent !== 100 || totalFuture !== 100) && !confirm(`饼图总比例不等于100%，您确定要这样保存吗？`)) return;
-            const allSubmissions = JSON.parse(localStorage.getItem(DB_KEY) || '{}');
-            state.timestamp = new Date().toISOString();
-            allSubmissions[state.userName] = state;
-            localStorage.setItem(DB_KEY, JSON.stringify(allSubmissions));
-            alert(`数据保存成功！`);
-            btn.exit.classList.remove('hidden');
-        });
+        function startQuiz() {
+            const positionInput = document.getElementById('positionInput');
+            userPosition = positionInput.value.trim();
+            
+            if (!userPosition) {
+                alert('请输入您的岗位名称');
+                return;
+            }
 
-        btn.addRole.addEventListener('click', () => { const newRoleName = prompt("请输入新角色的名称：")?.trim(); if (!newRoleName) return; const activeRoles = state[state.activeView].roles; if (activeRoles.some(role => role.name === newRoleName)) { alert('该角色已存在！'); return; } activeRoles.push({ name: newRoleName, value: 0, color: defaultColors[activeRoles.length % defaultColors.length] }); renderAllForUser(); });
-        document.getElementById('roles-list').addEventListener('input', e => { if (e.target.classList.contains('role-slider')) { const index = e.target.dataset.index; const newValue = parseInt(e.target.value, 10); const activeRoles = state[state.activeView].roles; const oldValue = activeRoles[index].value; const totalWithoutCurrent = activeRoles.reduce((sum, role, i) => (i == index ? sum : sum + role.value), 0); if (totalWithoutCurrent + newValue > 100) { alert('总比例不能超过100%！'); e.target.value = oldValue; return; } activeRoles[index].value = newValue; e.target.closest('.role-item').querySelector('.role-percentage').textContent = `${newValue}%`; updateTotal(); renderUserCharts(); } });
-        document.getElementById('roles-list').addEventListener('click', e => { if (e.target.classList.contains('delete-btn')) { state[state.activeView].roles.splice(e.target.dataset.index, 1); renderAllForUser(); } });
-        document.getElementById('admin-data-container').addEventListener('click', e => { if (e.target.classList.contains('delete-record-btn')) { const userNameToDelete = e.target.dataset.username; if (confirm(`您确定要删除学员 "${userNameToDelete}" 的记录吗？`)) { const allSubmissions = JSON.parse(localStorage.getItem(DB_KEY) || '{}'); delete allSubmissions[userNameToDelete]; localStorage.setItem(DB_KEY, JSON.stringify(allSubmissions)); renderAdminPage(); } } });
-        
-        function showWelcomePage() {
-            state = getInitialState();
-            input.name.value = ''; input.password.value = '';
-            Object.values(page).forEach(p => p.classList.add('hidden'));
-            page.welcome.classList.remove('hidden');
-            btn.exit.classList.add('hidden');
+            shuffledQuestions = shuffleArray(questions);
+            currentQuestion = 0;
+            scores = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
+            
+            document.getElementById('introSection').classList.add('fade-out');
+            setTimeout(() => {
+                document.getElementById('introSection').style.display = 'none';
+                document.getElementById('quizSection').style.display = 'block';
+                showQuestion();
+            }, 300);
+        }
+
+        function showQuestion() {
+            const question = shuffledQuestions[currentQuestion];
+            const progress = ((currentQuestion + 1) / shuffledQuestions.length) * 100;
+            
+            document.getElementById('progressPercentage').textContent = Math.round(progress) + '%';
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('questionNumber').textContent = `Question ${currentQuestion + 1} / ${shuffledQuestions.length}`;
+            document.getElementById('questionText').textContent = question.text;
+            
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `
+                    <span>${option.text}</span>
+                    <span class="option-score">${option.score}分</span>
+                `;
+                btn.onclick = () => selectOption(option.score);
+                optionsContainer.appendChild(btn);
+                
+                setTimeout(() => {
+                    btn.style.opacity = '0';
+                    btn.style.transform = 'translateY(10px)';
+                    btn.style.transition = 'all 0.3s ease';
+                    setTimeout(() => {
+                        btn.style.opacity = '1';
+                        btn.style.transform = 'translateY(0)';
+                    }, 50);
+                }, index * 50);
+            });
+        }
+
+        function selectOption(score) {
+            const question = shuffledQuestions[currentQuestion];
+            scores[question.code] += score;
+            
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach(btn => btn.style.pointerEvents = 'none');
+            
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < shuffledQuestions.length) {
+                    showQuestion();
+                } else {
+                    showResults();
+                }
+            }, 300);
+        }
+
+        function showResults() {
+            document.getElementById('quizSection').classList.add('fade-out');
+            setTimeout(() => {
+                document.getElementById('quizSection').style.display = 'none';
+                document.getElementById('resultSection').style.display = 'block';
+                calculateAndDisplayResults();
+            }, 300);
+        }
+
+        function calculateAndDisplayResults() {
+            const maxPossible = 50;
+            const percentages = {};
+            
+            for (let code in scores) {
+                percentages[code] = Math.round((scores[code] / maxPossible) * 100);
+            }
+            
+            const sortedCodes = Object.keys(percentages).sort((a, b) => percentages[b] - percentages[a]);
+            const topCode = sortedCodes[0];
+            const secondCode = sortedCodes[1];
+            const thirdCode = sortedCodes[2];
+            
+            const resultCode = topCode + secondCode + thirdCode;
+            
+            document.getElementById('positionDisplay').textContent = `岗位：${userPosition}`;
+            document.getElementById('resultCode').textContent = resultCode;
+            document.getElementById('resultSubtitle').textContent = 
+                `${hollandCodes[topCode].name} + ${hollandCodes[secondCode].name} + ${hollandCodes[thirdCode].name}`;
+            
+            displayScoreBars(percentages, sortedCodes);
+            drawRadarChart(percentages);
+            generateRecommendations(topCode, secondCode, thirdCode);
+        }
+
+        function generateRecommendations(first, second, third) {
+            const container = document.getElementById('recommendationsList');
+            container.innerHTML = '';
+            
+            // 获取前三代码的建议
+            const primaryStrategies = contributionStrategies[first].general;
+            const secondaryStrategies = contributionStrategies[second].general;
+            const tertiaryStrategies = contributionStrategies[third].general;
+            
+            // 选择三条不同的建议（优先主代码，辅以次要代码）
+            const selectedRecommendations = [
+                primaryStrategies[0],
+                primaryStrategies[1] || secondaryStrategies[0],
+                secondaryStrategies[1] || tertiaryStrategies[0]
+            ];
+            
+            selectedRecommendations.forEach((rec, index) => {
+                const card = document.createElement('div');
+                card.className = 'recommendation-card';
+                card.innerHTML = `
+                    <div class="rec-number">${index + 1}</div>
+                    <div class="rec-title">${rec.title}</div>
+                    <div class="rec-content">${rec.content}</div>
+                    <div class="rec-action">
+                        <span>💡</span>
+                        <span>具体行动：${rec.action}</span>
+                    </div>
+                `;
+                container.appendChild(card);
+                
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = 'all 0.5s ease';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 200);
+            });
+            
+            // 添加个性化说明
+            const note = document.createElement('div');
+            note.style.marginTop = '30px';
+            note.style.padding = '20px';
+            note.style.background = 'linear-gradient(135deg, #e6f0f8, #fff)';
+            note.style.borderRadius = '12px';
+            note.style.borderLeft = '4px solid #0055a4';
+            note.innerHTML = `
+                <strong style="color: #1e3a5f;">💼 针对您的岗位"${userPosition}"的特别提示：</strong><br><br>
+                作为${userPosition}，您可以将上述建议与日常职责结合。例如，利用您的${hollandCodes[first].name}特质，
+                在${hollandCodes[first].strengths.join('、')}方面建立独特优势，逐步从"${getContributionLevel(first)}"向更高层次的贡献模式演进。
+                记住：<strong>职业发展不在于职位头衔，而在于您创造价值的方式和范围。</strong>
+            `;
+            container.appendChild(note);
+        }
+
+        function getContributionLevel(code) {
+            const levels = {
+                'R': '独立贡献（技术专家路线）',
+                'I': '独立贡献（研究创新路线）',
+                'A': '独立贡献（创新设计路线）',
+                'S': '通过他人贡献（团队协作路线）',
+                'E': '通过他人贡献（领导影响路线）',
+                'C': '独立贡献（运营卓越路线）'
+            };
+            return levels[code] || '独立贡献';
+        }
+
+        function displayScoreBars(percentages, sortedCodes) {
+            const container = document.getElementById('scoresContainer');
+            container.innerHTML = '<div class="chart-title">各维度得分</div>';
+            
+            sortedCodes.forEach((code, index) => {
+                const score = percentages[code];
+                const info = hollandCodes[code];
+                
+                const item = document.createElement('div');
+                item.className = 'score-item';
+                item.innerHTML = `
+                    <div class="score-letter">${code}</div>
+                    <div class="score-info">
+                        <div class="score-name">${info.name}</div>
+                        <div class="score-bar-bg">
+                            <div class="score-bar-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="score-value">${score}</div>
+                `;
+                container.appendChild(item);
+                
+                setTimeout(() => {
+                    item.querySelector('.score-bar-fill').style.width = score + '%';
+                }, 100 + index * 100);
+            });
+        }
+
+        function drawRadarChart(percentages) {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            
+            if (chart) {
+                chart.destroy();
+            }
+            
+            const data = {
+                labels: ['实际型(R)', '研究型(I)', '艺术型(A)', '社会型(S)', '企业型(E)', '常规型(C)'],
+                datasets: [{
+                    label: '兴趣得分',
+                    data: [
+                        percentages.R,
+                        percentages.I,
+                        percentages.A,
+                        percentages.S,
+                        percentages.E,
+                        percentages.C
+                    ],
+                    backgroundColor: 'rgba(0, 85, 164, 0.2)',
+                    borderColor: '#0055a4',
+                    pointBackgroundColor: '#d4af37',
+                    pointBorderColor: '#0055a4',
+                    pointHoverBackgroundColor: '#d4af37',
+                    pointHoverBorderColor: '#0055a4',
+                    borderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                }]
+            };
+            
+            chart = new Chart(ctx, {
+                type: 'radar',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                stepSize: 20,
+                                font: { size: 10 }
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 12,
+                                    weight: 'bold'
+                                },
+                                color: '#1e3a5f'
+                            },
+                            grid: {
+                                color: 'rgba(0, 85, 164, 0.1)'
+                            },
+                            angleLines: {
+                                color: 'rgba(0, 85, 164, 0.1)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    animation: {
+                        duration: 1500,
+                        easing: 'easeOutQuart'
+                    }
+                }
+            });
+        }
+
+        function restartQuiz() {
+            document.getElementById('resultSection').classList.add('fade-out');
+            setTimeout(() => {
+                document.getElementById('resultSection').style.display = 'none';
+                document.getElementById('introSection').style.display = 'block';
+                document.getElementById('introSection').classList.remove('fade-out');
+                document.getElementById('resultSection').classList.remove('fade-out');
+                document.getElementById('quizSection').classList.remove('fade-out');
+                document.getElementById('positionInput').value = '';
+                document.getElementById('startBtn').disabled = true;
+            }, 300);
         }
     </script>
 </body>

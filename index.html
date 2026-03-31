@@ -23,6 +23,8 @@
             --text-dark: #1a202c;
             --text-gray: #4a5568;
             --white: #ffffff;
+            --ai-purple: #7c3aed;
+            --ai-light: #ede9fe;
             --shadow: 0 10px 40px rgba(30, 58, 95, 0.1);
             --shadow-hover: 0 20px 60px rgba(30, 58, 95, 0.15);
         }
@@ -102,7 +104,7 @@
         .context-banner {
             background: linear-gradient(135deg, var(--bv-blue), var(--secondary));
             color: white;
-            padding: 20px 30px;
+            padding: 25px 30px;
             border-radius: 16px;
             margin-bottom: 30px;
             text-align: left;
@@ -110,8 +112,8 @@
         }
 
         .context-banner h3 {
-            font-size: 1.1rem;
-            margin-bottom: 10px;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -119,8 +121,9 @@
 
         .context-banner p {
             font-size: 0.95rem;
-            line-height: 1.6;
+            line-height: 1.8;
             opacity: 0.95;
+            margin-bottom: 10px;
         }
 
         .intro-card {
@@ -172,8 +175,30 @@
             margin-bottom: 8px;
         }
 
+        .ai-highlight {
+            background: linear-gradient(135deg, var(--ai-light), #fff);
+            border-left: 4px solid var(--ai-purple);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .ai-highlight h4 {
+            color: var(--ai-purple);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ai-highlight p {
+            color: var(--text-gray);
+            line-height: 1.7;
+            margin: 0;
+        }
+
         .input-group {
-            margin: 30px 0;
+            margin: 25px 0;
             text-align: left;
         }
 
@@ -185,7 +210,7 @@
             font-size: 1rem;
         }
 
-        .input-group input {
+        .input-group input[type="text"] {
             width: 100%;
             padding: 15px 20px;
             border: 2px solid #e2e8f0;
@@ -195,10 +220,53 @@
             font-family: inherit;
         }
 
-        .input-group input:focus {
+        .input-group input[type="text"]:focus {
             outline: none;
             border-color: var(--bv-blue);
             box-shadow: 0 0 0 3px rgba(0, 85, 164, 0.1);
+        }
+
+        .experience-options {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .experience-btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 20px;
+            background: var(--bg-light);
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .experience-btn:hover {
+            border-color: var(--bv-blue);
+            background: #fff;
+            transform: translateY(-2px);
+        }
+
+        .experience-btn.selected {
+            background: linear-gradient(135deg, var(--bv-blue), var(--secondary));
+            color: white;
+            border-color: var(--bv-blue);
+        }
+
+        .experience-btn .exp-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .experience-btn .exp-desc {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            line-height: 1.4;
         }
 
         .input-hint {
@@ -497,6 +565,17 @@
             border: 2px solid var(--bv-blue);
         }
 
+        .experience-display {
+            background: linear-gradient(135deg, var(--accent-light), var(--accent));
+            color: var(--primary);
+            padding: 10px 25px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
         .result-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -619,6 +698,11 @@
             overflow: hidden;
         }
 
+        .recommendation-card.ai-card {
+            border-left: 4px solid var(--ai-purple);
+            background: linear-gradient(135deg, var(--ai-light), #fff);
+        }
+
         .recommendation-card::before {
             content: '';
             position: absolute;
@@ -654,6 +738,22 @@
             font-size: 0.9rem;
         }
 
+        .ai-card .rec-number {
+            background: var(--ai-purple);
+        }
+
+        .ai-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--ai-purple), #a78bfa);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
         .rec-title {
             font-size: 1.1rem;
             color: var(--primary);
@@ -677,6 +777,11 @@
             display: flex;
             align-items: center;
             gap: 8px;
+        }
+
+        .ai-card .rec-action {
+            color: var(--ai-purple);
+            border-top: 1px dashed rgba(124, 58, 237, 0.2);
         }
 
         .contribution-model {
@@ -788,6 +893,10 @@
                 grid-template-columns: repeat(2, 1fr);
             }
 
+            .experience-options {
+                flex-direction: column;
+            }
+
             .question-card {
                 padding: 30px 20px;
             }
@@ -853,8 +962,27 @@
             font-size: 0.9rem;
             line-height: 1.6;
         }
+
+        .influence-highlight {
+            background: linear-gradient(135deg, #e6f0f8, #fff);
+            border-left: 4px solid var(--bv-blue);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .influence-highlight h4 {
+            color: var(--bv-blue);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .influence-highlight p {
+            color: var(--text-gray);
+            line-height: 1.7;
+            margin: 0;
+        }
     </style>
-<base target="_blank">
 </head>
 <body>
     <div class="container">
@@ -865,8 +993,9 @@
             <p class="subtitle">在VUCA时代探索您的可持续职业发展路径</p>
             
             <div class="context-banner">
-                <h3>🎯 培训背景与目标</h3>
-                <p>在VUCA（易变、不确定、复杂、模糊）环境下，公司正在经历组织架构变革。本测评帮助您理解：<strong>在如何在现有岗位的日常工作中，通过调整贡献方式来找到实现可持续的职业发展的抓手。</strong>。</p>
+                <h3>🎯 培训背景与核心理念</h3>
+                <p>在VUCA（易变、不确定、复杂、模糊）环境下，必维正在经历组织架构变革。本测评帮助您理解：<strong>无论是否有晋升机会，您都可以通过改变贡献方式来建立个人影响力，实现可持续的职业发展。</strong></p>
+                <p style="margin-top: 10px; font-weight: 600;">💡 核心洞察：在职场中，影响力比职权更持久。真正的职业安全感来自于您能够影响他人、推动改变、创造价值的能力，而非职位头衔。</p>
             </div>
             
             <div class="intro-card">
@@ -882,21 +1011,46 @@
                     </ul>
                 </div>
                 
-                <p>本测评通过<strong>霍兰德职业兴趣理论</strong>帮助您识别个人天赋与热情，结合您的岗位特点，为您提供三条具体的贡献方式调整建议。</p>
+                <div class="influence-highlight">
+                    <h4>🌟 为什么影响力是职业长久的关键？</h4>
+                    <p>组织变革中，职位可能调整，部门可能重组，但<strong>个人的影响力是您可以随身携带的"职业资产"</strong>。通过改变贡献方式——从依靠他人到独立贡献，再到通过他人贡献，最终影响组织战略——您可以在任何岗位上持续扩大影响力半径，成为组织中不可或缺的"关键节点"。</p>
+                </div>
+
+                <div class="ai-highlight">
+                    <h4>🤖 AI时代的影响力建设</h4>
+                    <p>人工智能正在重塑检验检测认证行业。善于利用AI工具提升效率、创造新价值的人，将在新一轮职业洗牌中占据优势。<strong>将AI作为能力放大器，而非威胁</strong>，是当代职场人建立影响力的关键策略。本测评将为您提供结合AI工具的具体行动建议。</p>
+                </div>
+                
+                <p>本测评通过<strong>霍兰德职业兴趣理论</strong>帮助您识别个人天赋与热情，结合您的从业经验和岗位特点，为您提供定制化的影响力建设建议，<strong>其中至少包含一项AI赋能的具体行动</strong>。</p>
                 
                 <div class="vuca-note">
-                    <h4>⚡ 为什么关注"贡献方式"而非"职位"？</h4>
+                    <h4>⚡ 关注"贡献方式"而非"职位"</h4>
                     <p>在组织变革期，职位边界变得模糊，但组织始终需要价值创造。通过调整贡献方式（依靠他人→独立→通过他人→战略层面），您可以在当前岗位上创造更大影响力，实现个人成长与组织发展的双赢。</p>
+                </div>
+
+                <div class="input-group">
+                    <label>请选择您的从业年限</label>
+                    <div class="experience-options">
+                        <div class="experience-btn" onclick="selectExperience('junior')" id="expJunior">
+                            <span class="exp-title">10年以下</span>
+                            <span class="exp-desc">重点提升专业能力<br>逐步建立组织内部影响力</span>
+                        </div>
+                        <div class="experience-btn" onclick="selectExperience('senior')" id="expSenior">
+                            <span class="exp-title">10年及以上</span>
+                            <span class="exp-desc">巩固专业能力<br>扩展地理区域与行业领域影响力</span>
+                        </div>
+                    </div>
+                    <p class="input-hint" id="expHint" style="margin-top: 10px;">请选择您的从业年限以获取精准建议</p>
                 </div>
 
                 <div class="input-group">
                     <label for="positionInput">请输入您当前的岗位名称</label>
                     <input type="text" id="positionInput" placeholder="例如：质量工程师、项目经理、销售代表..." required>
-                    <p class="input-hint">这将帮助我们为您生成更精准的发展建议</p>
+                    <p class="input-hint">这将帮助我们为您生成更精准的影响力建设建议</p>
                 </div>
             </div>
 
-            <button class="btn-primary" id="startBtn" onclick="startQuiz()">开始测评</button>
+            <button class="btn-primary" id="startBtn" onclick="startQuiz()" disabled>开始测评</button>
         </section>
 
         <!-- 测评页面 -->
@@ -924,6 +1078,7 @@
         <section class="result-section" id="resultSection">
             <div class="result-header">
                 <div class="result-badge">测评完成</div>
+                <div class="experience-display" id="experienceDisplay">--</div>
                 <div class="position-display" id="positionDisplay">岗位：--</div>
                 <h2 class="result-title">您的霍兰德职业兴趣代码是</h2>
                 <div class="result-code" id="resultCode">---</div>
@@ -951,7 +1106,7 @@
             </div>
 
             <div class="recommendations-section" id="recommendationsSection">
-                <h3>🎯 基于您的岗位与兴趣代码的发展建议</h3>
+                <h3 id="recommendationsTitle">🎯 基于您的岗位与兴趣代码的影响力建设建议</h3>
                 <div id="recommendationsList">
                     <!-- 建议将通过JS生成 -->
                 </div>
@@ -1050,128 +1205,396 @@
             { code: 'C', text: '我喜欢完成有明确标准的工作任务' }
         ];
 
-        // 贡献方式建议库
-        const contributionStrategies = {
-            // R型建议（实际型）
-            R: {
-                general: [
-                    {
-                        title: '成为技术专家与内部顾问',
-                        content: '在您的岗位上建立"技术权威"地位，不仅完成日常检测/工作，更要主动识别技术难题并提供解决方案。',
-                        action: '每周选择一个技术痛点，深入研究并提出改进方案，向团队分享您的发现。'
-                    },
-                    {
-                        title: '开发标准化工具与模板',
-                        content: '将您的实操经验转化为可复用的工具、检查清单或自动化脚本，提升整个团队的效率。',
-                        action: '创建一个您岗位的标准操作工具包，并培训3位同事使用，成为内部"工具大师"。'
-                    },
-                    {
-                        title: '跨部门技术支持角色',
-                        content: '主动承担跨部门的技术支持工作，帮助其他团队解决设备或流程问题，扩大影响力。',
-                        action: '每月主动询问一个其他部门的技术需求，提供2小时免费技术支持。'
-                    }
-                ]
-            },
-            // I型建议（研究型）
-            I: {
-                general: [
-                    {
-                        title: '建立知识管理与研究枢纽',
-                        content: '将您的研究能力用于建立团队知识库，跟踪行业趋势，成为团队的信息中枢。',
-                        action: '每月撰写一份"行业趋势简报"，分享给团队，并建立团队知识共享平台。'
-                    },
-                    {
-                        title: '数据驱动的改进倡议',
-                        content: '运用您的分析能力，识别业务流程中的数据模式，提出基于证据的改进建议。',
-                        action: '选择一个业务指标，进行深度数据分析，向管理层提交一份数据洞察报告。'
-                    },
-                    {
-                        title: '方法论创新与最佳实践推广',
-                        content: '研究并引入新的方法论或技术框架，成为组织内部的方法论倡导者。',
-                        action: '学习一个新的行业方法论，设计试点项目，并在成功后撰写案例研究推广。'
-                    }
-                ]
-            },
-            // A型建议（艺术型）
-            A: {
-                general: [
-                    {
-                        title: '客户体验与服务设计创新',
-                        content: '运用您的创意能力，重新设计客户接触点的体验流程，提升客户满意度。',
-                        action: '绘制当前客户旅程地图，识别3个痛点，设计并实施一个创新解决方案。'
-                    },
-                    {
-                        title: '内部品牌与文化建设',
-                        content: '主导团队或部门的视觉识别、文化氛围营造，提升团队凝聚力和专业形象。',
-                        action: '发起一个"团队文化项目"，设计团队标识、内部分享会形式或办公环境优化。'
-                    },
-                    {
-                        title: '复杂信息的可视化与传播',
-                        content: '将复杂的技术或业务信息转化为易懂的视觉内容，提升沟通效率。',
-                        action: '为团队创建一个可视化模板库，将标准报告转化为信息图表或交互式展示。'
-                    }
-                ]
-            },
-            // S型建议（社会型）
-            S: {
-                general: [
-                    {
-                        title: '人才培养与导师计划',
-                        content: '建立正式的导师制度，系统性地培养新人，将您的经验转化为组织能力。',
-                        action: '主动申请成为2-3位新人的导师，制定培养计划，每月进行至少一次深度辅导。'
-                    },
-                    {
-                        title: '跨部门协作与关系网络构建',
-                        content: '成为部门间的"连接器"，主动促进不同团队间的协作与信息共享。',
-                        action: '每月组织一次跨部门午餐会或知识分享会，建立非正式沟通渠道。'
-                    },
-                    {
-                        title: '客户成功与关系深耕',
-                        content: '超越 transactional 关系，建立长期的客户伙伴关系，成为客户信赖的顾问。',
-                        action: '为5个重点客户建立"成功计划"，定期主动沟通，提供增值服务。'
-                    }
-                ]
-            },
-            // E型建议（企业型）
-            E: {
-                general: [
-                    {
-                        title: '内部创业与业务创新',
-                        content: '在现有岗位上识别新业务机会，像内部创业者一样推动创新项目落地。',
-                        action: '撰写一份"业务创新提案"，包含市场分析、资源需求和实施计划，向管理层汇报。'
-                    },
-                    {
-                        title: '变革管理与转型推动',
-                        content: '主动承担组织变革的推动者角色，帮助团队适应新的工作方式和流程。',
-                        action: '成为某个变革项目的"变革大使"，组织沟通会议，收集反馈，消除阻力。'
-                    },
-                    {
-                        title: '战略资源整合与联盟构建',
-                        content: '识别并整合内外部资源，建立战略伙伴关系，为组织创造协同价值。',
-                        action: '识别3个潜在的战略合作伙伴或内部资源，设计合作方案并推动初步接触。'
-                    }
-                ]
-            },
-            // C型建议（常规型）
-            C: {
-                general: [
-                    {
-                        title: '质量管理体系与流程优化',
-                        content: '建立或优化质量管理体系，确保合规的同时提升运营效率。',
-                        action: '审核当前流程，识别5个合规风险点或效率瓶颈，制定并实施改进计划。'
-                    },
-                    {
-                        title: '数据治理与知识资产管理',
-                        content: '建立系统的数据管理和文档标准，确保组织知识资产的安全和可追溯。',
-                        action: '设计并实施一个文档管理标准，培训团队使用，定期审计执行情况。'
-                    },
-                    {
-                        title: '运营卓越与成本控制',
-                        content: '通过精细化的运营管理，识别成本节约机会，提升资源利用效率。',
-                        action: '进行一项成本分析，识别10%的成本节约机会，制定实施路线图。'
-                    }
-                ]
-            }
+        // 10年以下员工的贡献方式建议（每个代码5条，其中至少2条包含AI元素）
+        const juniorStrategies = {
+            R: [
+                {
+                    title: '成为AI辅助的技术专家',
+                    content: '利用AI工具加速技术问题解决，建立"AI+专业"的复合型技术权威形象。',
+                    action: '学习使用ChatGPT、Claude等AI工具辅助技术诊断，建立AI辅助故障排查流程，将解决效率提升50%并分享给团队。',
+                    isAI: true
+                },
+                {
+                    title: '深耕技术专长，成为团队技术骨干',
+                    content: '在您的技术领域持续精进，解决他人无法解决的难题，建立"技术权威" reputation。',
+                    action: '每月攻克1个技术难点，记录解决方案并分享给团队，3个月内成为某细分领域的"go-to person"。',
+                    isAI: false
+                },
+                {
+                    title: '建立内部技术分享机制',
+                    content: '通过定期的技术分享，将个人学习转化为团队知识，同时提升个人在组织内的可见度。',
+                    action: '每两周举办1次"技术微分享"（30分钟），主题可以是新工具、技巧或案例，建立个人技术品牌。',
+                    isAI: false
+                },
+                {
+                    title: '开发AI辅助的检测工具与模板',
+                    content: '利用AI编程助手开发自动化工具，将重复性工作智能化，成为效率提升的先锋。',
+                    action: '使用GitHub Copilot或ChatGPT辅助编写自动化脚本，开发3个AI辅助检测工具，培训同事使用并收集反馈优化。',
+                    isAI: true
+                },
+                {
+                    title: '参与重点项目积累可见业绩',
+                    content: '主动申请参与高 visibility 项目，通过出色交付建立"靠谱"的个人品牌。',
+                    action: '向主管表达参与重点项目的意愿，承担1个有挑战性的模块，确保超预期交付。',
+                    isAI: false
+                }
+            ],
+            I: [
+                {
+                    title: '利用AI加速研究与数据分析',
+                    content: '运用AI工具进行文献综述、数据分析和报告生成，建立"AI增强型研究员"的高效形象。',
+                    action: '使用AI工具（如Elicit、ChatGPT）辅助文献检索和综述，将研究效率提升3倍，每月产出2份高质量研究报告。',
+                    isAI: true
+                },
+                {
+                    title: '建立行业知识优势与信息枢纽地位',
+                    content: '持续追踪行业动态，成为团队获取前沿信息的第一来源，建立知识权威。',
+                    action: '每周阅读3篇行业文章，每月撰写1份"行业趋势简报"，建立团队信息订阅机制。',
+                    isAI: false
+                },
+                {
+                    title: '用数据驱动改进建议',
+                    content: '通过数据分析发现业务机会，用证据说话，建立"理性分析"的专业形象。',
+                    action: '选择1个业务指标进行深度分析，发现改进机会，向主管提交数据洞察报告。',
+                    isAI: false
+                },
+                {
+                    title: '创建AI增强的知识库与智能问答系统',
+                    content: '利用AI技术构建团队知识库，建立智能问答系统，让知识获取更高效。',
+                    action: '使用Notion AI或自建GPTs搭建团队智能知识库，上传核心文档，训练专属问答助手，让团队随时获取精准答案。',
+                    isAI: true
+                },
+                {
+                    title: '建立导师关系加速成长',
+                    content: '主动寻找资深导师，同时开始指导新人，在教与学中双向提升影响力。',
+                    action: '寻找1位导师定期交流（每月1次），同时申请指导1位实习生或新人，建立成长共同体。',
+                    isAI: false
+                }
+            ],
+            A: [
+                {
+                    title: '利用AI工具提升创意设计效率',
+                    content: '运用Midjourney、DALL-E、Canva AI等工具快速生成设计方案，建立"AI创意总监"的高效形象。',
+                    action: '掌握2-3个AI设计工具，将设计效率提升5倍，为团队创建AI设计工作流和模板库，成为AI设计先锋。',
+                    isAI: true
+                },
+                {
+                    title: '用创意设计提升工作交付质量',
+                    content: '在报告、演示、文档中注入设计思维，让您的交付物脱颖而出，建立"品质保证"口碑。',
+                    action: '为团队创建3套可视化模板（报告/演示/文档），培训同事使用，提升整体交付品质。',
+                    isAI: false
+                },
+                {
+                    title: '优化客户接触点的体验设计',
+                    content: '重新设计客户沟通流程中的关键触点，通过创新体验让客户记住您。',
+                    action: '绘制客户旅程地图，识别2个痛点，设计并实施1个体验优化方案，收集客户反馈。',
+                    isAI: false
+                },
+                {
+                    title: '利用AI生成个性化内容与创意方案',
+                    content: '运用AI生成个性化文案、营销内容和创意方案，大幅提升内容产出效率和质量。',
+                    action: '使用ChatGPT、Jasper等AI写作工具，建立个性化内容生成工作流，每月产出10+高质量创意内容，建立内容营销优势。',
+                    isAI: true
+                },
+                {
+                    title: '建立个人创意作品集与专业形象',
+                    content: '系统整理个人优秀作品，建立专业形象，让成果为您说话。',
+                    action: '创建个人作品集（PPT/设计/文案），每月更新，在团队内部分享，建立创意专家形象。',
+                    isAI: false
+                }
+            ],
+            S: [
+                {
+                    title: '利用AI个性化培训与辅导',
+                    content: '运用AI工具为每位学员定制学习路径和内容，建立"AI赋能的人才培养专家"形象。',
+                    action: '使用AI工具分析学员能力差距，生成个性化学习计划，创建AI辅导助手，让每位学员获得定制化成长路径。',
+                    isAI: true
+                },
+                {
+                    title: '系统培养新人建立导师形象',
+                    content: '主动承担新人培养责任，通过帮助他人成功来建立个人影响力。',
+                    action: '申请成为2-3位新人的导师，制定90天培养计划，每周进行1次辅导，跟踪成长进度。',
+                    isAI: false
+                },
+                {
+                    title: '构建跨部门协作关系网络',
+                    content: '成为部门间的"连接器"，通过非正式沟通建立信任，扩大内部影响半径。',
+                    action: '每月组织1次跨部门"午餐学习会"，邀请不同部门同事分享，建立协作关系网。',
+                    isAI: false
+                },
+                {
+                    title: '利用AI分析客户需求与情感',
+                    content: '运用AI工具分析客户沟通记录，洞察深层需求和情感倾向，提供超预期的个性化服务。',
+                    action: '使用AI情感分析工具处理客户反馈和沟通记录，识别潜在需求模式，为5个重点客户制定精准服务策略。',
+                    isAI: true
+                },
+                {
+                    title: '提升沟通与冲突解决能力',
+                    content: '学习并实践高级沟通技巧，成为团队中的"沟通专家"和矛盾调解者。',
+                    action: '学习非暴力沟通或冲突调解技巧，主动协助解决团队内的小摩擦，建立"和事佬"口碑。',
+                    isAI: false
+                }
+            ],
+            E: [
+                {
+                    title: '利用AI进行商业分析与决策支持',
+                    content: '运用AI工具进行市场分析、竞争情报和商业模式创新，建立"数据驱动的商业领袖"形象。',
+                    action: '使用AI工具（如ChatGPT Plus、Claude）进行市场研究和商业分析，每月提交1份AI辅助的商业洞察报告，提升决策质量。',
+                    isAI: true
+                },
+                {
+                    title: '主动请缨承担挑战性任务',
+                    content: '通过承担高 visibility 任务并出色完成，快速建立"能成事"的个人品牌。',
+                    action: '每月主动申请1个超出当前职责的挑战性任务，确保高质量交付，积累业绩记录。',
+                    isAI: false
+                },
+                {
+                    title: '主导小型项目锻炼领导能力',
+                    content: '争取项目管理机会，在实践中提升计划、协调、执行的综合能力。',
+                    action: '申请主导1个小型项目（3个月内），制定完整项目计划，定期汇报进展，确保目标达成。',
+                    isAI: false
+                },
+                {
+                    title: '利用AI自动化项目管理与沟通',
+                    content: '运用AI工具自动化项目跟踪、报告生成和团队沟通，提升项目管理效率。',
+                    action: '使用AI项目管理助手（如Notion AI、Motion）自动化进度跟踪和报告，将项目管理时间减少40%，展示高效领导力。',
+                    isAI: true
+                },
+                {
+                    title: '建立个人职业品牌与可见度',
+                    content: '通过内部演讲、文章分享等方式，提升个人在组织内的知名度和影响力。',
+                    action: '每季度在部门会议或公司内部分享中演讲1次，主题可以是项目经验、学习心得或行业观察。',
+                    isAI: false
+                }
+            ],
+            C: [
+                {
+                    title: '利用AI实现智能质量监控与预警',
+                    content: '运用AI工具实现质量数据的实时监控和异常预警，建立"智能化质量管理专家"形象。',
+                    action: '使用AI数据分析工具建立质量监控仪表盘，设置智能预警阈值，实现质量问题提前预警，将质量事故降低50%。',
+                    isAI: true
+                },
+                {
+                    title: '建立质量标杆与标准化体系',
+                    content: '通过卓越的工作质量建立"零缺陷"口碑，成为质量标准的制定者和守护者。',
+                    action: '制定岗位质量标准清单，建立自查机制，连续3个月零差错，成为团队质量标杆。',
+                    isAI: false
+                },
+                {
+                    title: '优化流程提升运营效率',
+                    content: '识别并改进低效流程，用数据证明改进效果，成为"效率提升专家"。',
+                    action: '分析当前工作流程，识别3个优化点，实施改进并量化效率提升（目标：提升20%）。',
+                    isAI: false
+                },
+                {
+                    title: '利用AI自动化数据处理与报告生成',
+                    content: '运用AI工具自动化数据清洗、分析和报告生成，将重复性工作交给AI，专注高价值分析。',
+                    action: '使用AI数据处理工具（如ChatGPT Advanced Data Analysis、Excel AI插件）自动化月度报告，将数据处理时间从3天缩短至3小时。',
+                    isAI: true
+                },
+                {
+                    title: '创建知识文档与培训体系',
+                    content: '将个人经验系统化、标准化，通过培训传承，成为知识管理的推动者。',
+                    action: '编写岗位操作手册和标准流程文档，建立新人培训体系，确保知识可传承、可复制。',
+                    isAI: false
+                }
+            ]
+        };
+
+        // 10年及以上员工的贡献方式建议（每个代码5条，其中至少2条包含AI元素）
+        const seniorStrategies = {
+            R: [
+                {
+                    title: '引领AI技术在检测领域的战略应用',
+                    content: '主导AI技术在检测流程中的战略级应用，建立"AI+检测"的行业标杆形象。',
+                    action: '主导1个AI驱动的检测创新项目（如AI视觉检测、预测性维护），制定技术路线图，在行业内推广最佳实践，成为技术变革引领者。',
+                    isAI: true
+                },
+                {
+                    title: '建立区域技术权威与专家声誉',
+                    content: '超越组织边界，在地理区域内建立技术专家地位，成为行业认可的技术权威。',
+                    action: '申请在区域技术会议或行业论坛上演讲，每年至少2次，建立区域性技术专家声誉。',
+                    isAI: false
+                },
+                {
+                    title: '主导行业标准制定与技术白皮书',
+                    content: '参与或主导行业技术标准的制定，撰写技术白皮书，影响行业发展方向。',
+                    action: '识别1个行业技术标准制定机会，主动申请参与；或撰写1份技术白皮书，在行业内发布。',
+                    isAI: false
+                },
+                {
+                    title: '建立AI驱动的技术传承与培训体系',
+                    content: '利用AI技术构建智能化培训体系，实现技术经验的规模化传承。',
+                    action: '开发AI培训助手和虚拟现实培训系统，建立智能化技术认证体系，每年培养100+技术人才，打造行业人才标准。',
+                    isAI: true
+                },
+                {
+                    title: '推动技术创新与战略转型',
+                    content: '主导或参与公司技术战略规划，推动技术创新项目，影响组织技术发展方向。',
+                    action: '参与公司技术委员会或战略规划，主导1个战略性技术创新项目，推动组织技术升级。',
+                    isAI: false
+                }
+            ],
+            I: [
+                {
+                    title: '利用AI构建行业知识图谱与智能研究平台',
+                    content: '主导构建行业级AI知识图谱和智能研究平台，成为行业智慧中枢。',
+                    action: '主导开发行业知识图谱和AI研究助手，整合全行业数据资源，提供智能研究服务，建立行业级研究影响力。',
+                    isAI: true
+                },
+                {
+                    title: '建立行业研究智库与思想领导力',
+                    content: '在行业内建立研究声誉，通过发布研究报告、参与政策讨论，成为行业思想领袖。',
+                    action: '每年发布2-3份行业研究报告，参与行业协会政策研讨，建立"行业智库"个人品牌。',
+                    isAI: false
+                },
+                {
+                    title: '推动产学研合作与学术影响力',
+                    content: '与高校、研究机构建立合作，参与学术研究，提升个人在学术界的知名度。',
+                    action: '与1-2所高校建立合作关系，参与研究项目或担任客座讲师，发表学术论文或联合研究报告。',
+                    isAI: false
+                },
+                {
+                    title: '利用AI预测行业趋势与战略机遇',
+                    content: '运用AI大模型分析海量行业数据，预测技术趋势和市场机遇，成为行业"预言家"。',
+                    action: '建立AI驱动的行业趋势预测系统，每季度发布AI生成的战略洞察报告，为行业提供前瞻性指导，建立思想领导力。',
+                    isAI: true
+                },
+                {
+                    title: '担任行业顾问与政策咨询专家',
+                    content: '为政府机构、行业协会提供咨询服务，参与政策制定，提升个人行业地位。',
+                    action: '申请成为行业协会专家委员或政府顾问，参与政策研讨，每年提供2-3次专业咨询。',
+                    isAI: false
+                }
+            ],
+            A: [
+                {
+                    title: '利用AI生成式设计重塑行业标准',
+                    content: '主导AI生成式设计在行业中的应用，重新定义设计流程和审美标准。',
+                    action: '主导建立AI生成式设计中心，开发行业专用AI设计模型，制定AI辅助设计标准，每年产出100+AI辅助设计案例，成为行业设计革命领导者。',
+                    isAI: true
+                },
+                {
+                    title: '打造行业级设计标准与美学范式',
+                    content: '将设计能力提升至行业标准层面，影响行业审美趋势，成为设计领域的标杆。',
+                    action: '主导或参与制定行业设计标准，发布设计趋势报告，在行业内推广您的设计理念。',
+                    isAI: false
+                },
+                {
+                    title: '建立区域创意中心与设计联盟',
+                    content: '在地理区域内建立创意设计联盟，通过协作提升区域整体设计水平，成为创意领袖。',
+                    action: '发起区域性设计联盟或创意中心，每季度举办设计展览或论坛，建立区域创意生态。',
+                    isAI: false
+                },
+                {
+                    title: '利用AI实现个性化品牌体验规模化',
+                    content: '运用AI技术为每个客户生成个性化品牌体验，将定制化服务规模化。',
+                    action: '开发AI驱动的个性化品牌体验系统，为每个客户自动生成定制化方案，将个性化服务效率提升10倍，建立行业服务新标准。',
+                    isAI: true
+                },
+                {
+                    title: '跨界合作与艺术文化影响力',
+                    content: '与文化艺术机构跨界合作，提升个人在社会文化领域的影响力，拓展影响边界。',
+                    action: '与美术馆、设计院校或文化机构合作，举办跨界展览或讲座，提升社会文化影响力。',
+                    isAI: false
+                }
+            ],
+            S: [
+                {
+                    title: '利用AI构建智能化人才发展生态系统',
+                    content: '主导开发AI驱动的人才发展平台，实现人才评估、培养、匹配的智能化。',
+                    action: '主导开发AI人才发展平台，整合评估、学习、导师匹配功能，建立跨组织人才网络，每年影响1000+人才发展，成为行业人才发展标准制定者。',
+                    isAI: true
+                },
+                {
+                    title: '建立区域人才发展生态系统',
+                    content: '超越单一组织，在地理区域内建立人才发展平台，成为区域人才发展的推动者。',
+                    action: '发起区域性人才发展联盟，建立跨公司导师网络，每年影响100+人才发展。',
+                    isAI: false
+                },
+                {
+                    title: '推动行业客户关系管理标准',
+                    content: '将客户关系管理经验提炼为行业标准，通过培训和咨询影响行业客户服务水准。',
+                    action: '开发客户关系管理方法论，申请行业认证，开展外部培训，建立行业客户服务标准。',
+                    isAI: false
+                },
+                {
+                    title: '利用AI实现客户成功管理的智能化',
+                    content: '运用AI技术预测客户需求、自动化服务流程，建立"AI赋能的客户成功"新模式。',
+                    action: '开发AI客户成功管理系统，实现客户需求预测、自动化服务、智能预警，将客户满意度提升30%，成为行业客户成功标杆。',
+                    isAI: true
+                },
+                {
+                    title: '建立行业人脉网络与影响力中心',
+                    content: '系统性地建立和维护行业高端人脉网络，成为行业信息交流和资源整合的中心节点。',
+                    action: '建立行业高端人脉数据库，每月维护关键关系，每季度组织私密交流活动，成为"人脉枢纽"。',
+                    isAI: false
+                }
+            ],
+            E: [
+                {
+                    title: '利用AI驱动商业模式创新与生态构建',
+                    content: '主导AI技术驱动的商业模式创新，构建智能化产业生态，重塑行业竞争格局。',
+                    action: '主导1个AI驱动的商业模式创新项目（如AI即服务、智能平台），联合上下游建立AI产业联盟，3年内实现新业务占比30%，成为行业变革领导者。',
+                    isAI: true
+                },
+                {
+                    title: '建立区域业务影响力与市场份额',
+                    content: '在地理区域内建立强大的业务影响力，主导区域市场战略，成为区域业务领袖。',
+                    action: '制定并执行区域市场拓展战略，3年内将区域市场份额提升30%，建立区域业务霸主地位。',
+                    isAI: false
+                },
+                {
+                    title: '推动行业商业模式创新与生态构建',
+                    content: '主导或参与行业商业模式创新，构建产业生态，影响行业发展格局。',
+                    action: '识别行业变革机会，主导1个商业模式创新项目，联合上下游建立产业联盟，重塑行业生态。',
+                    isAI: false
+                },
+                {
+                    title: '利用AI实现智能决策与战略优化',
+                    content: '运用AI大模型辅助战略决策、风险预测和资源优化，建立"AI增强型领导力"。',
+                    action: '建立AI战略决策支持系统，整合市场数据、竞争情报、内部数据，实现战略决策智能化，将决策效率提升50%，成为智能化管理标杆。',
+                    isAI: true
+                },
+                {
+                    title: '建立个人商业思想与出版影响力',
+                    content: '通过出版书籍、专栏、演讲，建立个人商业思想体系，成为行业意见领袖。',
+                    action: '出版1本专业著作或管理书籍，开设行业专栏，每年进行10+场行业演讲，建立思想领导力。',
+                    isAI: false
+                }
+            ],
+            C: [
+                {
+                    title: '利用AI构建智能化运营卓越中心',
+                    content: '主导建立AI驱动的运营卓越中心，实现质量、效率、合规的智能化管理。',
+                    action: '主导开发AI运营管理系统，实现智能质量监控、预测性维护、自动化合规检查，将运营成本降低20%，成为行业智能化运营标杆。',
+                    isAI: true
+                },
+                {
+                    title: '建立区域运营卓越中心与标准',
+                    content: '在地理区域内建立运营卓越中心，制定区域运营标准，成为区域运营标杆。',
+                    action: '主导建立区域运营卓越中心，制定区域运营标准，每年进行区域运营审计和最佳实践推广。',
+                    isAI: false
+                },
+                {
+                    title: '推动行业合规与风险管理标准',
+                    content: '参与或主导行业合规标准和风险管理框架的制定，成为行业合规专家。',
+                    action: '参与行业协会合规委员会，主导制定1-2项行业标准，开展行业合规培训和认证。',
+                    isAI: false
+                },
+                {
+                    title: '利用AI实现预测性风险管理',
+                    content: '运用AI技术预测合规风险和运营异常，从事后检查转向事前预防。',
+                    action: '开发AI风险预测系统，分析历史数据识别风险模式，实现风险提前30天预警，将合规事故降低80%，建立行业风险管理新标准。',
+                    isAI: true
+                },
+                {
+                    title: '建立行业审计与认证权威地位',
+                    content: '成为行业内认可的审计和认证专家，为行业提供第三方评估服务，建立权威地位。',
+                    action: '获得行业权威认证资质，建立个人审计专家品牌，每年为10+企业提供第三方审计服务。',
+                    isAI: false
+                }
+            ]
         };
 
         // 打乱题目顺序
@@ -1188,6 +1611,7 @@
         let currentQuestion = 0;
         let scores = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
         let userPosition = '';
+        let userExperience = '';
         let chart = null;
 
         const options = [
@@ -1198,18 +1622,40 @@
             { text: '非常感兴趣', score: 5 }
         ];
 
-        // 检查岗位输入
-        document.getElementById('positionInput').addEventListener('input', function(e) {
+        function selectExperience(level) {
+            userExperience = level;
+            
+            // 更新UI
+            document.querySelectorAll('.experience-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            document.getElementById(level === 'junior' ? 'expJunior' : 'expSenior').classList.add('selected');
+            
+            // 更新提示文字
+            const hintText = level === 'junior' 
+                ? '✓ 已选择：10年以下 — 重点提升专业能力，逐步建立组织内部影响力'
+                : '✓ 已选择：10年及以上 — 巩固专业能力，扩展地理区域与行业领域影响力';
+            document.getElementById('expHint').textContent = hintText;
+            document.getElementById('expHint').style.color = '#0055a4';
+            document.getElementById('expHint').style.fontWeight = '600';
+            
+            checkCanStart();
+        }
+
+        function checkCanStart() {
+            const position = document.getElementById('positionInput').value.trim();
             const btn = document.getElementById('startBtn');
-            btn.disabled = e.target.value.trim() === '';
-        });
+            btn.disabled = !(userExperience && position);
+        }
+
+        // 监听岗位输入
+        document.getElementById('positionInput').addEventListener('input', checkCanStart);
 
         function startQuiz() {
-            const positionInput = document.getElementById('positionInput');
-            userPosition = positionInput.value.trim();
+            userPosition = document.getElementById('positionInput').value.trim();
             
-            if (!userPosition) {
-                alert('请输入您的岗位名称');
+            if (!userExperience || !userPosition) {
+                alert('请选择从业年限并输入岗位名称');
                 return;
             }
 
@@ -1299,11 +1745,19 @@
             const thirdCode = sortedCodes[2];
             
             const resultCode = topCode + secondCode + thirdCode;
+            const expText = userExperience === 'junior' ? '从业10年以下' : '从业10年及以上';
             
+            document.getElementById('experienceDisplay').textContent = expText;
             document.getElementById('positionDisplay').textContent = `岗位：${userPosition}`;
             document.getElementById('resultCode').textContent = resultCode;
             document.getElementById('resultSubtitle').textContent = 
                 `${hollandCodes[topCode].name} + ${hollandCodes[secondCode].name} + ${hollandCodes[thirdCode].name}`;
+            
+            // 更新建议标题
+            const titlePrefix = userExperience === 'junior' 
+                ? '🎯 专业能力提升与组织内部影响力建设建议'
+                : '🎯 地理区域与行业领域影响力扩展建议';
+            document.getElementById('recommendationsTitle').textContent = titlePrefix;
             
             displayScoreBars(percentages, sortedCodes);
             drawRadarChart(percentages);
@@ -1314,27 +1768,47 @@
             const container = document.getElementById('recommendationsList');
             container.innerHTML = '';
             
-            // 获取前三代码的建议
-            const primaryStrategies = contributionStrategies[first].general;
-            const secondaryStrategies = contributionStrategies[second].general;
-            const tertiaryStrategies = contributionStrategies[third].general;
+            // 根据从业年限选择建议库
+            const strategies = userExperience === 'junior' ? juniorStrategies : seniorStrategies;
             
-            // 选择三条不同的建议（优先主代码，辅以次要代码）
-            const selectedRecommendations = [
-                primaryStrategies[0],
-                primaryStrategies[1] || secondaryStrategies[0],
-                secondaryStrategies[1] || tertiaryStrategies[0]
+            // 获取前三代码的所有建议（每个代码5条，共15条）
+            const allStrategies = [
+                ...strategies[first].map(s => ({...s, source: first})),
+                ...strategies[second].map(s => ({...s, source: second})),
+                ...strategies[third].map(s => ({...s, source: third}))
             ];
+            
+            // 分离AI建议和非AI建议
+            const aiStrategies = allStrategies.filter(s => s.isAI);
+            const nonAiStrategies = allStrategies.filter(s => !s.isAI);
+            
+            // 确保至少选择1个AI建议，最多2个
+            const selectedAiCount = Math.min(Math.max(1, Math.floor(Math.random() * 2) + 1), aiStrategies.length);
+            const selectedNonAiCount = 3 - selectedAiCount;
+            
+            // 随机选择AI建议
+            const shuffledAi = shuffleArray(aiStrategies);
+            const selectedAi = shuffledAi.slice(0, selectedAiCount);
+            
+            // 随机选择非AI建议
+            const shuffledNonAi = shuffleArray(nonAiStrategies);
+            const selectedNonAi = shuffledNonAi.slice(0, selectedNonAiCount);
+            
+            // 合并并打乱顺序
+            const selectedRecommendations = shuffleArray([...selectedAi, ...selectedNonAi]);
             
             selectedRecommendations.forEach((rec, index) => {
                 const card = document.createElement('div');
-                card.className = 'recommendation-card';
+                card.className = `recommendation-card ${rec.isAI ? 'ai-card' : ''}`;
                 card.innerHTML = `
                     <div class="rec-number">${index + 1}</div>
-                    <div class="rec-title">${rec.title}</div>
+                    <div class="rec-title">
+                        ${rec.title}
+                        ${rec.isAI ? '<span class="ai-badge">🤖 AI赋能</span>' : ''}
+                    </div>
                     <div class="rec-content">${rec.content}</div>
                     <div class="rec-action">
-                        <span>💡</span>
+                        <span>${rec.isAI ? '🚀' : '💡'}</span>
                         <span>具体行动：${rec.action}</span>
                     </div>
                 `;
@@ -1351,32 +1825,59 @@
                 }, index * 200);
             });
             
-            // 添加个性化说明
+            // 根据从业年限生成不同的总结
+            const isJunior = userExperience === 'junior';
             const note = document.createElement('div');
             note.style.marginTop = '30px';
-            note.style.padding = '20px';
+            note.style.padding = '25px';
             note.style.background = 'linear-gradient(135deg, #e6f0f8, #fff)';
             note.style.borderRadius = '12px';
             note.style.borderLeft = '4px solid #0055a4';
-            note.innerHTML = `
-                <strong style="color: #1e3a5f;">💼 针对您的岗位"${userPosition}"的特别提示：</strong><br><br>
-                作为${userPosition}，您可以将上述建议与日常职责结合。例如，利用您的${hollandCodes[first].name}特质，
-                在${hollandCodes[first].strengths.join('、')}方面建立独特优势，逐步从"${getContributionLevel(first)}"向更高层次的贡献模式演进。
-                记住：<strong>职业发展不在于职位头衔，而在于您创造价值的方式和范围。</strong>
-            `;
+            
+            if (isJunior) {
+                note.innerHTML = `
+                    <strong style="color: #1e3a5f; font-size: 1.1rem;">🌱 针对您的岗位"${userPosition}"的发展路径（10年以下）：</strong><br><br>
+                    <p style="color: var(--text-gray); line-height: 1.8; margin-bottom: 15px;">
+                    作为${userPosition}，您拥有<span style="color: var(--bv-blue); font-weight: 600;">${hollandCodes[first].name}</span>的核心特质，
+                    辅以<span style="color: var(--bv-blue); font-weight: 600;">${hollandCodes[second].name}</span>和
+                    <span style="color: var(--bv-blue); font-weight: 600;">${hollandCodes[third].name}</span>的优势。
+                    在职业发展的这个阶段，<strong>专业能力是根基，组织内部影响力是加速器</strong>。
+                    </p>
+                    <p style="color: var(--text-gray); line-height: 1.8; margin-bottom: 15px;">
+                    <strong>AI时代的双轨并进策略：</strong>一方面持续深化您在<strong>${hollandCodes[first].strengths.join('、')}</strong>方面的专业能力；
+                    另一方面，<span style="color: var(--ai-purple); font-weight: 600;">积极拥抱AI工具</span>，将AI作为能力放大器，
+                    提升工作效率和质量。上述建议中标注"🤖 AI赋能"的选项，是您快速建立差异化优势的机会。
+                    </p>
+                    <p style="color: var(--text-gray); line-height: 1.8; margin: 0;">
+                    <strong>行动建议：</strong>选择1个AI相关建议和1-2个常规建议立即开始实践。持续3-6个月，
+                    您将成为团队中最懂AI的${userPosition}，这种"AI+专业"的复合能力将成为您最突出的职业标签。
+                    </p>
+                `;
+            } else {
+                note.innerHTML = `
+                    <strong style="color: #1e3a5f; font-size: 1.1rem;">🚀 针对您的岗位"${userPosition}"的影响力扩展路径（10年及以上）：</strong><br><br>
+                    <p style="color: var(--text-gray); line-height: 1.8; margin-bottom: 15px;">
+                    作为资深的${userPosition}，您已经具备<span style="color: var(--bv-blue); font-weight: 600;">${hollandCodes[first].name}</span>的深厚积累，
+                    以及<span style="color: var(--bv-blue); font-weight: 600;">${hollandCodes[second].name}</span>和
+                    <span style="color: var(--bv-blue); font-weight: 600;">${hollandCodes[third].name}</span>的综合优势。
+                    在这个阶段，<strong>您的影响力不应局限于组织内部，而应扩展到地理区域乃至整个行业的层面</strong>。
+                    </p>
+                    <p style="color: var(--text-gray); line-height: 1.8; margin-bottom: 15px;">
+                    <strong>AI驱动的三维影响力战略：</strong>第一，在<strong>组织内部</strong>成为AI转型的引领者和布道者；
+                    第二，在<strong>地理区域</strong>内建立"AI+专业"的复合专家声誉；第三，在<strong>行业领域</strong>内推动AI技术应用标准制定。
+                    将AI从技术工具升级为战略资产，是您建立行业级影响力的关键杠杆。
+                    </p>
+                    <p style="color: var(--text-gray); line-height: 1.8; margin-bottom: 15px;">
+                    您的核心优势在于<strong>${hollandCodes[first].strengths.join('、')}</strong>，
+                    现在需要将这些优势<strong>AI化、产品化、规模化</strong>，从个人贡献者转变为行业赋能者和标准制定者。
+                    </p>
+                    <p style="color: var(--text-gray); line-height: 1.8; margin: 0;">
+                    <strong>战略提醒：</strong>10年以上的从业经验意味着您拥有宝贵的行业洞察。现在是将这些"隐性资产"通过AI技术转化为"显性影响力"的最佳时机。
+                    选择1-2个AI战略项目系统推进，2-3年内您将成为行业内公认的"AI+专业"权威专家，引领行业智能化转型。
+                    </p>
+                `;
+            }
             container.appendChild(note);
-        }
-
-        function getContributionLevel(code) {
-            const levels = {
-                'R': '独立贡献（技术专家路线）',
-                'I': '独立贡献（研究创新路线）',
-                'A': '独立贡献（创新设计路线）',
-                'S': '通过他人贡献（团队协作路线）',
-                'E': '通过他人贡献（领导影响路线）',
-                'C': '独立贡献（运营卓越路线）'
-            };
-            return levels[code] || '独立贡献';
         }
 
         function displayScoreBars(percentages, sortedCodes) {
@@ -1488,7 +1989,16 @@
                 document.getElementById('introSection').classList.remove('fade-out');
                 document.getElementById('resultSection').classList.remove('fade-out');
                 document.getElementById('quizSection').classList.remove('fade-out');
+                
+                // 重置表单
                 document.getElementById('positionInput').value = '';
+                document.querySelectorAll('.experience-btn').forEach(btn => {
+                    btn.classList.remove('selected');
+                });
+                document.getElementById('expHint').textContent = '请选择您的从业年限以获取精准建议';
+                document.getElementById('expHint').style.color = 'var(--text-gray)';
+                document.getElementById('expHint').style.fontWeight = 'normal';
+                userExperience = '';
                 document.getElementById('startBtn').disabled = true;
             }, 300);
         }

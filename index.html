@@ -2,674 +2,790 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>必维职业发展规划测评 | 霍兰德职业兴趣探索</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>睿观生涯教练 · 选对赛道跟对人 | 35+职场人可持续职业发展</title>
+    <meta name="description" content="专注35+中高阶职场人士职业转型，运用Harrison人才测评与教练技术，助你突破职场魔咒，实现可持续职业发展。">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         :root {
-            --primary: #1e3a5f;
-            --secondary: #2c5282;
-            --accent: #d4af37;
-            --accent-light: #f4d03f;
-            --bv-blue: #0055a4;
-            --bv-light: #e6f0f8;
-            --bg-light: #f8fafc;
-            --text-dark: #1a202c;
-            --text-gray: #4a5568;
-            --white: #ffffff;
-            --ai-purple: #7c3aed;
-            --ai-light: #ede9fe;
-            --shadow: 0 10px 40px rgba(30, 58, 95, 0.1);
+            --deep-blue: #0a1f2e;
+            --navy: #0f2d3d;
+            --slate: #1a3c5c;
+            --steel: #2c5a7a;
+            --gold: #d4a853;
+            --gold-light: #e8c878;
+            --gold-dark: #b8923e;
+            --cream: #faf8f3;
+            --ivory: #f5f0e8;
+            --warm-gray: #8a7d6b;
+            --text-dark: #1e2a35;
+            --text-body: #3d4f5f;
+            --text-light: #6b7d8d;
+            --glass: rgba(255,255,255,0.08);
+            --glass-border: rgba(255,255,255,0.12);
         }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; font-size: 16px; }
         body {
-            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e6f0f8 100%);
-            min-height: 100vh;
-            color: var(--text-dark);
+            font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--cream);
+            color: var(--text-body);
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
+        @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(212,168,83,0.4); } 50% { box-shadow: 0 0 0 15px rgba(212,168,83,0); } }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes rotateSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .animate-on-scroll { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
+        /* ===== HERO ===== */
+        .hero {
             min-height: 100vh;
+            background: linear-gradient(135deg, var(--deep-blue) 0%, var(--navy) 40%, var(--slate) 100%);
+            position: relative;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-        }
-
-        /* 倒计时锁定页面 */
-        .lock-screen {
-            text-align: center;
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        .lock-card {
-            background: var(--white);
-            border-radius: 32px;
-            padding: 50px 40px;
-            box-shadow: var(--shadow);
-            margin-bottom: 30px;
-        }
-
-        .lock-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-        }
-
-        .lock-title {
-            font-size: 1.8rem;
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
-
-        .lock-message {
-            color: var(--text-gray);
-            line-height: 1.8;
-            margin-bottom: 30px;
-        }
-
-        .countdown-box {
-            background: linear-gradient(135deg, var(--bv-light), #fff);
-            border-radius: 24px;
-            padding: 30px;
-            margin: 20px 0;
-        }
-
-        .countdown-timer {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--bv-blue);
-            font-family: monospace;
-            letter-spacing: 5px;
-            margin: 15px 0;
-        }
-
-        .countdown-label {
-            font-size: 0.9rem;
-            color: var(--text-gray);
-        }
-
-        .reminder-note {
-            background: #fff8e6;
-            border-left: 4px solid var(--accent);
-            padding: 15px 20px;
-            border-radius: 12px;
-            margin-top: 20px;
-            font-size: 0.9rem;
-            color: #8a6e2b;
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--bv-blue);
-            color: var(--bv-blue);
-            padding: 12px 30px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            margin-top: 20px;
-        }
-
-        .btn-outline:hover {
-            background: var(--bv-blue);
-            color: white;
-        }
-
-        /* 原有样式保留 */
-        .intro-section, .quiz-section, .result-section {
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        .quiz-section, .result-section {
-            display: none;
-        }
-
-        .logo {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, var(--bv-blue), var(--primary));
-            border-radius: 20px;
-            margin: 0 auto 30px;
-            display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 36px;
-            color: var(--accent);
-            box-shadow: var(--shadow);
-            position: relative;
+            text-align: center;
+            padding: 0 24px;
             overflow: hidden;
-            font-weight: 700;
         }
-
-        .logo::before {
+        .hero::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            animation: shimmer 3s infinite;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 20% 50%, rgba(212,168,83,0.08) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(44,90,122,0.15) 0%, transparent 50%), radial-gradient(circle at 50% 80%, rgba(212,168,83,0.05) 0%, transparent 40%);
+            animation: gradientShift 15s ease infinite;
+            background-size: 200% 200%;
         }
+        .hero-ring { position: absolute; border: 1px solid rgba(212,168,83,0.15); border-radius: 50%; animation: rotateSlow 60s linear infinite; }
+        .hero-ring-1 { width: 600px; height: 600px; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .hero-ring-2 { width: 800px; height: 800px; top: 50%; left: 50%; transform: translate(-50%, -50%); animation-direction: reverse; animation-duration: 80s; border-color: rgba(255,255,255,0.06); }
+        .hero-ring-3 { width: 1000px; height: 1000px; top: 50%; left: 50%; transform: translate(-50%, -50%); animation-duration: 100s; border-color: rgba(212,168,83,0.08); }
+        .hero-content { position: relative; z-index: 2; max-width: 900px; animation: fadeInUp 1s ease-out; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--glass); border: 1px solid var(--glass-border); backdrop-filter: blur(10px); padding: 10px 24px; border-radius: 50px; font-size: 13px; color: var(--gold-light); letter-spacing: 2px; margin-bottom: 32px; animation: fadeIn 1.2s ease-out 0.3s both; }
+        .hero-badge i { color: var(--gold); font-size: 14px; }
+        .hero h1 { font-family: 'Noto Serif SC', serif; font-size: clamp(2rem, 5vw, 3.8rem); font-weight: 700; color: #fff; line-height: 1.3; margin-bottom: 20px; letter-spacing: 2px; }
+        .hero h1 .highlight { background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; position: relative; }
+        .hero h1 .highlight::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0.6; }
+        .hero-subtitle { font-size: clamp(1rem, 2.5vw, 1.35rem); color: rgba(255,255,255,0.7); font-weight: 300; margin-bottom: 48px; line-height: 1.8; max-width: 680px; margin-left: auto; margin-right: auto; }
+        .hero-cta-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; animation: fadeInUp 1s ease-out 0.6s both; }
+        .btn-primary { display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%); color: var(--deep-blue); padding: 16px 36px; border-radius: 50px; font-size: 15px; font-weight: 700; text-decoration: none; border: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 8px 32px rgba(212,168,83,0.3); position: relative; overflow: hidden; }
+        .btn-primary::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: left 0.5s; }
+        .btn-primary:hover::before { left: 100%; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(212,168,83,0.4); }
+        .btn-secondary { display: inline-flex; align-items: center; gap: 10px; background: transparent; color: #fff; padding: 16px 36px; border-radius: 50px; font-size: 15px; font-weight: 500; text-decoration: none; border: 1.5px solid rgba(255,255,255,0.3); cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(10px); }
+        .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.5); transform: translateY(-3px); }
+        .hero-scroll { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.4); font-size: 12px; letter-spacing: 2px; animation: float 3s ease-in-out infinite; cursor: pointer; text-decoration: none; }
+        .hero-scroll i { display: block; font-size: 20px; margin-top: 8px; }
 
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        /* ===== NAV ===== */
+        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; transition: all 0.4s ease; }
+        .nav.scrolled { background: rgba(10,31,46,0.95); backdrop-filter: blur(20px); box-shadow: 0 4px 30px rgba(0,0,0,0.2); }
+        .nav-logo { display: flex; align-items: center; gap: 12px; }
+        .nav-logo-text { color: #fff; font-size: 18px; font-weight: 700; letter-spacing: 1px; }
+        .nav-logo-sub { color: var(--gold); font-size: 10px; letter-spacing: 3px; margin-top: 2px; }
+        .nav-links { display: flex; gap: 32px; align-items: center; }
+        .nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.3s; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px; background: var(--gold); transition: width 0.3s; }
+        .nav-links a:hover { color: #fff; }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-cta { background: var(--gold); color: var(--deep-blue); padding: 8px 20px; border-radius: 30px; font-size: 13px; font-weight: 700; text-decoration: none; transition: all 0.3s; }
+        .nav-cta:hover { background: var(--gold-light); transform: scale(1.05); }
+        .nav-mobile-toggle { display: none; color: #fff; font-size: 24px; cursor: pointer; }
+
+        /* ===== SECTIONS ===== */
+        .section { padding: 100px 24px; max-width: 1200px; margin: 0 auto; }
+        .section-label { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; }
+        .section-label::before { content: ''; width: 30px; height: 2px; background: var(--gold); }
+        .section-title { font-family: 'Noto Serif SC', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: var(--text-dark); line-height: 1.3; margin-bottom: 20px; }
+        .section-desc { font-size: 1.1rem; color: var(--text-light); max-width: 640px; line-height: 1.8; }
+
+        /* ===== PHILOSOPHY ===== */
+        .philosophy { background: var(--ivory); position: relative; overflow: hidden; }
+        .philosophy::before { content: ''; position: absolute; top: -200px; right: -200px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(212,168,83,0.08) 0%, transparent 70%); border-radius: 50%; }
+        .philosophy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-top: 60px; }
+        .philosophy-visual { position: relative; }
+        .philosophy-image-placeholder { width: 100%; aspect-ratio: 4/5; background: linear-gradient(135deg, var(--slate) 0%, var(--steel) 100%); border-radius: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); font-size: 14px; position: relative; overflow: hidden; box-shadow: 0 30px 60px rgba(10,31,46,0.2); }
+        .philosophy-image-placeholder::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='rgba(255,255,255,0.05)' stroke-width='0.5'/%3E%3C/svg%3E"); background-size: 60px; opacity: 0.5; }
+        .philosophy-image-placeholder i { font-size: 48px; margin-bottom: 16px; color: var(--gold); opacity: 0.6; }
+        .philosophy-image-caption { position: absolute; bottom: 24px; left: 24px; right: 24px; background: rgba(10,31,46,0.8); backdrop-filter: blur(10px); padding: 16px 20px; border-radius: 16px; border: 1px solid rgba(212,168,83,0.2); }
+        .philosophy-image-caption p { color: #fff; font-size: 14px; line-height: 1.6; }
+        .philosophy-image-caption .caption-label { color: var(--gold); font-size: 11px; letter-spacing: 2px; margin-bottom: 6px; }
+        .philosophy-content h3 { font-family: 'Noto Serif SC', serif; font-size: 1.6rem; color: var(--text-dark); margin-bottom: 24px; line-height: 1.5; }
+        .philosophy-quote { background: linear-gradient(135deg, var(--cream) 0%, #fff 100%); border-left: 4px solid var(--gold); padding: 24px 28px; border-radius: 0 16px 16px 0; margin: 28px 0; font-size: 1.05rem; color: var(--text-body); line-height: 1.8; box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
+        .philosophy-quote strong { color: var(--gold-dark); font-weight: 600; }
+        .pillars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 36px; }
+        .pillar { background: #fff; border-radius: 20px; padding: 24px 16px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid rgba(212,168,83,0.1); transition: all 0.4s ease; }
+        .pillar:hover { transform: translateY(-8px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); border-color: rgba(212,168,83,0.3); }
+        .pillar-icon { width: 56px; height: 56px; background: linear-gradient(135deg, var(--ivory) 0%, var(--cream) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 24px; color: var(--gold-dark); border: 2px solid rgba(212,168,83,0.15); }
+        .pillar h4 { font-size: 1.1rem; color: var(--text-dark); margin-bottom: 8px; font-weight: 700; }
+        .pillar p { font-size: 13px; color: var(--text-light); line-height: 1.6; }
+
+        /* ===== PATHS ===== */
+        .paths { background: linear-gradient(180deg, var(--deep-blue) 0%, #0d2535 50%, var(--navy) 100%); position: relative; overflow: hidden; }
+        .paths::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 30% 20%, rgba(212,168,83,0.06) 0%, transparent 50%), radial-gradient(circle at 70% 80%, rgba(44,90,122,0.1) 0%, transparent 50%); }
+        .paths-header { text-align: center; margin-bottom: 60px; position: relative; z-index: 2; }
+        .paths-header .section-title { color: #fff; }
+        .paths-header .section-desc { color: rgba(255,255,255,0.6); margin: 0 auto; }
+        .path-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; position: relative; z-index: 2; }
+        .path-card { background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 28px; padding: 40px 32px; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden; text-decoration: none; display: block; }
+        .path-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--gold), var(--gold-light)); transform: scaleX(0); transition: transform 0.5s ease; }
+        .path-card:hover::before { transform: scaleX(1); }
+        .path-card:hover { background: rgba(255,255,255,0.12); border-color: rgba(212,168,83,0.3); transform: translateY(-12px); box-shadow: 0 30px 60px rgba(0,0,0,0.3); }
+        .path-icon { width: 72px; height: 72px; background: linear-gradient(135deg, rgba(212,168,83,0.2) 0%, rgba(212,168,83,0.05) 100%); border-radius: 24px; display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 28px; border: 1px solid rgba(212,168,83,0.2); transition: all 0.4s; }
+        .path-card:hover .path-icon { background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%); color: var(--deep-blue); transform: scale(1.1); }
+        .path-card h3 { font-family: 'Noto Serif SC', serif; font-size: 1.5rem; color: #fff; margin-bottom: 12px; font-weight: 700; }
+        .path-card .path-subtitle { color: var(--gold-light); font-size: 14px; font-weight: 500; margin-bottom: 20px; letter-spacing: 1px; }
+        .path-card .path-desc { color: rgba(255,255,255,0.65); font-size: 14px; line-height: 1.8; margin-bottom: 28px; }
+        .path-features { list-style: none; margin-bottom: 28px; }
+        .path-features li { display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,0.7); font-size: 13px; margin-bottom: 10px; }
+        .path-features li i { color: var(--gold); font-size: 12px; }
+        .path-cta { display: inline-flex; align-items: center; gap: 8px; color: var(--gold); font-size: 14px; font-weight: 600; transition: gap 0.3s; }
+        .path-card:hover .path-cta { gap: 14px; }
+
+        /* ===== EXPERIENCE ===== */
+        .experience { background: #fff; }
+        .experience-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-top: 60px; }
+        .experience-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .stat-card { background: linear-gradient(135deg, var(--cream) 0%, #fff 100%); border-radius: 24px; padding: 32px 24px; text-align: center; border: 1px solid rgba(212,168,83,0.1); transition: all 0.4s; }
+        .stat-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); border-color: rgba(212,168,83,0.3); }
+        .stat-number { font-family: 'Noto Serif SC', serif; font-size: 2.8rem; font-weight: 700; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 8px; }
+        .stat-label { font-size: 14px; color: var(--text-light); line-height: 1.5; }
+        .experience-visual { position: relative; }
+        .experience-image-placeholder { width: 100%; aspect-ratio: 3/2; background: linear-gradient(135deg, var(--slate) 0%, var(--steel) 100%); border-radius: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); font-size: 14px; box-shadow: 0 30px 60px rgba(10,31,46,0.15); position: relative; overflow: hidden; }
+        .experience-image-placeholder i { font-size: 48px; margin-bottom: 16px; color: var(--gold); opacity: 0.5; }
+        .experience-floating-card { position: absolute; bottom: -20px; left: -20px; background: #fff; padding: 20px 24px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.12); border: 1px solid rgba(212,168,83,0.15); max-width: 260px; }
+        .experience-floating-card p { font-size: 13px; color: var(--text-body); line-height: 1.7; font-style: italic; }
+        .experience-floating-card .author { margin-top: 12px; font-size: 12px; color: var(--text-light); font-style: normal; font-weight: 600; }
+
+        /* ===== PRICING ===== */
+        .pricing { background: linear-gradient(180deg, var(--ivory) 0%, var(--cream) 100%); position: relative; }
+        .pricing::before { content: ''; position: absolute; bottom: -300px; left: -300px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(212,168,83,0.06) 0%, transparent 70%); }
+        .pricing-header { text-align: center; margin-bottom: 60px; }
+        .pricing-grid { display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 24px; align-items: center; max-width: 1000px; margin: 0 auto; position: relative; z-index: 2; }
+        .pricing-card { background: #fff; border-radius: 28px; padding: 40px 32px; border: 1px solid rgba(0,0,0,0.06); transition: all 0.5s ease; position: relative; }
+        .pricing-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
+        .pricing-card.featured { background: linear-gradient(180deg, var(--deep-blue) 0%, var(--slate) 100%); color: #fff; border: 1px solid rgba(212,168,83,0.3); transform: scale(1.05); box-shadow: 0 30px 60px rgba(10,31,46,0.25); z-index: 2; }
+        .pricing-card.featured:hover { transform: scale(1.08) translateY(-8px); }
+        .pricing-badge { display: inline-block; padding: 6px 16px; border-radius: 30px; font-size: 11px; font-weight: 700; letter-spacing: 1px; margin-bottom: 20px; }
+        .pricing-card:not(.featured) .pricing-badge { background: var(--ivory); color: var(--text-light); }
+        .pricing-card.featured .pricing-badge { background: var(--gold); color: var(--deep-blue); }
+        .pricing-card h3 { font-family: 'Noto Serif SC', serif; font-size: 1.4rem; margin-bottom: 8px; font-weight: 700; }
+        .pricing-card:not(.featured) h3 { color: var(--text-dark); }
+        .pricing-card .price { font-family: 'Noto Serif SC', serif; font-size: 2.6rem; font-weight: 700; margin: 16px 0; line-height: 1; }
+        .pricing-card:not(.featured) .price { background: linear-gradient(135deg, var(--text-dark) 0%, var(--steel) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .pricing-card.featured .price { color: var(--gold); }
+        .pricing-card .price-period { font-size: 14px; opacity: 0.7; font-weight: 400; }
+        .pricing-features { list-style: none; margin: 28px 0; }
+        .pricing-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; margin-bottom: 12px; line-height: 1.6; }
+        .pricing-card:not(.featured) .pricing-features li { color: var(--text-body); }
+        .pricing-card.featured .pricing-features li { color: rgba(255,255,255,0.8); }
+        .pricing-features li i { margin-top: 3px; font-size: 12px; }
+        .pricing-card:not(.featured) .pricing-features li i { color: var(--gold); }
+        .pricing-card.featured .pricing-features li i { color: var(--gold); }
+        .pricing-btn { display: block; width: 100%; padding: 14px; border-radius: 50px; text-align: center; font-size: 14px; font-weight: 700; text-decoration: none; transition: all 0.3s; border: none; cursor: pointer; }
+        .pricing-card:not(.featured) .pricing-btn { background: var(--cream); color: var(--text-dark); border: 2px solid var(--ivory); }
+        .pricing-card:not(.featured) .pricing-btn:hover { background: var(--gold); color: var(--deep-blue); border-color: var(--gold); }
+        .pricing-card.featured .pricing-btn { background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%); color: var(--deep-blue); box-shadow: 0 8px 24px rgba(212,168,83,0.3); }
+        .pricing-card.featured .pricing-btn:hover { transform: scale(1.05); box-shadow: 0 12px 32px rgba(212,168,83,0.4); }
+        .pricing-guarantee { text-align: center; margin-top: 40px; padding: 20px; background: rgba(212,168,83,0.08); border-radius: 16px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .pricing-guarantee p { font-size: 14px; color: var(--text-light); }
+        .pricing-guarantee i { color: var(--gold); margin-right: 8px; }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials { background: linear-gradient(180deg, var(--deep-blue) 0%, var(--navy) 100%); position: relative; overflow: hidden; }
+        .testimonials-header { text-align: center; margin-bottom: 60px; }
+        .testimonials-header .section-title { color: #fff; }
+        .testimonials-header .section-desc { color: rgba(255,255,255,0.6); }
+        .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .testimonial-card { background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 24px; padding: 32px; transition: all 0.4s; }
+        .testimonial-card:hover { background: rgba(255,255,255,0.12); transform: translateY(-6px); }
+        .testimonial-stars { color: var(--gold); font-size: 14px; margin-bottom: 16px; }
+        .testimonial-text { color: rgba(255,255,255,0.85); font-size: 15px; line-height: 1.8; margin-bottom: 24px; font-style: italic; }
+        .testimonial-author { display: flex; align-items: center; gap: 14px; }
+        .testimonial-avatar { width: 48px; height: 48px; background: linear-gradient(135deg, var(--slate) 0%, var(--steel) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 18px; font-weight: 700; border: 2px solid rgba(212,168,83,0.3); }
+        .testimonial-info h4 { color: #fff; font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+        .testimonial-info p { color: rgba(255,255,255,0.5); font-size: 12px; }
+
+        /* ===== CTA ===== */
+        .cta-section { background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%); position: relative; overflow: hidden; text-align: center; }
+        .cta-section::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 50% 50%, rgba(212,168,83,0.08) 0%, transparent 50%); }
+        .cta-content { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
+        .cta-section h2 { font-family: 'Noto Serif SC', serif; font-size: clamp(1.8rem, 4vw, 2.6rem); color: #fff; margin-bottom: 20px; font-weight: 700; }
+        .cta-section p { color: rgba(255,255,255,0.7); font-size: 1.1rem; margin-bottom: 40px; line-height: 1.8; }
+        .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+        /* ===== FOOTER ===== */
+        .footer { background: var(--deep-blue); padding: 60px 24px 40px; border-top: 1px solid rgba(255,255,255,0.06); }
+        .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; }
+        .footer-brand p { color: rgba(255,255,255,0.5); font-size: 14px; line-height: 1.7; max-width: 300px; }
+        .footer-brand .tagline { color: var(--gold); font-size: 12px; letter-spacing: 2px; margin-top: 12px; }
+        .footer-col h4 { color: #fff; font-size: 14px; font-weight: 600; margin-bottom: 20px; letter-spacing: 1px; }
+        .footer-col a { display: block; color: rgba(255,255,255,0.5); text-decoration: none; font-size: 13px; margin-bottom: 12px; transition: color 0.3s; }
+        .footer-col a:hover { color: var(--gold); }
+        .footer-bottom { max-width: 1200px; margin: 40px auto 0; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; }
+        .footer-bottom p { color: rgba(255,255,255,0.3); font-size: 12px; }
+        .footer-social { display: flex; gap: 16px; }
+        .footer-social a { color: rgba(255,255,255,0.5); font-size: 18px; transition: color 0.3s; }
+        .footer-social a:hover { color: var(--gold); }
+
+        /* ===== FLOATING ===== */
+        .floating-cta { position: fixed; bottom: 24px; right: 24px; z-index: 999; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%); color: var(--deep-blue); padding: 14px 28px; border-radius: 50px; font-size: 14px; font-weight: 700; text-decoration: none; box-shadow: 0 8px 32px rgba(212,168,83,0.4); display: flex; align-items: center; gap: 8px; transition: all 0.3s; animation: pulse 2s infinite; border: none; cursor: pointer; }
+        .floating-cta:hover { transform: scale(1.05); box-shadow: 0 12px 40px rgba(212,168,83,0.5); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .philosophy-grid, .experience-grid { grid-template-columns: 1fr; gap: 40px; }
+            .path-cards { grid-template-columns: 1fr; }
+            .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
+            .pricing-card.featured { transform: none; order: -1; }
+            .testimonial-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .pillars { grid-template-columns: 1fr 1fr; }
         }
-
-        h1 { font-size: 2rem; color: var(--primary); margin-bottom: 10px; }
-        .subtitle { color: var(--text-gray); margin-bottom: 30px; }
-
-        .context-banner {
-            background: linear-gradient(135deg, var(--bv-blue), var(--secondary));
-            color: white;
-            padding: 25px 30px;
-            border-radius: 16px;
-            margin-bottom: 30px;
-            text-align: left;
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .nav-mobile-toggle { display: block; }
+            .hero h1 { font-size: 2rem; }
+            .section { padding: 60px 20px; }
+            .pillars { grid-template-columns: 1fr; }
+            .experience-stats { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+            .floating-cta { bottom: 16px; right: 16px; padding: 12px 20px; font-size: 13px; }
         }
-
-        .intro-card {
-            background: var(--white);
-            border-radius: 24px;
-            padding: 30px;
-            box-shadow: var(--shadow);
-            margin-bottom: 30px;
-            text-align: left;
-        }
-
-        .input-group { margin: 20px 0; text-align: left; }
-        .input-group label { font-weight: 600; color: var(--primary); display: block; margin-bottom: 10px; }
-        .input-group input { width: 100%; padding: 14px 18px; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 1rem; }
-        .input-group input:focus { outline: none; border-color: var(--bv-blue); }
-
-        .experience-options { display: flex; gap: 15px; flex-wrap: wrap; }
-        .experience-btn {
-            flex: 1; min-width: 180px; padding: 18px; background: var(--bg-light);
-            border: 2px solid #e2e8f0; border-radius: 12px; cursor: pointer;
-            text-align: center; transition: all 0.3s;
-        }
-        .experience-btn:hover { border-color: var(--bv-blue); background: #fff; transform: translateY(-2px); }
-        .experience-btn.selected { background: linear-gradient(135deg, var(--bv-blue), var(--secondary)); color: white; border-color: var(--bv-blue); }
-        .exp-title { font-weight: 700; display: block; margin-bottom: 5px; }
-        .exp-desc { font-size: 0.8rem; opacity: 0.8; }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--bv-blue), var(--secondary));
-            color: white; border: none; padding: 16px 50px; font-size: 1.1rem;
-            border-radius: 50px; cursor: pointer; font-weight: 600;
-            transition: all 0.3s; box-shadow: 0 4px 15px rgba(0,85,164,0.3);
-        }
-        .btn-primary:disabled { background: #cbd5e0; cursor: not-allowed; }
-        .btn-primary:hover:not(:disabled) { transform: translateY(-2px); }
-
-        .question-card {
-            background: var(--white); border-radius: 24px; padding: 40px 30px;
-            box-shadow: var(--shadow); text-align: center;
-        }
-        .question-text { font-size: 1.3rem; margin-bottom: 30px; line-height: 1.6; }
-        .options-container { display: flex; flex-direction: column; gap: 12px; max-width: 500px; margin: 0 auto; }
-        .option-btn {
-            background: var(--bg-light); border: 2px solid transparent; padding: 15px 20px;
-            border-radius: 12px; cursor: pointer; text-align: left; display: flex;
-            justify-content: space-between; align-items: center; transition: all 0.3s;
-        }
-        .option-btn:hover { background: #fff; border-color: var(--bv-blue); transform: translateX(5px); }
-        .option-btn.selected { background: linear-gradient(135deg, var(--bv-blue), var(--secondary)); color: white; }
-
-        .progress-container { background: var(--white); border-radius: 16px; padding: 20px; margin-bottom: 20px; }
-        .progress-bar { height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; }
-        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--bv-blue), var(--accent)); width: 0%; transition: width 0.3s; }
-
-        .result-code { font-size: 3rem; font-weight: 800; letter-spacing: 5px; margin: 20px 0; }
-        .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
-        .chart-container, .scores-container { background: var(--white); border-radius: 20px; padding: 20px; }
-        .score-item { display: flex; align-items: center; margin-bottom: 15px; gap: 10px; }
-        .score-letter { width: 40px; height: 40px; background: var(--bv-blue); color: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; }
-        .score-bar-bg { flex: 1; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; }
-        .score-bar-fill { height: 100%; background: linear-gradient(90deg, var(--bv-blue), var(--accent)); width: 0%; }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @media (max-width: 768px) { .result-grid { grid-template-columns: 1fr; } }
+        .mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10,31,46,0.98); z-index: 999; flex-direction: column; align-items: center; justify-content: center; gap: 32px; }
+        .mobile-menu.active { display: flex; }
+        .mobile-menu a { color: #fff; font-size: 1.5rem; text-decoration: none; font-weight: 500; }
+        .mobile-menu .close-btn { position: absolute; top: 24px; right: 24px; color: #fff; font-size: 32px; cursor: pointer; }
     </style>
 </head>
 <body>
-<div class="container" id="app">
-    <!-- 动态内容由JS控制 -->
-</div>
 
-<script>
-    // ==================== 配置区 ====================
-// 解锁时间：2026年4月24日 13:15
-const UNLOCK_TIME = new Date(2026, 3, 24, 13, 15, 0); // 月份从0开始，3=4月
-const CLASS_TIME_STR = "4月24日 13:10";
-const UNLOCK_TIME_STR = "4月24日 13:15";
-    
-    // ==================== 霍兰德测评题库 ====================
-    const hollandCodes = {
-        R: { name: '实际型', strengths: ['技术实操', '问题解决', '流程优化'] },
-        I: { name: '研究型', strengths: ['数据分析', '创新研究', '系统思考'] },
-        A: { name: '艺术型', strengths: ['创意设计', '品牌塑造', '用户体验'] },
-        S: { name: '社会型', strengths: ['团队协作', '人才培养', '客户关系'] },
-        E: { name: '企业型', strengths: ['项目管理', '业务拓展', '变革推动'] },
-        C: { name: '常规型', strengths: ['质量控制', '合规管理', '运营效率'] }
-    };
+    <!-- Navigation -->
+    <nav class="nav" id="navbar">
+        <div class="nav-logo">
+            <div style="width:44px;height:44px;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--deep-blue);font-weight:700;font-size:18px;">
+                睿
+            </div>
+            <div>
+                <div class="nav-logo-text">睿观生涯</div>
+                <div class="nav-logo-sub">觉知 · 探索 · 聚焦 · 赋能</div>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="#philosophy">理念</a>
+            <a href="#paths">服务路径</a>
+            <a href="#experience">成果</a>
+            <a href="#pricing">价格</a>
+            <a href="#testimonials">学员反馈</a>
+            <a href="#cta" class="nav-cta">预约诊断</a>
+        </div>
+        <div class="nav-mobile-toggle" onclick="toggleMobileMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
 
-    const options = [
-        { text: '完全不像我', score: 1 },
-        { text: '不太像我', score: 2 },
-        { text: '一般', score: 3 },
-        { text: '比较像我', score: 4 },
-        { text: '非常像我', score: 5 }
-    ];
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="close-btn" onclick="toggleMobileMenu()">
+            <i class="fas fa-times"></i>
+        </div>
+        <a href="#philosophy" onclick="toggleMobileMenu()">理念</a>
+        <a href="#paths" onclick="toggleMobileMenu()">服务路径</a>
+        <a href="#experience" onclick="toggleMobileMenu()">成果</a>
+        <a href="#pricing" onclick="toggleMobileMenu()">价格</a>
+        <a href="#testimonials" onclick="toggleMobileMenu()">学员反馈</a>
+        <a href="#cta" onclick="toggleMobileMenu()">预约诊断</a>
+    </div>
 
-    const questions = [
-        { code: 'R', text: '使用工具进行实际操作，比如修理设备或优化工作流程' },
-        { code: 'R', text: '在现场解决具体的技术问题' },
-        { code: 'R', text: '对机械设备和检测工具的工作原理感兴趣' },
-        { code: 'R', text: '动手制作原型或测试样品' },
-        { code: 'R', text: '执行具体明确的任务，而不是抽象规划' },
-        { code: 'R', text: '在实验室或现场环境中工作' },
-        { code: 'R', text: '使用各种专业设备和软件工具' },
-        { code: 'R', text: '解决实际的技术难题' },
-        { code: 'R', text: '改进工艺和提升效率' },
-        { code: 'R', text: '看到工作的具体成果，比如完成检测或修复设备' },
-        { code: 'I', text: '研究新的检测技术和行业标准' },
-        { code: 'I', text: '阅读技术文献和学术报告' },
-        { code: 'I', text: '进行实验和数据分析来验证假设' },
-        { code: 'I', text: '对复杂系统的逻辑和原理感兴趣' },
-        { code: 'I', text: '独立思考和解决复杂技术问题' },
-        { code: 'I', text: '对新技术的应用和数字化转型感兴趣' },
-        { code: 'I', text: '分析业务数据并发现改进机会' },
-        { code: 'I', text: '探索新的方法论和最佳实践' },
-        { code: 'I', text: '用科学方法解决业务问题' },
-        { code: 'I', text: '在安静的环境中专注于深度研究' },
-        { code: 'A', text: '设计美观的报告展示和可视化方案' },
-        { code: 'A', text: '撰写有创意的技术文档或培训材料' },
-        { code: 'A', text: '用创新的方式呈现复杂的检测数据' },
-        { code: 'A', text: '在工作中体现原创性和独特视角' },
-        { code: 'A', text: '设计更好的客户体验流程' },
-        { code: 'A', text: '具有丰富的想象力和创新思维' },
-        { code: 'A', text: '用非传统、灵活的方法解决问题' },
-        { code: 'A', text: '对品牌建设和视觉传达保持敏感' },
-        { code: 'A', text: '通过创意方式提升服务质量' },
-        { code: 'A', text: '工作方式灵活，不受僵化流程的束缚' },
-        { code: 'S', text: '培训指导团队成员，帮助他们成长' },
-        { code: 'S', text: '与客户深入交流并理解他们的需求' },
-        { code: 'S', text: '理解同事和客户的感受与期望' },
-        { code: 'S', text: '教导新人掌握专业技能' },
-        { code: 'S', text: '对团队协作和人际沟通感兴趣' },
-        { code: 'S', text: '参与跨部门合作项目' },
-        { code: 'S', text: '调解冲突并促进团队合作' },
-        { code: 'S', text: '支持他人并帮助他们成功' },
-        { code: 'S', text: '建立良好的人际关系和信任' },
-        { code: 'S', text: '在团队中扮演协调者的角色' },
-        { code: 'E', text: '推动业务拓展和新客户开发' },
-        { code: 'E', text: '领导项目并推动变革落地' },
-        { code: 'E', text: '说服客户接受我们的解决方案' },
-        { code: 'E', text: '对业务战略和市场机会感兴趣' },
-        { code: 'E', text: '参与竞争并追求业务目标' },
-        { code: 'E', text: '组织和协调跨部门资源' },
-        { code: 'E', text: '参与公司战略规划和决策' },
-        { code: 'E', text: '具备商业敏感度并愿意承担风险' },
-        { code: 'E', text: '制定目标并带领团队实现' },
-        { code: 'E', text: '重视业务成果和职业成就' },
-        { code: 'C', text: '确保工作流程的标准化和规范化' },
-        { code: 'C', text: '处理数据并保证其准确无误' },
-        { code: 'C', text: '熟练使用办公软件和管理系统' },
-        { code: 'C', text: '遵循既定的质量标准和程序' },
-        { code: 'C', text: '对合规管理和风险控制感兴趣' },
-        { code: 'C', text: '有条理地组织文档和信息' },
-        { code: 'C', text: '注重细节，在报告中很少出错' },
-        { code: 'C', text: '在稳定、可预测的环境中工作' },
-        { code: 'C', text: '处理财务数据和预算管理' },
-        { code: 'C', text: '完成有明确标准的工作任务' }
-    ];
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-ring hero-ring-1"></div>
+        <div class="hero-ring hero-ring-2"></div>
+        <div class="hero-ring hero-ring-3"></div>
 
-    // 简化版建议库（一个代码3条示例）
-    const juniorStrategies = {
-        R: [{ title: '成为AI辅助的技术专家', content: '利用AI工具加速技术问题解决', action: '学习使用ChatGPT辅助技术诊断', isAI: true }],
-        I: [{ title: '利用AI加速研究', content: '用AI进行文献综述和数据分析', action: '使用Elicit辅助文献检索', isAI: true }],
-        A: [{ title: '客户体验美化师', content: '将审美融入客户服务触点', action: '重新设计3份报告模板', isAI: false }],
-        S: [{ title: '个性化培训', content: '用AI为学员定制学习路径', action: '分析学员能力差距生成计划', isAI: true }],
-        E: [{ title: 'AI自动化项目管理', content: '用AI工具自动化进度跟踪', action: '使用Notion AI管理项目', isAI: true }],
-        C: [{ title: '智能质量监控', content: '用AI实现数据实时预警', action: '建立质量监控仪表盘', isAI: true }]
-    };
-    const seniorStrategies = juniorStrategies; // 简化版
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-crown"></i>
+                HARRISON 官方认证测评师 · GCDF 全球职业规划师
+            </div>
+            <h1>
+                35岁不是终点<br>
+                而是<span class="highlight">第二曲线的起点</span>
+            </h1>
+            <p class="hero-subtitle">
+                专注北上广深 30-50万+ 年薪中高端职场人士<br>
+                运用 Harrison 人才测评与教练技术，助你选对赛道跟对人，实现可持续职业发展
+            </p>
+            <div class="hero-cta-group">
+                <a href="#pricing" class="btn-primary">
+                    <i class="fas fa-rocket"></i>
+                    开启 1299 元深度体验
+                </a>
+                <a href="#cta" class="btn-secondary">
+                    <i class="fas fa-calendar-check"></i>
+                    预约免费 20 分钟诊断
+                </a>
+            </div>
+        </div>
 
-    // ==================== 工具函数 ====================
-    function shuffleArray(arr) {
-        for (let i = arr.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [arr[i], arr[j]] = [arr[j], arr[i]];
-        }
-        return arr;
-    }
+        <a href="#philosophy" class="hero-scroll">
+            向下探索
+            <i class="fas fa-chevron-down"></i>
+        </a>
+    </section>
 
-    // 保存测评数据到localStorage
-    function saveQuizData(data) {
-        localStorage.setItem('bv_quiz_completed', 'true');
-        localStorage.setItem('bv_quiz_data', JSON.stringify(data));
-    }
+    <!-- Philosophy Section -->
+    <section class="section philosophy" id="philosophy">
+        <div class="section-label">核心理念</div>
+        <h2 class="section-title">可持续职业发展<br>不是换工作，而是重新认识自己</h2>
+        <p class="section-desc">10年+外企500强HR管理经验 + 7年咨询销售经验，辅导500+中高阶职场人，70%成功率，最高51岁</p>
 
-    // 读取测评数据
-    function loadQuizData() {
-        const completed = localStorage.getItem('bv_quiz_completed');
-        const data = localStorage.getItem('bv_quiz_data');
-        if (completed === 'true' && data) {
-            return JSON.parse(data);
-        }
-        return null;
-    }
+        <div class="philosophy-grid">
+            <div class="philosophy-visual animate-on-scroll">
+                <div class="philosophy-image-placeholder">
+                    <i class="fas fa-user-tie"></i>
+                    <span>【请放置教练形象照】</span>
+                    <span style="font-size:12px;opacity:0.5;margin-top:8px;">建议：专业商务照，深色背景</span>
 
-    // 清除数据（重新测评时使用）
-    function clearQuizData() {
-        localStorage.removeItem('bv_quiz_completed');
-        localStorage.removeItem('bv_quiz_data');
-    }
-
-    // 检查是否已解锁
-    function isUnlocked() {
-        return new Date() >= UNLOCK_TIME;
-    }
-
-    // 格式化倒计时
-    function getTimeRemaining() {
-        const now = new Date();
-        const diff = UNLOCK_TIME - now;
-        if (diff <= 0) return null;
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (86400000)) / 3600000);
-        const minutes = Math.floor((diff % 3600000) / 60000);
-        const seconds = Math.floor((diff % 60000) / 1000);
-        return { days, hours, minutes, seconds, total: diff };
-    }
-
-    // 渲染倒计时锁定页面
-    function renderLockScreen() {
-        const app = document.getElementById('app');
-        app.innerHTML = `
-            <div class="lock-screen">
-                <div class="lock-card">
-                    <div class="lock-icon">🔒</div>
-                    <h2 class="lock-title">测评已完成，结果即将揭晓</h2>
-                    <div class="lock-message">
-                        <p>感谢您完成了霍兰德职业兴趣测评！</p>
-                        <p>我们将在课堂上统一解读结果，届时点击链接即可查看您的专属报告。</p>
+                    <div class="philosophy-image-caption">
+                        <div class="caption-label">刘翔 Luke Liu</div>
+                        <p>"我不是在帮你找下一份工作，我是在帮你找到下一个自己。"</p>
                     </div>
-                    <div class="countdown-box">
-                        <div class="countdown-label">距离结果揭晓还有</div>
-                        <div class="countdown-timer" id="countdownTimer">--:--:--:--</div>
-                        <div class="countdown-label">预计 ${UNLOCK_TIME_STR} 后可查看</div>
-                    </div>
-                    <div class="reminder-note">
-                        📅 上课时间：${CLASS_TIME_STR}<br>
-                        💡 届时我会用15分钟讲解霍兰德代码的含义，然后我们一起看大家的结果。<br>
-                        ⏰ 倒计时结束后刷新本页面，即可看到您的报告。
-                    </div>
-                    <button class="btn-outline" onclick="location.reload()">刷新检查</button>
                 </div>
             </div>
-        `;
-        
-        // 倒计时更新
-        const timerInterval = setInterval(() => {
-            if (isUnlocked()) {
-                clearInterval(timerInterval);
-                initApp();
+
+            <div class="philosophy-content animate-on-scroll delay-2">
+                <h3>为什么 35+ 职场人会陷入"魔咒"？</h3>
+                <p style="color: var(--text-body); line-height: 1.8; margin-bottom: 20px;">
+                    不是能力问题，不是年龄问题，而是<strong>方向问题</strong>。你在一个不适合的赛道里用尽全力，却越跑越累。Harrison测评通过175+行为维度，帮你看见那个"被忽略的自己"。
+                </p>
+
+                <div class="philosophy-quote">
+                    <strong>"确定性是最大的陷阱。</strong>你不需要等万事俱备，你需要的是：知道自己是谁，然后六七分就开干。剩下的，在路上找。"
+                </div>
+
+                <p style="color: var(--text-body); line-height: 1.8;">
+                    我的方法很简单：<strong>向内看（觉知）→ 向前看（探索）→ 定方向（聚焦）→ 拿结果（赋能）</strong>。这四个步骤，已经帮助数百位35+职场人走出迷茫，找到真正属于自己的赛道。
+                </p>
+
+                <div class="pillars">
+                    <div class="pillar">
+                        <div class="pillar-icon">🔍</div>
+                        <h4>觉知</h4>
+                        <p>Harrison测评<br>识别兴趣/风格/动机</p>
+                    </div>
+                    <div class="pillar">
+                        <div class="pillar-icon">🧭</div>
+                        <h4>探索</h4>
+                        <p>行业调研<br>职业访谈/展会</p>
+                    </div>
+                    <div class="pillar">
+                        <div class="pillar-icon">🎯</div>
+                        <h4>聚焦</h4>
+                        <p>确定方向<br>目标雇主画像</p>
+                    </div>
+                    <div class="pillar">
+                        <div class="pillar-icon">⚡</div>
+                        <h4>赋能</h4>
+                        <p>简历/面试<br>影响力溢出</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Paths Section -->
+    <section class="section paths" id="paths">
+        <div class="paths-header">
+            <div class="section-label">选择你的路径</div>
+            <h2 class="section-title">你目前处于哪个阶段？</h2>
+            <p class="section-desc">三条专属通道，针对不同状态提供精准解决方案。每一条路径，都有完整的问答手册与行动指南。</p>
+        </div>
+
+        <div class="path-cards">
+            <a href="./job/index.html" class="path-card animate-on-scroll">
+                <div class="path-icon">🔍</div>
+                <h3>求职转型</h3>
+                <div class="path-subtitle">JOB TRANSITION</div>
+                <p class="path-desc">
+                    正在求职或计划转型？35+不是障碍，方向错误才是。从测评解读到简历定制，从面试技巧到薪酬谈判，全程陪跑。
+                </p>
+                <ul class="path-features">
+                    <li><i class="fas fa-check"></i> Harrison测评解读与方向定位</li>
+                    <li><i class="fas fa-check"></i> 黄金三角法则定制简历</li>
+                    <li><i class="fas fa-check"></i> STAR面试技巧深度训练</li>
+                    <li><i class="fas fa-check"></i> 薪酬谈判与offer选择</li>
+                </ul>
+                <div class="path-cta">
+                    查看求职陪跑手册 <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+
+            <a href="./workplace/index.html" class="path-card animate-on-scroll delay-2">
+                <div class="path-icon">🌪️</div>
+                <h3>职场破局</h3>
+                <div class="path-subtitle">WORKPLACE BREAKTHROUGH</div>
+                <p class="path-desc">
+                    在职但感到瓶颈？公司下滑、晋升无望、向上管理困难？在不跳槽的情况下，找到日常工作的"跃升抓手"。
+                </p>
+                <ul class="path-features">
+                    <li><i class="fas fa-check"></i> 识别个人独特优势与日常抓手</li>
+                    <li><i class="fas fa-check"></i> 向上管理与影响力构建</li>
+                    <li><i class="fas fa-check"></i> 克服年龄焦虑与职业倦怠</li>
+                    <li><i class="fas fa-check"></i> 可持续竞争力修炼路径</li>
+                </ul>
+                <div class="path-cta">
+                    查看职场陪跑手册 <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+
+            <a href="./startup/index.html" class="path-card animate-on-scroll delay-3">
+                <div class="path-icon">🚀</div>
+                <h3>创业导航</h3>
+                <div class="path-subtitle">ENTREPRENEUR NAVIGATION</div>
+                <p class="path-desc">
+                    创业几年越来越累？选对赛道选对人，用长期主义经营热爱。测评帮你验证：你是真的不适合，还是只是暂时疲惫？
+                </p>
+                <ul class="path-features">
+                    <li><i class="fas fa-check"></i> 创业内驱力诊断</li>
+                    <li><i class="fas fa-check"></i> 细分赛道机会匹配</li>
+                    <li><i class="fas fa-check"></i> 创始人信心重建</li>
+                    <li><i class="fas fa-check"></i> 团队搭建与管理风格</li>
+                </ul>
+                <div class="path-cta">
+                    查看创业陪跑手册 <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="section experience" id="experience">
+        <div class="section-label">实战成果</div>
+        <h2 class="section-title">数字背后的真实改变</h2>
+        <p class="section-desc">不只是测评报告，而是可落地的职业转型结果</p>
+
+        <div class="experience-grid">
+            <div class="experience-stats animate-on-scroll">
+                <div class="stat-card">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">辅导学员<br>中高阶职场人士</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">70%</div>
+                    <div class="stat-label">3-6个月内<br>成功转型/入职</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">37岁</div>
+                    <div class="stat-label">学员平均年龄<br>最高51岁</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">200万</div>
+                    <div class="stat-label">最高学员年薪<br>企业高管/创业</div>
+                </div>
+            </div>
+
+            <div class="experience-visual animate-on-scroll delay-2">
+                <div class="experience-image-placeholder">
+                    <i class="fas fa-users"></i>
+                    <span>【请放置学员成功案例合影/职场场景图】</span>
+                    <span style="font-size:12px;opacity:0.5;margin-top:8px;">建议：多元化职场人群，展现专业感</span>
+                </div>
+                <div class="experience-floating-card">
+                    <p>"感谢在您的指导下，让我从无所适从到建立自信，再大胆尝试！"</p>
+                    <div class="author">— 40岁外企IT工程师，入职大湾区院校</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="section pricing" id="pricing">
+        <div class="pricing-header">
+            <div class="section-label">投资自己</div>
+            <h2 class="section-title">选择适合你的服务</h2>
+            <p class="section-desc">一次错误跳槽的机会成本 = 至少3个月薪资损失 ≈ 5-10万元。先确认方向，再全力奔跑。</p>
+        </div>
+
+        <div class="pricing-grid">
+            <div class="pricing-card animate-on-scroll">
+                <div class="pricing-badge">体验入门</div>
+                <h3>深度体验</h3>
+                <div class="price">
+                    ¥1,299
+                    <span class="price-period">/ 一次性</span>
+                </div>
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check-circle"></i> Harrison职业测评（175+维度）</li>
+                    <li><i class="fas fa-check-circle"></i> 完整版专业报告（电子版）</li>
+                    <li><i class="fas fa-check-circle"></i> 60-75分钟1对1深度解读</li>
+                    <li><i class="fas fa-check-circle"></i> 2-3个转型方向建议</li>
+                    <li><i class="fas fa-check-circle"></i> 3天微信持续答疑</li>
+                    <li><i class="fas fa-check-circle"></i> 《高薪求职面试秘籍》</li>
+                </ul>
+                <a href="#cta" class="pricing-btn">立即体验</a>
+            </div>
+
+            <div class="pricing-card featured animate-on-scroll delay-2">
+                <div class="pricing-badge">最受欢迎</div>
+                <h3>求职/职场陪跑</h3>
+                <div class="price">
+                    ¥3,999
+                    <span class="price-period">/ 3个月</span>
+                </div>
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check-circle"></i> 包含1299全部服务内容</li>
+                    <li><i class="fas fa-check-circle"></i> 简历定制与优化（2轮）</li>
+                    <li><i class="fas fa-check-circle"></i> 面试模拟与技巧训练</li>
+                    <li><i class="fas fa-check-circle"></i> 薪酬谈判策略指导</li>
+                    <li><i class="fas fa-check-circle"></i> 每周1次教练跟进</li>
+                    <li><i class="fas fa-check-circle"></i> 目标雇主画像分析</li>
+                    <li><i class="fas fa-check-circle"></i> 人脉内推策略</li>
+                </ul>
+                <a href="#cta" class="pricing-btn">开启陪跑</a>
+            </div>
+
+            <div class="pricing-card animate-on-scroll delay-3">
+                <div class="pricing-badge">高管专属</div>
+                <h3>精英陪跑</h3>
+                <div class="price">
+                    ¥4,999
+                    <span class="price-period">/ 3个月</span>
+                </div>
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check-circle"></i> 包含3999全部服务内容</li>
+                    <li><i class="fas fa-check-circle"></i> 50万+年薪专属策略</li>
+                    <li><i class="fas fa-check-circle"></i> 高管面试挑战性问题应对</li>
+                    <li><i class="fas fa-check-circle"></i> 领导力风格深度解析</li>
+                    <li><i class="fas fa-check-circle"></i> 个人品牌与影响力构建</li>
+                    <li><i class="fas fa-check-circle"></i> 1对1专属教练（不限次数）</li>
+                </ul>
+                <a href="#cta" class="pricing-btn">预约咨询</a>
+            </div>
+        </div>
+
+        <div class="pricing-guarantee">
+            <p><i class="fas fa-shield-alt"></i> 1299体验费用可全额抵扣后续陪跑套餐，相当于免费获得深度测评+方向定位</p>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section testimonials" id="testimonials">
+        <div class="testimonials-header">
+            <div class="section-label">学员心声</div>
+            <h2 class="section-title">他们都已经找到新赛道</h2>
+            <p class="section-desc">真实反馈，已脱敏处理。每一个数字背后，都是一个重新出发的故事。</p>
+        </div>
+
+        <div class="testimonial-grid">
+            <div class="testimonial-card animate-on-scroll">
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"翔哥塑造了我的求职认知，谢谢！从无所适从到建立自信，再大胆尝试。"</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">L</div>
+                    <div class="testimonial-info">
+                        <h4>某40岁外企IT工程师</h4>
+                        <p>入职大湾区院校</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card animate-on-scroll delay-2">
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"通过职场陪跑我意识到了自己向上管理的短板和未来发展的抓手。现在每天工作都有了方向感。"</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">W</div>
+                    <div class="testimonial-info">
+                        <h4>某39岁民企项目总监</h4>
+                        <p>年薪100万 → 突破瓶颈</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card animate-on-scroll delay-3">
+                <div class="testimonial-stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="testimonial-text">"Offer拿到手软，但对我最有帮助的是选对赛道跟对人，真的可以改变轨迹。"</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">Z</div>
+                    <div class="testimonial-info">
+                        <h4>某35岁IT大厂职能岗</h4>
+                        <p>入职独角兽，百万年薪</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section cta-section" id="cta">
+        <div class="cta-content">
+            <div class="section-label">立即行动</div>
+            <h2>你的下半场职业生涯<br>还有 20+ 年，值得好好规划</h2>
+            <p>预约一次免费的 20 分钟诊断通话，聊聊你的现状、困惑和期望。没有任何购买压力，只是看看我们是否适合一起工作。</p>
+            <div class="cta-buttons">
+                <a href="#" class="btn-primary" onclick="showWechatModal(); return false;">
+                    <i class="fab fa-weixin"></i>
+                    添加微信 lukeliu2017
+                </a>
+                <a href="#" class="btn-secondary" onclick="showWechatModal(); return false;">
+                    <i class="fas fa-calendar-check"></i>
+                    预约免费诊断
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div style="width:48px;height:48px;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--deep-blue);font-weight:700;font-size:20px;margin-bottom:16px;">
+                    睿
+                </div>
+                <p>睿观生涯教练，专注35+中高阶职场人士职业转型与领导力提升。新生涯，从心开始。</p>
+                <div class="tagline">觉知 · 探索 · 聚焦 · 赋能</div>
+            </div>
+            <div class="footer-col">
+                <h4>服务路径</h4>
+                <a href="./job/index.html">求职转型陪跑</a>
+                <a href="./workplace/index.html">职场破局陪跑</a>
+                <a href="./startup/index.html">创业导航陪跑</a>
+                <a href="#pricing">1299深度体验</a>
+            </div>
+            <div class="footer-col">
+                <h4>资源</h4>
+                <a href="https://mp.weixin.qq.com/s/yj4_zlr7O95qP5B5P5_VWg" target="_blank">突破35岁职场魔咒</a>
+                <a href="#">高薪求职面试秘籍</a>
+                <a href="#">Harrison测评介绍</a>
+                <a href="#">学员成功案例</a>
+            </div>
+            <div class="footer-col">
+                <h4>联系</h4>
+                <a href="#" onclick="showWechatModal(); return false;">微信：lukeliu2017</a>
+                <a href="mailto:luke.liu@rg-consulting.cn">luke.liu@rg-consulting.cn</a>
+                <a href="#">广州睿观管理咨询有限公司</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 睿观生涯教练 · 广州睿观管理咨询有限公司 · 保留所有权利</p>
+            <div class="footer-social">
+                <a href="#" title="抖音"><i class="fab fa-tiktok"></i></a>
+                <a href="#" title="微信"><i class="fab fa-weixin"></i></a>
+                <a href="#" title="视频号"><i class="fas fa-play-circle"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating CTA -->
+    <a href="#cta" class="floating-cta" onclick="showWechatModal(); return false;">
+        <i class="fas fa-comments"></i>
+        免费咨询
+    </a>
+
+    <!-- WeChat Modal -->
+    <div id="wechatModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(10px);">
+        <div style="background:#fff;border-radius:28px;padding:40px;max-width:380px;width:90%;text-align:center;position:relative;box-shadow:0 30px 60px rgba(0,0,0,0.3);">
+            <button onclick="closeWechatModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;color:var(--text-light);">&times;</button>
+            <div style="width:80px;height:80px;background:linear-gradient(135deg, var(--slate) 0%, var(--steel) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:var(--gold);font-size:36px;">
+                <i class="fab fa-weixin"></i>
+            </div>
+            <h3 style="font-family:'Noto Serif SC',serif;font-size:1.4rem;color:var(--text-dark);margin-bottom:12px;">添加教练微信</h3>
+            <p style="color:var(--text-light);font-size:14px;line-height:1.7;margin-bottom:24px;">
+                扫码或搜索微信号 <strong style="color:var(--gold-dark);">lukeliu2017</strong><br>
+                预约免费20分钟诊断通话
+            </p>
+            <div style="width:180px;height:180px;background:linear-gradient(135deg, var(--ivory) 0%, var(--cream) 100%);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;border:2px dashed rgba(212,168,83,0.3);">
+                <div style="text-align:center;color:var(--text-light);">
+                    <i class="fas fa-qrcode" style="font-size:48px;margin-bottom:8px;display:block;color:var(--gold);"></i>
+                    <span style="font-size:12px;">【放置微信二维码】</span>
+                </div>
+            </div>
+            <a href="weixin://" style="display:inline-block;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);color:var(--deep-blue);padding:12px 32px;border-radius:50px;font-weight:700;text-decoration:none;font-size:14px;">
+                <i class="fab fa-weixin"></i> 打开微信添加
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
             } else {
-                const remaining = getTimeRemaining();
-                if (remaining) {
-                    const timerEl = document.getElementById('countdownTimer');
-                    if (timerEl) {
-                        timerEl.textContent = `${remaining.days}天 ${remaining.hours}时 ${remaining.minutes}分 ${remaining.seconds}秒`;
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('active');
+        }
+
+        // WeChat modal
+        function showWechatModal() {
+            document.getElementById('wechatModal').style.display = 'flex';
+        }
+        function closeWechatModal() {
+            document.getElementById('wechatModal').style.display = 'none';
+        }
+        document.getElementById('wechatModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('wechatModal')) {
+                closeWechatModal();
+            }
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     }
                 }
-            }
-        }, 1000);
-    }
-
-    // 渲染结果页
-    function renderResult(data) {
-        const { userPosition, userExperience, scores, topCode, secondCode, thirdCode } = data;
-        const percentages = {};
-        for (let code in scores) {
-            percentages[code] = Math.round((scores[code] / 50) * 100);
-        }
-        
-        const strategies = userExperience === 'junior' ? juniorStrategies : seniorStrategies;
-        const rec = strategies[topCode] ? strategies[topCode][0] : { title: '发挥您的优势', content: '将您的核心特质应用在工作中', action: '持续精进' };
-        
-        const app = document.getElementById('app');
-        app.innerHTML = `
-            <div class="result-section" style="display:block">
-                <div class="logo">BV</div>
-                <div style="text-align:center">
-                    <div class="experience-display" style="background:var(--accent-light); display:inline-block; padding:8px 25px; border-radius:30px; margin-bottom:15px">
-                        ${userExperience === 'junior' ? '从业10年以下' : '从业10年及以上'}
-                    </div>
-                    <div style="background:var(--bv-light); display:inline-block; padding:8px 25px; border-radius:30px; margin-bottom:15px; margin-left:10px">
-                        岗位：${userPosition}
-                    </div>
-                    <h2 class="result-title">您的霍兰德职业兴趣代码是</h2>
-                    <div class="result-code">${topCode}${secondCode}${thirdCode}</div>
-                    <p>${hollandCodes[topCode].name} + ${hollandCodes[secondCode].name} + ${hollandCodes[thirdCode].name}</p>
-                </div>
-
-                <div class="result-grid">
-                    <div class="chart-container">
-                        <div class="chart-title">兴趣分布雷达图</div>
-                        <canvas id="radarChart"></canvas>
-                    </div>
-                    <div class="scores-container">
-                        <div class="chart-title">各维度得分</div>
-                        ${Object.keys(percentages).map(code => `
-                            <div class="score-item">
-                                <div class="score-letter">${code}</div>
-                                <div class="score-bar-bg"><div class="score-bar-fill" style="width: ${percentages[code]}%"></div></div>
-                                <div>${percentages[code]}</div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-
-                <div style="background:var(--white); border-radius:24px; padding:30px; margin-top:20px">
-                    <h3 style="color:var(--primary); margin-bottom:20px">🎯 影响力建设建议</h3>
-                    <div class="recommendation-card" style="background:var(--bv-light); padding:20px; border-radius:16px">
-                        <div class="rec-title">${rec.title}</div>
-                        <div class="rec-content">${rec.content}</div>
-                        <div class="rec-action" style="margin-top:12px">💡 具体行动：${rec.action}</div>
-                    </div>
-                    <p style="margin-top:20px; color:var(--text-gray); font-size:0.9rem">
-                        💬 课堂上我们会详细解读您的霍兰德代码含义，以及如何结合岗位发挥优势。
-                    </p>
-                </div>
-
-                <div class="btn-group" style="text-align:center; margin-top:30px">
-                    <button class="btn-outline" onclick="clearAndRestart()">重新测评</button>
-                    <button class="btn-primary" onclick="window.print()">保存报告</button>
-                </div>
-            </div>
-        `;
-        
-        // 绘制雷达图
-        const ctx = document.getElementById('radarChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'radar',
-            data: {
-                labels: ['R实际', 'I研究', 'A艺术', 'S社会', 'E企业', 'C常规'],
-                datasets: [{
-                    data: [percentages.R, percentages.I, percentages.A, percentages.S, percentages.E, percentages.C],
-                    backgroundColor: 'rgba(0,85,164,0.2)',
-                    borderColor: '#0055a4',
-                    pointBackgroundColor: '#d4af37',
-                    borderWidth: 2
-                }]
-            },
-            options: { responsive: true, maintainAspectRatio: true, scales: { r: { beginAtZero: true, max: 100 } } }
-        });
-    }
-
-    // 渲染首页（测评入口）
-    function renderIntro() {
-        const app = document.getElementById('app');
-        app.innerHTML = `
-            <div class="intro-section">
-                <div class="logo">BV</div>
-                <h1>必维职业发展规划测评</h1>
-                <p class="subtitle">探索您的霍兰德职业兴趣代码</p>
-                
-                <div class="context-banner">
-                    <h3>🎯 课前说明</h3>
-                    <p>完成测评后，结果将在<span style="color:var(--accent-light)">${UNLOCK_TIME_STR}</span>自动解锁。届时我们会用15分钟讲解霍兰德代码的含义，然后一起解读大家的结果。</p>
-                    <p style="margin-top:10px">💡 请如实作答，答案无对错之分。</p>
-                </div>
-                
-                <div class="intro-card">
-                    <div class="input-group">
-                        <label>请选择您的从业年限</label>
-                        <div class="experience-options">
-                            <div class="experience-btn" data-exp="junior">
-                                <span class="exp-title">10年以下</span>
-                                <span class="exp-desc">重点提升专业能力</span>
-                            </div>
-                            <div class="experience-btn" data-exp="senior">
-                                <span class="exp-title">10年及以上</span>
-                                <span class="exp-desc">扩展行业影响力</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label>请输入您当前的岗位名称</label>
-                        <input type="text" id="positionInput" placeholder="例如：质量工程师、项目经理...">
-                    </div>
-                </div>
-                <button class="btn-primary" id="startQuizBtn" disabled>开始测评</button>
-            </div>
-        `;
-        
-        let selectedExp = null;
-        document.querySelectorAll('.experience-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.experience-btn').forEach(b => b.classList.remove('selected'));
-                btn.classList.add('selected');
-                selectedExp = btn.dataset.exp;
-                checkStart();
             });
         });
-        const positionInput = document.getElementById('positionInput');
-        const startBtn = document.getElementById('startQuizBtn');
-        function checkStart() {
-            startBtn.disabled = !(selectedExp && positionInput.value.trim());
-        }
-        positionInput.addEventListener('input', checkStart);
-        startBtn.addEventListener('click', () => {
-            if (selectedExp && positionInput.value.trim()) {
-                startQuiz(selectedExp, positionInput.value.trim());
-            }
-        });
-    }
-
-    // 开始测评（存储用户信息后进入答题）
-    let currentQuestions = [];
-    let currentIndex = 0;
-    let quizScores = { R:0, I:0, A:0, S:0, E:0, C:0 };
-    let quizUserExp = '';
-    let quizUserPos = '';
-    
-    function startQuiz(exp, pos) {
-        quizUserExp = exp;
-        quizUserPos = pos;
-        currentQuestions = shuffleArray([...questions]);
-        currentIndex = 0;
-        quizScores = { R:0, I:0, A:0, S:0, E:0, C:0 };
-        renderQuizQuestion();
-    }
-    
-    function renderQuizQuestion() {
-        const app = document.getElementById('app');
-        if (currentIndex >= currentQuestions.length) {
-            // 完成测评，计算结果并存储
-            const scores = quizScores;
-            const sorted = Object.keys(scores).sort((a,b) => scores[b]-scores[a]);
-            const resultData = {
-                userPosition: quizUserPos,
-                userExperience: quizUserExp,
-                scores: scores,
-                topCode: sorted[0],
-                secondCode: sorted[1],
-                thirdCode: sorted[2],
-                completedAt: new Date().toISOString()
-            };
-            saveQuizData(resultData);
-            // 重新根据当前时间判断显示锁屏还是结果
-            initApp();
-            return;
-        }
-        
-        const q = currentQuestions[currentIndex];
-        const progress = ((currentIndex + 1) / currentQuestions.length) * 100;
-        app.innerHTML = `
-            <div class="quiz-section" style="display:block">
-                <div class="progress-container">
-                    <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
-                    <div style="text-align:center; margin-top:10px">${currentIndex+1} / ${currentQuestions.length}</div>
-                </div>
-                <div class="question-card">
-                    <div class="question-text">${q.text}</div>
-                    <div class="options-container" id="optionsContainer"></div>
-                </div>
-            </div>
-        `;
-        const optsContainer = document.getElementById('optionsContainer');
-        options.forEach(opt => {
-            const btn = document.createElement('button');
-            btn.className = 'option-btn';
-            btn.innerHTML = `${opt.text}<span style="opacity:0.6">${opt.score}分</span>`;
-            btn.onclick = () => {
-                quizScores[q.code] += opt.score;
-                currentIndex++;
-                renderQuizQuestion();
-            };
-            optsContainer.appendChild(btn);
-        });
-    }
-    
-    function clearAndRestart() {
-        clearQuizData();
-        initApp();
-    }
-    
-    // 主入口：判断状态并渲染相应界面
-    function initApp() {
-        const completedData = loadQuizData();
-        if (!completedData) {
-            renderIntro();
-        } else {
-            if (isUnlocked()) {
-                renderResult(completedData);
-            } else {
-                renderLockScreen();
-            }
-        }
-    }
-    
-    // 暴露全局函数
-    window.clearAndRestart = clearAndRestart;
-    
-    initApp();
-</script>
+    </script>
 </body>
 </html>

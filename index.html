@@ -164,7 +164,7 @@
         .stat-number { font-family: 'Noto Serif SC', serif; font-size: 2.8rem; font-weight: 700; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 8px; }
         .stat-label { font-size: 14px; color: var(--text-light); line-height: 1.5; }
         .experience-visual { position: relative; }
-        .experience-image-placeholder { width: 100%; aspect-ratio: 3/2; background: linear-gradient(135deg, var(--slate) 0%, var(--steel) 100%); border-radius: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); font-size: 14px; box-shadow: 0 30px 60px rgba(10,31,46,0.15); position: relative; overflow: hidden; }
+        .experience-image-placeholder { width: 100%; aspect-ratio: 3/2; border-radius: 24px; display: flex; align-items: center; justify-content: center; box-shadow: 0 30px 60px rgba(10,31,46,0.15); position: relative; overflow: hidden; }
         .experience-image-placeholder i { font-size: 48px; margin-bottom: 16px; color: var(--gold); opacity: 0.5; }
         .experience-floating-card { position: absolute; bottom: -20px; left: -20px; background: #fff; padding: 20px 24px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.12); border: 1px solid rgba(212,168,83,0.15); max-width: 260px; }
         .experience-floating-card p { font-size: 13px; color: var(--text-body); line-height: 1.7; font-style: italic; }
@@ -277,12 +277,10 @@
     <!-- Navigation -->
     <nav class="nav" id="navbar">
         <div class="nav-logo">
-            <div style="width:44px;height:44px;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--deep-blue);font-weight:700;font-size:18px;">
-                睿
-            </div>
+            <img src="images/Company logo.png" alt="睿观生涯教练" style="height:100px;width:auto;object-fit:contain;">
             <div>
-                <div class="nav-logo-text">睿观生涯</div>
-                <div class="nav-logo-sub">觉知 · 探索 · 聚焦 · 赋能</div>
+                <div class="nav-logo-text">选对赛道跟对人</div>
+                <div class="nav-logo-sub">释放个人潜能，实现可持续职业发展</div>
             </div>
         </div>
         <div class="nav-links">
@@ -356,14 +354,18 @@
 
         <div class="philosophy-grid">
             <div class="philosophy-visual animate-on-scroll">
-                <div class="philosophy-image-placeholder">
-                    <i class="fas fa-user-tie"></i>
-                    <span>【请放置教练形象照】</span>
-                    <span style="font-size:12px;opacity:0.5;margin-top:8px;">建议：专业商务照，深色背景</span>
+                <div class="coach-slideshow" style="width:100%;aspect-ratio:4/5;border-radius:24px;overflow:hidden;position:relative;box-shadow:0 30px 60px rgba(10,31,46,0.2);">
+                    <img src="images/profile.jpeg" alt="刘翔 Luke Liu - 睿观生涯教练" class="slide active" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1;transition:opacity 0.8s ease;">
+                    <img src="images/HAphoto.jpeg" alt="刘翔与Dr. Harrison合影" class="slide" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 0.8s ease;">
 
                     <div class="philosophy-image-caption">
                         <div class="caption-label">刘翔 Luke Liu</div>
                         <p>"我不是在帮你找下一份工作，我是在帮你找到下一个自己。"</p>
+                    </div>
+
+                    <div class="slide-dots" style="position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:3;">
+                        <span class="dot active" style="width:8px;height:8px;border-radius:50%;background:var(--gold);transition:all 0.3s;"></span>
+                        <span class="dot" style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.4);transition:all 0.3s;"></span>
                     </div>
                 </div>
             </div>
@@ -375,7 +377,7 @@
                 </p>
 
                 <div class="philosophy-quote">
-                    <strong>"确定性是最大的陷阱。</strong>你不需要等万事俱备，你需要的是：知道自己是谁，然后六七分就开干。剩下的，在路上找。"
+                    <strong>"确定性是最大的陷阱。</strong>你不需要等万事俱备，你需要的是：知道自己是谁，然后六六七七就开干。剩下的，在路上找。"
                 </div>
 
                 <p style="color: var(--text-body); line-height: 1.8;">
@@ -383,26 +385,26 @@
                 </p>
 
                 <div class="pillars">
-                    <div class="pillar">
+                    <a href="https://mp.weixin.qq.com/s/yj4_zlr7O95qP5B5P5_VWg" target="_blank" class="pillar" style="text-decoration:none;cursor:pointer;">
                         <div class="pillar-icon">🔍</div>
                         <h4>觉知</h4>
                         <p>Harrison测评<br>识别兴趣/风格/动机</p>
-                    </div>
-                    <div class="pillar">
+                    </a>
+                    <a href="https://mp.weixin.qq.com/s/yj4_zlr7O95qP5B5P5_VWg" target="_blank" class="pillar" style="text-decoration:none;cursor:pointer;">
                         <div class="pillar-icon">🧭</div>
                         <h4>探索</h4>
-                        <p>行业调研<br>职业访谈/展会</p>
-                    </div>
-                    <div class="pillar">
+                        <p>行业调研<br>职业访谈/展会/研讨会/人脉链接</p>
+                    </a>
+                    <a href="https://mp.weixin.qq.com/s/yj4_zlr7O95qP5B5P5_VWg" target="_blank" class="pillar" style="text-decoration:none;cursor:pointer;">
                         <div class="pillar-icon">🎯</div>
                         <h4>聚焦</h4>
-                        <p>确定方向<br>目标雇主画像</p>
-                    </div>
-                    <div class="pillar">
+                        <p>确定方向<br>目标雇主画像逐渐清晰，信心愈发坚定</p>
+                    </a>
+                    <a href="https://mp.weixin.qq.com/s/yj4_zlr7O95qP5B5P5_VWg" target="_blank" class="pillar" style="text-decoration:none;cursor:pointer;">
                         <div class="pillar-icon">⚡</div>
                         <h4>赋能</h4>
-                        <p>简历/面试<br>影响力溢出</p>
-                    </div>
+                        <p>简历/面试<br>薪酬谈判</p>
+                    </a>
                 </div>
             </div>
         </div>
@@ -426,7 +428,7 @@
                 </p>
                 <ul class="path-features">
                     <li><i class="fas fa-check"></i> Harrison测评解读与方向定位</li>
-                    <li><i class="fas fa-check"></i> 黄金三角法则定制简历</li>
+                    <li><i class="fas fa-check"></i> 掌握高薪简历定制黄金三角法则</li>
                     <li><i class="fas fa-check"></i> STAR面试技巧深度训练</li>
                     <li><i class="fas fa-check"></i> 薪酬谈判与offer选择</li>
                 </ul>
@@ -444,9 +446,9 @@
                 </p>
                 <ul class="path-features">
                     <li><i class="fas fa-check"></i> 识别个人独特优势与日常抓手</li>
-                    <li><i class="fas fa-check"></i> 向上管理与影响力构建</li>
+                    <li><i class="fas fa-check"></i> 向上管理、战略思维与个人影响力构建</li>
                     <li><i class="fas fa-check"></i> 克服年龄焦虑与职业倦怠</li>
-                    <li><i class="fas fa-check"></i> 可持续竞争力修炼路径</li>
+                    <li><i class="fas fa-check"></i> 身心灵智思维度修炼可持续竞争力</li>
                 </ul>
                 <div class="path-cta">
                     查看职场陪跑手册 <i class="fas fa-arrow-right"></i>
@@ -458,7 +460,7 @@
                 <h3>创业导航</h3>
                 <div class="path-subtitle">ENTREPRENEUR NAVIGATION</div>
                 <p class="path-desc">
-                    创业几年越来越累？选对赛道选对人，用长期主义经营热爱。测评帮你验证：你是真的不适合，还是只是暂时疲惫？
+                    创业几年越来越累？<strong>选对赛道选对人<strong/>，用长期主义经营热爱。测评帮你验证：你是真的不适合，还是只是暂时疲惫？
                 </p>
                 <ul class="path-features">
                     <li><i class="fas fa-check"></i> 创业内驱力诊断</li>
@@ -500,14 +502,12 @@
             </div>
 
             <div class="experience-visual animate-on-scroll delay-2">
-                <div class="experience-image-placeholder">
-                    <i class="fas fa-users"></i>
-                    <span>【请放置学员成功案例合影/职场场景图】</span>
-                    <span style="font-size:12px;opacity:0.5;margin-top:8px;">建议：多元化职场人群，展现专业感</span>
+                <div class="experience-image-placeholder" style="background:var(--ivory);display:flex;align-items:center;justify-content:center;overflow:hidden;">
+                    <img src="images/participant.jpeg" alt="睿观生涯学员成功案例" style="width:auto;height:100%;max-width:100%;object-fit:contain;display:block;">
                 </div>
                 <div class="experience-floating-card">
-                    <p>"感谢在您的指导下，让我从无所适从到建立自信，再大胆尝试！"</p>
-                    <div class="author">— 40岁外企IT工程师，入职大湾区院校</div>
+                    <p>"感谢您的指导，让我实现成为架构师的职业目标！"</p>
+                    <div class="author">— 35岁外企IT工程师，入职大湾区小而美外企</div>
                 </div>
             </div>
         </div>
@@ -530,12 +530,12 @@
                     <span class="price-period">/ 一次性</span>
                 </div>
                 <ul class="pricing-features">
-                    <li><i class="fas fa-check-circle"></i> Harrison职业测评（175+维度）</li>
-                    <li><i class="fas fa-check-circle"></i> 完整版专业报告（电子版）</li>
+                    <li><i class="fas fa-check-circle"></i> Harrison职业测评（特性报告）</li>
+                    <li><i class="fas fa-check-circle"></i> 人才测评解读详解（电子版）</li>
                     <li><i class="fas fa-check-circle"></i> 60-75分钟1对1深度解读</li>
-                    <li><i class="fas fa-check-circle"></i> 2-3个转型方向建议</li>
+                    <li><i class="fas fa-check-circle"></i> 2-3个求职转型/职场破局建议</li>
                     <li><i class="fas fa-check-circle"></i> 3天微信持续答疑</li>
-                    <li><i class="fas fa-check-circle"></i> 《高薪求职面试秘籍》</li>
+                    <li><i class="fas fa-check-circle"></i> 《30万+高薪求职面试秘籍》</li>
                 </ul>
                 <a href="#cta" class="pricing-btn">立即体验</a>
             </div>
@@ -549,11 +549,11 @@
                 </div>
                 <ul class="pricing-features">
                     <li><i class="fas fa-check-circle"></i> 包含1299全部服务内容</li>
-                    <li><i class="fas fa-check-circle"></i> 简历定制与优化（2轮）</li>
-                    <li><i class="fas fa-check-circle"></i> 面试模拟与技巧训练</li>
-                    <li><i class="fas fa-check-circle"></i> 薪酬谈判策略指导</li>
-                    <li><i class="fas fa-check-circle"></i> 每周1次教练跟进</li>
-                    <li><i class="fas fa-check-circle"></i> 目标雇主画像分析</li>
+                    <li><i class="fas fa-check-circle"></i> 教练指导下简历定制与优化（2轮）</li>
+                    <li><i class="fas fa-check-circle"></i> 面试模拟与薪酬谈判策略</li>
+                    <li><i class="fas fa-check-circle"></i> 用PEST分析行业发展中的职业机遇</li>
+                    <li><i class="fas fa-check-circle"></i> 1对1专属教练（每两周一次）</li>
+                    <li><i class="fas fa-check-circle"></i> 厘清目标雇主画像</li>
                     <li><i class="fas fa-check-circle"></i> 人脉内推策略</li>
                 </ul>
                 <a href="#cta" class="pricing-btn">开启陪跑</a>
@@ -572,7 +572,7 @@
                     <li><i class="fas fa-check-circle"></i> 高管面试挑战性问题应对</li>
                     <li><i class="fas fa-check-circle"></i> 领导力风格深度解析</li>
                     <li><i class="fas fa-check-circle"></i> 个人品牌与影响力构建</li>
-                    <li><i class="fas fa-check-circle"></i> 1对1专属教练（不限次数）</li>
+                    <li><i class="fas fa-check-circle"></i> 可持续职业发展的四维修炼</li>
                 </ul>
                 <a href="#cta" class="pricing-btn">预约咨询</a>
             </div>
@@ -659,23 +659,21 @@
     <footer class="footer">
         <div class="footer-grid">
             <div class="footer-brand">
-                <div style="width:48px;height:48px;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--deep-blue);font-weight:700;font-size:20px;margin-bottom:16px;">
-                    睿
-                </div>
+                <img src="images/Company logo.png" alt="睿观生涯教练" style="height:100px;width:auto;object-fit:contain;margin-bottom:16px;">
                 <p>睿观生涯教练，专注35+中高阶职场人士职业转型与领导力提升。新生涯，从心开始。</p>
                 <div class="tagline">觉知 · 探索 · 聚焦 · 赋能</div>
             </div>
             <div class="footer-col">
                 <h4>服务路径</h4>
-                <a href="./job/index.html">求职转型陪跑</a>
-                <a href="./workplace/index.html">职场破局陪跑</a>
-                <a href="./startup/index.html">创业导航陪跑</a>
+                <a href="job_index.html">求职转型陪跑</a>
+                <a href="workplace_index.html">职场破局陪跑</a>
+                <a href="startup_index.html">创业导航陪跑</a>
                 <a href="#pricing">1299深度体验</a>
             </div>
             <div class="footer-col">
                 <h4>资源</h4>
                 <a href="https://mp.weixin.qq.com/s/yj4_zlr7O95qP5B5P5_VWg" target="_blank">突破35岁职场魔咒</a>
-                <a href="#">高薪求职面试秘籍</a>
+                <a href="#" onclick="downloadWithPassword(); return false;">高薪求职面试秘籍</a>
                 <a href="#">Harrison测评介绍</a>
                 <a href="#">学员成功案例</a>
             </div>
@@ -755,6 +753,26 @@
             }
         });
 
+        // ===== COACH SLIDESHOW =====
+        (function() {
+            const slides = document.querySelectorAll('.coach-slideshow .slide');
+            const dots = document.querySelectorAll('.coach-slideshow .dot');
+            let current = 0;
+            const total = slides.length;
+
+            if (total > 1) {
+                setInterval(() => {
+                    slides[current].style.opacity = '0';
+                    dots[current].style.background = 'rgba(255,255,255,0.4)';
+
+                    current = (current + 1) % total;
+
+                    slides[current].style.opacity = '1';
+                    dots[current].style.background = 'var(--gold)';
+                }, 3000);
+            }
+        })();
+
         // Scroll animations
         const observerOptions = {
             threshold: 0.1,
@@ -786,6 +804,21 @@
                 }
             });
         });
+
+        // ===== PASSWORD PROTECTED PDF DOWNLOAD =====
+        function downloadWithPassword() {
+            const pwd = prompt('请输入下载密码：');
+            if (pwd === '8888') {
+                const link = document.createElement('a');
+                link.href = 'images/高薪求职面试秘籍.pdf';
+                link.download = '高薪求职面试秘籍.pdf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } else if (pwd !== null) {
+                alert('密码错误，请重试。');
+            }
+        }
     </script>
 </body>
 </html>

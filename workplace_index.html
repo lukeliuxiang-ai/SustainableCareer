@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>职场破局陪跑手册 · 在岗位上找到跃升抓手 | 睿观生涯</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --deep-blue: #0a1f2e;
+      --navy: #0f2d3d;
+      --slate: #1a3c5c;
+      --steel: #2c5a7a;
+      --gold: #d4a853;
+      --gold-light: #e8c878;
+      --gold-dark: #b8923e;
+      --cream: #faf8f3;
+      --ivory: #f5f0e8;
+      --text-dark: #1e2a35;
+      --text-body: #3d4f5f;
+      --text-light: #6b7d8d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background: var(--cream);
+      color: var(--text-body);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(212,168,83,0.4); } 50% { box-shadow: 0 0 0 12px rgba(212,168,83,0); } }
+    .animate-on-scroll { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+    .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== TOP BAR ===== */
+    .top-bar {
+      background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .back-link {
+      color: rgba(255,255,255,0.7);
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .back-link:hover { color: var(--gold); }
+    .top-cta {
+      background: var(--gold);
+      color: var(--deep-blue);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .top-cta:hover { background: var(--gold-light); transform: scale(1.05); }
+
+    /* ===== HERO MINI ===== */
+    .hero-mini {
+      background: linear-gradient(135deg, var(--deep-blue) 0%, var(--navy) 50%, var(--slate) 100%);
+      padding: 60px 24px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-mini::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 50%, rgba(212,168,83,0.08) 0%, transparent 50%);
+    }
+    .hero-mini-content { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
+    .hero-mini h1 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .hero-mini h1 span {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-mini p {
+      color: rgba(255,255,255,0.65);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    /* ===== QUICK NAV ===== */
+    .quick-nav {
+      background: var(--ivory);
+      padding: 16px 24px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      position: sticky;
+      top: 48px;
+      z-index: 99;
+    }
+    .quick-nav a {
+      white-space: nowrap;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      color: var(--text-body);
+      text-decoration: none;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.06);
+      transition: all 0.3s;
+    }
+    .quick-nav a:hover, .quick-nav a.active {
+      background: var(--deep-blue);
+      color: var(--gold);
+      border-color: var(--deep-blue);
+    }
+
+    /* ===== CONTENT ===== */
+    .content { max-width: 800px; margin: 0 auto; padding: 48px 20px 80px; }
+
+    /* ===== SECTION ===== */
+    .section { margin-bottom: 56px; }
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+    .section-label::before {
+      content: '';
+      width: 24px;
+      height: 2px;
+      background: var(--gold);
+    }
+    .section h2 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.5rem;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+    .section-quote {
+      background: linear-gradient(135deg, var(--ivory) 0%, #fff 100%);
+      border-left: 3px solid var(--gold);
+      padding: 14px 18px;
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 24px;
+      font-size: 14px;
+      color: var(--text-body);
+      line-height: 1.7;
+    }
+
+    /* ===== QA CARD ===== */
+    .qa-card {
+      background: #fff;
+      border-radius: 16px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(0,0,0,0.06);
+      overflow: hidden;
+      transition: all 0.3s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .qa-card:hover {
+      border-color: rgba(212,168,83,0.2);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    .qa-q {
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .q-icon {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, var(--ivory) 0%, var(--cream) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: var(--gold-dark);
+      font-size: 13px;
+      flex-shrink: 0;
+      border: 1.5px solid rgba(212,168,83,0.2);
+    }
+    .q-text {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text-dark);
+      flex: 1;
+      line-height: 1.5;
+    }
+    .qa-toggle {
+      color: var(--text-light);
+      font-size: 12px;
+      transition: transform 0.3s;
+    }
+    .qa-card.open .qa-toggle {
+      transform: rotate(180deg);
+    }
+    .qa-a {
+      padding: 0 20px 18px 60px;
+      display: none;
+      border-top: 1px solid rgba(0,0,0,0.04);
+      margin-top: 4px;
+    }
+    .qa-a.active { display: block; }
+    .a-text {
+      font-size: 14px;
+      color: var(--text-body);
+      line-height: 1.75;
+    }
+    .a-text strong { color: var(--gold-dark); font-weight: 600; }
+    .a-text ul { margin: 10px 0 10px 18px; }
+    .a-text li { margin-bottom: 6px; }
+    .tip-box {
+      background: linear-gradient(135deg, var(--ivory) 0%, #fff 100%);
+      border-left: 3px solid var(--gold);
+      padding: 12px 16px;
+      margin: 14px 0;
+      border-radius: 0 10px 10px 0;
+      font-size: 13px;
+      color: var(--text-body);
+    }
+    .grip-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .grip-item {
+      background: var(--ivory);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 12px;
+      color: var(--text-body);
+      border: 1px solid rgba(212,168,83,0.15);
+    }
+
+    /* ===== CTA CARD ===== */
+    .cta-card {
+      background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);
+      border-radius: 20px;
+      padding: 28px 24px;
+      text-align: center;
+      margin: 36px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-card::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle at 50% 50%, rgba(212,168,83,0.08) 0%, transparent 50%);
+    }
+    .cta-card h3 {
+      font-family: 'Noto Serif SC', serif;
+      color: #fff;
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 2;
+    }
+    .cta-card p {
+      color: rgba(255,255,255,0.7);
+      font-size: 14px;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 2;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      color: var(--deep-blue);
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 4px 16px rgba(212,168,83,0.3);
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(212,168,83,0.4);
+    }
+
+    /* ===== FLOATING CTA ===== */
+    .floating-cta {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      color: var(--deep-blue);
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(212,168,83,0.4);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 200;
+      transition: all 0.3s;
+      animation: pulse 2s infinite;
+    }
+    .floating-cta:hover { transform: scale(1.05); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      .hero-mini { padding: 40px 20px 32px; }
+      .content { padding: 32px 16px 60px; }
+      .qa-a { padding-left: 20px; }
+      .floating-cta { padding: 10px 18px; font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <a href="../index.html" class="back-link">
+      <i class="fas fa-arrow-left"></i> 返回首页
+    </a>
+    <a href="../index.html#pricing" class="top-cta">1299元体验</a>
+  </div>
+
+  <!-- Hero Mini -->
+  <div class="hero-mini">
+    <div class="hero-mini-content">
+      <h1>职场破局陪跑手册<br><span>在岗位上找到跃升抓手</span></h1>
+      <p>35+中高阶职场精英专属 · 不跳槽也能破局，在日常工作中修炼可持续竞争力</p>
+    </div>
+  </div>
+
+  <!-- Quick Nav -->
+  <div class="quick-nav">
+    <a href="#s1">焦虑</a>
+    <a href="#s2">适应</a>
+    <a href="#s3">瓶颈</a>
+    <a href="#s4">跃升</a>
+    <a href="#s5">价格</a>
+  </div>
+
+  <div class="content">
+
+    <!-- 第一章：年龄焦虑/公司下滑 -->
+    <div class="section" id="s1">
+      <div class="section-label">第一章</div>
+      <h2>🌪️ 公司业绩下滑 · 年龄增长 · 未来焦虑</h2>
+      <div class="section-quote">年薪30万+的你不是没有能力，你只是在一个不确定的环境里，忘了自己还有什么。</div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">公司业绩一年不如一年，我35+了，担心随时被裁，怎么办？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">这种焦虑非常真实。但根源不是你不<strong>行，而是你失去了对自己优势的掌控感</strong>。测评的价值不是给你新工作，而是让你回到日常工作中，重新找到"我比别人做得好的那个点"。<div class="tip-box">比如：你天生擅长数据分析？特别会协调冲突？汇报时总能抓住重点？看清这些，你就不再把命运交给公司的涨跌。</div></div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">测评能帮我保住现在的工作吗？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">不能直接"保住"，但能让你<strong>的职业发展变得可持续</strong>。VUCA环境下，70%的人都要准备3-5年换一份工作。破局之道在于<strong>发现你的个人独特优势</strong>。当向内看变得清澈，向前看才能笃定自信。</div></div></div>
+    </div>
+
+    <!-- 第二章：新公司适应/向上管理 -->
+    <div class="section" id="s2">
+      <div class="section-label">第二章</div>
+      <h2>🪜 刚入职新公司 · 适应困难 · 向上管理</h2>
+      <div class="section-quote">适应新环境不是靠"熬"，而是靠"看懂自己"和"看懂老板"。</div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我之前跳槽几次，每次都有适应问题，这次刚入职新公司，很担心重蹈覆辙。</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">反复适应不良，往往不是能力问题，而是<strong>你不了解自己的职业兴趣和行为偏好，也不了解老板的管理风格</strong>。测评会告诉你：你期望明确指令还是自主发挥？倾向提前规划还是临场应变？<div class="tip-box">知道了这些，你就能主动搜寻高度匹配的雇主，而不是被动接受一份工作心存忐忑地"熬过试用期"。</div></div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">向上管理具体怎么做？测评能帮我吗？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">向上管理的核心是<strong>让老板用他舒服的方式，看到你的价值</strong>。基于测评结果，给你具体场景建议：<div class="grip-grid"><span class="grip-item">📋 每周例会怎么发言更出彩</span><span class="grip-item">⏰ 每日3分钟汇报说什么</span><span class="grip-item">🤝 与其他部门经理有异议时持什么立场</span><span class="grip-item">🍜 如何向老板提出项目建议与反馈</span></div>这些日常小事，恰恰是建立信任和个人影响力的关键。</div></div></div>
+    </div>
+
+    <!-- 第三章：发展受限/晋升瓶颈 -->
+    <div class="section" id="s3">
+      <div class="section-label">第三章</div>
+      <h2>📈 发展受限 · 无晋升可能 · 对外面没信心</h2>
+      <div class="section-quote">你看不到希望，不是因为你不行，而是因为你只看到了公司的天花板，没看到自己的潜力。</div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我在公司5年了，升职无望，加薪没戏，但又不敢跳槽，怎么办？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">这是典型的"瓶颈期"。我们的做法不是催你跳槽，而是帮你<strong>设定未来职业目标，在当前岗位上重新找到成长感</strong>。<div class="tip-box">比如你希望晋升总监，测评发现你有极高的情商与人际沟通能力，你可以有意识地在项目协调中发挥对不同利益相关者的影响力。</div>有了职业目标，日复一日的工作就不再是"搬砖"，而是"修炼"。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">对外面市场不熟悉，不知道自己出去值多少钱，缺乏信心。</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">信心来自<strong>对自己优势的确定性</strong>。你的市场价值判断不光是参考薪酬报告，更要基于过往业绩大小，更重要的是<strong>脱离大厂平台后，你是否还能复刻辉煌</strong>。作为资深HR总监，我可以给你提供客观中允的专业意见。<strong>因为知道自己"与众不同的非凡价值"，面试时底气完全不同</strong>。</div></div></div>
+    </div>
+
+    <!-- 第四章：自我期许高/不满足现状 -->
+    <div class="section" id="s4">
+      <div class="section-label">第四章</div>
+      <h2>🚀 自我期许高 · 不满足现状 · 想要跃升</h2>
+      <div class="section-quote">你不是不想努力，你是不想在看不到未来的方向上努力。</div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我没有被裁员风险，但每天像在"搬砖"，感觉自己在退步，怎么办？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">这是很多优秀职场人的"体面困境"——<strong>工作稳定，但成长停滞</strong>。你对未来有高期许，说明你缺的是一个<strong>可以发力、看得见成长的方向</strong>。<div class="tip-box">测评会帮你找到那个方向：你可以在每周例会上刻意练习"结构化表达"，在跨部门协作中练习"影响力谈判"，用商业而非纯技术的眼光识别项目。有了目标，每一件日常工作都是能力的修炼场。</div></div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我希望能让自己变得更有竞争力，但不知道从哪里开始。</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">从"看清自己"开始。我们的服务就是<strong>一份基于30年行为科学的专业测评 + 一次60分钟的教练解读</strong>。解读结束后，你会带走：<ul><li>📊 你的3-5个核心优势（别人很难复制的）</li><li>🎯 2-3个日常工作中可以立即开始练习的"抓手"</li><li>📈 一个初步的可持续职业发展目标</li></ul><strong>你不需要辞职，不需要转行，只需要在每天的工作中多一个视角、多一个练习</strong>。</div></div></div>
+    </div>
+
+    <!-- 附加：年龄不是问题 -->
+    <div class="section">
+      <div class="section-label">附加</div>
+      <h2>⏰ 年龄不是问题 · 任何时候都不晚</h2>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我40+了，做测评会不会太晚？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><strong>一点也不晚。</strong>我们服务过的学员中，40岁以上占比超过35%，最高龄的51岁。40+恰恰是职场人最具爆发力的阶段——你比年轻人更懂行业、更懂人性、更懂自己真正想要什么。<strong>测评不是改变你，而是让你用好已有的积累。</strong>一位46岁学员感慨："早十年做就好了，但现在做也不晚——至少未来的二十年，我不会再走弯路了。"</div></div></div>
+    </div>
+
+    <!-- 第五章：价格与核心价值 -->
+    <div class="section" id="s5">
+      <div class="section-label">第五章</div>
+      <h2>💰 1299元 · 你能得到什么</h2>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">1299元包含哪些服务？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><strong>✅ Harrison职业测评授权（175+维度）</strong><br><strong>✅ 完整版专业测评报告（电子版，永久可查）</strong><br><strong>✅ 75分钟1对1教练深度解读（线上视频/语音）</strong><br><strong>✅ 3个以上日常工作中的"可练习抓手"建议</strong><br><strong>✅ 3天微信持续答疑</strong><br><strong>✅ 领取30万+高薪求职面试秘籍</strong><br>投资仅月薪的5%甚至更低<strong>就可以在日常工作中找到可持续职业发展的起点</strong>。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">什么是"日常抓手"？能举个例子吗？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">"抓手"是你<strong>不需要换工作、不需要额外时间，在现有岗位上就能刻意练习的具体场景</strong>。比如：<div class="grip-grid"><span class="grip-item">🗣️ 每周例会发言时练习"结论先行"</span><span class="grip-item">📝 在N+1和N+2都在场的情况下探讨公司战略层面的问题</span><span class="grip-item">🤝 与供应商谈判时练习"专业影响力表达"</span><span class="grip-item">🍽️ 处理员工冲突与客户投诉时练习"高情商沟通"</span></div><strong>有了职业目标，日复一日的工作就不再是"消耗"，而是"修炼"</strong>。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">可以先了解一下再决定吗？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">当然。我们提供<strong>免费20分钟职场诊断通话</strong>，你可以先聊聊你的现状和困惑，确认适合自己再做决定。</div></div></div>
+    </div>
+
+    <!-- CTA Card -->
+    <div class="cta-card animate-on-scroll">
+      <h3>准备好开启你的职场跃升了吗？</h3>
+      <p>预约免费20分钟诊断通话，聊聊你的焦虑、瓶颈和期望</p>
+      <a href="../index.html#cta" class="cta-btn">
+        <i class="fab fa-weixin"></i> 添加微信 lukeliu2017
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Floating CTA -->
+  <a href="../index.html#cta" class="floating-cta">
+    <i class="fas fa-comments"></i>
+    免费咨询
+  </a>
+
+  <script>
+    // QA Toggle
+    document.querySelectorAll('.qa-card').forEach(card => {
+      const q = card.querySelector('.qa-q');
+      const a = card.querySelector('.qa-a');
+      const icon = card.querySelector('.qa-toggle');
+      if (!q || !a) return;
+
+      q.addEventListener('click', () => {
+        const isOpen = a.classList.contains('active');
+        if (isOpen) {
+          a.classList.remove('active');
+          card.classList.remove('open');
+          if (icon) icon.style.transform = 'rotate(0deg)';
+        } else {
+          a.classList.add('active');
+          card.classList.add('open');
+          if (icon) icon.style.transform = 'rotate(180deg)';
+        }
+      });
+    });
+
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+    // Active nav highlight
+    const sections = document.querySelectorAll('.section[id]');
+    const navLinks = document.querySelectorAll('.quick-nav a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (scrollY >= sectionTop - 100) current = section.getAttribute('id');
+      });
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+      });
+    });
+  </script>
+</body>
+</html>

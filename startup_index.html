@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>创业导航陪跑手册 · 选对赛道选对人 | 睿观生涯</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --deep-blue: #0a1f2e;
+      --navy: #0f2d3d;
+      --slate: #1a3c5c;
+      --steel: #2c5a7a;
+      --gold: #d4a853;
+      --gold-light: #e8c878;
+      --gold-dark: #b8923e;
+      --cream: #faf8f3;
+      --ivory: #f5f0e8;
+      --text-dark: #1e2a35;
+      --text-body: #3d4f5f;
+      --text-light: #6b7d8d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background: var(--cream);
+      color: var(--text-body);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(212,168,83,0.4); } 50% { box-shadow: 0 0 0 12px rgba(212,168,83,0); } }
+    .animate-on-scroll { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+    .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== TOP BAR ===== */
+    .top-bar {
+      background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .back-link {
+      color: rgba(255,255,255,0.7);
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .back-link:hover { color: var(--gold); }
+    .top-cta {
+      background: var(--gold);
+      color: var(--deep-blue);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .top-cta:hover { background: var(--gold-light); transform: scale(1.05); }
+
+    /* ===== HERO MINI ===== */
+    .hero-mini {
+      background: linear-gradient(135deg, var(--deep-blue) 0%, var(--navy) 50%, var(--slate) 100%);
+      padding: 60px 24px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-mini::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 50%, rgba(212,168,83,0.08) 0%, transparent 50%);
+    }
+    .hero-mini-content { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
+    .hero-mini h1 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .hero-mini h1 span {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-mini p {
+      color: rgba(255,255,255,0.65);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    /* ===== QUICK NAV ===== */
+    .quick-nav {
+      background: var(--ivory);
+      padding: 16px 24px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      position: sticky;
+      top: 48px;
+      z-index: 99;
+    }
+    .quick-nav a {
+      white-space: nowrap;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      color: var(--text-body);
+      text-decoration: none;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.06);
+      transition: all 0.3s;
+    }
+    .quick-nav a:hover, .quick-nav a.active {
+      background: var(--deep-blue);
+      color: var(--gold);
+      border-color: var(--deep-blue);
+    }
+
+    /* ===== CONTENT ===== */
+    .content { max-width: 800px; margin: 0 auto; padding: 48px 20px 80px; }
+
+    /* ===== SECTION ===== */
+    .section { margin-bottom: 56px; }
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+    .section-label::before {
+      content: '';
+      width: 24px;
+      height: 2px;
+      background: var(--gold);
+    }
+    .section h2 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.5rem;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+    .section-quote {
+      background: linear-gradient(135deg, var(--ivory) 0%, #fff 100%);
+      border-left: 3px solid var(--gold);
+      padding: 14px 18px;
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 24px;
+      font-size: 14px;
+      color: var(--text-body);
+      line-height: 1.7;
+    }
+
+    /* ===== QA CARD ===== */
+    .qa-card {
+      background: #fff;
+      border-radius: 16px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(0,0,0,0.06);
+      overflow: hidden;
+      transition: all 0.3s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .qa-card:hover {
+      border-color: rgba(212,168,83,0.2);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    .qa-q {
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .q-icon {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, var(--ivory) 0%, var(--cream) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: var(--gold-dark);
+      font-size: 13px;
+      flex-shrink: 0;
+      border: 1.5px solid rgba(212,168,83,0.2);
+    }
+    .q-text {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text-dark);
+      flex: 1;
+      line-height: 1.5;
+    }
+    .qa-toggle {
+      color: var(--text-light);
+      font-size: 12px;
+      transition: transform 0.3s;
+    }
+    .qa-card.open .qa-toggle {
+      transform: rotate(180deg);
+    }
+    .qa-a {
+      padding: 0 20px 18px 60px;
+      display: none;
+      border-top: 1px solid rgba(0,0,0,0.04);
+      margin-top: 4px;
+    }
+    .qa-a.active { display: block; }
+    .a-text {
+      font-size: 14px;
+      color: var(--text-body);
+      line-height: 1.75;
+    }
+    .a-text strong { color: var(--gold-dark); font-weight: 600; }
+    .a-text ul { margin: 10px 0 10px 18px; }
+    .a-text li { margin-bottom: 6px; }
+    .tip-box {
+      background: linear-gradient(135deg, var(--ivory) 0%, #fff 100%);
+      border-left: 3px solid var(--gold);
+      padding: 12px 16px;
+      margin: 14px 0;
+      border-radius: 0 10px 10px 0;
+      font-size: 13px;
+      color: var(--text-body);
+    }
+
+    /* ===== CTA CARD ===== */
+    .cta-card {
+      background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);
+      border-radius: 20px;
+      padding: 28px 24px;
+      text-align: center;
+      margin: 36px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-card::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle at 50% 50%, rgba(212,168,83,0.08) 0%, transparent 50%);
+    }
+    .cta-card h3 {
+      font-family: 'Noto Serif SC', serif;
+      color: #fff;
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 2;
+    }
+    .cta-card p {
+      color: rgba(255,255,255,0.7);
+      font-size: 14px;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 2;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      color: var(--deep-blue);
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 4px 16px rgba(212,168,83,0.3);
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(212,168,83,0.4);
+    }
+
+    /* ===== FLOATING CTA ===== */
+    .floating-cta {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      color: var(--deep-blue);
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(212,168,83,0.4);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 200;
+      transition: all 0.3s;
+      animation: pulse 2s infinite;
+    }
+    .floating-cta:hover { transform: scale(1.05); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      .hero-mini { padding: 40px 20px 32px; }
+      .content { padding: 32px 16px 60px; }
+      .qa-a { padding-left: 20px; }
+      .floating-cta { padding: 10px 18px; font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <a href="index.html" class="back-link">
+      <i class="fas fa-arrow-left"></i> 返回首页
+    </a>
+    <a href="index.html#pricing" class="top-cta">1299元体验</a>
+  </div>
+
+  <!-- Hero Mini -->
+  <div class="hero-mini">
+    <div class="hero-mini-content">
+      <h1>创业导航陪跑手册<br><span>选对赛道选对人</span></h1>
+      <p>创业者专属 · 用长期主义经营热爱，测评验证你的创业内驱力</p>
+    </div>
+  </div>
+
+  <!-- Quick Nav -->
+  <div class="quick-nav">
+    <a href="#s1">初心</a>
+    <a href="#s2">赛道</a>
+    <a href="#s3">内驱力</a>
+    <a href="#s4">测评</a>
+    <a href="#s5">价格</a>
+    <a href="#s6">案例</a>
+  </div>
+
+  <div class="content">
+
+    <!-- 第一章：创业初心 -->
+    <div class="section" id="s1">
+      <div class="section-label">第一章</div>
+      <h2>创业初心 · 为什么开始</h2>
+      <div class="section-quote">"很多老板不是能力不够，是走着走着忘了自己为什么出发。" —— 教练手记</div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我创业几年了，越来越累，是不是选错了赛道？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">创业的疲惫感往往来自<strong>"热情被消耗，但内驱力没跟上"</strong>。很多老板当初选赛道只看商业价值，忽略了"这件事我是否真的愿意做10年"。Harrison测评帮你区分：你是真的不喜欢这个赛道，还是只是暂时的疲惫？数据会告诉你答案。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">打工和创业，选人的逻辑有什么不同？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><strong>求职是选对赛道跟对人，创业是选对赛道选对人。</strong>打工时你选老板、选公司文化；创业时你选合伙人、选核心团队、选你自己——<strong>你自己就是那个最重要的"人"</strong>。你适不适合做创始人？你的动机模式适合单打独斗还是团队作战？测评会帮你看清。</div></div></div>
+    </div>
+
+    <!-- 第二章：赛道选择 -->
+    <div class="section" id="s2">
+      <div class="section-label">第二章</div>
+      <h2>赛道选择 · 不止商业价值</h2>
+      <div class="section-quote">很多细分赛道的机会，需要长期思维来经营——跑得快不如跑得久。</div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">怎么判断一个赛道值得我长期投入？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">三个维度：<strong>商业价值 + 个人特质匹配 + 内驱力可持续</strong>。前两个可以调研，第三个只有你自己知道——而且往往你自己也不知道。Harrison测评的能量化你的<strong>职业兴趣、行为风格、工作动机</strong>，告诉你：这个赛道你能不能"爱它十年"。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我现在做的赛道还有机会吗？还是该换？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">我们辅导过一位做传统贸易的老板，测评后发现他的动机高度偏向"创新与变革"，而传统贸易的稳定重复让他内耗严重。后来他切入了跨境电商的细分服务领域，<strong>同样是做生意，换了一个场景，内驱力完全不一样</strong>。很多时候不是赛道没机会，是赛道和你的特质不匹配。</div></div></div>
+    </div>
+
+    <!-- 第三章：内驱力 -->
+    <div class="section" id="s3">
+      <div class="section-label">第三章</div>
+      <h2>内驱力 · 创业成功的隐形引擎</h2>
+      <div class="section-quote">能力和资源决定起点，内驱力决定你能走多远。</div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">什么是内驱力？为什么它比能力更重要？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">内驱力是你<strong>不需要别人督促、不需要KPI驱动、甚至不需要赚钱也会想做的事</strong>。创业是长跑，前三年靠风口，后三年靠能力，再往后全靠内驱力。Harrison测评会告诉你：你的内驱力来自哪里？成就感？影响力？自主性？还是专业精进？——找到它，你就不需要"坚持"了。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我怎么知道自己有没有足够的内驱力创业？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">很简单：回顾过去三年，有没有一件事是你<strong>不计回报也愿意花时间</strong>的？如果没有，你需要先找到它。我们服务过一位年营收千万的老板，测评后发现他的最高动机是"帮助他人成长"，而他一直在做纯贸易——后来他转型做行业培训+咨询，<strong>收入没降，但整个人状态完全不一样</strong>。这就是内驱力被激活的样子。</div></div></div>
+    </div>
+
+    <!-- 第四章：Harrison测评 -->
+    <div class="section" id="s4">
+      <div class="section-label">第四章</div>
+      <h2>Harrison测评 · 创业者的导航仪</h2>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">Harrison测评能帮我解决什么具体问题？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">四个核心价值：<ul><li><strong>看清自己</strong> —— 你的职业兴趣、行为风格、动机模式，数据化呈现</li><li><strong>验证赛道</strong> —— 你现在的创业方向，和你的特质匹配度有多高？</li><li><strong>诊断团队</strong> —— 你适合和什么样的人合伙？你的管理风格是什么？</li><li><strong>重获信心</strong> —— 当你迷茫时，一份客观的测评报告比任何鸡汤都有用</li></ul></div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我做了很多测评，MBTI、DISC都做过，Harrison有什么不同？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">MBTI和DISC告诉你"你是什么类型"，Harrison告诉你<strong>"你喜欢什么、擅长什么、为什么而工作"</strong>。它测量175+个行为维度，内置一致性校验，全球5000+企业用于高管选拔。对创业者来说，它的价值不是贴标签，而是<strong>帮你找到那个让你有持续内驱力的创业方向</strong>。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我创业已经有点成绩了，还需要做测评吗？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">恰恰是最值得做的时候。很多老板在年营收500万、1000万、5000万这三个节点会陷入迷茫——<strong>"我还要继续吗？往哪走？"</strong>测评的价值在于，用数据帮你确认：你是应该继续深耕，还是应该转型？你是应该自己干，还是找合伙人？——避免在错误的方向上越努力越偏离。</div></div></div>
+    </div>
+
+    <!-- 第五章：价格与决策 -->
+    <div class="section" id="s5">
+      <div class="section-label">第五章</div>
+      <h2>投入与回报 · 值不值</h2>
+      <div class="section-quote">一次错误的方向决策，损失的远不止金钱，更是时间和团队的信心。</div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">创业导航服务多少钱？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><strong>标准定价1299元</strong>（含Harrison测评授权+完整报告+60分钟1对1教练解读+3天微信跟进）。<br>对创业者来说，这相当于一次团队聚餐的费用，但可能帮你避免一次百万级的错误决策。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">能先体验再决定吗？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">可以。我们提供<strong>免费20分钟创业诊断通话</strong>，你可以先聊聊你的现状和困惑，确认是否适合再做决定。</div></div></div>
+    </div>
+
+    <!-- 第六章：成功案例 -->
+    <div class="section" id="s6">
+      <div class="section-label">第六章</div>
+      <h2>真实案例 · 他们用测评找到了方向</h2>
+
+      <div class="qa-card open"><div class="qa-q"><div class="q-icon">🏆</div><div class="q-text">有没有创业者的真实案例？</div><i class="fas fa-chevron-down qa-toggle" style="transform:rotate(180deg);"></i></div><div class="qa-a active"><div class="a-text"><p><strong>以下是部分创业者的转型/调整案例：</strong></p><ul><li>📌 传统贸易老板 → 转型行业咨询+培训，内驱力激活，状态焕然一新</li><li>📌 跨境电商创业者 → 测评验证赛道匹配度，确认长期投入方向</li><li>📌 技术型创始人 → 发现管理短板，找到合适合伙人互补</li></ul><div class="tip-box">所有案例均做脱敏处理，为保护隐私仅展示部分内容。</div></div></div></div>
+    </div>
+
+    <!-- CTA Card -->
+    <div class="cta-card animate-on-scroll">
+      <h3>准备好开启你的创业导航了吗？</h3>
+      <p>预约免费20分钟创业诊断，聊聊你的赛道、困惑、内驱力</p>
+      <a href="index.html#cta" class="cta-btn">
+        <i class="fab fa-weixin"></i> 添加微信 lukeliu2017
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Floating CTA -->
+  <a href="index.html#cta" class="floating-cta">
+    <i class="fas fa-comments"></i>
+    免费咨询
+  </a>
+
+  <script>
+    // QA Toggle
+    document.querySelectorAll('.qa-card').forEach(card => {
+      const q = card.querySelector('.qa-q');
+      const a = card.querySelector('.qa-a');
+      const icon = card.querySelector('.qa-toggle');
+      if (!q || !a) return;
+
+      q.addEventListener('click', () => {
+        const isOpen = a.classList.contains('active');
+        if (isOpen) {
+          a.classList.remove('active');
+          card.classList.remove('open');
+          if (icon) icon.style.transform = 'rotate(0deg)';
+        } else {
+          a.classList.add('active');
+          card.classList.add('open');
+          if (icon) icon.style.transform = 'rotate(180deg)';
+        }
+      });
+    });
+
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+    // Active nav highlight
+    const sections = document.querySelectorAll('.section[id]');
+    const navLinks = document.querySelectorAll('.quick-nav a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (scrollY >= sectionTop - 100) current = section.getAttribute('id');
+      });
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>可持续职业发展测评 | 睿观生涯教练 · 选对赛道跟对人</title>
+    <meta name="description" content="35+中高阶职场人士专属测评，通过霍兰德职业兴趣探索，发现你在现有岗位的跃升抓手，实现可持续职业发展。">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --deep-blue: #0a1f2e;
+            --navy: #0f2d3d;
+            --slate: #1a3c5c;
+            --steel: #2c5a7a;
+            --gold: #d4a853;
+            --gold-light: #e8c878;
+            --gold-dark: #b8923e;
+            --cream: #faf8f3;
+            --ivory: #f5f0e8;
+            --text-dark: #1e2a35;
+            --text-body: #3d4f5f;
+            --text-light: #6b7d8d;
+            --glass: rgba(255,255,255,0.08);
+            --glass-border: rgba(255,255,255,0.12);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body {
+            font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--cream);
+            color: var(--text-body);
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
+        @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(212,168,83,0.4); } 50% { box-shadow: 0 0 0 15px rgba(212,168,83,0); } }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--deep-blue) 0%, var(--navy) 40%, var(--slate) 100%);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 24px;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 20% 50%, rgba(212,168,83,0.08) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(44,90,122,0.15) 0%, transparent 50%), radial-gradient(circle at 50% 80%, rgba(212,168,83,0.05) 0%, transparent 40%);
+            animation: gradientShift 15s ease infinite;
+            background-size: 200% 200%;
+        }
+        .hero-ring { position: absolute; border: 1px solid rgba(212,168,83,0.15); border-radius: 50%; animation: rotateSlow 60s linear infinite; }
+        .hero-ring-1 { width: 600px; height: 600px; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .hero-ring-2 { width: 800px; height: 800px; top: 50%; left: 50%; transform: translate(-50%, -50%); animation-direction: reverse; animation-duration: 80s; border-color: rgba(255,255,255,0.06); }
+        .hero-content { position: relative; z-index: 2; max-width: 800px; animation: fadeInUp 1s ease-out; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--glass); border: 1px solid var(--glass-border); backdrop-filter: blur(10px); padding: 10px 24px; border-radius: 50px; font-size: 13px; color: var(--gold-light); letter-spacing: 2px; margin-bottom: 32px; }
+        .hero-badge i { color: var(--gold); font-size: 14px; }
+        .hero h1 { font-family: 'Noto Serif SC', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; color: #fff; line-height: 1.3; margin-bottom: 20px; letter-spacing: 2px; }
+        .hero h1 .highlight { background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero-subtitle { font-size: clamp(1rem, 2.5vw, 1.25rem); color: rgba(255,255,255,0.7); font-weight: 300; margin-bottom: 40px; line-height: 1.8; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .hero-quote { font-family: 'Noto Serif SC', serif; font-size: 1.1rem; color: rgba(255,255,255,0.5); font-style: italic; line-height: 1.8; max-width: 500px; margin: 0 auto 40px; padding: 20px; border-left: 3px solid var(--gold); background: var(--glass); backdrop-filter: blur(10px); border-radius: 0 16px 16px 0; }
+        .btn-primary { display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%); color: var(--deep-blue); padding: 16px 36px; border-radius: 50px; font-size: 15px; font-weight: 700; text-decoration: none; border: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 8px 32px rgba(212,168,83,0.3); position: relative; overflow: hidden; }
+        .btn-primary::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: left 0.5s; }
+        .btn-primary:hover::before { left: 100%; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(212,168,83,0.4); }
+        .btn-secondary { display: inline-flex; align-items: center; gap: 10px; background: transparent; color: #fff; padding: 16px 36px; border-radius: 50px; font-size: 15px; font-weight: 500; text-decoration: none; border: 1.5px solid rgba(255,255,255,0.3); cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(10px); }
+        .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.5); transform: translateY(-3px); }
+        .hero-scroll { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,0.4); font-size: 12px; letter-spacing: 2px; animation: float 3s ease-in-out infinite; cursor: pointer; text-decoration: none; }
+        .hero-scroll i { display: block; font-size: 20px; margin-top: 8px; }
+
+        /* ===== ASSESSMENT FORM ===== */
+        .assessment-section { background: linear-gradient(180deg, var(--ivory) 0%, var(--cream) 100%); position: relative; overflow: hidden; padding: 100px 24px; }
+        .assessment-section::before { content: ''; position: absolute; top: -200px; right: -200px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(212,168,83,0.06) 0%, transparent 70%); border-radius: 50%; }
+        .container { max-width: 700px; margin: 0 auto; position: relative; z-index: 2; }
+        .section-label { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; }
+        .section-label::before { content: ''; width: 30px; height: 2px; background: var(--gold); }
+        .section-title { font-family: 'Noto Serif SC', serif; font-size: clamp(1.8rem, 4vw, 2.4rem); font-weight: 700; color: var(--text-dark); line-height: 1.3; margin-bottom: 20px; }
+        .section-desc { font-size: 1.1rem; color: var(--text-light); max-width: 640px; line-height: 1.8; margin-bottom: 40px; }
+
+        .form-card { background: #fff; border-radius: 24px; padding: 40px; box-shadow: 0 8px 40px rgba(10,31,46,0.08); border: 1px solid rgba(212,168,83,0.08); }
+        .form-group { margin-bottom: 24px; }
+        .form-group label { display: block; font-size: 14px; font-weight: 600; color: var(--text-dark); margin-bottom: 8px; }
+        .form-group label i { color: var(--gold); margin-right: 6px; font-size: 12px; }
+        .form-group input, .form-group select {
+            width: 100%; padding: 14px 18px; border: 2px solid var(--ivory); border-radius: 12px;
+            font-size: 15px; color: var(--text-body); background: var(--cream); transition: all 0.3s;
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none; border-color: var(--gold); background: #fff; box-shadow: 0 4px 12px rgba(212,168,83,0.1);
+        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .form-hint { font-size: 12px; color: var(--text-light); margin-top: 6px; }
+
+        /* ===== QUIZ ===== */
+        .quiz-section { display: none; background: linear-gradient(180deg, var(--ivory) 0%, var(--cream) 100%); min-height: 100vh; padding: 100px 24px 80px; }
+        .quiz-container { max-width: 800px; margin: 0 auto; }
+        .progress-container { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .progress-bar { height: 8px; background: var(--ivory); border-radius: 4px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); width: 0%; transition: width 0.5s ease; }
+        .progress-text { text-align: center; margin-top: 10px; font-size: 14px; color: var(--text-light); }
+        .question-card { background: #fff; border-radius: 24px; padding: 48px 40px; box-shadow: 0 8px 40px rgba(10,31,46,0.08); border: 1px solid rgba(212,168,83,0.08); }
+        .question-number { font-size: 12px; color: var(--gold); font-weight: 600; letter-spacing: 2px; margin-bottom: 12px; }
+        .question-text { font-family: 'Noto Serif SC', serif; font-size: 1.4rem; color: var(--text-dark); line-height: 1.6; margin-bottom: 36px; }
+        .options-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+        .option-btn {
+            background: var(--cream); border: 2px solid var(--ivory); padding: 16px 8px; border-radius: 12px;
+            cursor: pointer; text-align: center; transition: all 0.3s; font-size: 14px; color: var(--text-body);
+        }
+        .option-btn:hover { border-color: var(--gold); background: #fff; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(212,168,83,0.1); }
+        .option-btn.selected { background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%); color: #fff; border-color: var(--deep-blue); }
+        .option-score { display: block; font-size: 11px; opacity: 0.6; margin-top: 4px; }
+        .option-btn.selected .option-score { color: var(--gold-light); }
+
+        /* ===== RESULT ===== */
+        .result-section { display: none; background: linear-gradient(180deg, var(--ivory) 0%, var(--cream) 100%); min-height: 100vh; padding: 100px 24px 80px; }
+        .result-container { max-width: 900px; margin: 0 auto; }
+        .result-header { text-align: center; margin-bottom: 60px; }
+        .result-code { font-family: 'Noto Serif SC', serif; font-size: 4rem; font-weight: 700; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 16px; }
+        .result-code-label { font-size: 1.1rem; color: var(--text-light); margin-bottom: 8px; }
+        .result-code-desc { font-size: 1.2rem; color: var(--text-dark); font-weight: 600; }
+        .result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px; }
+        .chart-card, .scores-card { background: #fff; border-radius: 24px; padding: 30px; box-shadow: 0 8px 40px rgba(10,31,46,0.08); border: 1px solid rgba(212,168,83,0.08); }
+        .card-title { font-family: 'Noto Serif SC', serif; font-size: 1.2rem; color: var(--text-dark); margin-bottom: 20px; font-weight: 600; }
+        .score-item { display: flex; align-items: center; margin-bottom: 14px; gap: 12px; }
+        .score-letter { width: 36px; height: 36px; background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%); color: var(--gold); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; }
+        .score-bar-bg { flex: 1; height: 8px; background: var(--ivory); border-radius: 4px; overflow: hidden; }
+        .score-bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); width: 0%; transition: width 1s ease; }
+        .score-value { font-size: 14px; color: var(--text-light); min-width: 40px; text-align: right; }
+
+        .recommendations { background: #fff; border-radius: 24px; padding: 40px; box-shadow: 0 8px 40px rgba(10,31,46,0.08); border: 1px solid rgba(212,168,83,0.08); margin-bottom: 40px; }
+        .rec-title { font-family: 'Noto Serif SC', serif; font-size: 1.4rem; color: var(--text-dark); margin-bottom: 30px; font-weight: 700; }
+        .rec-card { background: linear-gradient(135deg, var(--cream) 0%, #fff 100%); border-left: 4px solid var(--gold); padding: 24px 28px; border-radius: 0 16px 16px 0; margin-bottom: 16px; transition: all 0.3s; }
+        .rec-card:hover { transform: translateX(4px); box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+        .rec-card.ai-card { border-left-color: var(--steel); background: linear-gradient(135deg, rgba(44,90,122,0.05) 0%, #fff 100%); }
+        .rec-card.ai-card .rec-icon { color: var(--steel); }
+        .rec-icon { font-size: 20px; margin-bottom: 8px; color: var(--gold); }
+        .rec-heading { font-size: 16px; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; }
+        .rec-text { font-size: 14px; color: var(--text-body); line-height: 1.7; }
+        .rec-tag { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; margin-top: 10px; }
+        .rec-tag.daily { background: rgba(212,168,83,0.1); color: var(--gold-dark); }
+        .rec-tag.ai { background: rgba(44,90,122,0.1); color: var(--steel); }
+        .rec-tag.strategy { background: rgba(10,31,46,0.06); color: var(--text-light); }
+
+        .cta-card {
+            background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%); border-radius: 24px; padding: 40px;
+            text-align: center; position: relative; overflow: hidden; margin-bottom: 40px;
+        }
+        .cta-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 50% 50%, rgba(212,168,83,0.08) 0%, transparent 50%); }
+        .cta-card h3 { font-family: 'Noto Serif SC', serif; color: #fff; font-size: 1.5rem; margin-bottom: 12px; position: relative; z-index: 2; }
+        .cta-card p { color: rgba(255,255,255,0.7); font-size: 15px; margin-bottom: 24px; position: relative; z-index: 2; line-height: 1.7; }
+
+        /* ===== TOP BAR ===== */
+        .top-bar {
+            background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        .top-bar a { text-decoration: none; }
+        .back-link {
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.3s;
+        }
+        .back-link:hover { color: var(--gold); }
+        .top-cta {
+            background: var(--gold);
+            color: var(--deep-blue);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+        .top-cta:hover { background: var(--gold-light); transform: scale(1.05); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .hero { min-height: auto; padding: 100px 20px 60px; }
+            .hero h1 { font-size: 2rem; }
+            .form-row { grid-template-columns: 1fr; }
+            .options-grid { grid-template-columns: 1fr; }
+            .result-grid { grid-template-columns: 1fr; }
+            .result-code { font-size: 3rem; }
+            .question-card { padding: 32px 24px; }
+            .assessment-section { padding: 60px 20px; }
+        }
+        @keyframes rotateSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-ring hero-ring-1"></div>
+        <div class="hero-ring hero-ring-2"></div>
+
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-compass"></i>
+                睿观生涯教练 · Harrison测评认证
+            </div>
+            <h1>
+                可持续职业发展测评<br>
+                <span class="highlight">在日常工作中找到跃升抓手</span>
+            </h1>
+            <p class="hero-subtitle">
+                35+中高阶职场人士专属 · 10分钟探索你的职业兴趣密码
+            </p>
+            <div class="hero-quote">
+                "真正的职业发展，不是在跳槽中寻找答案，而是在现有岗位上修炼出不可替代的竞争力。你的热情、禀赋与组织需求的交汇点，就是你日常工作的'跃升抓手'。"
+            </div>
+            <div style="display:flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                <a href="#assessment" class="btn-primary">
+                    <i class="fas fa-play-circle"></i>
+                    开始测评
+                </a>
+                <a href="workplace_index.html" class="btn-secondary">
+                    <i class="fas fa-book-open"></i>
+                    了解职场陪跑
+                </a>
+            </div>
+        </div>
+
+        <a href="#assessment" class="hero-scroll">
+            向下探索
+            <i class="fas fa-chevron-down"></i>
+        </a>
+    </section>
+
+    <!-- Assessment Form -->
+    <section class="assessment-section" id="assessment">
+        <div class="container">
+            <div class="section-label">基本信息</div>
+            <h2 class="section-title">让我们了解你</h2>
+            <p class="section-desc">这些信息将帮助我们为你提供更精准的职业发展建议。所有数据仅用于本次测评，严格保密。</p>
+
+            <div class="form-card" id="infoForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i>姓名</label>
+                        <input type="text" id="userName" placeholder="请输入您的姓名">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-venus-mars"></i>性别</label>
+                        <select id="userGender">
+                            <option value="">请选择</option>
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-birthday-cake"></i>年龄段</label>
+                        <select id="userAge">
+                            <option value="">请选择</option>
+                            <option value="33-38岁">33-38岁</option>
+                            <option value="39-45岁">39-45岁</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-coins"></i>年薪范围</label>
+                        <select id="userSalary">
+                            <option value="">请选择</option>
+                            <option value="30-50万">30-50万</option>
+                            <option value="50-100万">50-100万</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-briefcase"></i>岗位性质</label>
+                        <select id="userRoleType">
+                            <option value="">请选择</option>
+                            <option value="专家岗">专家岗</option>
+                            <option value="管理岗位">管理岗位</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-building"></i>目前公司性质</label>
+                        <select id="userCompany">
+                            <option value="">请选择</option>
+                            <option value="头部大型企业">头部大型企业</option>
+                            <option value="中型企业">中型企业</option>
+                            <option value="初创公司">初创公司</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-tasks"></i>具体岗位</label>
+                    <select id="userPosition">
+                        <option value="">请选择</option>
+                        <option value="销售">销售</option>
+                        <option value="品牌&营销">品牌&营销</option>
+                        <option value="HR">HR</option>
+                        <option value="财务">财务</option>
+                        <option value="品质">品质</option>
+                        <option value="产品">产品</option>
+                        <option value="运营">运营</option>
+                        <option value="技术-研发/测试">技术-研发/测试</option>
+                    </select>
+                    <div class="form-hint">选择最接近你当前工作的岗位类型</div>
+                </div>
+                <button class="btn-primary" id="startBtn" style="width:100%; margin-top:10px;" onclick="startAssessment()">
+                    <i class="fas fa-arrow-right"></i>
+                    进入霍兰德测评（60题）
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section class="quiz-section" id="quiz">
+        <div class="top-bar">
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> 返回首页
+            </a>
+            <button class="top-cta" onclick="showPayModal()">1299元体验</button>
+        </div>
+        <div class="quiz-container">
+            <div class="progress-container">
+                <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                <div class="progress-text" id="progressText">1 / 60</div>
+            </div>
+            <div class="question-card">
+                <div class="question-number" id="questionNumber">QUESTION 01</div>
+                <div class="question-text" id="questionText">加载中...</div>
+                <div class="options-grid" id="optionsContainer"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Result Section -->
+    <section class="result-section" id="result">
+        <div class="top-bar">
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> 返回首页
+            </a>
+            <button class="top-cta" onclick="showPayModal()">1299元体验</button>
+        </div>
+        <div class="result-container">
+            <div class="result-header">
+                <div class="result-code-label">您的霍兰德职业兴趣代码</div>
+                <div class="result-code" id="resultCode">---</div>
+                <div class="result-code-desc" id="resultCodeDesc">---</div>
+                <div class="result-interpretation" id="resultInterpretation" style="max-width:700px;margin:24px auto 0;padding:24px 28px;background:linear-gradient(135deg,var(--cream) 0%,#fff 100%);border-left:4px solid var(--gold);border-radius:0 16px 16px 0;text-align:left;font-size:15px;color:var(--text-body);line-height:1.8;"></div>
+            </div>
+
+            <div class="result-grid">
+                <div class="chart-card">
+                    <div class="card-title">兴趣分布雷达图</div>
+                    <canvas id="radarChart"></canvas>
+                </div>
+                <div class="scores-card">
+                    <div class="card-title">各维度得分</div>
+                    <div id="scoresContainer"></div>
+                </div>
+            </div>
+
+            <div class="recommendations">
+                <div class="rec-title">🎯 基于你的测评结果，四条「日常抓手」建议</div>
+                <div id="recommendationsContainer"></div>
+            </div>
+
+            <div class="cta-card">
+                <h3>想把这些抓手变成行动计划？</h3>
+                <p>睿观生涯教练的职场陪跑服务，通过 Harrison 测评 + 1对1教练解读，帮你在现有岗位上找到 2-3 个可刻意练习的跃升抓手，实现可持续职业发展。</p>
+                <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+                    <a href="workplace_index.html" class="btn-primary" style="display:inline-flex;">
+                        <i class="fas fa-external-link-alt"></i>
+                        了解职场陪跑详情
+                    </a>
+                    <button class="btn-secondary" onclick="saveReport()" style="display:inline-flex;">
+                        <i class="fas fa-download"></i>
+                        保存测评报告
+                    </button>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin-bottom:40px;">
+                <button class="btn-secondary" onclick="restartAssessment()" style="border-color:var(--text-light); color:var(--text-body);">
+                    <i class="fas fa-redo"></i>
+                    重新测评
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // ==================== 霍兰德测评题库（60题） ====================
+        const hollandCodes = {
+            R: { name: '实际型', desc: '喜欢动手操作、解决具体技术问题', intro: '偏好使用工具、机械或技术解决实际问题，喜欢看到具体成果。适合技术、工程、运维等需要实操能力的环境。' },
+            I: { name: '研究型', desc: '喜欢分析思考、探索未知规律', intro: '偏好独立思考、数据分析和知识探索，享受解决复杂问题的过程。适合研究、分析、战略规划等需要深度思考的岗位。' },
+            A: { name: '艺术型', desc: '喜欢创新表达、追求独特视角', intro: '偏好创新、表达和原创性工作，重视审美和独特性。适合创意、设计、品牌、内容创作等需要想象力的领域。' },
+            S: { name: '社会型', desc: '喜欢人际互动、帮助他人成长', intro: '偏好与人打交道、教导和协助他人，重视人际关系和团队和谐。适合培训、咨询、HR、客户成功等需要高情商的岗位。' },
+            E: { name: '企业型', desc: '喜欢领导推动、追求商业成果', intro: '偏好领导、说服和组织资源达成目标，享受竞争和成就感。适合管理、销售、业务拓展、创业等需要推动力的角色。' },
+            C: { name: '常规型', desc: '喜欢规范有序、注重细节准确', intro: '偏好结构化、标准化的工作，重视准确性和流程规范。适合财务、品质、运营、合规等需要细致和条理的岗位。' }
+        };
+
+        // 霍兰德组合解读（100-150字）
+        const codeInterpretations = {
+            'R-I': '你对技术实操和深度研究都有浓厚兴趣，既能动手解决问题，又善于追根溯源。在需要「技术+创新」的环境中你最如鱼得水，比如技术架构设计、工艺改进、产品研发等岗位。着力于将实践经验系统化、将研究发现工程化，是你职业发展的最佳路径。',
+            'R-A': '你兼具技术实操能力和创新思维，不喜欢墨守成规。在需要「技术美学」的环境中你最自在，比如用户体验设计、创意工程、产品原型开发等。着力于用创意方式解决技术难题、用技术手段实现创意构想，是你脱颖而出的关键。',
+            'R-S': '你既有技术硬实力，又擅长与人协作。在需要「技术+服务」的环境中你最舒适，比如技术支持管理、客户成功工程、技术培训等。着力于用技术赋能团队、用沟通能力放大技术价值，是你职业跃升的方向。',
+            'R-E': '你兼具技术能力和商业敏感度，不满足于只做执行者。在需要「技术驱动业务」的环境中你最兴奋，比如技术销售、产品管理、技术创业等。着力于用技术创造商业价值、用商业思维指导技术方向，是你成就感的来源。',
+            'R-C': '你既有实操能力，又重视规范和标准。在需要「精准执行」的环境中你最安心，比如质量管理、标准化工程、运维管理等。着力于建立技术操作规范、提升流程可靠性，是你建立专业壁垒的方式。',
+            'I-A': '你兼具研究深度和创意表达，不喜欢重复性工作。在需要「创新研究」的环境中你最投入，比如市场洞察、用户研究、创新咨询等。着力于用数据讲故事、用研究支撑创意，是你独特价值的体现。',
+            'I-S': '你既有研究能力，又关心人的成长。在需要「知识传播」的环境中你最满足，比如企业内训、知识管理、教育科技等。着力于把复杂知识简单化、把研究发现 actionable 化，是你影响力的放大器。',
+            'I-E': '你兼具分析能力和商业野心，喜欢用数据说话。在需要「数据驱动决策」的环境中你最自信，比如商业分析、战略咨询、投资研究等。着力于用洞察影响决策、用研究推动变革，是你职业高度的体现。',
+            'I-C': '你既有研究严谨性，又重视流程规范。在需要「精准研究」的环境中你最踏实，比如质量控制研究、合规分析、标准化研究等。着力于建立研究方法论、确保数据可靠性，是你专业深度的保障。',
+            'A-S': '你兼具创意能力和人际敏感度，喜欢温暖而有创造力的氛围。在需要「创意服务」的环境中你最开心，比如品牌体验设计、企业文化、创意培训等。着力于用创意提升人际体验、用共情驱动创新，是你独特魅力的来源。',
+            'A-E': '你既有创意才华，又有商业头脑，不满足于只做幕后。在需要「创意商业」的环境中你最闪耀，比如品牌创业、创意总监、营销创新等。着力于把创意变成生意、用商业放大创意价值，是你成就感的巅峰。',
+            'A-C': '你兼具审美能力和执行力，重视「好看且好用」。在需要「设计规范」的环境中你最稳定，比如视觉设计、品牌管理、UI/UX规范等。着力于建立设计标准、确保品质一致性，是你专业口碑的基础。',
+            'S-E': '你兼具人际能力和领导魄力，是天生的团队领导者。在需要「带人打仗」的环境中你最兴奋，比如团队管理、业务负责人、部门总监等。着力于培养团队、推动业务增长，是你价值最大化的方式。',
+            'S-C': '你既有服务意识，又重视流程规范，是团队的「稳定器」。在需要「服务运营」的环境中你最安心，比如客户运营、HR运营、行政管理等。着力于优化服务流程、提升团队满意度，是你不可替代的价值。',
+            'E-C': '你兼具商业野心和执行力，是「说到做到」的类型。在需要「业务运营」的环境中你最自信，比如运营管理、项目管理、业务分析等。着力于用数据驱动业务、用规范保障执行，是你职业发展的基石。'
+        };
+
+        const options = [
+            { text: '完全不像我', score: 1 },
+            { text: '不太像我', score: 2 },
+            { text: '一般', score: 3 },
+            { text: '比较像我', score: 4 },
+            { text: '非常像我', score: 5 }
+        ];
+
+        const questions = [
+            { code: 'R', text: '使用工具解决具体的技术或操作问题' },
+            { code: 'R', text: '在现场排查故障、调试设备' },
+            { code: 'R', text: '对机械设备、软件工具的工作原理感兴趣' },
+            { code: 'R', text: '动手搭建原型、测试样品、验证方案' },
+            { code: 'R', text: '执行有明确标准、可量化的任务' },
+            { code: 'R', text: '在实验室、产线或项目现场工作' },
+            { code: 'R', text: '使用专业设备和数字化工具完成任务' },
+            { code: 'R', text: '解决实际的技术难题，看到即时成果' },
+            { code: 'R', text: '优化流程、提升效率、缩短交付周期' },
+            { code: 'R', text: '看到工作的具体产出，比如修复完成、产品上线' },
+            { code: 'I', text: '研究新技术、新标准、新方法论' },
+            { code: 'I', text: '阅读行业报告、技术文献、案例分析' },
+            { code: 'I', text: '通过实验和数据分析验证假设' },
+            { code: 'I', text: '对复杂系统的底层逻辑和原理感兴趣' },
+            { code: 'I', text: '独立思考和解决复杂的专业问题' },
+            { code: 'I', text: '对AI、大数据等新技术应用感兴趣' },
+            { code: 'I', text: '分析业务数据并发现改进机会' },
+            { code: 'I', text: '探索最佳实践，建立知识库' },
+            { code: 'I', text: '用科学方法解决业务中的模糊问题' },
+            { code: 'I', text: '在安静环境中专注深度研究和学习' },
+            { code: 'A', text: '设计美观的报告、PPT或可视化方案' },
+            { code: 'A', text: '撰写有创意的方案、故事或培训内容' },
+            { code: 'A', text: '用创新的方式呈现复杂信息' },
+            { code: 'A', text: '在工作中体现原创性和独特视角' },
+            { code: 'A', text: '设计更好的客户体验或用户旅程' },
+            { code: 'A', text: '具有丰富的想象力和跨界思维' },
+            { code: 'A', text: '用非传统、灵活的方法解决问题' },
+            { code: 'A', text: '对品牌调性、视觉传达保持敏感' },
+            { code: 'A', text: '通过创意方式提升服务或产品价值' },
+            { code: 'A', text: '工作方式灵活，不受僵化流程束缚' },
+            { code: 'S', text: '培训指导团队成员，帮助他们成长' },
+            { code: 'S', text: '与客户深入交流，理解真实需求' },
+            { code: 'S', text: '感知同事和客户的情绪与期望' },
+            { code: 'S', text: '教导新人掌握专业技能' },
+            { code: 'S', text: '对团队协作和人际沟通感兴趣' },
+            { code: 'S', text: '参与跨部门合作项目，协调资源' },
+            { code: 'S', text: '调解冲突并促进团队达成共识' },
+            { code: 'S', text: '支持他人并帮助他们取得成功' },
+            { code: 'S', text: '建立良好的人际信任和长期关系' },
+            { code: 'S', text: '在团队中扮演协调者和连接者角色' },
+            { code: 'E', text: '推动业务拓展和新机会开发' },
+            { code: 'E', text: '领导项目并推动变革落地' },
+            { code: 'E', text: '说服客户或决策者接受方案' },
+            { code: 'E', text: '对业务战略和市场机会敏感' },
+            { code: 'E', text: '参与竞争并追求明确的业务目标' },
+            { code: 'E', text: '组织和协调跨部门资源达成目标' },
+            { code: 'E', text: '参与公司战略规划和重要决策' },
+            { code: 'E', text: '具备商业敏感度并愿意承担风险' },
+            { code: 'E', text: '制定目标并带领团队实现突破' },
+            { code: 'E', text: '重视业务成果和职业成就感' },
+            { code: 'C', text: '确保工作流程标准化和规范化' },
+            { code: 'C', text: '处理数据并保证准确无误' },
+            { code: 'C', text: '熟练使用办公软件和管理系统' },
+            { code: 'C', text: '遵循既定的质量标准和程序' },
+            { code: 'C', text: '对合规管理和风险控制感兴趣' },
+            { code: 'C', text: '有条理地组织文档和信息' },
+            { code: 'C', text: '注重细节，在报告中很少出错' },
+            { code: 'C', text: '在稳定、可预测的环境中工作' },
+            { code: 'C', text: '处理预算、成本和财务数据' },
+            { code: 'C', text: '完成有明确标准和验收条件的工作' }
+        ];
+
+        // ==================== 建议库（基于前两个代码 + 岗位） ====================
+        const recommendationsDB = {
+            'R-I': {
+                general: [
+                    { icon: '🛠️', heading: '成为「技术+数据」双料专家', text: '在现有岗位上刻意练习：每周用数据复盘一个技术决策，建立「假设→验证→迭代」的工作闭环。让同事一提到技术难题就想到你。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🤖', heading: '用AI加速技术问题解决', text: '学习使用ChatGPT/Claude辅助技术诊断和文献检索。每天花15分钟用AI工具处理一个过去需要1小时的技术查询，把时间留给深度思考。', tag: 'ai', tagText: 'AI赋能' },
+                    { icon: '📊', heading: '建立个人技术知识库', text: '将每次解决的技术难题记录成标准化文档，内部分享。3个月后你会拥有一份部门最完整的技术FAQ，这就是你的隐形影响力。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🎯', heading: '从执行者到方法论输出者', text: '主动承担一个流程优化项目，把你的技术经验提炼成可复制的SOP。在部门会议上分享，让领导看到你的系统思考能力。', tag: 'strategy', tagText: '战略贡献' }
+                ]
+            },
+            'R-A': {
+                general: [
+                    { icon: '🎨', heading: '打造「技术美学」个人标签', text: '在交付技术方案时，刻意关注可视化呈现。用信息图、动态演示替代纯文字报告，让复杂技术变得「好看又好用」。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🤖', heading: '用AI生成创意原型', text: '使用Midjourney/Stable Diffusion快速生成产品原型图，或用AI辅助设计用户界面。把「想法→原型」的时间从一周缩短到一天。', tag: 'ai', tagText: 'AI赋能' },
+                    { icon: '📐', heading: '发起「用户体验微创新」', text: '每周找一个客户/同事抱怨的痛点，用技术手段+创意方案快速解决。记录成「微创新案例集」，季度汇报时就是你的亮点。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🚀', heading: '从幕后走到台前', text: '主动申请在技术分享会、客户演示中担任主讲。把技术语言翻译成故事，让非技术人员也能听懂——这是管理者必备的能力。', tag: 'strategy', tagText: '战略贡献' }
+                ]
+            },
+            'R-S': {
+                general: [
+                    { icon: '👨‍🏫', heading: '成为团队「技术导师」', text: '每周固定1小时「 office hour」，解答 junior 同事的技术问题。把个人技术经验系统化输出，既帮助他人成长，也巩固自己的知识体系。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🤖', heading: '用AI制作个性化培训内容', text: '利用AI工具为不同水平的同事生成定制化学习路径和练习题。一个人就能撑起部门的技术培训体系。', tag: 'ai', tagText: 'AI赋能' },
+                    { icon: '🤝', heading: '建立「技术+业务」翻译能力', text: '刻意练习把技术语言翻译成业务语言。每次技术汇报前，先问自己：「如果我是业务总监，我想听到什么？」', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🌐', heading: '从个人贡献到团队赋能', text: '主动承担新人 onboarding 设计，把你的技术经验变成团队资产。领导会看到：你不仅能做事，还能带人。', tag: 'strategy', tagText: '战略贡献' }
+                ]
+            },
+            'R-E': {
+                general: [
+                    { icon: '💼', heading: '用技术能力驱动业务增长', text: '主动识别一个可以用技术方案解决的业务痛点，向领导提案并主导落地。让技术从「成本中心」变成「增长引擎」。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🤖', heading: '用AI自动化重复技术工作', text: '识别工作中重复性最高的技术任务，用AI/脚本实现自动化。把节省下来的时间投入到高价值的业务拓展中。', tag: 'ai', tagText: 'AI赋能' },
+                    { icon: '📈', heading: '建立「技术ROI」思维', text: '每次技术改进都量化业务价值：节省了多少时间？提升了多少效率？降低了多少成本？用数据说话，让技术价值被看见。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🎯', heading: '从技术专家到业务合伙人', text: '主动参与业务会议，用技术视角提供商业洞察。当业务团队开始主动找你讨论策略时，你就完成了从执行者到合伙人的跃升。', tag: 'strategy', tagText: '战略贡献' }
+                ]
+            },
+            'R-C': {
+                general: [
+                    { icon: '⚙️', heading: '打造「零失误」技术交付品牌', text: '在现有岗位上建立双重检查机制：关键交付物必经过「自测→交叉检查→标准化复核」。让「靠谱」成为你的个人标签。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🤖', heading: '用AI建立智能质量监控', text: '利用AI工具建立数据实时预警和自动化质检流程。从「事后检查」升级为「事前预防」，成为部门质量管理的标杆。', tag: 'ai', tagText: 'AI赋能' },
+                    { icon: '📋', heading: '建立个人技术文档体系', text: '把每次项目经验标准化为模板和checklist。3个月后，你会拥有一套部门最完整的技术操作手册，新人培训效率提升50%。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🏗️', heading: '从执行者到标准制定者', text: '主动申请参与或主导部门技术标准的制定。当大家开始引用「XX标准」时，你就从做事的人变成了定规则的人。', tag: 'strategy', tagText: '战略贡献' }
+                ]
+            },
+            'I-A': {
+                general: [
+                    { icon: '🔬', heading: '成为「研究+创意」跨界人才', text: '在研究报告中刻意加入可视化故事线。用数据叙事替代纯数据堆砌，让枯燥的研究变得引人入胜、易于传播。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🤖', heading: '用AI加速研究与创意产出', text: '使用AI工具进行文献综述、数据分析和创意发散。把研究周期缩短40%，把更多时间留给深度洞察和创意表达。', tag: 'ai', tagText: 'AI赋能' },
+                    { icon: '📚', heading: '建立「洞察专栏」影响力', text: '每月写一篇基于数据分析的深度洞察文章，在内部分享或行业平台发布。6个月后，你会成为团队公认的「智库」。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🌟', heading: '从分析师到战略顾问', text: '主动为高层决策提供数据支撑和趋势预判。当领导开始说「让XX先研究一下」时，你就从后台走到了决策桌前。', tag: 'strategy', tagText: '战略贡献' }
+                ]
+            },
+            'I-S': {
+                general: [
+                    { icon: '📖', heading: '成为「知识型导师」', text: '把研究成果转化为培训课程，每周给团队分享一个「本周洞察」。既巩固自己的知识体系，也建立「团队大脑」的个人品牌。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🤖', heading: '用AI打造个性化学习系统', text: '利用AI为不同岗位、不同层级的同事生成定制化学习内容和测试题。一个人就能支撑整个组织的知识管理。', tag: 'ai', tagText: 'AI赋能' },
+                    { icon: '💡', heading: '建立「研究→应用」闭环', text: '每次研究都不止于报告，而是设计一个可落地的试点方案。让研究成果在1个月内产生可见的业务价值。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🌉', heading: '从研究者到组织桥梁', text: '主动连接研究团队与业务团队，翻译研究语言，推动成果落地。成为组织中「懂业务的研究者，懂研究的业务人」。', tag: 'strategy', tagText: '战略贡献' }
+                ]
+            },
+            'I-E': {
+                general: [
+                    { icon: '📊', heading: '用数据驱动商业决策', text: '每周向业务团队提供一个「数据洞察」，指出一个被忽视的机会或风险。让数据从「事后总结」变成「事前导航」。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🤖', heading: '用AI建立商业预测模型', text: '学习使用AI工具分析市场趋势、客户行为数据，建立预测模型。让决策从「凭经验」升级为「靠数据」。', tag: 'ai', tagText: 'AI赋能' },
+                    { icon: '🎯', heading: '发起「数据驱动的创新项目」', text: '基于研究发现，主动提案并主导一个创新试点。用数据证明可行性，用结果争取资源，用复盘沉淀方法论。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '💡', heading: '从分析师到创新领袖', text: '在部门内建立「创新实验室」机制，定期组织跨团队 brainstorm，把研究洞察转化为商业机会。你就是组织的创新引擎。', tag: 'strategy', tagText: '战略贡献' }
+                ]
+            },
+            'I-C': {
+                general: [
+                    { icon: '📐', heading: '打造「精准研究」个人品牌', text: '在研究工作中建立严格的质控流程：数据来源必标注、分析方法必记录、结论必附置信区间。让「严谨」成为你的标签。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🤖', heading: '用AI自动化数据处理流程', text: '利用AI工具建立数据清洗、分析和报告生成的自动化流程。把重复性工作交给机器，把时间留给深度洞察。', tag: 'ai', tagText: 'AI赋能' },
+                    { icon: '📚', heading: '建立可复用的研究方法论库', text: '把每次研究的方法、工具、模板标准化。3个月后，你会拥有一套部门最完整的研究工具箱，新人上手效率提升3倍。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🏛️', heading: '从研究者到方法论专家', text: '主动输出研究方法论白皮书，在行业内分享。当其他公司开始引用你的方法时，你就从部门专家变成了行业权威。', tag: 'strategy', tagText: '战略贡献' }
+                ]
+            },
+            'A-S': {
+                general: [
+                    { icon: '🎭', heading: '用创意方式提升团队氛围', text: '在团队会议、培训中刻意加入创意元素：故事开场、视觉化呈现、互动游戏。让「 boring 的会议」变成「期待的聚会」。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🤖', heading: '用AI生成创意培训内容', text: '利用AI工具快速生成培训案例、情景模拟、互动测试。一个人就能产出过去需要一个团队的内容量。', tag: 'ai', tagText: 'AI赋能' },
+                    { icon: '🌈', heading: '建立「用户体验」内部品牌', text: '无论对内对外，每次交付都关注「体验感」。从一封邮件到一个方案，让接触到你的人感受到专业和用心。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🌟', heading: '从执行者到文化塑造者', text: '主动发起部门文化建设项目：内刊、分享会、创新日。当大家开始说「这是我们部门的文化」时，你就是那个塑造者。', tag: 'strategy', tagText: '战略贡献' }
+                ]
+            },
+            'A-E': {
+                general: [
+                    { icon: '🎨', heading: '用创意包装商业提案', text: '在向客户/领导提案时，刻意加入视觉故事线、数据可视化、情景模拟。让方案从「被阅读」变成「被体验」。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🤖', heading: '用AI快速生成创意方案原型', text: '使用AI工具在几小时内生成多个创意方案原型，快速验证市场反应。把「创意→验证」的周期从月缩短到周。', tag: 'ai', tagText: 'AI赋能' },
+                    { icon: '📣', heading: '打造个人「创意IP」', text: '每月输出一个创意作品：行业洞察漫画、数据可视化故事、短视频。在内部和行业平台建立「那个很有想法的人」的标签。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🚀', heading: '从创意人到创新领袖', text: '主动发起跨部门创新项目，用创意方法论带动团队突破思维定式。当业务增长开始归功于「那次创新」时，你就完成了跃升。', tag: 'strategy', tagText: '战略贡献' }
+                ]
+            },
+            'A-C': {
+                general: [
+                    { icon: '✨', heading: '在规范中创造美感', text: '即使在标准化流程中，也刻意追求呈现品质：报告排版、邮件格式、文档结构。让「专业感」从细节中自然流露。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🤖', heading: '用AI自动化创意生产流程', text: '利用AI工具建立模板库、素材库和自动化排版流程。把重复性设计工作交给机器，把时间留给核心创意。', tag: 'ai', tagText: 'AI赋能' },
+                    { icon: '📐', heading: '建立「品牌视觉规范」体系', text: '主动梳理并输出部门/项目的视觉规范手册。让所有人都能快速产出「看起来像出自一人之手」的专业作品。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🏆', heading: '从设计师到品牌守护者', text: '主动承担品牌一致性管理职责，审核对外输出的视觉品质。当领导开始说「让XX看一下」时，你就是品牌的守门人。', tag: 'strategy', tagText: '战略贡献' }
+                ]
+            },
+            'S-E': {
+                general: [
+                    { icon: '👥', heading: '用领导力带动团队成长', text: '每周与团队成员进行15分钟一对一，了解他们的职业目标，匹配成长机会。让团队因你而成长，而非因你而忙碌。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🤖', heading: '用AI建立人才发展系统', text: '利用AI工具分析团队成员的能力画像，生成个性化发展建议和培训计划。让「因材施教」从理想变成现实。', tag: 'ai', tagText: 'AI赋能' },
+                    { icon: '🎯', heading: '建立「客户成功」思维', text: '无论内部外部，把每个合作方都当作「客户」。每周主动询问：「我怎样才能让你更成功？」——关系自然深化。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🌐', heading: '从管理者到影响力中心', text: '主动建立跨部门协作网络，成为信息和资源的枢纽。当大家有问题第一个想到你时，你就拥有了不可替代的影响力。', tag: 'strategy', tagText: '战略贡献' }
+                ]
+            },
+            'S-C': {
+                general: [
+                    { icon: '🤝', heading: '成为团队「稳定器」', text: '在团队变动、项目紧张时，主动承担协调和安抚工作。让「有XX在就安心」成为团队的集体感受。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🤖', heading: '用AI优化团队协作流程', text: '利用AI工具建立自动化任务分配、进度跟踪和知识共享系统。让团队协作从「靠人催」变成「靠系统跑」。', tag: 'ai', tagText: 'AI赋能' },
+                    { icon: '📋', heading: '建立「新人友好」入职体系', text: '主动设计并优化新人 onboarding 流程，从第一天到第三个月都有明确指引和陪伴。新人留存率提升就是你的成绩单。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🏛️', heading: '从协调者到组织设计师', text: '主动参与或主导部门组织架构、协作流程的优化设计。当大家开始说「这个流程真好用」时，你就是那个设计者。', tag: 'strategy', tagText: '战略贡献' }
+                ]
+            },
+            'E-C': {
+                general: [
+                    { icon: '📈', heading: '用数据驱动业务增长', text: '每周复盘关键业务数据，找到增长杠杆和优化空间。用数据说话，让决策从「我觉得」变成「数据显示」。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🤖', heading: '用AI建立智能业务仪表盘', text: '利用AI工具整合多源数据，建立实时业务监控和预警系统。让问题在发生前就被发现，机会在萌芽时就被捕捉。', tag: 'ai', tagText: 'AI赋能' },
+                    { icon: '🎯', heading: '建立「目标-执行-复盘」闭环', text: '为每个项目建立清晰的OKR、周度检查点和月度复盘机制。让团队始终聚焦最重要的事，而非最紧急的事。', tag: 'daily', tagText: '日常抓手' },
+                    { icon: '🚀', heading: '从业务骨干到战略操盘手', text: '主动承担年度规划、预算编制、资源调配等战略级工作。当公司增长开始与你的决策紧密相关时，你就完成了跃升。', tag: 'strategy', tagText: '战略贡献' }
+                ]
+            }
+        };
+
+        // 默认建议（当组合不在数据库中时）
+        const defaultRecommendations = [
+            { icon: '🎯', heading: '找到你的「日常抓手」', text: '在现有岗位上，刻意练习与你最高得分维度相关的工作内容。每周记录一个「抓手时刻」——今天你做了什么让自己更专业的事？', tag: 'daily', tagText: '日常抓手' },
+            { icon: '🤖', heading: '用AI放大你的优势', text: '学习使用AI工具辅助你最强维度的工作。把重复性任务交给AI，把时间留给高价值的深度思考和人际互动。', tag: 'ai', tagText: 'AI赋能' },
+            { icon: '📊', heading: '建立个人影响力档案', text: '每月整理一份「影响力清单」：你解决了什么问题？帮助了谁成长？推动了什么改进？这是你的职业资产。', tag: 'daily', tagText: '日常抓手' },
+            { icon: '🌟', heading: '从个人贡献到组织赋能', text: '主动把你的经验和方法分享给团队。当你从「一个人很强」变成「让一群人更强」时，你就拥有了管理者级别的价值。', tag: 'strategy', tagText: '战略贡献' }
+        ];
+
+        // ==================== 状态管理 ====================
+        let currentQuestions = [];
+        let currentIndex = 0;
+        let quizScores = { R:0, I:0, A:0, S:0, E:0, C:0 };
+        let userInfo = {};
+        let chartInstance = null;
+
+        // ==================== 工具函数 ====================
+        function shuffleArray(arr) {
+            const newArr = [...arr];
+            for (let i = newArr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+            }
+            return newArr;
+        }
+
+        function validateForm() {
+            const fields = ['userName', 'userGender', 'userAge', 'userSalary', 'userRoleType', 'userPosition', 'userCompany'];
+            for (let field of fields) {
+                const el = document.getElementById(field);
+                if (!el || !el.value.trim()) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function startAssessment() {
+            if (!validateForm()) {
+                alert('请填写完整所有信息后再开始测评');
+                return;
+            }
+
+            userInfo = {
+                name: document.getElementById('userName').value,
+                gender: document.getElementById('userGender').value,
+                age: document.getElementById('userAge').value,
+                salary: document.getElementById('userSalary').value,
+                roleType: document.getElementById('userRoleType').value,
+                position: document.getElementById('userPosition').value,
+                company: document.getElementById('userCompany').value
+            };
+
+            currentQuestions = shuffleArray([...questions]);
+            currentIndex = 0;
+            quizScores = { R:0, I:0, A:0, S:0, E:0, C:0 };
+
+            document.getElementById('assessment').style.display = 'none';
+            document.getElementById('hero').style.display = 'none';
+            document.getElementById('quiz').style.display = 'block';
+            window.scrollTo(0, 0);
+
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const q = currentQuestions[currentIndex];
+            const progress = ((currentIndex + 1) / currentQuestions.length) * 100;
+
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `${currentIndex + 1} / ${currentQuestions.length}`;
+            document.getElementById('questionNumber').textContent = `QUESTION ${String(currentIndex + 1).padStart(2, '0')}`;
+            document.getElementById('questionText').textContent = q.text;
+
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+
+            options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `
+                    <div>${opt.text}</div>
+                    <span class="option-score">${opt.score}分</span>
+                `;
+                btn.onclick = () => {
+                    quizScores[q.code] += opt.score;
+                    currentIndex++;
+                    if (currentIndex >= currentQuestions.length) {
+                        showResult();
+                    } else {
+                        renderQuestion();
+                    }
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        function showResult() {
+            document.getElementById('quiz').style.display = 'none';
+            document.getElementById('result').style.display = 'block';
+            window.scrollTo(0, 0);
+
+            const sorted = Object.keys(quizScores).sort((a, b) => quizScores[b] - quizScores[a]);
+            const topCode = sorted[0];
+            const secondCode = sorted[1];
+            const thirdCode = sorted[2];
+            const codeKey = `${topCode}-${secondCode}`;
+            const reverseKey = `${secondCode}-${topCode}`;
+
+            // Display 2-letter code
+            document.getElementById('resultCode').textContent = topCode + secondCode;
+            document.getElementById('resultCodeDesc').textContent = 
+                `${hollandCodes[topCode].name} + ${hollandCodes[secondCode].name} · ${hollandCodes[topCode].desc}`;
+
+            // Display interpretation (100-150 words)
+            let interpretation = codeInterpretations[codeKey] || codeInterpretations[reverseKey];
+            if (!interpretation) {
+                // Generate generic interpretation if specific combo not found
+                interpretation = `你的核心兴趣在于${hollandCodes[topCode].name}和${hollandCodes[secondCode].name}。${hollandCodes[topCode].intro}同时，${hollandCodes[secondCode].intro}在需要结合这两种能力的岗位上，你最可能发挥优势。着力于在日常工作中找到能同时发挥这两种特质的具体场景，是你获得可持续职业发展的最佳路径。`;
+            }
+            document.getElementById('resultInterpretation').textContent = interpretation;
+
+            // Render scores
+            const percentages = {};
+            for (let code in quizScores) {
+                percentages[code] = Math.round((quizScores[code] / 50) * 100);
+            }
+
+            const scoresContainer = document.getElementById('scoresContainer');
+            scoresContainer.innerHTML = '';
+            const codeOrder = ['R', 'I', 'A', 'S', 'E', 'C'];
+            codeOrder.forEach(code => {
+                const div = document.createElement('div');
+                div.className = 'score-item';
+                div.innerHTML = `
+                    <div class="score-letter">${code}</div>
+                    <div class="score-bar-bg"><div class="score-bar-fill" style="width: 0%"></div></div>
+                    <div class="score-value">${percentages[code]}%</div>
+                `;
+                scoresContainer.appendChild(div);
+            });
+
+            // Animate bars
+            setTimeout(() => {
+                document.querySelectorAll('.score-bar-fill').forEach((bar, idx) => {
+                    bar.style.width = percentages[codeOrder[idx]] + '%';
+                });
+            }, 300);
+
+            // Render radar chart
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            if (chartInstance) chartInstance.destroy();
+
+            chartInstance = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['R实际型', 'I研究型', 'A艺术型', 'S社会型', 'E企业型', 'C常规型'],
+                    datasets: [{
+                        data: [percentages.R, percentages.I, percentages.A, percentages.S, percentages.E, percentages.C],
+                        backgroundColor: 'rgba(212,168,83,0.2)',
+                        borderColor: '#d4a853',
+                        pointBackgroundColor: '#d4a853',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#d4a853',
+                        borderWidth: 2,
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: { display: false },
+                            grid: { color: 'rgba(0,0,0,0.05)' },
+                            angleLines: { color: 'rgba(0,0,0,0.05)' },
+                            pointLabels: {
+                                font: { size: 12, family: 'Noto Sans SC' },
+                                color: '#3d4f5f'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Render recommendations
+            const recs = recommendationsDB[codeKey] || recommendationsDB[reverseKey];
+            const finalRecs = recs ? recs.general : defaultRecommendations;
+
+            const recContainer = document.getElementById('recommendationsContainer');
+            recContainer.innerHTML = '';
+            finalRecs.forEach(rec => {
+                const div = document.createElement('div');
+                div.className = `rec-card ${rec.tag === 'ai' ? 'ai-card' : ''}`;
+                div.innerHTML = `
+                    <div class="rec-icon">${rec.icon}</div>
+                    <div class="rec-heading">${rec.heading}</div>
+                    <div class="rec-text">${rec.text}</div>
+                    <span class="rec-tag ${rec.tag}">${rec.tagText}</span>
+                `;
+                recContainer.appendChild(div);
+            });
+        }
+
+        // Save report as HTML file
+        function saveReport() {
+            const code = document.getElementById('resultCode').textContent;
+            const desc = document.getElementById('resultCodeDesc').textContent;
+            const interpretation = document.getElementById('resultInterpretation').textContent;
+            const date = new Date().toLocaleDateString('zh-CN');
+
+            // Get scores
+            const scoresHtml = document.getElementById('scoresContainer').innerHTML;
+            const recsHtml = document.getElementById('recommendationsContainer').innerHTML;
+
+            const reportHtml = `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>可持续职业发展测评报告 - ${userInfo.name || '学员'}</title>
+    <style>
+        body { font-family: 'Noto Sans SC', 'Microsoft YaHei', sans-serif; max-width: 800px; margin: 40px auto; padding: 0 24px; color: #3d4f5f; line-height: 1.8; }
+        .header { text-align: center; padding: 40px 0; border-bottom: 2px solid #d4a853; margin-bottom: 40px; }
+        .header h1 { color: #0a1f2e; font-size: 28px; margin-bottom: 8px; }
+        .header .date { color: #6b7d8d; font-size: 14px; }
+        .code-box { text-align: center; padding: 30px; background: linear-gradient(135deg, #faf8f3, #fff); border-radius: 16px; margin-bottom: 30px; }
+        .code { font-size: 48px; font-weight: 700; color: #d4a853; }
+        .code-desc { font-size: 16px; color: #1e2a35; margin-top: 8px; }
+        .interpretation { padding: 24px; background: #f5f0e8; border-left: 4px solid #d4a853; border-radius: 0 12px 12px 0; margin-bottom: 30px; font-size: 15px; }
+        .section-title { font-size: 20px; color: #0a1f2e; font-weight: 700; margin: 30px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #e8c878; }
+        .rec-card { padding: 20px; background: #faf8f3; border-left: 3px solid #d4a853; border-radius: 0 12px 12px 0; margin-bottom: 12px; }
+        .rec-heading { font-weight: 700; color: #1e2a35; margin-bottom: 6px; }
+        .rec-text { font-size: 14px; }
+        .footer { text-align: center; padding: 40px 0; margin-top: 40px; border-top: 1px solid #f5f0e8; color: #6b7d8d; font-size: 13px; }
+        .footer a { color: #d4a853; text-decoration: none; }
+        .score-item { display: flex; align-items: center; margin-bottom: 10px; gap: 10px; }
+        .score-letter { width: 32px; height: 32px; background: #0a1f2e; color: #d4a853; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; }
+        .score-bar-bg { flex: 1; height: 8px; background: #f5f0e8; border-radius: 4px; overflow: hidden; }
+        .score-bar-fill { height: 100%; background: linear-gradient(90deg, #d4a853, #e8c878); }
+        .score-value { font-size: 13px; color: #6b7d8d; min-width: 40px; text-align: right; }
+        @media print { body { margin: 0; } .no-print { display: none; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>可持续职业发展测评报告</h1>
+        <div class="date">测评日期：${date} | 姓名：${userInfo.name || '——'} | 岗位：${userInfo.position || '——'}</div>
+    </div>
+
+    <div class="code-box">
+        <div class="code">${code}</div>
+        <div class="code-desc">${desc}</div>
+    </div>
+
+    <div class="interpretation">
+        ${interpretation}
+    </div>
+
+    <div class="section-title">📊 各维度得分</div>
+    <div>${scoresHtml}</div>
+
+    <div class="section-title">🎯 日常抓手建议</div>
+    <div>${recsHtml}</div>
+
+    <div class="footer">
+        <p>本报告由 <a href="https://rg-consulting.cn">睿观生涯教练</a> 生成</p>
+        <p>如需深度解读，请添加微信 lukeliu2017 预约 1对1 咨询</p>
+        <p style="margin-top:16px;font-size:11px;color:#999;">© 2026 睿观生涯教练 · 广州睿观管理咨询有限公司</p>
+    </div>
+    <!-- Payment Modal -->
+    <div id="payModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:10001;align-items:center;justify-content:center;backdrop-filter:blur(10px);">
+        <div style="background:#fff;border-radius:28px;padding:40px;max-width:420px;width:90%;text-align:center;position:relative;box-shadow:0 30px 60px rgba(0,0,0,0.3);">
+            <button onclick="closePayModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;color:var(--text-light);">&times;</button>
+            <div style="width:80px;height:80px;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:var(--deep-blue);font-size:36px;">
+                <i class="fas fa-qrcode"></i>
+            </div>
+            <h3 style="font-family:'Noto Serif SC',serif;font-size:1.4rem;color:var(--text-dark);margin-bottom:12px;">扫码支付</h3>
+            <p style="color:var(--text-light);font-size:14px;line-height:1.7;margin-bottom:24px;">
+                请使用微信或支付宝扫描下方二维码完成支付<br>
+                支付完成后请截图联系客服确认
+            </p>
+            <div style="width:240px;height:240px;margin:0 auto 20px;border-radius:16px;overflow:hidden;border:2px solid rgba(212,168,83,0.2);background:var(--ivory);display:flex;align-items:center;justify-content:center;">
+                <img src="images/pay.png" alt="付款二维码" style="width:100%;height:100%;object-fit:contain;display:block;">
+            </div>
+            <p style="color:var(--text-light);font-size:12px;margin-bottom:16px;">
+                支付遇到问题？<a href="#" onclick="closePayModal(); return false;" style="color:var(--gold-dark);text-decoration:underline;">联系客服</a>
+            </p>
+            <a href="#" onclick="closePayModal(); return false;" style="display:inline-block;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);color:var(--deep-blue);padding:12px 32px;border-radius:50px;font-weight:700;text-decoration:none;font-size:14px;">
+                <i class="fas fa-check"></i> 已完成支付
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Payment Modal functions
+        function showPayModal() {
+            document.getElementById('payModal').style.display = 'flex';
+        }
+        function closePayModal() {
+            document.getElementById('payModal').style.display = 'none';
+        }
+        document.getElementById('payModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('payModal')) {
+                closePayModal();
+            }
+        });
+    </script>
+</body>
+</html>`;
+
+            const blob = new Blob([reportHtml], { type: 'text/html;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `职业发展测评报告_${userInfo.name || '学员'}_${date}.html`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function restartAssessment() {
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('hero').style.display = 'flex';
+            document.getElementById('assessment').style.display = 'block';
+            window.scrollTo(0, 0);
+
+            // Reset form
+            ['userName', 'userGender', 'userAge', 'userSalary', 'userRoleType', 'userPosition', 'userCompany'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+        }
+    </script>
+    <!-- Payment Modal -->
+    <div id="payModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:10001;align-items:center;justify-content:center;backdrop-filter:blur(10px);">
+        <div style="background:#fff;border-radius:28px;padding:40px;max-width:420px;width:90%;text-align:center;position:relative;box-shadow:0 30px 60px rgba(0,0,0,0.3);">
+            <button onclick="closePayModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;color:var(--text-light);">&times;</button>
+            <div style="width:80px;height:80px;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:var(--deep-blue);font-size:36px;">
+                <i class="fas fa-qrcode"></i>
+            </div>
+            <h3 style="font-family:'Noto Serif SC',serif;font-size:1.4rem;color:var(--text-dark);margin-bottom:12px;">扫码支付</h3>
+            <p style="color:var(--text-light);font-size:14px;line-height:1.7;margin-bottom:24px;">
+                请使用微信或支付宝扫描下方二维码完成支付<br>
+                支付完成后请截图联系客服确认
+            </p>
+            <div style="width:240px;height:240px;margin:0 auto 20px;border-radius:16px;overflow:hidden;border:2px solid rgba(212,168,83,0.2);background:var(--ivory);display:flex;align-items:center;justify-content:center;">
+                <img src="images/pay.png" alt="付款二维码" style="width:100%;height:100%;object-fit:contain;display:block;">
+            </div>
+            <p style="color:var(--text-light);font-size:12px;margin-bottom:16px;">
+                支付遇到问题？<a href="#" onclick="closePayModal(); return false;" style="color:var(--gold-dark);text-decoration:underline;">联系客服</a>
+            </p>
+            <a href="#" onclick="closePayModal(); return false;" style="display:inline-block;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);color:var(--deep-blue);padding:12px 32px;border-radius:50px;font-weight:700;text-decoration:none;font-size:14px;">
+                <i class="fas fa-check"></i> 已完成支付
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Payment Modal functions
+        function showPayModal() {
+            document.getElementById('payModal').style.display = 'flex';
+        }
+        function closePayModal() {
+            document.getElementById('payModal').style.display = 'none';
+        }
+        document.getElementById('payModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('payModal')) {
+                closePayModal();
+            }
+        });
+    </script>
+</body>
+</html>

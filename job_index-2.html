@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>求职转型陪跑手册 · 35+中高阶职场精英 | 睿观生涯</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --deep-blue: #0a1f2e;
+      --navy: #0f2d3d;
+      --slate: #1a3c5c;
+      --steel: #2c5a7a;
+      --gold: #d4a853;
+      --gold-light: #e8c878;
+      --gold-dark: #b8923e;
+      --cream: #faf8f3;
+      --ivory: #f5f0e8;
+      --text-dark: #1e2a35;
+      --text-body: #3d4f5f;
+      --text-light: #6b7d8d;
+      --glass: rgba(255,255,255,0.08);
+      --glass-border: rgba(255,255,255,0.12);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background: var(--cream);
+      color: var(--text-body);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-on-scroll { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+    .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== TOP BAR ===== */
+    .top-bar {
+      background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+    .top-bar a { text-decoration: none; }
+    .back-link {
+      color: rgba(255,255,255,0.7);
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.3s;
+    }
+    .back-link:hover { color: var(--gold); }
+    .top-cta {
+      background: var(--gold);
+      color: var(--deep-blue);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      transition: all 0.3s;
+    }
+    .top-cta:hover { background: var(--gold-light); transform: scale(1.05); }
+
+    /* ===== HERO MINI ===== */
+    .hero-mini {
+      background: linear-gradient(135deg, var(--deep-blue) 0%, var(--navy) 50%, var(--slate) 100%);
+      padding: 60px 24px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-mini::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 50%, rgba(212,168,83,0.08) 0%, transparent 50%);
+    }
+    .hero-mini-content { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
+    .hero-mini h1 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .hero-mini h1 span {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-mini p {
+      color: rgba(255,255,255,0.65);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    /* ===== QUICK NAV ===== */
+    .quick-nav {
+      background: var(--ivory);
+      padding: 16px 24px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      position: sticky;
+      top: 48px;
+      z-index: 99;
+    }
+    .quick-nav a {
+      white-space: nowrap;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      color: var(--text-body);
+      text-decoration: none;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.06);
+      transition: all 0.3s;
+    }
+    .quick-nav a:hover, .quick-nav a.active {
+      background: var(--deep-blue);
+      color: var(--gold);
+      border-color: var(--deep-blue);
+    }
+
+    /* ===== CONTENT ===== */
+    .content { max-width: 800px; margin: 0 auto; padding: 48px 20px 80px; }
+
+    /* ===== SECTION ===== */
+    .section { margin-bottom: 56px; }
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+    .section-label::before {
+      content: '';
+      width: 24px;
+      height: 2px;
+      background: var(--gold);
+    }
+    .section h2 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.5rem;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+    .section-quote {
+      background: linear-gradient(135deg, var(--ivory) 0%, #fff 100%);
+      border-left: 3px solid var(--gold);
+      padding: 14px 18px;
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 24px;
+      font-size: 14px;
+      color: var(--text-body);
+      line-height: 1.7;
+    }
+
+    /* ===== QA CARD ===== */
+    .qa-card {
+      background: #fff;
+      border-radius: 16px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(0,0,0,0.06);
+      overflow: hidden;
+      transition: all 0.3s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .qa-card:hover {
+      border-color: rgba(212,168,83,0.2);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    .qa-q {
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .q-icon {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, var(--ivory) 0%, var(--cream) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: var(--gold-dark);
+      font-size: 13px;
+      flex-shrink: 0;
+      border: 1.5px solid rgba(212,168,83,0.2);
+    }
+    .q-text {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text-dark);
+      flex: 1;
+      line-height: 1.5;
+    }
+    .qa-toggle {
+      color: var(--text-light);
+      font-size: 12px;
+      transition: transform 0.3s;
+    }
+    .qa-card.open .qa-toggle {
+      transform: rotate(180deg);
+    }
+    .qa-a {
+      padding: 0 20px 18px 60px;
+      display: none;
+      border-top: 1px solid rgba(0,0,0,0.04);
+      margin-top: 4px;
+    }
+    .qa-a.active { display: block; }
+    .a-text {
+      font-size: 14px;
+      color: var(--text-body);
+      line-height: 1.75;
+    }
+    .a-text strong { color: var(--gold-dark); font-weight: 600; }
+    .a-text ul { margin: 10px 0 10px 18px; }
+    .a-text li { margin-bottom: 6px; }
+    .tip-box {
+      background: linear-gradient(135deg, var(--ivory) 0%, #fff 100%);
+      border-left: 3px solid var(--gold);
+      padding: 12px 16px;
+      margin: 14px 0;
+      border-radius: 0 10px 10px 0;
+      font-size: 13px;
+      color: var(--text-body);
+    }
+
+    /* ===== CTA CARD ===== */
+    .cta-card {
+      background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);
+      border-radius: 20px;
+      padding: 28px 24px;
+      text-align: center;
+      margin: 36px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-card::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle at 50% 50%, rgba(212,168,83,0.08) 0%, transparent 50%);
+    }
+    .cta-card h3 {
+      font-family: 'Noto Serif SC', serif;
+      color: #fff;
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 2;
+    }
+    .cta-card p {
+      color: rgba(255,255,255,0.7);
+      font-size: 14px;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 2;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      color: var(--deep-blue);
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 4px 16px rgba(212,168,83,0.3);
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(212,168,83,0.4);
+    }
+
+    /* ===== FLOATING CTA ===== */
+    .floating-cta {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      color: var(--deep-blue);
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(212,168,83,0.4);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 200;
+      transition: all 0.3s;
+      animation: pulse 2s infinite;
+    }
+    .floating-cta:hover { transform: scale(1.05); }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(212,168,83,0.4); }
+      50% { box-shadow: 0 0 0 12px rgba(212,168,83,0); }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      .hero-mini { padding: 40px 20px 32px; }
+      .content { padding: 32px 16px 60px; }
+      .qa-a { padding-left: 20px; }
+      .floating-cta { padding: 10px 18px; font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <a href="index.html" class="back-link">
+      <i class="fas fa-arrow-left"></i> 返回首页
+    </a>
+    <a href="#" class="top-cta" onclick="showPayModal(); return false;">1299元体验</a>
+  </div>
+
+  <!-- Hero Mini -->
+  <div class="hero-mini">
+    <div class="hero-mini-content">
+      <h1>求职转型陪跑手册<br><span>选对赛道跟对人</span></h1>
+      <p>35+中高阶职场精英专属 · 从迷茫到入职的完整行动指南</p>
+    </div>
+  </div>
+
+  <!-- Quick Nav -->
+  <div class="quick-nav">
+    <a href="#s1">迷茫期</a>
+    <a href="#s2">测评</a>
+    <a href="#s3">流程</a>
+    <a href="#s4">效果</a>
+    <a href="#s5">价格</a>
+    <a href="#s6">顾虑</a>
+    <a href="#s7">案例</a>
+  </div>
+
+  <div class="content">
+
+    <!-- 第一章：转型迷茫 -->
+    <div class="section" id="s1">
+      <div class="section-label">第一章</div>
+      <h2>转型迷茫期 · 想转不敢转</h2>
+      <div class="section-quote">"你只是在不适合的环境里待太久了，不是你不行。"</div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我都35+了，现在转行还来得及吗？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><strong>来得及。</strong>我辅导的学员平均年龄37岁，最高51岁。问题不在年龄，而在于方向是否适合你。测评帮你找到最适配的赛道，年龄只是数字，适配才是加速器。<div class="tip-box">案例1：40岁互联网运营岗，测评后锁定了理想雇主画像，通过人脉内推3个月成功上岸。<a href="Case_study.html#mark" style="color:var(--gold-dark);text-decoration:underline;font-weight:600;">了解更多👉</a></div><div class="tip-box">案例2：35岁外企IT测试岗女性，经辅导后2个半月成功转型加入大湾区院某研究院。<a href="Case_study.html#nicole" style="color:var(--gold-dark);text-decoration:underline;font-weight:600;">了解更多👉</a></div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我不知道自己还能做什么，感觉很迷茫</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">工作十年以上，我们只知道自己"正在做"什么，却很少问"我擅长什么"。<strong>Harrison测评是一面镜子</strong>——从动机、偏好、行为倾向帮你找回<strong>被忽略的优势与未被开发的潜力。<strong/></div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我已经有一个大概方向，还需要做测评吗？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">恰恰最值得做。用数据验证直觉：吻合则底气更足，有出入则避免昂贵试错。75%学员在测评后微调方向，节省至少半年试错时间。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">35岁+转型是不是只能去送外卖、开网约车？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">绝对不是。真实案例：制造业中层→供应链咨询，银行行长→心理咨询，大客户销售→创业。<strong>转型方向取决于特质+能力+经验，而非年龄。</strong></div></div></div>
+    </div>
+
+    <!-- 第二章：测评科学性 -->
+    <div class="section" id="s2">
+      <div class="section-label">第二章</div>
+      <h2>测评科学性 · 为什么不是MBTI</h2>
+      <div class="section-quote">工具只是起点，解读才是价值。</div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">和网上免费性格测试有什么不同？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><strong>Harrison是经30年企业端验证的行为科学工具</strong>，全球5000+企业用于高管选拔。测量175+行为维度，内置一致性校验，对照真实从业者数据库。国内客户包括华为、中欧商学院、上海迪士尼和安利等。<div class="tip-box">单纯的测评报告毫无价值，测评+专业教练解读，才能发现你与生俱来的禀赋。</div></div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">工作十几年性格定型，测出来还有用吗？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">“不识庐山真面目，只缘身在此山中。”自我觉察一直都是千古难题。工作十几年了，请问你花了多少时间去观察自己的行为模式，情绪起伏以及价值观的演变？<strong>你对自己未开发的潜力了解多少？转型的本质是找到与固有特质更匹配的新环境。</strong>比如你以为要进入智能制造行业，那么什么方面是你从未做过但也可以比别人做得好的特质呢？</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">一份报告就能决定我的转型方向？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">报告是起点，不是终点。我们提供<strong>测评 + 1对1深度解读 + 2-3个赛道建议</strong>。教练会结合你的经历、家庭情况综合评估，不鼓励仅凭报告自行决策。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">求职陪跑和猎头服务有啥区别？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">最大的区别在于<strong>猎头服务的对象是雇主，目的是为了帮雇主找人,而非服务求职者！</strong>。顶尖的猎头具有卓越的判断力，在时间管理上也极为苛刻。如果你不能在60秒内讲清楚个人独特优势，他/她也不会在你身上多花一分钟时间。在我辅导的300多位职场精英当中，仅有10-12%左右是通过猎头找到工作的。求职陪跑教练的角色则是<strong>以求职者为中心，致力于让你由内至外获得信心和力量</strong>。有了清晰的职业目标，你才能采取果断的行动而非终日忧心忡忡；你的眼神、语音语调和身体语言会向身边的人脉传递这种力量，你的弱关系会向你伸出援手，在行动中你实现职场破局。</div></div></div>
+    </div>
+
+    <!-- 第三章：服务流程 -->
+    <div class="section" id="s3">
+      <div class="section-label">第三章</div>
+      <h2>服务流程 · 每一步都清晰</h2>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">购买后具体经历哪些步骤？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><ul><li>① 支付确认 → 1个工作日内联系，发测评链接</li><li>② 完成测评（约30分钟）</li><li>③ 报告生成（1-2个工作日）</li><li>④ 预约1对1咨询（60-75分钟，线上）</li><li>⑤ 获取转型方向报告 + 3天微信答疑</li></ul></div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">顾问是什么背景？能理解我的行业吗？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">刘翔（Luke Liu）——Harrison官方认证测评师、GCDF全球职业规划师、RCC国际商务教练。10年500强外企HR管理 + 10年咨询经验，服务过IT互联网/制造业/医疗/高端服务业500+学员。大部分HR背景的求职教练只能对本行业提供辅导。而对于Luke Liu教练，由于受过GCDF全球职业规划师训练，凭借强大的Harrison工具，能萃取不同行业岗位当中的核心能力要求，跨行业辅导恰恰是其突出的优势与强项。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">报告我看不懂怎么办？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">完全正常。顾问会用通俗语言+工作场景案例逐项讲解，保证你听完能清晰了解自身的独特优势。报告是教练的工具，你的收获是清晰的结论和行动清单。</div></div></div>
+    </div>
+
+    <!-- 第四章：效果与价值 -->
+    <div class="section" id="s4">
+      <div class="section-label">第四章</div>
+      <h2>效果与价值 · 能保证找到工作吗</h2>
+      <div class="section-quote">方向对了，每一步都是前进；方向错了，越努力越偏离。</div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">能保证找到工作吗？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">不能，但我们可以做到：<strong>在你现有条件下，帮你找到真正适合的转型方向，避免从坑跳入另一个坑。</strong>方向错了，越努力越偏离——这项服务解决"往哪走"。后续可搭配3-6个月求职陪跑套餐，通过简历定制、面试技巧训练以及薪酬谈判辅导，成功率提升至80%以上。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我的数据安全吗？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">测评数据和报告仅用于本次职业咨询，不用于任何第三方商业用途。睿观生涯教练遵循国际隐私标准，案例展示均做脱敏处理。</div></div></div>
+    </div>
+
+    <!-- 第五章：价格与决策 -->
+    <div class="section" id="s5">
+      <div class="section-label">第五章</div>
+      <h2>价格与决策 · 值不值这个钱</h2>
+      <div class="section-quote">一次错误跳槽的机会成本 = 至少3个月薪资损失 ≈ 5-10万元</div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">Harrison测评解读服务如何收费？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><strong>标准定价1299元</strong>（含测评报告+60-75分钟1对1咨询+3天答疑）。<br>对30-50万年薪职场人，这相当于月薪的5%，但可能帮你避免一次5-10万的错误决策。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">有没有优惠？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><ul><li><strong>2人同行：1198元/人</strong></li><li><strong>3人同行：1128元/人</strong></li><li>学员推荐特惠价：1229元</li></ul></div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">1299元能帮我找到年薪涨5万的工作，那当然值；万一没用呢？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">这个逻辑反过来也成立。如果方向选错，潜在损失远不止1299元——可能是几万甚至十几万的收入差，更宝贵的是时间成本和精神内耗。这项服务的价值在于<strong>降低试错成本的确定性</strong>。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">体验后如果想继续陪跑，费用怎么算？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">1299体验费用可<strong>全额抵扣后续3个月求职陪跑套餐</strong>（3999元/4999元），您只需要补齐差价即可启动服务。</div></div></div>
+    </div>
+
+    <!-- 第六章：真实顾虑 -->
+    <div class="section" id="s6">
+      <div class="section-label">第六章</div>
+      <h2>真实顾虑 · 那些不好意思问的</h2>
+      <div class="section-quote">停下来审视自己的人，比闷头往前冲的人更有勇气。</div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">35岁+做测评是不是说明我很失败？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">恰恰相反。愿意停下来审视自己的人，往往更有勇气。职场是40年马拉松，哪怕你今年40岁，也只是走了一半。<strong>转型不是失败，而是主动探索可能性。在五百强外企裁员当中，很多公司都会给收到影响的员工购买这项专业服务。</strong>通过测评和专业教练解读获得反馈，这是对自己职业发展最好的投资。</div></div></div>
+
+      
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">有房贷有孩子，不敢轻易转，怎么办？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">我们不是让你"裸辞"。转型分步走：先明确方向，在当前岗位积累项目/人脉，再完成切换。<strong>测评和咨询是帮你确定"往哪个方向准备"，而不是催你立刻辞职。</strong>在岗期间为自己投资是最睿智的选择，可参考<a href="../workplace_index.html" style="color:var(--gold-dark);text-decoration:underline;font-weight:600;">职场陪跑</a>了解更多。👉</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">简单说，我花1299元能得到什么？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><strong>一份基于30年行为科学的专业测评报告 + 1次认证顾问1对1转型咨询</strong>。你能带走：<ul><li>详细测评报告（电子版，永久保留）</li><li>2-3个转型赛道方向建议+适配理由</li><li>简历诊断+行动清单+3天微信答疑</li><li>在35+关键节点，少走一段弯路，多一份底气</li></ul><div class="tip-box">我们不卖"保证成功"，我们卖的是"在人生重要转型关口，让你比别人多了解一份真实的自己"。</div></div></div></div>
+    </div>
+
+    <!-- 第七章：成功案例 -->
+    <div class="section" id="s7">
+      <div class="section-label">第七章</div>
+      <h2>成功案例 · 他们都已经找到新赛道</h2>
+      <div class="qa-card open"><div class="qa-q"><div class="q-icon">🏆</div><div class="q-text">是否有成功案例？能看看真实学员反馈吗？</div><i class="fas fa-chevron-down qa-toggle" style="transform:rotate(180deg);"></i></div><div class="qa-a active"><div class="a-text"><p><strong>睿观生涯教练已累计服务超过500位中高阶职场人士：</strong></p><ul><li>📊 平均年龄<strong>37岁</strong>，最高转型年龄<strong>51岁</strong></li><li>💰 学员年薪集中在<strong>30-50万</strong>，最高<strong>200万</strong></li><li>✅ 约70%学员在3-6个月内明确新方向或成功入职</li><li>✅ 入职企业包括华为、腾讯、字节、百度、网易、思科等</li></ul></div></div></div>
+    </div>
+
+ <!-- 案例入口按钮 -->
+      <a href="Case_study.html" style="display:flex;align-items:center;gap:16px;background:linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);border-radius:20px;padding:24px 28px;margin-bottom:24px;text-decoration:none;transition:all 0.4s ease;box-shadow:0 8px 24px rgba(10,31,46,0.15);border:1px solid rgba(212,168,83,0.2);">
+        <div style="width:56px;height:56px;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 12px rgba(212,168,83,0.3);">
+          <i class="fas fa-users" style="color:var(--deep-blue);font-size:24px;"></i>
+        </div>
+        <div style="flex:1;">
+          <div style="color:#fff;font-size:16px;font-weight:700;margin-bottom:4px;">查看6位学员真实转型故事</div>
+          <div style="color:rgba(255,255,255,0.6);font-size:13px;">点击查看六位35岁+职场人如何转型破局的完整案例</div>
+        </div>
+        <div style="width:40px;height:40px;background:rgba(255,255,255,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <i class="fas fa-arrow-right" style="color:var(--gold);font-size:16px;"></i>
+        </div>
+      </a>
+
+    <!-- CTA Card -->
+    <div class="cta-card animate-on-scroll">
+      <h3>准备好开启你的转型了吗？</h3>
+      <p>预约免费20分钟诊断通话，聊聊你的现状和困惑</p>
+      <a href="#" class="cta-btn" onclick="showQRModal('wechat'); return false;">
+        <i class="fab fa-weixin"></i> 添加微信 lukeliu2017
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Floating CTA -->
+  <a href="#" class="floating-cta" onclick="showQRModal('wechat'); return false;">
+    <i class="fas fa-comments"></i>
+    免费咨询
+  </a>
+
+  <script>
+    // QA Toggle
+    document.querySelectorAll('.qa-card').forEach(card => {
+      const q = card.querySelector('.qa-q');
+      const a = card.querySelector('.qa-a');
+      const icon = card.querySelector('.qa-toggle');
+      if (!q || !a) return;
+
+      // 默认折叠（除了已标记open的）
+      if (!card.classList.contains('open')) {
+        a.classList.remove('active');
+        if (icon) icon.style.transform = 'rotate(0deg)';
+      }
+
+      q.addEventListener('click', () => {
+        const isOpen = a.classList.contains('active');
+        if (isOpen) {
+          a.classList.remove('active');
+          card.classList.remove('open');
+          if (icon) icon.style.transform = 'rotate(0deg)';
+        } else {
+          a.classList.add('active');
+          card.classList.add('open');
+          if (icon) icon.style.transform = 'rotate(180deg)';
+        }
+      });
+    });
+
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+    // Active nav highlight
+    const sections = document.querySelectorAll('.section[id]');
+    const navLinks = document.querySelectorAll('.quick-nav a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (scrollY >= sectionTop - 100) current = section.getAttribute('id');
+      });
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+      });
+    });
+
+    // Payment Modal
+    function showPayModal() {
+      document.getElementById('payModal').style.display = 'flex';
+    }
+    function closePayModal() {
+      document.getElementById('payModal').style.display = 'none';
+    }
+    document.getElementById('payModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('payModal')) {
+        closePayModal();
+      }
+    });
+
+    // QR Code Modal
+    function showQRModal(type) {
+      document.getElementById('qrModal').style.display = 'flex';
+    }
+    function closeQRModal() {
+      document.getElementById('qrModal').style.display = 'none';
+    }
+    document.getElementById('qrModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('qrModal')) {
+        closeQRModal();
+      }
+    });
+  </script>
+
+
+  <!-- Payment QR Code Modal -->
+  <div id="payModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:10001;align-items:center;justify-content:center;backdrop-filter:blur(10px);">
+    <div style="background:#fff;border-radius:28px;padding:40px;max-width:420px;width:90%;text-align:center;position:relative;box-shadow:0 30px 60px rgba(0,0,0,0.3);">
+      <button onclick="closePayModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;color:var(--text-light);">&times;</button>
+      <div style="width:80px;height:80px;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:var(--deep-blue);font-size:36px;">
+        <i class="fas fa-qrcode"></i>
+      </div>
+      <h3 style="font-family:'Noto Serif SC',serif;font-size:1.4rem;color:var(--text-dark);margin-bottom:12px;">扫码支付</h3>
+      <p style="color:var(--text-light);font-size:14px;line-height:1.7;margin-bottom:24px;">
+        请使用微信或支付宝扫描下方二维码完成支付<br>
+        支付完成后请截图联系客服确认
+      </p>
+      <div style="width:240px;height:240px;margin:0 auto 20px;border-radius:16px;overflow:hidden;border:2px solid rgba(212,168,83,0.2);background:var(--ivory);display:flex;align-items:center;justify-content:center;">
+        <img src="images/pay.png" alt="付款二维码" style="width:100%;height:100%;object-fit:contain;display:block;">
+      </div>
+      <p style="color:var(--text-light);font-size:12px;margin-bottom:16px;">
+        支付遇到问题？<a href="#" onclick="showQRModal('wechat'); closePayModal(); return false;" style="color:var(--gold-dark);text-decoration:underline;">联系客服</a>
+      </p>
+      <a href="#" onclick="closePayModal(); return false;" style="display:inline-block;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);color:var(--deep-blue);padding:12px 32px;border-radius:50px;font-weight:700;text-decoration:none;font-size:14px;">
+        <i class="fas fa-check"></i> 已完成支付
+      </a>
+    </div>
+  </div>
+
+  <!-- QR Code Modal -->
+  <div id="qrModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(10px);">
+    <div style="background:#fff;border-radius:28px;padding:40px;max-width:420px;width:90%;text-align:center;position:relative;box-shadow:0 30px 60px rgba(0,0,0,0.3);">
+      <button onclick="closeQRModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;color:var(--text-light);">&times;</button>
+      <div style="width:80px;height:80px;background:linear-gradient(135deg, var(--slate) 0%, var(--steel) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:var(--gold);font-size:36px;">
+        <i class="fab fa-weixin"></i>
+      </div>
+      <h3 style="font-family:'Noto Serif SC',serif;font-size:1.4rem;color:var(--text-dark);margin-bottom:12px;">添加教练微信</h3>
+      <p style="color:var(--text-light);font-size:14px;line-height:1.7;margin-bottom:24px;">
+        扫码添加微信 <strong style="color:var(--gold-dark);">lukeliu2017</strong><br>
+        预约免费20分钟诊断通话
+      </p>
+      <div style="width:200px;height:200px;margin:0 auto 20px;border-radius:16px;overflow:hidden;border:2px solid rgba(212,168,83,0.2);">
+        <img id="qrImage" src="images/qrcode.jpeg" alt="微信二维码" style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+      <a href="weixin://" style="display:inline-block;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);color:var(--deep-blue);padding:12px 32px;border-radius:50px;font-weight:700;text-decoration:none;font-size:14px;">
+        <i class="fab fa-weixin"></i> 打开微信添加
+      </a>
+    </div>
+  </div>
+
+</body>
+</html>

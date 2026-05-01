@@ -284,12 +284,33 @@
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .nav-mobile-toggle { display: block; }
+            .nav { padding: 10px 14px; }
+            .nav-logo { gap: 8px; }
+            .nav-logo img { height: 56px !important; }
+            .nav-logo-text { font-size: 14px; letter-spacing: 0.2px; }
+            .nav-logo-sub { font-size: 9px; letter-spacing: 1px; margin-top: 0; }
             .hero { min-height: 50vh; padding: 100px 20px 60px; }
+            .hero-ring { display: none; }
             .section { padding: 60px 20px; }
-            .clients-grid { grid-template-columns: repeat(2, 1fr); }
+            .clients-header { margin-bottom: 36px; }
+            .clients-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .client-logo { padding: 14px 12px; aspect-ratio: 16 / 10; }
+            .client-logo picture,
+            .client-logo img {
+                width: 100% !important;
+                height: auto !important;
+                max-height: 42px;
+                object-fit: contain !important;
+                display: block;
+            }
             .footer-grid { grid-template-columns: 1fr; }
             .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
             .floating-cta { bottom: 16px; right: 16px; padding: 12px 20px; font-size: 13px; }
+        }
+        @media (max-width: 480px) {
+            .clients-grid { grid-template-columns: 1fr; }
+            .client-logo { min-height: 86px; }
+            .client-logo img { max-height: 50px; }
         }
         .mobile-menu { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10,31,46,0.98); z-index: 999; flex-direction: column; align-items: center; justify-content: center; gap: 32px; }
         .mobile-menu.active { display: flex; }

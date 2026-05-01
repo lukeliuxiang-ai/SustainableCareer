@@ -102,6 +102,59 @@
         .nav-links a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px; background: var(--gold); transition: width 0.3s; }
         .nav-links a:hover { color: #fff; }
         .nav-links a:hover::after { width: 100%; }
+        .nav-dropdown { position: relative; }
+        .nav-dropdown-toggle {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            padding: 0;
+            font-family: inherit;
+        }
+        .nav-dropdown-toggle:hover { color: #fff; }
+        .nav-dropdown-toggle i { font-size: 12px; transition: transform 0.25s ease; }
+        .nav-dropdown.open .nav-dropdown-toggle i { transform: rotate(180deg); }
+        .nav-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 14px);
+            left: 0;
+            min-width: 190px;
+            padding: 10px;
+            background: rgba(10,31,46,0.72);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 14px;
+            box-shadow: 0 16px 36px rgba(0,0,0,0.25);
+            display: none;
+            z-index: 1100;
+        }
+        .nav-dropdown.open .nav-dropdown-menu { display: block; }
+        .nav-dropdown-menu a {
+            display: block;
+            color: rgba(255,255,255,0.9);
+            font-size: 13px;
+            padding: 9px 11px;
+            border-radius: 9px;
+            text-decoration: none;
+            margin-bottom: 4px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.25s ease;
+        }
+        .nav-dropdown-menu a:last-child { margin-bottom: 0; }
+        .nav-dropdown-menu a::after { display: none; }
+        .nav-dropdown-menu a:hover {
+            background: rgba(255,255,255,0.13);
+            color: #fff;
+            border-color: rgba(212,168,83,0.35);
+        }
         .nav-cta { background: var(--gold); color: var(--deep-blue); padding: 8px 20px; border-radius: 30px; font-size: 13px; font-weight: 700; text-decoration: none; transition: all 0.3s; }
         .nav-cta:hover { background: var(--gold-light); transform: scale(1.05); }
         .nav-mobile-toggle { display: none; color: #fff; font-size: 24px; cursor: pointer; }
@@ -314,7 +367,16 @@
             <a href="#experience">成果</a>
             <a href="#pricing">价格</a>
             <a href="#testimonials">学员反馈</a>
-            <a href="career_assessment.html">职业测评</a>
+            <div class="nav-dropdown" id="assessmentDropdown">
+                <button type="button" class="nav-dropdown-toggle" id="assessmentDropdownToggle" aria-expanded="false">
+                    职业测评 <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="nav-dropdown-menu" id="assessmentDropdownMenu">
+                    <a href="AboutHA.html">Harrison测评</a>
+                    <a href="career_assessment.html">霍兰德测评</a>
+                    <a href="Life-pie-chart.html">生命饼图</a>
+                </div>
+            </div>
             <a href="#cta" class="nav-cta">预约诊断</a>
         </div>
         <div class="nav-mobile-toggle" onclick="toggleMobileMenu()">
@@ -332,7 +394,9 @@
         <a href="#experience" onclick="toggleMobileMenu()">成果</a>
         <a href="#pricing" onclick="toggleMobileMenu()">价格</a>
         <a href="#testimonials" onclick="toggleMobileMenu()">学员反馈</a>
-            <a href="career_assessment.html" onclick="toggleMobileMenu()">职业测评</a>
+        <a href="AboutHA.html" onclick="toggleMobileMenu()">Harrison测评</a>
+        <a href="career_assessment.html" onclick="toggleMobileMenu()">霍兰德测评</a>
+        <a href="Life-pie-chart.html" onclick="toggleMobileMenu()">生命饼图</a>
         <a href="#cta" onclick="toggleMobileMenu()">预约诊断</a>
     </div>
 
@@ -822,6 +886,22 @@
             const menu = document.getElementById('mobileMenu');
             const isActive = menu.classList.toggle('active');
             document.body.style.overflow = isActive ? 'hidden' : '';
+        }
+
+        const assessmentDropdown = document.getElementById('assessmentDropdown');
+        const assessmentDropdownToggle = document.getElementById('assessmentDropdownToggle');
+        if (assessmentDropdown && assessmentDropdownToggle) {
+            assessmentDropdownToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isOpen = assessmentDropdown.classList.toggle('open');
+                assessmentDropdownToggle.setAttribute('aria-expanded', String(isOpen));
+            });
+            document.addEventListener('click', (e) => {
+                if (!assessmentDropdown.contains(e.target)) {
+                    assessmentDropdown.classList.remove('open');
+                    assessmentDropdownToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
         }
 
         // QR Code Modal System

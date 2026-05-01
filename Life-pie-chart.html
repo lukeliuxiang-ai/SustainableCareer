@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生命角色测评 | 睿观生涯教练</title>
+    <meta name="description" content="睿观生涯教练生命角色测评工具：对比当下与2031年角色分配，下载结果并联系教练免费解读。">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-blue: #0a1f2e;
+            --navy: #0f2d3d;
+            --slate: #1a3c5c;
+            --steel: #2c5a7a;
+            --primary-color: #2c5a7a;
+            --secondary-color: #1f9b73;
+            --gold: #d4a853;
+            --gold-light: #e8c878;
+            --gold-dark: #b8923e;
+            --cream: #faf8f3;
+            --ivory: #f5f0e8;
+            --text-dark: #1e2a35;
+            --text-body: #3d4f5f;
+            --text-light: #6b7d8d;
+            --danger-color: #e56767;
+            --light-gray: #e8edf2;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, var(--deep-blue) 0%, var(--navy) 40%, var(--slate) 100%);
+            color: var(--text-body);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { width: 100%; max-width: 520px; margin: auto; }
+        .card {
+            background: linear-gradient(180deg, #ffffff 0%, var(--cream) 100%);
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 16px 40px rgba(10,31,46,0.2);
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px solid rgba(212,168,83,0.14);
+        }
+        h1, h2, h3 { font-weight: 600; margin-top: 0; color: var(--text-dark); }
+        h1 { font-family: 'Noto Serif SC', serif; font-size: 26px; }
+        h2 { font-size: 20px; text-align: left; margin-bottom: 16px; }
+        h3 { font-size: 16px; color: var(--text-light); margin-bottom: 10px; }
+        .description { color: var(--text-light); margin-bottom: 24px; line-height: 1.8; }
+        .input-field {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid rgba(44,90,122,0.2);
+            border-radius: 12px;
+            margin-bottom: 14px;
+            font-size: 16px;
+            background: #fff;
+            color: var(--text-body);
+        }
+        .btn { padding: 15px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; }
+        .btn-full { width: 100%; }
+        .btn-primary { background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%); color: var(--deep-blue); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(212,168,83,0.35); }
+        .btn-secondary { background: transparent; color: var(--steel); font-weight: 500; margin-top: 14px; border: 1px solid rgba(44,90,122,0.25); }
+        .btn-danger { background-color: var(--danger-color); color: white; }
+        #app-header {
+            color: #fff;
+            text-align: center;
+            font-family: 'Noto Serif SC', serif;
+            font-size: 24px;
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+        .charts-wrapper { display: flex; gap: 10px; }
+        .chart-container { width: 50%; text-align: center; }
+        .toggle-buttons { display: flex; justify-content: center; margin-bottom: 20px; }
+        .toggle-buttons button { padding: 8px 20px; border: 1px solid rgba(44,90,122,0.24); background-color: var(--light-gray); cursor: pointer; font-size: 14px; color: var(--text-body); }
+        .toggle-buttons button:first-child { border-radius: 15px 0 0 15px; }
+        .toggle-buttons button:last-child { border-radius: 0 15px 15px 0; border-left: none;}
+        .toggle-buttons button.active { background-color: var(--steel); color: white; border-color: var(--steel); }
+        .role-manager-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .add-btn { width: 36px; height: 36px; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%); color: var(--deep-blue); border: none; border-radius: 50%; font-size: 24px; display: flex; justify-content: center; align-items: center; line-height: 1; cursor: pointer; }
+        .role-item { display: flex; align-items: center; margin-bottom: 15px; }
+        .role-color-dot { width: 12px; height: 12px; border-radius: 50%; margin-right: 15px; flex-shrink: 0; }
+        .role-name { flex-grow: 1; text-align: left; font-weight: 500; }
+        .role-slider-container { flex-grow: 2; display: flex; align-items: center; }
+        .role-slider { width: 100%; margin: 0 10px; cursor: pointer; }
+        .role-percentage { min-width: 45px; text-align: right; font-weight: 500; }
+        .delete-btn { width: 24px; height: 24px; background-color: var(--danger-color); color: white; border: none; border-radius: 50%; font-size: 18px; cursor: pointer; margin-left: 15px; line-height: 1; }
+        .total-percentage { margin-top: 20px; font-weight: bold; font-size: 16px; }
+        .total-percentage.error { color: var(--danger-color); }
+        .actions-container { display: flex; gap: 10px; margin-top: 20px; }
+        .actions-container .btn { flex: 1; }
+        .student-record-card { background: white; border-radius: 15px; padding: 20px; margin-bottom: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); position: relative; }
+        .delete-record-btn { position: absolute; top: 15px; right: 15px; width: 30px; height: 30px; border-radius: 50%; border: none; background-color: var(--danger-color); color: white; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; line-height: 1; }
+        .student-record-header { font-size: 18px; font-weight: bold; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--light-gray); text-align: left; }
+        .student-record-header .timestamp { font-size: 12px; font-weight: normal; color: var(--dark-gray); display: block; margin-top: 4px; }
+        .admin-charts-wrapper { display: flex; gap: 20px; }
+        .admin-chart-block { width: 50%; text-align: center; }
+        .role-details-list { list-style: none; padding: 0; margin-top: 15px; text-align: left; font-size: 14px; }
+        .role-details-list li { display: flex; align-items: center; margin-bottom: 5px; }
+        .hidden { display: none; }
+
+        /* 新增：保存状态提示 */
+        .save-status { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            padding: 12px 20px; 
+            border-radius: 8px; 
+            font-size: 14px; 
+            font-weight: 500;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        .save-status.show { opacity: 1; transform: translateY(0); }
+        .save-status.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .save-status.error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .save-status.loading { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+
+        /* 新增：后台数据表格样式 */
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
+        .admin-table th, .admin-table td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+        .admin-table th { background: #f8f9fa; font-weight: 600; }
+        .admin-table tr:hover { background: #f8f9fa; }
+        .view-btn { 
+            padding: 4px 12px; 
+            background: var(--steel); 
+            color: white; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-size: 12px;
+        }
+        .result-download-tip {
+            margin-top: 16px;
+            border: 1px solid rgba(212,168,83,0.25);
+            background: linear-gradient(135deg, var(--ivory) 0%, #fff 100%);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: left;
+        }
+        .result-download-tip h4 {
+            margin: 0 0 8px;
+            font-size: 15px;
+            color: var(--gold-dark);
+        }
+        .result-download-tip p {
+            margin: 0 0 10px;
+            line-height: 1.7;
+            color: var(--text-body);
+            font-size: 14px;
+        }
+        .helper-text {
+            margin-top: 10px;
+            font-size: 12px;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        @media (max-width: 640px) {
+            .container { max-width: 100%; }
+            .card { padding: 20px 16px; border-radius: 18px; }
+            .charts-wrapper { flex-direction: column; }
+            .chart-container { width: 100%; }
+            .actions-container { flex-wrap: wrap; }
+            .actions-container .btn { min-width: calc(50% - 5px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- 保存状态提示 -->
+    <div id="save-status" class="save-status"></div>
+
+    <div class="container">
+        <!-- 欢迎页面 -->
+        <div id="welcome-page">
+            <div id="app-header" style="visibility: hidden;">生命角色饼图</div>
+            <div class="card">
+                <h1>欢迎来到生命角色规划工具</h1>
+                <p class="description">无需输入姓名和密码，点击下方按钮即可直接开始测评。</p>
+                <button type="button" id="start-btn" class="btn btn-full btn-primary">进入测评</button>
+                <button type="button" id="admin-login-btn" class="btn btn-full btn-secondary">规划师入口</button>
+            </div>
+        </div>
+
+        <!-- 主应用页面 -->
+        <div id="main-app" class="hidden">
+            <div id="app-header">生命角色饼图</div>
+            <div class="card">
+                <div class="charts-wrapper">
+                    <div class="chart-container"><h3>当下</h3><canvas id="present-pie-chart"></canvas></div>
+                    <div class="chart-container"><h3>2031年</h3><canvas id="future-pie-chart"></canvas></div>
+                </div>
+            </div>
+            <div class="card role-management-section">
+                <div class="toggle-buttons">
+                    <button id="toggle-present" class="active">当下</button>
+                    <button id="toggle-future">2031年</button>
+                </div>
+                <div class="role-manager-header"><h2>角色管理</h2><button id="add-role-btn" class="add-btn">+</button></div>
+                <div id="roles-list"></div>
+                <div id="total-percentage" class="total-percentage"></div>
+                <div class="actions-container">
+                    <button type="button" id="exit-btn" class="btn btn-danger hidden">退出</button>
+                    <button type="button" id="reset-btn" class="btn" style="background-color: #8592a0; color: white;">重置</button>
+                    <button type="button" id="save-btn" class="btn btn-primary">保存并下载</button>
+                </div>
+                <div id="result-download-tip" class="result-download-tip hidden">
+                    <h4>测评结果已生成</h4>
+                    <p>你可以下载本次测评结果（含当下与2031角色占比），并用于后续复盘。</p>
+                    <button type="button" id="download-result-btn" class="btn btn-primary btn-full">下载测评文本结果</button>
+                    <p class="helper-text">拿着这份结果，联系睿观生涯教练可获得一次免费解读，帮你更清晰地找到职业和人生的优先级。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 管理员后台页面 -->
+        <div id="admin-page" class="hidden">
+            <div id="app-header">规划师后台</div>
+            <div class="card">
+                <h2>学员数据概览</h2>
+                <div id="admin-stats" style="display: flex; gap: 20px; margin-bottom: 20px; flex-wrap: wrap;">
+                    <div style="background: #f0f4ff; padding: 15px; border-radius: 10px; flex: 1; min-width: 120px;">
+                        <div style="font-size: 24px; font-weight: bold; color: var(--primary-color);" id="stat-total">0</div>
+                        <div style="font-size: 12px; color: #666;">总提交数</div>
+                    </div>
+                    <div style="background: #f0fff4; padding: 15px; border-radius: 10px; flex: 1; min-width: 120px;">
+                        <div style="font-size: 24px; font-weight: bold; color: var(--secondary-color);" id="stat-users">0</div>
+                        <div style="font-size: 12px; color: #666;">独立用户</div>
+                    </div>
+                    <div style="background: #fff5f0; padding: 15px; border-radius: 10px; flex: 1; min-width: 120px;">
+                        <div style="font-size: 14px; font-weight: bold; color: #e07a3c;" id="stat-last">-</div>
+                        <div style="font-size: 12px; color: #666;">最后更新</div>
+                    </div>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table class="admin-table" id="admin-table">
+                        <thead>
+                            <tr>
+                                <th>姓名</th>
+                                <th>当下总计</th>
+                                <th>2031年总计</th>
+                                <th>提交时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-table-body">
+                            <!-- 动态填充 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="admin-detail-view" class="hidden">
+                <!-- 详细视图 -->
+            </div>
+            <button onclick="showWelcomePage()" class="btn btn-full btn-primary" style="margin-top: 10px;">返回首页</button>
+            <button id="refresh-data-btn" class="btn btn-full" style="margin-top: 10px; background: #6c757d; color: white;">刷新数据</button>
+        </div>
+    </div>
+
+    <script>
+        // API配置 - 部署后需要修改为实际的Vercel域名
+        const API_BASE = window.location.hostname === 'localhost' 
+            ? 'http://localhost:3000/api'  // 本地开发
+            : '/api';  // 生产环境（同域名）
+
+        const DB_KEY = 'lifePieSubmissions_v4';
+        const page = { welcome: document.getElementById('welcome-page'), app: document.getElementById('main-app'), admin: document.getElementById('admin-page'), };
+        const input = { name: document.getElementById('name-input'), password: document.getElementById('student-password-input'), };
+        const btn = { start: document.getElementById('start-btn'), adminLogin: document.getElementById('admin-login-btn'), reset: document.getElementById('reset-btn'), save: document.getElementById('save-btn'), exit: document.getElementById('exit-btn'), addRole: document.getElementById('add-role-btn'), refresh: document.getElementById('refresh-data-btn'), downloadResult: document.getElementById('download-result-btn') };
+        const resultTip = document.getElementById('result-download-tip');
+
+        let presentPieChart, futurePieChart;
+        const getInitialState = () => ({ userName: '', activeView: 'present', present: { roles: [ { name: '员工', value: 40, color: '#2c5a7a' }, { name: '配偶', value: 20, color: '#d4a853' }, { name: '子女', value: 15, color: '#1a3c5c' }, { name: '自我', value: 15, color: '#8a7d6b' }, { name: '朋友', value: 10, color: '#4f6f8b' } ] }, future: { roles: [ { name: '员工', value: 25, color: '#2c5a7a' }, { name: '配偶', value: 25, color: '#d4a853' }, { name: '子女', value: 10, color: '#1a3c5c' }, { name: '自我', value: 30, color: '#8a7d6b' }, { name: '朋友', value: 10, color: '#4f6f8b' } ] }, timestamp: null });
+        let state = getInitialState();
+        const defaultColors = ['#2c5a7a', '#d4a853', '#1a3c5c', '#8a7d6b', '#4f6f8b', '#b8923e', '#6b7d8d'];
+
+        // 显示保存状态提示
+        function showStatus(message, type = 'loading', duration = 3000) {
+            const statusEl = document.getElementById('save-status');
+            statusEl.textContent = message;
+            statusEl.className = `save-status ${type} show`;
+
+            if (duration > 0) {
+                setTimeout(() => {
+                    statusEl.classList.remove('show');
+                }, duration);
+            }
+            return statusEl;
+        }
+
+        function createChart(canvasId, rolesData) { 
+            const ctx = document.getElementById(canvasId).getContext('2d'); 
+            return new Chart(ctx, { 
+                type: 'pie', 
+                data: { 
+                    labels: rolesData.map(r => r.name), 
+                    datasets: [{ 
+                        data: rolesData.map(r => r.value), 
+                        backgroundColor: rolesData.map(r => r.color), 
+                        borderWidth: 2, 
+                        borderColor: '#fff' 
+                    }] 
+                }, 
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: true, 
+                    plugins: { 
+                        legend: { display: false }, 
+                        tooltip: { 
+                            callbacks: { 
+                                label: context => `${context.label}: ${context.raw}%` 
+                            } 
+                        } 
+                    } 
+                } 
+            }); 
+        }
+
+        function renderAllForUser() { 
+            if (presentPieChart) presentPieChart.destroy(); 
+            if (futurePieChart) futurePieChart.destroy(); 
+            presentPieChart = createChart('present-pie-chart', state.present.roles); 
+            futurePieChart = createChart('future-pie-chart', state.future.roles); 
+            renderRoleManagement(); 
+            updateToggleButtons(); 
+        }
+
+        function renderRoleManagement() { 
+            const activeRoles = state[state.activeView].roles; 
+            const rolesList = document.getElementById('roles-list'); 
+            rolesList.innerHTML = ''; 
+            activeRoles.forEach((role, index) => { 
+                const roleItem = document.createElement('div'); 
+                roleItem.className = 'role-item'; 
+                roleItem.innerHTML = `<div class="role-color-dot" style="background-color: ${role.color};"></div><div class="role-name">${role.name}</div><div class="role-slider-container"><input type="range" min="0" max="100" value="${role.value}" class="role-slider" data-index="${index}"></div><div class="role-percentage">${role.value}%</div><button class="delete-btn" data-index="${index}">-</button>`; 
+                rolesList.appendChild(roleItem); 
+            }); 
+            updateTotal(); 
+        }
+
+        function updateTotal() { 
+            const total = state[state.activeView].roles.reduce((sum, role) => sum + role.value, 0); 
+            document.getElementById('total-percentage').textContent = `总计：${total}%`; 
+            document.getElementById('total-percentage').classList.toggle('error', total > 100); 
+        }
+
+        function updateToggleButtons() { 
+            document.getElementById('toggle-present').classList.toggle('active', state.activeView === 'present'); 
+            document.getElementById('toggle-future').classList.toggle('active', state.activeView === 'future'); 
+        }
+
+        function formatTimestamp(isoString) { 
+            if (!isoString) return ''; 
+            const date = new Date(isoString); 
+            const pad = num => num.toString().padStart(2, '0'); 
+            return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`; 
+        }
+
+        function generateAnonymousUserName() {
+            const now = new Date();
+            const pad = num => num.toString().padStart(2, '0');
+            return `匿名学员_${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}_${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
+        }
+
+        function buildResultText() {
+            const presentLines = state.present.roles.map(r => `- ${r.name}: ${r.value}%`).join('\n');
+            const futureLines = state.future.roles.map(r => `- ${r.name}: ${r.value}%`).join('\n');
+            return [
+                '睿观生涯教练｜生命角色测评结果',
+                `姓名：${state.userName || '未命名'}`,
+                `生成时间：${formatTimestamp(state.timestamp || new Date().toISOString())}`,
+                '',
+                `当下总占比：${state.present.roles.reduce((sum, r) => sum + r.value, 0)}%`,
+                presentLines,
+                '',
+                `2031年总占比：${state.future.roles.reduce((sum, r) => sum + r.value, 0)}%`,
+                futureLines,
+                '',
+                '提示：拿着这份结果，联系睿观生涯教练可获得一次免费解读。'
+            ].join('\n');
+        }
+
+        function downloadResultFile() {
+            const blob = new Blob([buildResultText()], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            const safeName = (state.userName || '用户').replace(/[^\w\u4e00-\u9fa5-]/g, '_');
+            link.href = URL.createObjectURL(blob);
+            link.download = `${safeName}_生命角色测评结果_${new Date().toISOString().slice(0,10)}.txt`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+        }
+
+        function downloadSnapshotImage() {
+            const pCanvas = document.getElementById('present-pie-chart');
+            const fCanvas = document.getElementById('future-pie-chart');
+            const width = 1240;
+            const height = 860;
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+
+            ctx.fillStyle = '#faf8f3';
+            ctx.fillRect(0, 0, width, height);
+
+            ctx.fillStyle = '#0a1f2e';
+            ctx.font = '700 42px "Noto Sans SC", sans-serif';
+            ctx.fillText('睿观生涯教练｜生命角色测评结果', 60, 72);
+
+            ctx.fillStyle = '#3d4f5f';
+            ctx.font = '500 24px "Noto Sans SC", sans-serif';
+            ctx.fillText(`学员：${state.userName}`, 60, 118);
+            ctx.fillText(`时间：${formatTimestamp(state.timestamp || new Date().toISOString())}`, 60, 152);
+
+            ctx.fillStyle = '#ffffff';
+            ctx.strokeStyle = 'rgba(44,90,122,0.2)';
+            ctx.lineWidth = 2;
+            ctx.fillRect(40, 190, 560, 520);
+            ctx.strokeRect(40, 190, 560, 520);
+            ctx.fillRect(640, 190, 560, 520);
+            ctx.strokeRect(640, 190, 560, 520);
+
+            ctx.fillStyle = '#1e2a35';
+            ctx.font = '700 30px "Noto Sans SC", sans-serif';
+            ctx.fillText('当下', 290, 238);
+            ctx.fillText('2031年', 870, 238);
+
+            if (pCanvas) ctx.drawImage(pCanvas, 100, 260, 440, 440);
+            if (fCanvas) ctx.drawImage(fCanvas, 700, 260, 440, 440);
+
+            ctx.fillStyle = '#6b7d8d';
+            ctx.font = '500 22px "Noto Sans SC", sans-serif';
+            ctx.fillText('拿着这份结果联系睿观生涯教练，可获得一次免费解读。', 60, 795);
+
+            const safeName = (state.userName || '用户').replace(/[^\w\u4e00-\u9fa5-]/g, '_');
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = `${safeName}_生命角色测评结果_${new Date().toISOString().slice(0,10)}.png`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // 远程保存数据到MongoDB
+        async function saveToRemote(data) {
+            try {
+                showStatus('正在保存到云端...', 'loading', 0);
+
+                const response = await fetch(`${API_BASE}/save`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.error || result.message || '保存失败');
+                }
+
+                showStatus('✓ 数据已保存到云端', 'success', 3000);
+                return result;
+            } catch (error) {
+                console.error('Save error:', error);
+                showStatus('⚠ 云端保存失败，已转为本地保存', 'error', 5000);
+
+                // 失败时回退到localStorage
+                const allSubmissions = JSON.parse(localStorage.getItem(DB_KEY) || '{}');
+                allSubmissions[data.userName] = data;
+                localStorage.setItem(DB_KEY, JSON.stringify(allSubmissions));
+                alert('云端保存失败，已自动备份到本地存储');
+                return { success: false, localFallback: true };
+            }
+        }
+
+        // 获取远程数据（管理员功能）
+        async function fetchRemoteData(adminPassword) {
+            try {
+                showStatus('正在加载数据...', 'loading', 0);
+
+                const response = await fetch(`${API_BASE}/admin?password=${encodeURIComponent(adminPassword)}`);
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.error || '获取数据失败');
+                }
+
+                showStatus('✓ 数据加载完成', 'success', 2000);
+                return result;
+            } catch (error) {
+                showStatus('✗ 加载失败: ' + error.message, 'error', 5000);
+                throw error;
+            }
+        }
+
+        // 渲染管理员页面 - 表格视图
+        async function renderAdminPage() {
+            const password = prompt("请输入规划师密码：");
+            if (password !== '0411') {
+                if (password !== null) alert('密码错误！');
+                return false;
+            }
+
+            try {
+                const data = await fetchRemoteData(password);
+
+                // 更新统计数据
+                document.getElementById('stat-total').textContent = data.stats.totalSubmissions;
+                document.getElementById('stat-users').textContent = data.stats.uniqueUsers;
+                document.getElementById('stat-last').textContent = data.stats.lastSubmission 
+                    ? formatTimestamp(data.stats.lastSubmission) 
+                    : '-';
+
+                // 填充表格
+                const tbody = document.getElementById('admin-table-body');
+                tbody.innerHTML = '';
+
+                data.submissions.forEach(sub => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>${sub.userName}</strong></td>
+                        <td>${sub.present?.total || 0}%</td>
+                        <td>${sub.future?.total || 0}%</td>
+                        <td>${formatTimestamp(sub.timestamp)}</td>
+                        <td><button class="view-btn" onclick="viewDetail('${sub.userName}')">查看</button></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+                return true;
+            } catch (error) {
+                console.error('Admin render error:', error);
+                return false;
+            }
+        }
+
+        // 查看详细数据（可扩展）
+        window.viewDetail = function(userName) {
+            alert(`查看 ${userName} 的详细数据\n（此处可展开详细图表）`);
+        };
+
+        // 事件监听
+        btn.start.addEventListener('click', async () => {
+            state.userName = generateAnonymousUserName();
+
+            page.welcome.classList.add('hidden'); 
+            page.app.classList.remove('hidden');
+            renderAllForUser();
+            if (state.timestamp) {
+                resultTip.classList.remove('hidden');
+            }
+        });
+
+        btn.adminLogin.addEventListener('click', async () => {
+            const success = await renderAdminPage();
+            if (success) {
+                page.welcome.classList.add('hidden'); 
+                page.admin.classList.remove('hidden');
+            }
+        });
+
+        btn.refresh.addEventListener('click', renderAdminPage);
+
+        document.getElementById('toggle-present').addEventListener('click', () => { 
+            state.activeView = 'present'; 
+            renderAllForUser(); 
+        });
+
+        document.getElementById('toggle-future').addEventListener('click', () => { 
+            state.activeView = 'future'; 
+            renderAllForUser(); 
+        });
+
+        btn.exit.addEventListener('click', showWelcomePage);
+
+        btn.reset.addEventListener('click', () => {
+            if (confirm('您确定要重置所有角色和比例为初始状态吗？')) {
+                const currentName = state.userName;
+                state = getInitialState();
+                state.userName = currentName;
+                renderAllForUser();
+                btn.exit.classList.add('hidden');
+                resultTip.classList.add('hidden');
+                showStatus('✓ 已重置为初始状态', 'success', 2000);
+            }
+        });
+
+        // 保存按钮 - 远程保存
+        btn.save.addEventListener('click', async () => {
+            const totalPresent = state.present.roles.reduce((sum, r) => sum + r.value, 0); 
+            const totalFuture = state.future.roles.reduce((sum, r) => sum + r.value, 0);
+
+            if (totalPresent > 100 || totalFuture > 100) { 
+                alert('“当下”或“2031年”的总比例超过了100%，请调整后再保存！'); 
+                return; 
+            }
+
+            if ((totalPresent !== 100 || totalFuture !== 100) && !confirm(`饼图总比例不等于100%，您确定要这样保存吗？`)) {
+                return;
+            }
+
+            // 准备数据
+            const dataToSave = {
+                userName: state.userName,
+                present: state.present,
+                future: state.future,
+                timestamp: new Date().toISOString()
+            };
+
+            // 保存到远程
+            await saveToRemote(dataToSave);
+            state.timestamp = dataToSave.timestamp;
+            downloadSnapshotImage();
+
+            btn.exit.classList.remove('hidden');
+            resultTip.classList.remove('hidden');
+            alert('已保存并下载图片结果。你也可以下载文本结果，并联系睿观生涯教练免费解读。');
+        });
+
+        btn.downloadResult.addEventListener('click', downloadResultFile);
+
+        btn.addRole.addEventListener('click', () => { 
+            const newRoleName = prompt("请输入新角色的名称：")?.trim(); 
+            if (!newRoleName) return; 
+            const activeRoles = state[state.activeView].roles; 
+            if (activeRoles.some(role => role.name === newRoleName)) { 
+                alert('该角色已存在！'); 
+                return; 
+            } 
+            activeRoles.push({ 
+                name: newRoleName, 
+                value: 0, 
+                color: defaultColors[activeRoles.length % defaultColors.length] 
+            }); 
+            renderAllForUser(); 
+        });
+
+        document.getElementById('roles-list').addEventListener('input', e => { 
+            if (e.target.classList.contains('role-slider')) { 
+                const index = e.target.dataset.index; 
+                const newValue = parseInt(e.target.value, 10); 
+                const activeRoles = state[state.activeView].roles; 
+                const oldValue = activeRoles[index].value; 
+                const totalWithoutCurrent = activeRoles.reduce((sum, role, i) => (i == index ? sum : sum + role.value), 0); 
+                if (totalWithoutCurrent + newValue > 100) { 
+                    alert('总比例不能超过100%！'); 
+                    e.target.value = oldValue; 
+                    return; 
+                } 
+                activeRoles[index].value = newValue; 
+                e.target.closest('.role-item').querySelector('.role-percentage').textContent = `${newValue}%`; 
+                updateTotal(); 
+                // 实时更新图表
+                if (state.activeView === 'present' && presentPieChart) {
+                    presentPieChart.data.datasets[0].data = state.present.roles.map(r => r.value);
+                    presentPieChart.update();
+                } else if (state.activeView === 'future' && futurePieChart) {
+                    futurePieChart.data.datasets[0].data = state.future.roles.map(r => r.value);
+                    futurePieChart.update();
+                }
+            } 
+        });
+
+        document.getElementById('roles-list').addEventListener('click', e => { 
+            if (e.target.classList.contains('delete-btn')) { 
+                state[state.activeView].roles.splice(e.target.dataset.index, 1); 
+                renderAllForUser(); 
+            } 
+        });
+
+        window.showWelcomePage = function() {
+            state = getInitialState();
+            if (input.name) input.name.value = '';
+            if (input.password) input.password.value = '';
+            Object.values(page).forEach(p => p.classList.add('hidden'));
+            page.welcome.classList.remove('hidden');
+            btn.exit.classList.add('hidden');
+            resultTip.classList.add('hidden');
+        };
+    </script>
+</body>
+</html>

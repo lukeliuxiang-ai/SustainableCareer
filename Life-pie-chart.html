@@ -298,6 +298,50 @@
             return statusEl;
         }
 
+        // 在饼图扇区内绘制百分比标签（无需额外插件）
+        const piePercentageLabelPlugin = {
+            id: 'piePercentageLabelPlugin',
+            afterDatasetsDraw(chart) {
+                const { ctx } = chart;
+                const dataset = chart.data.datasets[0];
+                if (!dataset) return;
+
+                const data = dataset.data || [];
+                const meta = chart.getDatasetMeta(0);
+                const total = data.reduce((sum, v) => sum + Number(v || 0), 0);
+                if (!total) return;
+
+                ctx.save();
+                ctx.font = '700 12px "Noto Sans SC", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+
+                data.forEach((value, index) => {
+                    const arc = meta.data[index];
+                    if (!arc || !value) return;
+
+                    const percentage = Math.round((Number(value) / total) * 100);
+                    if (percentage < 4) return; // 太小的扇区不显示，避免重叠
+
+                    const angle = (arc.startAngle + arc.endAngle) / 2;
+                    const radius = arc.innerRadius + (arc.outerRadius - arc.innerRadius) * 0.68;
+                    const x = arc.x + Math.cos(angle) * radius;
+                    const y = arc.y + Math.sin(angle) * radius;
+
+                    ctx.fillStyle = 'rgba(10,31,46,0.35)';
+                    ctx.beginPath();
+                    ctx.arc(x, y, 14, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    ctx.fillStyle = '#fff';
+                    ctx.fillText(`${percentage}%`, x, y);
+                });
+
+                ctx.restore();
+            }
+        };
+        Chart.register(piePercentageLabelPlugin);
+
         function createChart(canvasId, rolesData) { 
             const ctx = document.getElementById(canvasId).getContext('2d'); 
             return new Chart(ctx, { 
@@ -405,8 +449,8 @@
         function downloadSnapshotImage() {
             const pCanvas = document.getElementById('present-pie-chart');
             const fCanvas = document.getElementById('future-pie-chart');
-            const width = 1240;
-            const height = 860;
+            const width = 1480;
+            const height = 980;
             const canvas = document.createElement('canvas');
             canvas.width = width;
             canvas.height = height;
@@ -427,22 +471,49 @@
             ctx.fillStyle = '#ffffff';
             ctx.strokeStyle = 'rgba(44,90,122,0.2)';
             ctx.lineWidth = 2;
-            ctx.fillRect(40, 190, 560, 520);
-            ctx.strokeRect(40, 190, 560, 520);
-            ctx.fillRect(640, 190, 560, 520);
-            ctx.strokeRect(640, 190, 560, 520);
+            ctx.fillRect(40, 190, 680, 640);
+            ctx.strokeRect(40, 190, 680, 640);
+            ctx.fillRect(760, 190, 680, 640);
+            ctx.strokeRect(760, 190, 680, 640);
 
             ctx.fillStyle = '#1e2a35';
             ctx.font = '700 30px "Noto Sans SC", sans-serif';
-            ctx.fillText('当下', 290, 238);
-            ctx.fillText('2031年', 870, 238);
+            ctx.fillText('当下', 380, 238);
+            ctx.fillText('2031年', 1100, 238);
 
-            if (pCanvas) ctx.drawImage(pCanvas, 100, 260, 440, 440);
-            if (fCanvas) ctx.drawImage(fCanvas, 700, 260, 440, 440);
+            if (pCanvas) ctx.drawImage(pCanvas, 70, 270, 430, 430);
+            if (fCanvas) ctx.drawImage(fCanvas, 790, 270, 430, 430);
+
+            const drawRoleList = (title, roles, startX, startY) => {
+                ctx.fillStyle = '#3d4f5f';
+                ctx.font = '700 24px "Noto Sans SC", sans-serif';
+                ctx.fillText(title, startX, startY);
+
+                let y = startY + 42;
+                roles.forEach(role => {
+                    ctx.fillStyle = role.color;
+                    ctx.beginPath();
+                    ctx.arc(startX + 10, y - 5, 8, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    ctx.fillStyle = '#1e2a35';
+                    ctx.font = '500 22px "Noto Sans SC", sans-serif';
+                    ctx.fillText(`${role.name}：${role.value}%`, startX + 28, y);
+                    y += 38;
+                });
+
+                const total = roles.reduce((sum, r) => sum + Number(r.value || 0), 0);
+                ctx.fillStyle = '#6b7d8d';
+                ctx.font = '600 20px "Noto Sans SC", sans-serif';
+                ctx.fillText(`总计：${total}%`, startX, y + 8);
+            };
+
+            drawRoleList('当下角色分配', state.present.roles, 510, 322);
+            drawRoleList('2031角色分配', state.future.roles, 1230, 322);
 
             ctx.fillStyle = '#6b7d8d';
             ctx.font = '500 22px "Noto Sans SC", sans-serif';
-            ctx.fillText('拿着这份结果联系睿观生涯教练，可获得一次免费解读。', 60, 795);
+            ctx.fillText('拿着这份结果联系睿观生涯教练，可获得一次免费解读。', 60, 900);
 
             const safeName = (state.userName || '用户').replace(/[^\w\u4e00-\u9fa5-]/g, '_');
             const link = document.createElement('a');
@@ -583,7 +654,7 @@
             renderAllForUser(); 
         });
 
-        btn.exit.addEventListener('click', showWelcomePage);
+        btn.exit.addEventListener('click', () => window.showWelcomePage());
 
         btn.reset.addEventListener('click', () => {
             if (confirm('您确定要重置所有角色和比例为初始状态吗？')) {

@@ -671,8 +671,16 @@
 
         // Mobile menu toggle
         function toggleMobileMenu() {
-            document.getElementById('mobileMenu').classList.toggle('active');
+            const menu = document.getElementById('mobileMenu');
+            const isActive = menu.classList.toggle('active');
+            document.body.style.overflow = isActive ? 'hidden' : '';
         }
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                document.getElementById('mobileMenu').classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
 
         // QR Code Modal System
         const qrConfig = {

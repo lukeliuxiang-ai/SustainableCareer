@@ -274,12 +274,6 @@
             : '/api';  // 生产环境（同域名）
 
         const DB_KEY = 'lifePieSubmissions_v4';
-
-        /** GitHub Pages 等纯静态站点没有 /api，避免先请求再下载导致下载被浏览器拦截 */
-        function isStaticHostingWithoutApi() {
-            const h = (window.location.hostname || '').toLowerCase();
-            return h.endsWith('github.io') || h.endsWith('gitlab.io') || h.endsWith('cloudflarepages.dev');
-        }
         const page = { welcome: document.getElementById('welcome-page'), app: document.getElementById('main-app'), admin: document.getElementById('admin-page'), };
         const input = { name: document.getElementById('name-input'), password: document.getElementById('student-password-input'), };
         const btn = { start: document.getElementById('start-btn'), adminLogin: document.getElementById('admin-login-btn'), reset: document.getElementById('reset-btn'), save: document.getElementById('save-btn'), exit: document.getElementById('exit-btn'), addRole: document.getElementById('add-role-btn'), refresh: document.getElementById('refresh-data-btn'), downloadResult: document.getElementById('download-result-btn') };
@@ -531,31 +525,9 @@
         }
 
         // 远程保存数据到MongoDB
-        /**
-         * @param {object} data
-         * @param {{ quiet?: boolean }} opts  quiet=true：不弹窗、不显示误导性错误条（用于「保存并下载」仅触发下载的场景）
-         */
-        async function saveToRemote(data, opts = {}) {
-            const quiet = opts.quiet === true;
-
-            const saveLocal = () => {
-                const allSubmissions = JSON.parse(localStorage.getItem(DB_KEY) || '{}');
-                allSubmissions[data.userName] = data;
-                localStorage.setItem(DB_KEY, JSON.stringify(allSubmissions));
-            };
-
-            if (isStaticHostingWithoutApi()) {
-                saveLocal();
-                if (!quiet) {
-                    showStatus('✓ 已保存到本机（静态站点无云端接口）', 'success', 3500);
-                }
-                return { success: true, localOnly: true };
-            }
-
+        async function saveToRemote(data) {
             try {
-                if (!quiet) {
-                    showStatus('正在保存到云端...', 'loading', 0);
-                }
+                showStatus('正在保存到云端...', 'loading', 0);
 
                 const response = await fetch(`${API_BASE}/save`, {
                     method: 'POST',
@@ -563,28 +535,23 @@
                     body: JSON.stringify(data)
                 });
 
-                const raw = await response.text();
-                let result = {};
-                try {
-                    result = raw ? JSON.parse(raw) : {};
-                } catch {
-                    result = { error: raw ? raw.slice(0, 120) : '非 JSON 响应' };
-                }
+                const result = await response.json();
 
                 if (!response.ok) {
-                    throw new Error(result.error || result.message || `保存失败 (${response.status})`);
+                    throw new Error(result.error || result.message || '保存失败');
                 }
 
-                if (!quiet) {
-                    showStatus('✓ 数据已保存到云端', 'success', 3000);
-                }
+                showStatus('✓ 数据已保存到云端', 'success', 3000);
                 return result;
             } catch (error) {
                 console.error('Save error:', error);
-                saveLocal();
-                if (!quiet) {
-                    showStatus('⚠ 云端保存失败，已转为本地保存', 'error', 5000);
-                }
+                showStatus('⚠ 云端保存失败，已转为本地保存', 'error', 5000);
+
+                // 失败时回退到localStorage
+                const allSubmissions = JSON.parse(localStorage.getItem(DB_KEY) || '{}');
+                allSubmissions[data.userName] = data;
+                localStorage.setItem(DB_KEY, JSON.stringify(allSubmissions));
+                alert('云端保存失败，已自动备份到本地存储');
                 return { success: false, localFallback: true };
             }
         }
@@ -701,8 +668,8 @@
             }
         });
 
-        // 保存按钮：必须在用户点击的同一同步阶段触发下载，否则 await 后浏览器会拦截程序化下载（GitHub Pages 上尤其明显）
-        btn.save.addEventListener('click', () => {
+        // 保存按钮 - 远程保存
+        btn.save.addEventListener('click', async () => {
             const totalPresent = state.present.roles.reduce((sum, r) => sum + r.value, 0); 
             const totalFuture = state.future.roles.reduce((sum, r) => sum + r.value, 0);
 
@@ -715,27 +682,22 @@
                 return;
             }
 
+            // 准备数据
             const dataToSave = {
                 userName: state.userName,
                 present: state.present,
                 future: state.future,
                 timestamp: new Date().toISOString()
             };
-            state.timestamp = dataToSave.timestamp;
 
-            try {
-                downloadSnapshotImage();
-            } catch (e) {
-                console.error(e);
-                alert('生成下载图片失败：' + (e && e.message ? e.message : String(e)));
-                return;
-            }
+            // 保存到远程
+            await saveToRemote(dataToSave);
+            state.timestamp = dataToSave.timestamp;
+            downloadSnapshotImage();
 
             btn.exit.classList.remove('hidden');
             resultTip.classList.remove('hidden');
-
-            // 后台静默保存：不弹 alert、不用红色错误提示，避免「云端失败」类误导（下载已成功）
-            void saveToRemote(dataToSave, { quiet: true });
+            alert('已保存并下载图片结果。你也可以下载文本结果，并联系睿观生涯教练免费解读。');
         });
 
         btn.downloadResult.addEventListener('click', downloadResultFile);

@@ -531,17 +531,31 @@
         }
 
         // 远程保存数据到MongoDB
-        async function saveToRemote(data) {
-            if (isStaticHostingWithoutApi()) {
+        /**
+         * @param {object} data
+         * @param {{ quiet?: boolean }} opts  quiet=true：不弹窗、不显示误导性错误条（用于「保存并下载」仅触发下载的场景）
+         */
+        async function saveToRemote(data, opts = {}) {
+            const quiet = opts.quiet === true;
+
+            const saveLocal = () => {
                 const allSubmissions = JSON.parse(localStorage.getItem(DB_KEY) || '{}');
                 allSubmissions[data.userName] = data;
                 localStorage.setItem(DB_KEY, JSON.stringify(allSubmissions));
-                showStatus('✓ 已保存到本机（静态站点无云端接口）', 'success', 3500);
+            };
+
+            if (isStaticHostingWithoutApi()) {
+                saveLocal();
+                if (!quiet) {
+                    showStatus('✓ 已保存到本机（静态站点无云端接口）', 'success', 3500);
+                }
                 return { success: true, localOnly: true };
             }
 
             try {
-                showStatus('正在保存到云端...', 'loading', 0);
+                if (!quiet) {
+                    showStatus('正在保存到云端...', 'loading', 0);
+                }
 
                 const response = await fetch(`${API_BASE}/save`, {
                     method: 'POST',
@@ -561,15 +575,16 @@
                     throw new Error(result.error || result.message || `保存失败 (${response.status})`);
                 }
 
-                showStatus('✓ 数据已保存到云端', 'success', 3000);
+                if (!quiet) {
+                    showStatus('✓ 数据已保存到云端', 'success', 3000);
+                }
                 return result;
             } catch (error) {
                 console.error('Save error:', error);
-                showStatus('⚠ 云端保存失败，已转为本地保存', 'error', 5000);
-
-                const allSubmissions = JSON.parse(localStorage.getItem(DB_KEY) || '{}');
-                allSubmissions[data.userName] = data;
-                localStorage.setItem(DB_KEY, JSON.stringify(allSubmissions));
+                saveLocal();
+                if (!quiet) {
+                    showStatus('⚠ 云端保存失败，已转为本地保存', 'error', 5000);
+                }
                 return { success: false, localFallback: true };
             }
         }
@@ -719,18 +734,8 @@
             btn.exit.classList.remove('hidden');
             resultTip.classList.remove('hidden');
 
-            void saveToRemote(dataToSave).then((r) => {
-                let msg = '图片已开始下载。';
-                if (r && r.localOnly) {
-                    msg += '当前为静态页面（如 GitHub Pages），数据已保存在本机浏览器。';
-                } else if (r && r.localFallback) {
-                    msg += '云端未保存成功，数据已备份在本机浏览器。';
-                } else {
-                    msg += '数据已同步到云端。';
-                }
-                msg += '\n\n你也可以在下方下载文本结果，并联系睿观生涯教练免费解读。';
-                alert(msg);
-            });
+            // 后台静默保存：不弹 alert、不用红色错误提示，避免「云端失败」类误导（下载已成功）
+            void saveToRemote(dataToSave, { quiet: true });
         });
 
         btn.downloadResult.addEventListener('click', downloadResultFile);

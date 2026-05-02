@@ -13,8 +13,6 @@
             --navy: #0f2d3d;
             --slate: #1a3c5c;
             --steel: #2c5a7a;
-            --primary-color: #2c5a7a;
-            --secondary-color: #1f9b73;
             --gold: #d4a853;
             --gold-light: #e8c878;
             --gold-dark: #b8923e;
@@ -98,14 +96,6 @@
         .total-percentage.error { color: var(--danger-color); }
         .actions-container { display: flex; gap: 10px; margin-top: 20px; }
         .actions-container .btn { flex: 1; }
-        .student-record-card { background: white; border-radius: 15px; padding: 20px; margin-bottom: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); position: relative; }
-        .delete-record-btn { position: absolute; top: 15px; right: 15px; width: 30px; height: 30px; border-radius: 50%; border: none; background-color: var(--danger-color); color: white; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; line-height: 1; }
-        .student-record-header { font-size: 18px; font-weight: bold; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--light-gray); text-align: left; }
-        .student-record-header .timestamp { font-size: 12px; font-weight: normal; color: var(--dark-gray); display: block; margin-top: 4px; }
-        .admin-charts-wrapper { display: flex; gap: 20px; }
-        .admin-chart-block { width: 50%; text-align: center; }
-        .role-details-list { list-style: none; padding: 0; margin-top: 15px; text-align: left; font-size: 14px; }
-        .role-details-list li { display: flex; align-items: center; margin-bottom: 5px; }
         .hidden { display: none; }
 
         /* 新增：保存状态提示 */
@@ -127,20 +117,6 @@
         .save-status.error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
         .save-status.loading { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
 
-        /* 新增：后台数据表格样式 */
-        .admin-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
-        .admin-table th, .admin-table td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
-        .admin-table th { background: #f8f9fa; font-weight: 600; }
-        .admin-table tr:hover { background: #f8f9fa; }
-        .view-btn { 
-            padding: 4px 12px; 
-            background: var(--steel); 
-            color: white; 
-            border: none; 
-            border-radius: 4px; 
-            cursor: pointer; 
-            font-size: 12px;
-        }
         .result-download-tip {
             margin-top: 16px;
             border: 1px solid rgba(212,168,83,0.25);
@@ -188,7 +164,6 @@
                 <h1>欢迎来到生命角色规划工具</h1>
                 <p class="description">无需输入姓名和密码，点击下方按钮即可直接开始测评。</p>
                 <button type="button" id="start-btn" class="btn btn-full btn-primary">进入测评</button>
-                <button type="button" id="admin-login-btn" class="btn btn-full btn-secondary">规划师入口</button>
             </div>
         </div>
 
@@ -222,61 +197,14 @@
                 </div>
             </div>
         </div>
-
-        <!-- 管理员后台页面 -->
-        <div id="admin-page" class="hidden">
-            <div id="app-header">规划师后台</div>
-            <div class="card">
-                <h2>学员数据概览</h2>
-                <div id="admin-stats" style="display: flex; gap: 20px; margin-bottom: 20px; flex-wrap: wrap;">
-                    <div style="background: #f0f4ff; padding: 15px; border-radius: 10px; flex: 1; min-width: 120px;">
-                        <div style="font-size: 24px; font-weight: bold; color: var(--primary-color);" id="stat-total">0</div>
-                        <div style="font-size: 12px; color: #666;">总提交数</div>
-                    </div>
-                    <div style="background: #f0fff4; padding: 15px; border-radius: 10px; flex: 1; min-width: 120px;">
-                        <div style="font-size: 24px; font-weight: bold; color: var(--secondary-color);" id="stat-users">0</div>
-                        <div style="font-size: 12px; color: #666;">独立用户</div>
-                    </div>
-                    <div style="background: #fff5f0; padding: 15px; border-radius: 10px; flex: 1; min-width: 120px;">
-                        <div style="font-size: 14px; font-weight: bold; color: #e07a3c;" id="stat-last">-</div>
-                        <div style="font-size: 12px; color: #666;">最后更新</div>
-                    </div>
-                </div>
-                <div style="overflow-x: auto;">
-                    <table class="admin-table" id="admin-table">
-                        <thead>
-                            <tr>
-                                <th>姓名</th>
-                                <th>当下总计</th>
-                                <th>2031年总计</th>
-                                <th>提交时间</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="admin-table-body">
-                            <!-- 动态填充 -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div id="admin-detail-view" class="hidden">
-                <!-- 详细视图 -->
-            </div>
-            <button onclick="showWelcomePage()" class="btn btn-full btn-primary" style="margin-top: 10px;">返回首页</button>
-            <button id="refresh-data-btn" class="btn btn-full" style="margin-top: 10px; background: #6c757d; color: white;">刷新数据</button>
-        </div>
     </div>
 
     <script>
-        // API配置 - 部署后需要修改为实际的Vercel域名
-        const API_BASE = window.location.hostname === 'localhost' 
-            ? 'http://localhost:3000/api'  // 本地开发
-            : '/api';  // 生产环境（同域名）
-
+        /** 仅本机浏览器存储，无后端数据库 */
         const DB_KEY = 'lifePieSubmissions_v4';
-        const page = { welcome: document.getElementById('welcome-page'), app: document.getElementById('main-app'), admin: document.getElementById('admin-page'), };
-        const input = { name: document.getElementById('name-input'), password: document.getElementById('student-password-input'), };
-        const btn = { start: document.getElementById('start-btn'), adminLogin: document.getElementById('admin-login-btn'), reset: document.getElementById('reset-btn'), save: document.getElementById('save-btn'), exit: document.getElementById('exit-btn'), addRole: document.getElementById('add-role-btn'), refresh: document.getElementById('refresh-data-btn'), downloadResult: document.getElementById('download-result-btn') };
+
+        const page = { welcome: document.getElementById('welcome-page'), app: document.getElementById('main-app') };
+        const btn = { start: document.getElementById('start-btn'), reset: document.getElementById('reset-btn'), save: document.getElementById('save-btn'), exit: document.getElementById('exit-btn'), addRole: document.getElementById('add-role-btn'), downloadResult: document.getElementById('download-result-btn') };
         const resultTip = document.getElementById('result-download-tip');
 
         let presentPieChart, futurePieChart;
@@ -524,103 +452,20 @@
             document.body.removeChild(link);
         }
 
-        // 远程保存数据到MongoDB
-        async function saveToRemote(data) {
-            try {
-                showStatus('正在保存到云端...', 'loading', 0);
-
-                const response = await fetch(`${API_BASE}/save`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-
-                const result = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(result.error || result.message || '保存失败');
-                }
-
-                showStatus('✓ 数据已保存到云端', 'success', 3000);
-                return result;
-            } catch (error) {
-                console.error('Save error:', error);
-                showStatus('⚠ 云端保存失败，已转为本地保存', 'error', 5000);
-
-                // 失败时回退到localStorage
-                const allSubmissions = JSON.parse(localStorage.getItem(DB_KEY) || '{}');
-                allSubmissions[data.userName] = data;
-                localStorage.setItem(DB_KEY, JSON.stringify(allSubmissions));
-                alert('云端保存失败，已自动备份到本地存储');
-                return { success: false, localFallback: true };
+        /**
+         * 将本次测评写入本机 localStorage（可选静默，不打断下载）
+         * @param {object} data
+         * @param {{ quiet?: boolean }} opts
+         */
+        function saveSubmissionLocal(data, opts = {}) {
+            const quiet = opts.quiet === true;
+            const allSubmissions = JSON.parse(localStorage.getItem(DB_KEY) || '{}');
+            allSubmissions[data.userName] = data;
+            localStorage.setItem(DB_KEY, JSON.stringify(allSubmissions));
+            if (!quiet) {
+                showStatus('✓ 已保存到本机浏览器', 'success', 2500);
             }
         }
-
-        // 获取远程数据（管理员功能）
-        async function fetchRemoteData(adminPassword) {
-            try {
-                showStatus('正在加载数据...', 'loading', 0);
-
-                const response = await fetch(`${API_BASE}/admin?password=${encodeURIComponent(adminPassword)}`);
-                const result = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(result.error || '获取数据失败');
-                }
-
-                showStatus('✓ 数据加载完成', 'success', 2000);
-                return result;
-            } catch (error) {
-                showStatus('✗ 加载失败: ' + error.message, 'error', 5000);
-                throw error;
-            }
-        }
-
-        // 渲染管理员页面 - 表格视图
-        async function renderAdminPage() {
-            const password = prompt("请输入规划师密码：");
-            if (password !== '0411') {
-                if (password !== null) alert('密码错误！');
-                return false;
-            }
-
-            try {
-                const data = await fetchRemoteData(password);
-
-                // 更新统计数据
-                document.getElementById('stat-total').textContent = data.stats.totalSubmissions;
-                document.getElementById('stat-users').textContent = data.stats.uniqueUsers;
-                document.getElementById('stat-last').textContent = data.stats.lastSubmission 
-                    ? formatTimestamp(data.stats.lastSubmission) 
-                    : '-';
-
-                // 填充表格
-                const tbody = document.getElementById('admin-table-body');
-                tbody.innerHTML = '';
-
-                data.submissions.forEach(sub => {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td><strong>${sub.userName}</strong></td>
-                        <td>${sub.present?.total || 0}%</td>
-                        <td>${sub.future?.total || 0}%</td>
-                        <td>${formatTimestamp(sub.timestamp)}</td>
-                        <td><button class="view-btn" onclick="viewDetail('${sub.userName}')">查看</button></td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-
-                return true;
-            } catch (error) {
-                console.error('Admin render error:', error);
-                return false;
-            }
-        }
-
-        // 查看详细数据（可扩展）
-        window.viewDetail = function(userName) {
-            alert(`查看 ${userName} 的详细数据\n（此处可展开详细图表）`);
-        };
 
         // 事件监听
         btn.start.addEventListener('click', async () => {
@@ -633,16 +478,6 @@
                 resultTip.classList.remove('hidden');
             }
         });
-
-        btn.adminLogin.addEventListener('click', async () => {
-            const success = await renderAdminPage();
-            if (success) {
-                page.welcome.classList.add('hidden'); 
-                page.admin.classList.remove('hidden');
-            }
-        });
-
-        btn.refresh.addEventListener('click', renderAdminPage);
 
         document.getElementById('toggle-present').addEventListener('click', () => { 
             state.activeView = 'present'; 
@@ -668,8 +503,8 @@
             }
         });
 
-        // 保存按钮 - 远程保存
-        btn.save.addEventListener('click', async () => {
+        // 保存按钮：必须在用户点击的同一同步阶段触发下载，否则 await 后浏览器会拦截程序化下载（GitHub Pages 上尤其明显）
+        btn.save.addEventListener('click', () => {
             const totalPresent = state.present.roles.reduce((sum, r) => sum + r.value, 0); 
             const totalFuture = state.future.roles.reduce((sum, r) => sum + r.value, 0);
 
@@ -682,22 +517,26 @@
                 return;
             }
 
-            // 准备数据
             const dataToSave = {
                 userName: state.userName,
                 present: state.present,
                 future: state.future,
                 timestamp: new Date().toISOString()
             };
-
-            // 保存到远程
-            await saveToRemote(dataToSave);
             state.timestamp = dataToSave.timestamp;
-            downloadSnapshotImage();
+
+            try {
+                downloadSnapshotImage();
+            } catch (e) {
+                console.error(e);
+                alert('生成下载图片失败：' + (e && e.message ? e.message : String(e)));
+                return;
+            }
 
             btn.exit.classList.remove('hidden');
             resultTip.classList.remove('hidden');
-            alert('已保存并下载图片结果。你也可以下载文本结果，并联系睿观生涯教练免费解读。');
+
+            saveSubmissionLocal(dataToSave, { quiet: true });
         });
 
         btn.downloadResult.addEventListener('click', downloadResultFile);
@@ -753,9 +592,8 @@
 
         window.showWelcomePage = function() {
             state = getInitialState();
-            if (input.name) input.name.value = '';
-            if (input.password) input.password.value = '';
-            Object.values(page).forEach(p => p.classList.add('hidden'));
+            page.welcome.classList.add('hidden');
+            page.app.classList.add('hidden');
             page.welcome.classList.remove('hidden');
             btn.exit.classList.add('hidden');
             resultTip.classList.add('hidden');

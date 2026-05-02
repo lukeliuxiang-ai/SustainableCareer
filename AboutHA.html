@@ -109,12 +109,21 @@
         .intro::before { content: ''; position: absolute; top: -200px; right: -200px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(212,168,83,0.06) 0%, transparent 70%); border-radius: 50%; }
         .intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-top: 60px; }
         .intro-image { position: relative; }
+        .intro-image picture,
         .intro-image img {
             width: 100%;
             aspect-ratio: 3/4;
             object-fit: cover;
             border-radius: 24px;
             box-shadow: 0 30px 60px rgba(10,31,46,0.2);
+            display: block;
+        }
+        .intro-image picture img {
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            border-radius: 24px;
             display: block;
         }
         .intro-image-caption {
@@ -226,6 +235,12 @@
         .meeting-header .section-desc { color: rgba(255,255,255,0.6); margin: 0 auto; text-align: center; }
         .meeting-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 2; }
         .meeting-image { position: relative; }
+        .meeting-image picture {
+            width: 100%;
+            display: block;
+            border-radius: 24px;
+            overflow: hidden;
+        }
         .meeting-image img {
             width: 100%;
             aspect-ratio: 1/1;
@@ -234,6 +249,16 @@
             box-shadow: 0 30px 60px rgba(0,0,0,0.3);
             display: block;
             border: 2px solid rgba(212,168,83,0.2);
+        }
+        .meeting-image picture img {
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border-radius: 24px;
+            display: block;
+            border: 2px solid rgba(212,168,83,0.2);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
         }
         .meeting-content h3 { font-family: 'Noto Serif SC', serif; font-size: 1.6rem; color: #fff; margin-bottom: 24px; line-height: 1.5; }
         .meeting-content p { color: rgba(255,255,255,0.75); line-height: 1.9; margin-bottom: 20px; font-size: 15px; }
@@ -386,7 +411,11 @@
 
         <div class="intro-grid">
             <div class="intro-image animate-on-scroll">
-                <img src="images/profile.webp" alt="Dr. Dan Harrison - 哈里逊博士" loading="lazy" decoding="async">
+                <picture>
+                    <source srcset="images/Danha.webp" type="image/webp">
+                    <source srcset="images/profile.webp" type="image/webp">
+                    <img src="images/Danha.jpg" alt="Dr. Dan Harrison - 哈里逊博士" loading="lazy" decoding="async">
+                </picture>
                 <div class="intro-image-caption">
                     <div class="name">Dr. Dan Harrison</div>
                     <div class="title">哈里逊博士 · 创始人</div>
@@ -520,7 +549,10 @@
 
         <div class="meeting-grid">
             <div class="meeting-image animate-on-scroll">
-                <img src="images/HAphoto.webp" alt="刘翔与Dr. Dan Harrison在泰国清迈合影" loading="lazy" decoding="async">
+                <picture>
+                    <source srcset="images/HAphoto.webp" type="image/webp">
+                    <img src="images/HAphoto.jpeg" alt="刘翔与Dr. Dan Harrison在泰国清迈合影" loading="lazy" decoding="async">
+                </picture>
             </div>
             <div class="meeting-content animate-on-scroll delay-2">
                 <h3>2024年哈里逊全球年会</h3>

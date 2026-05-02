@@ -6,6 +6,7 @@
     <title>生命角色测评 | 睿观生涯教练</title>
     <meta name="description" content="睿观生涯教练生命角色测评工具：对比当下与2031年角色分配，下载结果并联系教练免费解读。">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -36,7 +37,7 @@
             min-height: 100vh;
             padding: 20px;
         }
-        .container { width: 100%; max-width: 520px; margin: auto; }
+        .container { width: 100%; max-width: 560px; margin: auto; }
         .card {
             background: linear-gradient(180deg, #ffffff 0%, var(--cream) 100%);
             border-radius: 24px;
@@ -142,6 +143,132 @@
             color: var(--text-light);
             line-height: 1.6;
         }
+        .guide-card {
+            text-align: left;
+            margin-top: 16px;
+        }
+        .guide-card h2 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.15rem;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        .guide-intro {
+            font-size: 14px;
+            color: var(--text-body);
+            line-height: 1.85;
+            margin-bottom: 18px;
+        }
+        .guide-steps { margin: 0; padding: 0; list-style: none; counter-reset: step; }
+        .guide-steps li {
+            position: relative;
+            padding-left: 36px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            line-height: 1.75;
+            color: var(--text-body);
+        }
+        .guide-steps li::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--deep-blue);
+            font-size: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .guide-steps strong { color: var(--text-dark); }
+        .post-save-actions {
+            margin-top: 18px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(212,168,83,0.25);
+        }
+        .post-save-actions .post-save-lead {
+            font-size: 14px;
+            color: var(--text-dark);
+            font-weight: 600;
+            margin: 0 0 12px;
+        }
+        .post-save-btns { display: flex; flex-direction: column; gap: 10px; }
+        .post-save-btns .btn-link-home {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid rgba(44,90,122,0.28);
+            color: var(--steel);
+            background: #fff;
+            transition: all 0.25s ease;
+        }
+        .post-save-btns .btn-link-home:hover {
+            border-color: rgba(212,168,83,0.45);
+            color: var(--gold-dark);
+            background: var(--ivory);
+        }
+        .qr-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 10050;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(10,31,46,0.75);
+            backdrop-filter: blur(8px);
+        }
+        .qr-modal.hidden { display: none; }
+        .qr-modal-box {
+            position: relative;
+            background: #fff;
+            border-radius: 22px;
+            padding: 28px 24px 24px;
+            max-width: 360px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.25);
+            border: 1px solid rgba(212,168,83,0.2);
+        }
+        .qr-modal-box h3 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            margin: 0 0 8px;
+        }
+        .qr-modal-box p { margin: 0 0 16px; font-size: 14px; color: var(--text-light); line-height: 1.6; }
+        .qr-modal-box img {
+            width: 220px;
+            height: 220px;
+            object-fit: contain;
+            border-radius: 12px;
+            border: 1px solid rgba(212,168,83,0.2);
+        }
+        .qr-modal-close {
+            position: absolute;
+            top: 12px;
+            right: 14px;
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: transparent;
+            font-size: 26px;
+            line-height: 1;
+            cursor: pointer;
+            color: var(--text-light);
+        }
         @media (max-width: 640px) {
             .container { max-width: 100%; }
             .card { padding: 20px 16px; border-radius: 18px; }
@@ -162,8 +289,19 @@
             <div id="app-header" style="visibility: hidden;">生命角色饼图</div>
             <div class="card">
                 <h1>欢迎来到生命角色规划工具</h1>
-                <p class="description">无需输入姓名和密码，点击下方按钮即可直接开始测评。</p>
+                <p class="description">请先阅读下方使用指引，再进入练习。无需登录，数据仅保存在本机浏览器。</p>
                 <button type="button" id="start-btn" class="btn btn-full btn-primary">进入测评</button>
+            </div>
+            <div class="card guide-card">
+                <h2>生命角色饼图使用指引</h2>
+                <p class="guide-intro">35岁+的职场人，当下的困境与焦虑，往往只是「员工」这一个角色的局部。本练习邀请你跳出单一视角，以全局眼光审视自己的时间分配。</p>
+                <ol class="guide-steps">
+                    <li><strong>第一步：审视当下</strong><br>列出你目前的生命角色（如员工、配偶、子女、自我等），调整各角色的时间占比。可自由增减角色。</li>
+                    <li><strong>第二步：描绘未来</strong><br>展望2031年，设定你期望的角色构成与时间分配。同样可自由调整。</li>
+                    <li><strong>第三步：保存下载</strong><br>点击「保存并下载」，生成你的专属角色饼图。</li>
+                    <li><strong>第四步：设定目标</strong><br>对比当下与2031年的差异，思考：为了实现理想的角色分配，你的职业目标需要如何调整？</li>
+                    <li><strong>第五步：寻求支持</strong><br>请带着您的报告和思考，联系睿观生涯教练 Luke Liu。</li>
+                </ol>
             </div>
         </div>
 
@@ -194,8 +332,27 @@
                     <p>你可以下载本次测评结果（含当下与2031角色占比），并用于后续复盘。</p>
                     <button type="button" id="download-result-btn" class="btn btn-primary btn-full">下载测评文本结果</button>
                     <p class="helper-text">拿着这份结果，联系睿观生涯教练可获得一次免费解读，帮你更清晰地找到职业和人生的优先级。</p>
+                    <div class="post-save-actions">
+                        <p class="post-save-lead">下一步</p>
+                        <div class="post-save-btns">
+                            <button type="button" id="open-wechat-qr-btn" class="btn btn-primary btn-full">
+                                <i class="fab fa-weixin" style="margin-right:8px;"></i>免费咨询 · 微信二维码
+                            </button>
+                            <a href="index.html#cta" class="btn-link-home">返回网站主页 · 预约诊断</a>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- 微信二维码弹窗 -->
+    <div id="wechat-qr-modal" class="qr-modal hidden" role="dialog" aria-modal="true" aria-labelledby="wechat-qr-title">
+        <div class="qr-modal-box">
+            <button type="button" class="qr-modal-close" id="wechat-qr-close" aria-label="关闭">&times;</button>
+            <h3 id="wechat-qr-title">添加睿观生涯教练微信</h3>
+            <p>扫码添加 <strong style="color:var(--gold-dark);">lukeliu2017</strong>，预约免费 20 分钟诊断通话</p>
+            <img src="images/qrcode.jpeg" alt="睿观生涯教练微信二维码" width="220" height="220">
         </div>
     </div>
 
@@ -204,8 +361,18 @@
         const DB_KEY = 'lifePieSubmissions_v4';
 
         const page = { welcome: document.getElementById('welcome-page'), app: document.getElementById('main-app') };
-        const btn = { start: document.getElementById('start-btn'), reset: document.getElementById('reset-btn'), save: document.getElementById('save-btn'), exit: document.getElementById('exit-btn'), addRole: document.getElementById('add-role-btn'), downloadResult: document.getElementById('download-result-btn') };
+        const btn = { start: document.getElementById('start-btn'), reset: document.getElementById('reset-btn'), save: document.getElementById('save-btn'), exit: document.getElementById('exit-btn'), addRole: document.getElementById('add-role-btn'), downloadResult: document.getElementById('download-result-btn'), openWechatQr: document.getElementById('open-wechat-qr-btn') };
         const resultTip = document.getElementById('result-download-tip');
+        const wechatQrModal = document.getElementById('wechat-qr-modal');
+
+        function openWechatQrModal() {
+            wechatQrModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeWechatQrModal() {
+            wechatQrModal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
 
         let presentPieChart, futurePieChart;
         const getInitialState = () => ({ userName: '', activeView: 'present', present: { roles: [ { name: '员工', value: 40, color: '#2c5a7a' }, { name: '配偶', value: 20, color: '#d4a853' }, { name: '子女', value: 15, color: '#1a3c5c' }, { name: '自我', value: 15, color: '#8a7d6b' }, { name: '朋友', value: 10, color: '#4f6f8b' } ] }, future: { roles: [ { name: '员工', value: 25, color: '#2c5a7a' }, { name: '配偶', value: 25, color: '#d4a853' }, { name: '子女', value: 10, color: '#1a3c5c' }, { name: '自我', value: 30, color: '#8a7d6b' }, { name: '朋友', value: 10, color: '#4f6f8b' } ] }, timestamp: null });
@@ -541,6 +708,15 @@
 
         btn.downloadResult.addEventListener('click', downloadResultFile);
 
+        if (btn.openWechatQr) btn.openWechatQr.addEventListener('click', openWechatQrModal);
+        document.getElementById('wechat-qr-close').addEventListener('click', closeWechatQrModal);
+        wechatQrModal.addEventListener('click', (e) => {
+            if (e.target === wechatQrModal) closeWechatQrModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !wechatQrModal.classList.contains('hidden')) closeWechatQrModal();
+        });
+
         btn.addRole.addEventListener('click', () => { 
             const newRoleName = prompt("请输入新角色的名称：")?.trim(); 
             if (!newRoleName) return; 
@@ -592,6 +768,7 @@
 
         window.showWelcomePage = function() {
             state = getInitialState();
+            closeWechatQrModal();
             page.welcome.classList.add('hidden');
             page.app.classList.add('hidden');
             page.welcome.classList.remove('hidden');

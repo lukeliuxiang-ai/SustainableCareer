@@ -834,6 +834,7 @@
 
             var tag = e.target.closest('.skill-tag');
             if (tag && assessSection.contains(tag)) {
+                hideDefPopover();
                 if (touchPick === tag) {
                     clearTouchSelection();
                     setBucketsTapWait(false);
@@ -906,17 +907,9 @@
         defPopover._anchor = null;
     }
 
-    function showDefPopover(anchor) {
-        if (!anchor || !anchor.dataset.skill) return;
-        if (popoverAutoHideTimer) {
-            clearTimeout(popoverAutoHideTimer);
-            popoverAutoHideTimer = null;
-        }
-        var skill = anchor.dataset.skill;
-        defPopover.textContent = SKILL_DEFS[skill] || '（暂无定义）';
-        defPopover.classList.add('is-visible');
-        defPopover.setAttribute('aria-hidden', 'false');
-        defPopover._anchor = anchor;
+    /** 仅更新浮层位置，不重置 1.5s 自动关闭（避免手机 resize/visualViewport 反复打断定时器） */
+    function layoutDefPopover(anchor) {
+        if (!anchor || defPopover._anchor !== anchor || !defPopover.classList.contains('is-visible')) return;
         requestAnimationFrame(function () {
             if (defPopover._anchor !== anchor) return;
             var r = anchor.getBoundingClientRect();
@@ -931,6 +924,20 @@
             defPopover.style.left = left + 'px';
             defPopover.style.top = top + 'px';
         });
+    }
+
+    function showDefPopover(anchor) {
+        if (!anchor || !anchor.dataset.skill) return;
+        if (popoverAutoHideTimer) {
+            clearTimeout(popoverAutoHideTimer);
+            popoverAutoHideTimer = null;
+        }
+        var skill = anchor.dataset.skill;
+        defPopover.textContent = SKILL_DEFS[skill] || '（暂无定义）';
+        defPopover.classList.add('is-visible');
+        defPopover.setAttribute('aria-hidden', 'false');
+        defPopover._anchor = anchor;
+        layoutDefPopover(anchor);
         popoverAutoHideTimer = setTimeout(function () {
             popoverAutoHideTimer = null;
             hideDefPopover();
@@ -1159,9 +1166,10 @@
         try {
             dt.setDragImage(ghost, Math.round(cx), Math.round(cy));
         } catch (err) { /* 个别环境不支持 */ }
-        requestAnimationFrame(function () {
-            if (ghost.parentNode) ghost.parentNode.removeChild(ghost);
-        });
+        if (tag._dragGhostEl && tag._dragGhostEl.parentNode) {
+            tag._dragGhostEl.parentNode.removeChild(tag._dragGhostEl);
+        }
+        tag._dragGhostEl = ghost;
     }
 
     function wireTags() {
@@ -1182,6 +1190,10 @@
             });
             tag.addEventListener('dragend', function () {
                 tag.classList.remove('dragging');
+                if (tag._dragGhostEl && tag._dragGhostEl.parentNode) {
+                    tag._dragGhostEl.parentNode.removeChild(tag._dragGhostEl);
+                    tag._dragGhostEl = null;
+                }
                 dragPayload = null;
                 clearDragOver();
             });
@@ -1319,9 +1331,21 @@
     window.addEventListener('scroll', hideDefPopover, { passive: true });
     window.addEventListener('resize', function () {
         if (defPopover._anchor && defPopover.classList.contains('is-visible')) {
-            showDefPopover(defPopover._anchor);
+            layoutDefPopover(defPopover._anchor);
         }
     });
+    if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', function () {
+            if (defPopover._anchor && defPopover.classList.contains('is-visible')) {
+                layoutDefPopover(defPopover._anchor);
+            }
+        });
+        window.visualViewport.addEventListener('scroll', function () {
+            if (defPopover._anchor && defPopover.classList.contains('is-visible')) {
+                layoutDefPopover(defPopover._anchor);
+            }
+        });
+    }
 
     document.getElementById('btnRestart').addEventListener('click', function () {
         currentPage = 0;

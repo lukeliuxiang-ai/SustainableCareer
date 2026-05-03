@@ -1139,37 +1139,91 @@
     }
 
     /**
-     * 移动端默认拖拽预览常会截到整块网格/白底；用与标签同尺寸的克隆作为 setDragImage，预览与电脑一致。
+     * 用 canvas 绘制与文案等宽的「小标签」拖拽图。DOM 克隆在手机上常被算成整块网格尺寸，出现大面积色块。
      */
     function setSkillTagDragImage(e, tag) {
         var dt = e.dataTransfer;
         if (!dt || typeof dt.setDragImage !== 'function') return;
+
+        tag._dragGhostEl = null;
+
+        var text = (tag.textContent || '').trim();
+        var cs = window.getComputedStyle(tag);
+        var fontFamily = (cs.fontFamily || 'sans-serif').split(',')[0].replace(/["']/g, '').trim();
+        var fontWeight = cs.fontWeight || '600';
+        var baseFont = parseFloat(cs.fontSize) || 12;
+        var padX = 10;
+        var padY = 6;
+        var maxCanvasW = Math.min(260, Math.max(100, window.innerWidth - 32));
+        var dpr = Math.min(window.devicePixelRatio || 1, 3);
+
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        var fontSize = Math.max(9, Math.round(baseFont));
+        var tw;
+        for (;;) {
+            ctx.font = fontWeight + ' ' + fontSize + 'px ' + fontFamily;
+            tw = ctx.measureText(text).width;
+            if (tw + padX * 2 <= maxCanvasW || fontSize <= 9) break;
+            fontSize--;
+        }
+
+        var cw = Math.ceil(Math.min(tw + padX * 2, maxCanvasW));
+        var ch = Math.ceil(fontSize * 1.45 + padY * 2);
+
+        canvas.width = Math.ceil(cw * dpr);
+        canvas.height = Math.ceil(ch * dpr);
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.scale(dpr, dpr);
+
+        var bg = cs.backgroundColor;
+        if (!bg || bg === 'rgba(0, 0, 0, 0)' || bg === 'transparent') {
+            bg = '#d8f3dc';
+        }
+        var fg = cs.color || '#1e2a35';
+        var br = 8;
+
+        function roundRectPath(x, y, w, h, r) {
+            r = Math.min(r, w / 2, h / 2);
+            ctx.beginPath();
+            ctx.moveTo(x + r, y);
+            ctx.lineTo(x + w - r, y);
+            ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+            ctx.lineTo(x + w, y + h - r);
+            ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+            ctx.lineTo(x + r, y + h);
+            ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+            ctx.lineTo(x, y + r);
+            ctx.quadraticCurveTo(x, y, x + r, y);
+            ctx.closePath();
+        }
+
+        roundRectPath(0, 0, cw, ch, br);
+        ctx.fillStyle = bg;
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        ctx.fillStyle = fg;
+        ctx.font = fontWeight + ' ' + fontSize + 'px ' + fontFamily;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(text, cw / 2, ch / 2);
+
         var rect = tag.getBoundingClientRect();
-        var w = Math.max(1, Math.ceil(rect.width));
-        var h = Math.max(1, Math.ceil(rect.height));
-        var ghost = tag.cloneNode(true);
-        ghost.classList.remove('dragging', 'skill-tag--selected');
-        ghost.setAttribute('draggable', 'false');
-        ghost.style.cssText =
-            'position:fixed;left:-9999px;top:0;width:' + w + 'px;height:' + h + 'px;' +
-            'min-width:0!important;max-width:none!important;margin:0;padding:inherit;' +
-            'box-sizing:border-box;pointer-events:none;opacity:1;transform:none;' +
-            'box-shadow:0 2px 8px rgba(10,31,46,0.15);overflow:hidden;';
-        document.body.appendChild(ghost);
-        var cx = w / 2;
-        var cy = h / 2;
+        var cx = cw / 2;
+        var cy = ch / 2;
         if (typeof e.clientX === 'number' && typeof e.clientY === 'number' &&
             !(e.clientX === 0 && e.clientY === 0)) {
-            cx = Math.min(Math.max(e.clientX - rect.left, 0), w);
-            cy = Math.min(Math.max(e.clientY - rect.top, 0), h);
+            cx = Math.min(Math.max(e.clientX - rect.left, 0), cw);
+            cy = Math.min(Math.max(e.clientY - rect.top, 0), ch);
         }
         try {
-            dt.setDragImage(ghost, Math.round(cx), Math.round(cy));
+            dt.setDragImage(canvas, Math.round(cx), Math.round(cy));
         } catch (err) { /* 个别环境不支持 */ }
-        if (tag._dragGhostEl && tag._dragGhostEl.parentNode) {
-            tag._dragGhostEl.parentNode.removeChild(tag._dragGhostEl);
-        }
-        tag._dragGhostEl = ghost;
     }
 
     function wireTags() {

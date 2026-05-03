@@ -397,11 +397,9 @@
             align-items: center;
             justify-content: center;
             line-height: 1.25;
-            touch-action: manipulation;
+            /* 触摸拖拽需禁用默认手势，否则手机无法拖进方框 */
+            touch-action: none;
             -webkit-tap-highlight-color: rgba(212,168,83,0.25);
-        }
-        @media (pointer: fine) {
-            .skill-tag { touch-action: none; }
         }
         .skill-tag:active { cursor: grabbing; }
         .skill-tag.dragging { opacity: 0.55; }
@@ -587,7 +585,7 @@
                     <h1 class="skills-cat-title" id="catHeading">个人能力</h1>
                     <p class="skills-step" id="stepLine">第 1 / 4 类 · 请从下方拖拽技能至上方对应方框</p>
                     <p class="skills-intro">将最符合您现状的技能分别放入「极为熟练」「熟练掌握」「不太熟练」。每列最多 2 项。</p>
-                    <p class="skills-touch-hint">小屏操作：<strong>先点击</strong>一项技能（金色高亮），<strong>再点击</strong>「极为熟练 / 熟练掌握 / 不太熟练」的方框或标题即可放入；点下方「可选技能」区域可将已选技能放回池内。电脑端仍可拖拽。</p>
+                    <p class="skills-touch-hint">小屏操作：<strong>按住技能拖到</strong>对应方框即可（与电脑相同）；也可<strong>先点选</strong>技能（金色高亮）再<strong>点方框</strong>归类；要放回池内可先点选再点下方「可选技能」区域。</p>
 
                     <div class="skills-dnd-layout">
                         <div class="skills-buckets">
@@ -1048,13 +1046,6 @@
         nodes.forEach(function (n) { poolEl.appendChild(n); });
     }
 
-    function refreshTagDraggableFlags() {
-        var touch = isTouchPlacementMode();
-        assessSection.querySelectorAll('.skill-tag').forEach(function (t) {
-            t.setAttribute('draggable', touch ? 'false' : 'true');
-        });
-    }
-
     function renderPage() {
         clearTouchSelection();
         var cat = CATEGORIES[currentPage];
@@ -1089,7 +1080,6 @@
         wireTags();
         bindDelegatedDnD();
         bindTouchTapPlacement();
-        refreshTagDraggableFlags();
         renderNavButtons();
     }
 
@@ -1129,13 +1119,9 @@
 
     function wireTags() {
         document.querySelectorAll('#assessSection .skill-tag').forEach(function (tag) {
-            tag.setAttribute('draggable', isTouchPlacementMode() ? 'false' : 'true');
+            tag.setAttribute('draggable', 'true');
             bindDefPopoverHandlers(tag);
             tag.addEventListener('dragstart', function (e) {
-                if (isTouchPlacementMode()) {
-                    e.preventDefault();
-                    return;
-                }
                 tag.classList.add('dragging');
                 var parent = tag.parentElement;
                 var fromBucket = 'pool';
@@ -1304,9 +1290,6 @@
         clearTimeout(skillsResizeTimer);
         skillsResizeTimer = setTimeout(function () {
             if (!isTouchPlacementMode()) clearTouchSelection();
-            if (assessSection && !assessSection.classList.contains('is-hidden')) {
-                refreshTagDraggableFlags();
-            }
         }, 150);
     });
 

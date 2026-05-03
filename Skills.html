@@ -381,6 +381,17 @@
         }
         .skill-tag:active { cursor: grabbing; }
         .skill-tag.dragging { opacity: 0.55; }
+        /* 触摸自定义拖拽：跟随手指的幽灵标签（pointer-events:none 以便命中下方投放区） */
+        .skill-tag-touch-ghost {
+            position: fixed;
+            z-index: 4000;
+            pointer-events: none;
+            margin: 0;
+            opacity: 0.95;
+            box-shadow: 0 10px 28px rgba(10, 31, 46, 0.22);
+            transform: translate(-50%, -50%);
+            will-change: left, top;
+        }
         .skill-tag--c0 { background: var(--pool-cat1-bg); color: var(--pool-cat1); border-color: rgba(45,106,79,0.25); }
         .skill-tag--c1 { background: var(--pool-cat2-bg); color: var(--pool-cat2); border-color: rgba(154,114,9,0.25); }
         .skill-tag--c2 { background: var(--pool-cat3-bg); color: var(--pool-cat3); border-color: rgba(29,78,137,0.25); }
@@ -734,6 +745,16 @@
     var LS_REPORT_WEEK = 'rg_skills_report_week_dl';
     var dragPayload = null;
     var dndBound = false;
+    var touchDnDBound = false;
+    /** 手机等粗指针设备：用 Pointer 模拟拖放（HTML5 DnD 在 iOS 等上不可靠） */
+    var touchDnDState = null;
+
+    function touchDnDUseNativeDraggable() {
+        try {
+            if (window.matchMedia('(pointer: coarse)').matches) return false;
+        } catch (err) { /* ignore */ }
+        return true;
+    }
     var popoverLeaveTimer = null;
     /** 定义浮层展示 1.5s 后自动关闭，避免小屏遮挡操作 */
     var popoverAutoHideTimer = null;
@@ -890,6 +911,21 @@
         });
     }
 
+    /** 触摸拖放命中：含池子、虚线框，以及落在列标题/状态行时的整列投放区 */
+    function resolveAssessDropZone(hit) {
+        if (!hit) return null;
+        var pool = hit.closest('#skillPool');
+        if (pool && assessSection.contains(pool)) return pool;
+        var zone = hit.closest('.skills-drop-zone[data-bucket]');
+        if (zone && assessSection.contains(zone)) return zone;
+        var bucket = hit.closest('.skills-bucket[data-bucket]');
+        if (bucket && assessSection.contains(bucket)) {
+            var inner = bucket.querySelector('.skills-drop-zone[data-bucket]');
+            if (inner) return inner;
+        }
+        return null;
+    }
+
     function findTagInDom(skill) {
         var all = assessSection.querySelectorAll('.skill-tag');
         for (var i = 0; i < all.length; i++) {
@@ -941,11 +977,116 @@
         document.addEventListener('dragend', clearDragOver, true);
     }
 
+    function bindPointerTouchDrag() {
+        if (touchDnDBound) return;
+        touchDnDBound = true;
+
+        function cleanupWindowListeners() {
+            if (!touchDnDState) return;
+            if (touchDnDState._move) {
+                window.removeEventListener('pointermove', touchDnDState._move, true);
+            }
+            if (touchDnDState._end) {
+                window.removeEventListener('pointerup', touchDnDState._end, true);
+                window.removeEventListener('pointercancel', touchDnDState._end, true);
+            }
+            touchDnDState._move = null;
+            touchDnDState._end = null;
+        }
+
+        function finishDrag() {
+            var st = touchDnDState;
+            if (!st) return;
+            cleanupWindowListeners();
+            var tag = st.tag;
+            tag.classList.remove('dragging');
+            if (st.ghost && st.ghost.parentNode) {
+                st.ghost.parentNode.removeChild(st.ghost);
+            }
+            clearDragOver();
+            if (st.active) {
+                var hit = document.elementFromPoint(st.lastX, st.lastY);
+                var zone = resolveAssessDropZone(hit);
+                if (zone) {
+                    var targetBucket = zone.id === 'skillPool' ? 'pool' : zone.getAttribute('data-bucket');
+                    assignSkillToBucketTag(tag, targetBucket);
+                }
+            } else {
+                showDefPopover(tag);
+            }
+            touchDnDState = null;
+        }
+
+        function onWinMove(e) {
+            var st = touchDnDState;
+            if (!st || e.pointerId !== st.pointerId) return;
+            st.lastX = e.clientX;
+            st.lastY = e.clientY;
+            var dx = e.clientX - st.x0;
+            var dy = e.clientY - st.y0;
+            if (!st.active) {
+                if (dx * dx + dy * dy < 100) return;
+                st.active = true;
+                hideDefPopover();
+                st.tag.classList.add('dragging');
+                var ghost = document.createElement('div');
+                ghost.className = st.tag.className + ' skill-tag-touch-ghost';
+                ghost.textContent = st.tag.textContent || '';
+                var r = st.tag.getBoundingClientRect();
+                ghost.style.width = Math.max(Math.round(r.width), 44) + 'px';
+                ghost.style.minHeight = Math.max(Math.round(r.height), 28) + 'px';
+                ghost.style.left = e.clientX + 'px';
+                ghost.style.top = e.clientY + 'px';
+                document.body.appendChild(ghost);
+                st.ghost = ghost;
+            }
+            e.preventDefault();
+            if (st.ghost) {
+                st.ghost.style.left = e.clientX + 'px';
+                st.ghost.style.top = e.clientY + 'px';
+            }
+            clearDragOver();
+            var hit = document.elementFromPoint(e.clientX, e.clientY);
+            var zone = resolveAssessDropZone(hit);
+            if (zone) zone.classList.add('drag-over');
+        }
+
+        function onWinEnd(e) {
+            var st = touchDnDState;
+            if (!st || e.pointerId !== st.pointerId) return;
+            if (st.active) e.preventDefault();
+            finishDrag();
+        }
+
+        assessSection.addEventListener('pointerdown', function (e) {
+            if (!e.isPrimary || e.pointerType !== 'touch') return;
+            if (touchDnDUseNativeDraggable()) return;
+            var tag = e.target.closest('.skill-tag');
+            if (!tag || !assessSection.contains(tag)) return;
+            if (touchDnDState) return;
+            touchDnDState = {
+                tag: tag,
+                pointerId: e.pointerId,
+                x0: e.clientX,
+                y0: e.clientY,
+                lastX: e.clientX,
+                lastY: e.clientY,
+                active: false,
+                ghost: null,
+                _move: onWinMove,
+                _end: onWinEnd
+            };
+            window.addEventListener('pointermove', onWinMove, { capture: true, passive: false });
+            window.addEventListener('pointerup', onWinEnd, { capture: true });
+            window.addEventListener('pointercancel', onWinEnd, { capture: true });
+        }, true);
+    }
+
     function createTag(name, catIndex) {
         var el = document.createElement('div');
         el.className = 'skill-tag skill-tag--c' + catIndex;
         el.textContent = name;
-        el.setAttribute('draggable', 'true');
+        el.setAttribute('draggable', touchDnDUseNativeDraggable() ? 'true' : 'false');
         el.dataset.skill = name;
         el.dataset.catIndex = String(catIndex);
         return el;
@@ -997,6 +1138,7 @@
         updateStatusTexts();
         wireTags();
         bindDelegatedDnD();
+        bindPointerTouchDrag();
         renderNavButtons();
     }
 
@@ -1134,7 +1276,7 @@
 
     function wireTags() {
         document.querySelectorAll('#assessSection .skill-tag').forEach(function (tag) {
-            tag.setAttribute('draggable', 'true');
+            tag.setAttribute('draggable', touchDnDUseNativeDraggable() ? 'true' : 'false');
             bindDefPopoverHandlers(tag);
             tag.addEventListener('dragstart', function (e) {
                 hideDefPopover();

@@ -50,17 +50,17 @@
         /* ===== NAV ===== */
         .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; transition: all 0.4s ease; }
         .nav.scrolled { background: rgba(10,31,46,0.95); backdrop-filter: blur(20px); box-shadow: 0 4px 30px rgba(0,0,0,0.2); }
-        .nav-logo { display: flex; align-items: center; gap: 12px; }
+        .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; }
         .nav-logo-text { color: #fff; font-size: 18px; font-weight: 700; letter-spacing: 1px; }
         .nav-logo-sub { color: var(--gold); font-size: 10px; letter-spacing: 3px; margin-top: 2px; }
-        .nav-links { display: flex; gap: 32px; align-items: center; }
-        .nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.3s; position: relative; }
+        .nav-links { display: flex; gap: 28px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+        .nav-links a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.3s; position: relative; }
         .nav-links a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px; background: var(--gold); transition: width 0.3s; }
         .nav-links a:hover { color: #fff; }
         .nav-links a:hover::after { width: 100%; }
         .nav-dropdown { position: relative; }
         .nav-dropdown-toggle {
-            color: rgba(255,255,255,0.8);
+            color: rgba(255,255,255,0.85);
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
@@ -113,6 +113,7 @@
         }
         .nav-cta { background: var(--gold); color: var(--deep-blue); padding: 8px 20px; border-radius: 30px; font-size: 13px; font-weight: 700; text-decoration: none; transition: all 0.3s; }
         .nav-cta:hover { background: var(--gold-light); transform: scale(1.05); }
+        .nav-links a.nav-cta::after { display: none; }
         .nav-mobile-toggle { display: none; color: #fff; font-size: 24px; cursor: pointer; }
 
         /* ===== HERO ===== */
@@ -376,13 +377,13 @@
 
     <!-- Navigation -->
     <nav class="nav" id="navbar">
-        <div class="nav-logo">
+        <a href="index.html" class="nav-logo">
             <img src="images/Company logo.png" alt="睿观生涯教练" style="height:100px;width:auto;object-fit:contain;">
             <div>
                 <div class="nav-logo-text">选对赛道跟对人</div>
                 <div class="nav-logo-sub">释放个人潜能，实现可持续职业发展</div>
             </div>
-        </div>
+        </a>
         <div class="nav-links">
             <a href="index.html">首页</a>
             <a href="index.html#philosophy">理念</a>

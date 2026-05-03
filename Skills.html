@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>职业技能测评 | 睿观生涯教练</title>
+    <meta name="description" content="将各项职业技能按熟练程度分类，生成个人职业技能画像。">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-blue: #0a1f2e;
+            --navy: #0f2d3d;
+            --slate: #1a3c5c;
+            --steel: #2c5a7a;
+            --gold: #d4a853;
+            --gold-light: #e8c878;
+            --gold-dark: #b8923e;
+            --cream: #faf8f3;
+            --ivory: #f5f0e8;
+            --text-dark: #1e2a35;
+            --text-body: #3d4f5f;
+            --text-light: #6b7d8d;
+            --glass: rgba(255,255,255,0.08);
+            --glass-border: rgba(255,255,255,0.12);
+            /* 技能标签基准宽度；“+1 单位”用于列宽 */
+            --skill-tag-min-w: 5.5rem;
+            --skill-tag-unit: 1ch;
+            --drop-pad-x: calc(var(--skill-tag-unit));
+            --tag-h: 34px;
+            --tag-gap: 10px;
+            --pool-cat1: #2d6a4f;
+            --pool-cat1-bg: #d8f3dc;
+            --pool-cat2: #9a7209;
+            --pool-cat2-bg: #fff3bf;
+            --pool-cat3: #1d4e89;
+            --pool-cat3-bg: #caf0f8;
+            --pool-cat4: #3c096c;
+            --pool-cat4-bg: #e0aaff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 16px; scroll-behavior: smooth; }
+        body {
+            font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--cream);
+            color: var(--text-body);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            padding-top: 100px;
+            padding-bottom: 48px;
+        }
+        img { max-width: 100%; height: auto; display: block; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes statusFlash { 0%, 100% { opacity: 1; color: #c0392b; } 50% { opacity: 0.45; color: #e74c3c; } }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+            background: rgba(10,31,46,0.95); backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+        }
+        .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; }
+        .nav-logo-text { color: #fff; font-size: 18px; font-weight: 700; letter-spacing: 1px; }
+        .nav-logo-sub { color: var(--gold); font-size: 10px; letter-spacing: 3px; margin-top: 2px; }
+        .nav-links { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+        .nav-links a {
+            color: rgba(255,255,255,0.85); text-decoration: none; font-size: 14px; font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: #fff; }
+        .nav-dropdown { position: relative; }
+        .nav-dropdown-toggle {
+            color: rgba(255,255,255,0.85);
+            font-size: 14px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            padding: 0;
+            font-family: inherit;
+        }
+        .nav-dropdown-toggle:hover { color: #fff; }
+        .nav-dropdown-toggle i { font-size: 11px; transition: transform 0.25s ease; }
+        .nav-dropdown.open .nav-dropdown-toggle i { transform: rotate(180deg); }
+        .nav-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 12px);
+            left: 0;
+            min-width: 180px;
+            padding: 10px;
+            background: rgba(10,31,46,0.92);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+            display: none;
+            z-index: 1100;
+        }
+        .nav-dropdown.open .nav-dropdown-menu { display: block; }
+        .nav-dropdown-menu a {
+            display: block;
+            color: rgba(255,255,255,0.92);
+            font-size: 13px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-bottom: 4px;
+            background: rgba(255,255,255,0.06);
+        }
+        .nav-dropdown-menu a:last-child { margin-bottom: 0; }
+        .nav-dropdown-menu a:hover { background: rgba(255,255,255,0.12); color: #fff; }
+        .nav-cta {
+            background: var(--gold); color: var(--deep-blue); padding: 8px 20px; border-radius: 30px;
+            font-size: 13px; font-weight: 700; text-decoration: none; transition: transform 0.3s;
+        }
+        .nav-cta:hover { transform: scale(1.05); }
+
+        .skills-wrap {
+            max-width: 520px;
+            margin: 0 auto;
+            padding: 0 20px 40px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        .skills-card {
+            background: #fff;
+            border-radius: 24px;
+            box-shadow: 0 12px 48px rgba(10,31,46,0.1);
+            border: 1px solid rgba(212,168,83,0.12);
+            overflow: hidden;
+        }
+        .skills-hero {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            background: linear-gradient(135deg, var(--slate), var(--steel));
+        }
+        .skills-card-inner { padding: 20px 18px 24px; }
+        .skills-page-label {
+            font-size: 12px; font-weight: 600; color: var(--gold); letter-spacing: 2px;
+            margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
+        }
+        .skills-page-label::before { content: ''; width: 24px; height: 2px; background: var(--gold); }
+        .skills-cat-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.35rem;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+        .skills-step {
+            font-size: 13px; color: var(--text-light);
+            margin-bottom: 18px;
+        }
+
+        /* 三列拖拽区 */
+        .skills-buckets {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        @media (max-width: 480px) {
+            .skills-buckets { grid-template-columns: 1fr; }
+        }
+        .skills-bucket h3 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-dark);
+            text-align: center;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+        .skills-drop-zone {
+            border: 2px dashed rgba(26,60,92,0.28);
+            border-radius: 14px;
+            background: linear-gradient(180deg, var(--ivory) 0%, #f0ebe3 100%);
+            min-height: calc(8 * (var(--tag-h) + var(--tag-gap)) + 16px);
+            width: calc(100% + var(--drop-pad-x));
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 10px 8px;
+            display: flex;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            gap: var(--tag-gap);
+            justify-content: center;
+            transition: border-color 0.25s, background 0.25s;
+        }
+        .skills-drop-zone.drag-over {
+            border-color: var(--gold);
+            background: rgba(212,168,83,0.08);
+        }
+        .skills-status {
+            font-size: 11px;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 8px;
+            line-height: 1.4;
+        }
+        .skills-status.flash-warn {
+            animation: statusFlash 0.5s ease-in-out 3;
+            color: #c0392b;
+            font-weight: 600;
+        }
+
+        /* 底部技能池：每行 4 个 */
+        .skills-pool-title {
+            font-size: 12px; color: var(--text-light);
+            margin: 16px 0 10px;
+            font-weight: 600;
+        }
+        .skills-pool {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--tag-gap);
+        }
+        #skillPool.drag-over {
+            outline: 2px dashed var(--gold);
+            outline-offset: 4px;
+            border-radius: 12px;
+        }
+        @media (max-width: 420px) {
+            .skills-pool { grid-template-columns: repeat(2, 1fr); }
+        }
+        .skill-tag {
+            min-width: var(--skill-tag-min-w);
+            min-height: var(--tag-h);
+            padding: 6px 8px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+            cursor: grab;
+            user-select: none;
+            border: 1px solid rgba(0,0,0,0.08);
+            box-shadow: 0 2px 6px rgba(10,31,46,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.25;
+            touch-action: none;
+        }
+        .skill-tag:active { cursor: grabbing; }
+        .skill-tag.dragging { opacity: 0.55; }
+        .skill-tag--c0 { background: var(--pool-cat1-bg); color: var(--pool-cat1); border-color: rgba(45,106,79,0.25); }
+        .skill-tag--c1 { background: var(--pool-cat2-bg); color: var(--pool-cat2); border-color: rgba(154,114,9,0.25); }
+        .skill-tag--c2 { background: var(--pool-cat3-bg); color: var(--pool-cat3); border-color: rgba(29,78,137,0.25); }
+        .skill-tag--c3 { background: var(--pool-cat4-bg); color: var(--pool-cat4); border-color: rgba(60,9,108,0.25); }
+        .skill-tag--report-0 { background: var(--pool-cat1-bg); color: var(--pool-cat1); border-color: rgba(45,106,79,0.25); }
+        .skill-tag--report-1 { background: var(--pool-cat2-bg); color: var(--pool-cat2); border-color: rgba(154,114,9,0.25); }
+        .skill-tag--report-2 { background: var(--pool-cat3-bg); color: var(--pool-cat3); border-color: rgba(29,78,137,0.25); }
+        .skill-tag--report-3 { background: var(--pool-cat4-bg); color: var(--pool-cat4); border-color: rgba(60,9,108,0.25); }
+
+        .skills-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 22px;
+        }
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--deep-blue); padding: 12px 28px; border-radius: 50px;
+            font-size: 14px; font-weight: 700; border: none; cursor: pointer;
+            box-shadow: 0 6px 24px rgba(212,168,83,0.35);
+            transition: transform 0.25s, box-shadow 0.25s;
+            font-family: inherit;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(212,168,83,0.45); }
+        .btn-secondary {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: transparent; color: var(--slate);
+            padding: 12px 28px; border-radius: 50px; font-size: 14px; font-weight: 600;
+            border: 2px solid rgba(26,60,92,0.25); cursor: pointer; transition: all 0.25s;
+            font-family: inherit;
+        }
+        .btn-secondary:hover { border-color: var(--gold); color: var(--gold-dark); }
+
+        #reportSection { display: none; }
+        #reportSection.is-visible { display: block; }
+        #assessSection.is-hidden { display: none; }
+
+        .report-def-block {
+            margin-top: 28px;
+            padding: 20px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--cream) 0%, #fff 100%);
+            border: 1px solid rgba(212,168,83,0.12);
+        }
+        .report-def-block h3 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--gold);
+        }
+        .report-def-block ol {
+            padding-left: 1.2rem;
+            font-size: 14px;
+            color: var(--text-body);
+        }
+        .report-def-block li { margin-bottom: 12px; }
+        .report-def-block li strong { color: var(--text-dark); }
+
+        .skills-intro {
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .skill-def-popover {
+            position: fixed;
+            z-index: 2500;
+            max-width: min(300px, calc(100vw - 24px));
+            padding: 11px 15px 12px;
+            font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            font-size: 12.5px;
+            font-weight: 300;
+            letter-spacing: 0.06em;
+            line-height: 1.75;
+            color: rgba(30, 42, 53, 0.82);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.62) 0%, rgba(240, 244, 250, 0.48) 100%);
+            backdrop-filter: blur(14px) saturate(1.1);
+            -webkit-backdrop-filter: blur(14px) saturate(1.1);
+            border: 1px solid rgba(26, 60, 92, 0.12);
+            border-radius: 10px;
+            box-shadow: 0 10px 36px rgba(10, 31, 46, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.65);
+            pointer-events: none;
+            display: none;
+            text-align: left;
+            -webkit-font-smoothing: antialiased;
+        }
+        .skill-def-popover.is-visible { display: block; }
+
+        .report-download-hint {
+            margin-top: 22px;
+            padding: 14px 16px;
+            font-size: 13px;
+            line-height: 1.65;
+            color: var(--text-body);
+            background: linear-gradient(135deg, rgba(212, 168, 83, 0.12) 0%, rgba(10, 31, 46, 0.06) 100%);
+            border: 1px solid rgba(212, 168, 83, 0.22);
+            border-radius: 14px;
+        }
+        .report-download-hint strong { color: var(--text-dark); }
+        .report-download-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+            margin-top: 14px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="index.html" class="nav-logo">
+            <img src="images/Company logo.png" alt="" style="height:56px;width:auto;object-fit:contain;">
+            <div>
+                <div class="nav-logo-text">睿观生涯教练</div>
+                <div class="nav-logo-sub">职业技能测评</div>
+            </div>
+        </a>
+        <div class="nav-links">
+            <a href="index.html">首页</a>
+            <a href="index.html#philosophy">服务理念</a>
+            <div class="nav-dropdown" id="skillsNavDropdown">
+                <button type="button" class="nav-dropdown-toggle" id="skillsNavDropdownToggle" aria-expanded="false">
+                    其它测评 <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="nav-dropdown-menu">
+                    <a href="AboutHA.html">Harrison测评</a>
+                    <a href="career_assessment.html">霍兰德测评</a>
+                    <a href="Life-pie-chart.html">生命饼图</a>
+                    <a href="value.html">价值观测评</a>
+                </div>
+            </div>
+        </div>
+        <a href="index.html#cta" class="nav-cta">预约诊断</a>
+    </nav>
+
+    <div class="skills-wrap">
+        <section id="assessSection">
+            <div class="skills-card">
+                <img id="assessHeroImg" class="skills-hero" src="images/skill01.webp" alt="职业技能测评" width="800" height="450" decoding="async">
+                <div class="skills-card-inner">
+                    <div class="skills-page-label">SKILL MAPPING</div>
+                    <h1 class="skills-cat-title" id="catHeading">个人能力</h1>
+                    <p class="skills-step" id="stepLine">第 1 / 4 类 · 请从下方拖拽技能至上方对应方框</p>
+                    <p class="skills-intro">将最符合您现状的技能分别放入「极为熟练」「熟练掌握」「不太熟练」。每列最多 2 项。</p>
+
+                    <div class="skills-buckets">
+                        <div class="skills-bucket" data-bucket="expert">
+                            <h3>极为熟练</h3>
+                            <div class="skills-drop-zone" data-bucket="expert" aria-label="极为熟练"></div>
+                            <p class="skills-status" data-status="expert">已选0项，最多2项</p>
+                        </div>
+                        <div class="skills-bucket" data-bucket="proficient">
+                            <h3>熟练掌握</h3>
+                            <div class="skills-drop-zone" data-bucket="proficient" aria-label="熟练掌握"></div>
+                            <p class="skills-status" data-status="proficient">已选0项，最多2项</p>
+                        </div>
+                        <div class="skills-bucket" data-bucket="weak">
+                            <h3>不太熟练</h3>
+                            <div class="skills-drop-zone" data-bucket="weak" aria-label="不太熟练"></div>
+                            <p class="skills-status" data-status="weak">已选0项，最多2项</p>
+                        </div>
+                    </div>
+
+                    <div class="skills-pool-title">可选技能（拖拽）</div>
+                    <div class="skills-pool" id="skillPool"></div>
+
+                    <div class="skills-actions" id="navActions"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="reportSection">
+            <div class="skills-card">
+                <img id="reportHeroImg" class="skills-hero" src="images/skill01.webp" alt="测评报告" width="800" height="450" decoding="async">
+                <div class="skills-card-inner">
+                    <div class="skills-page-label">测评报告</div>
+                    <h1 class="skills-cat-title">职业技能分类总结</h1>
+                    <p class="skills-step">以下为你在四个维度中的选择汇总</p>
+
+                    <div class="skills-buckets" style="margin-top:8px;">
+                        <div class="skills-bucket" data-bucket="expert">
+                            <h3>极为熟练</h3>
+                            <div class="skills-drop-zone" id="reportExpert"></div>
+                        </div>
+                        <div class="skills-bucket" data-bucket="proficient">
+                            <h3>熟练掌握</h3>
+                            <div class="skills-drop-zone" id="reportProficient"></div>
+                        </div>
+                        <div class="skills-bucket" data-bucket="weak">
+                            <h3>不太熟练</h3>
+                            <div class="skills-drop-zone" id="reportWeak"></div>
+                        </div>
+                    </div>
+
+                    <div id="reportDefinitions"></div>
+
+                    <p class="report-download-hint" id="reportDownloadHint">
+                        <strong>免费解读与下载说明：</strong>下载的报告可凭此向<strong>睿观生涯教练</strong>申请一次<strong>免费解读</strong>。
+                        为公平起见，<strong>每位用户每周仅限下载一份报告</strong>（以本浏览器本地记录为准；清除数据后需重新遵守规则）。
+                    </p>
+                    <div class="report-download-row">
+                        <button type="button" class="btn-primary" id="btnDownloadReport"><i class="fas fa-download"></i> 下载报告</button>
+                    </div>
+
+                    <div class="skills-actions">
+                        <button type="button" class="btn-secondary" id="btnRestart"><i class="fas fa-redo"></i> 重新测评</button>
+                        <a href="index.html" class="btn-primary" style="text-decoration:none;"><i class="fas fa-home"></i> 返回首页</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="skillDefPopover" class="skill-def-popover" role="tooltip" aria-hidden="true"></div>
+
+    <script>
+(function () {
+    'use strict';
+    var SKILL_DEFS = {
+        '学习能力': '愿意并能做到学习、掌握和应用新知识技能',
+        '自我驱动': '有高度的自我驱动力，即使在遇到困境也如此',
+        '编辑校对': '编辑和校对文书',
+        '直觉': '凭借直觉和经验做出正确的决策和判断',
+        '临场发挥': '在压力下能临场发挥，灵活应对',
+        '观察力': '敏锐观察和注意细节及变化',
+        '娱乐表演': '在娱乐领域进行表演和演出',
+        '艺术创作': '以艺术形式（例如音乐、绘画、文学等）进行创作和表达',
+        '信息收集整理': '高效收集和整理各种渠道的信息和数据',
+        '动手操作': '对于需要动手类的任务和操作较为熟练',
+        '适应能力': '快速适应不同环境和变化以及压力管理的能力',
+        '激情活力': '在工作中保持热情与活力，并能感染带动他人',
+        '体能健康': '身体健康，体能良好，能承受较强的工作体能负荷',
+        '仪容仪表': '保持专业的着装仪容仪态',
+        '口头表达': '以口头方式有效沟通和表达',
+        '写作': '撰写、修改文书内容，清晰有效地表达思想和观点',
+        '聆听技巧': '有效倾听和理解他人',
+        '接受反馈': '以开放的态度倾听和采纳他人的反馈意见',
+        '教练辅导': '对他人的行为给予有效反馈和辅导',
+        '领导力/影响力': '赢得他人的尊重和认可，使他人愿意接受影响，并发生行为改变',
+        '谈判协商': '掌握谈判技巧，善于达成协议和妥协',
+        '客服能力': '识别客户需求与期望并提供优质的服务和支持',
+        '说服力': '以有力的方式说服他人接受建议、方案和想法',
+        '电话沟通': '在电话中有效沟通和交流',
+        '职场敏感度': '在处理复杂人际关系时具有较强的敏感度',
+        '培训演讲': '在众人面前进行培训和演讲的能力',
+        '冲突管理': '处理和解决人际之间的冲突和矛盾',
+        '客户关系': '建立和维护良好的客户关系',
+        '情绪管理': '根据场合有效地管理、控制和释放个人情绪',
+        '社交媒体沟通': '在社交媒体平台上有效沟通和互动',
+        '时间管理': '分清事物的轻重缓急，有效管理和利用时间',
+        '分析能力': '分析信息和数据，并给予有效的解读',
+        '设定目标': '为组织和个人设定明确的目标',
+        '创新思维': '能跳出传统思维的桎梏，用创新的方法解决问题',
+        '多任务管理': '同时管理多个任务和项目，相互切换无障碍',
+        '组织协调': '有效组织和协调内部的人财物等资源',
+        '合理授权': '赋予他人责任和权力高效完成业务',
+        '销售能力': '有效推销和销售产品或服务',
+        '成本控制': '管理和控制成本',
+        '团队合作': '能与不同职能、地域、文化的人员紧密合作',
+        '决策判断': '对于重大的事项能做出明智的决策和抉择',
+        '问题解决能力': '有效解决疑难复杂问题和应对挑战',
+        '项目管理': '规划、执行和监控项目的能力',
+        '品质管理': '管理和确保产品或服务的质量',
+        '行政后勤': '管理和协调行政后勤事务，井井有条',
+        '调查深究': '深入研究复杂的概念或者调研疑难问题的起因',
+        '商业敏感度': '对商业环境和机会的敏感度和洞察',
+        '战略思维': '能理解外部环境变化与组织战略全局，具备前瞻性思维视角',
+        '变革管理': '成功引导和实施组织变革',
+        '风险意识': '对潜在风险和危害的敏感性和警觉性，包括且不限于（消防、人身和资金安全）',
+        '合规与控制': '从财务与合规的角度控制风险',
+        '整合资源': '能有效地整合组织内外的资源，包括且不限于人财物及虚拟资源',
+        '培养下属': '通过有效的方式培养下属的能力提升并实现职位晋升',
+        '招募人员': '擅于吸纳和甄别组织内外的人才并匹配合适的岗位',
+        '财务管理': '具备与工作要求相匹配的财务知识，理解个人和组织业务的财务闭环',
+        '机敏应变': '勇于创新，带领团队/组织高效迅速应对外界的动态变化',
+        '建立关系': '能与团队/组织内外的利益相关者建立长期稳固、健康有效的关系',
+        '激励参与': '能激励团队/组织内外的人员都积极参与到业务当中'
+    };
+
+    var CATEGORIES = [
+        {
+            title: '个人能力',
+            tags: ['学习能力', '自我驱动', '编辑校对', '直觉', '临场发挥', '观察力', '娱乐表演', '艺术创作', '信息收集整理', '动手操作', '适应能力', '激情活力', '体能健康', '仪容仪表']
+        },
+        {
+            title: '人际沟通',
+            tags: ['写作', '领导力/影响力', '客服能力', '冲突管理', '培训演讲', '说服力', '情绪管理', '客户关系', '口头表达', '职场敏感度', '聆听技巧', '接受反馈', '电话沟通', '谈判协商', '社交媒体沟通', '教练辅导']
+        },
+        {
+            title: '软技能',
+            tags: ['时间管理', '分析能力', '创新思维', '设定目标', '多任务管理', '成本控制', '组织协调', '合理授权', '行政后勤', '销售能力', '团队合作', '项目管理', '品质管理', '调查深究', '决策判断', '问题解决能力']
+        },
+        {
+            title: '领导力',
+            tags: ['合规与控制', '整合资源', '培养下属', '招募人员', '财务管理', '机敏应变', '建立关系', '激励参与', '战略思维', '风险意识', '商业敏感度', '变革管理']
+        }
+    ];
+
+    var BUCKETS = ['expert', 'proficient', 'weak'];
+    var currentPage = 0;
+    var selections = CATEGORIES.map(function () {
+        return { expert: [], proficient: [], weak: [] };
+    });
+
+    var poolEl = document.getElementById('skillPool');
+    var catHeading = document.getElementById('catHeading');
+    var stepLine = document.getElementById('stepLine');
+    var navActions = document.getElementById('navActions');
+    var assessSection = document.getElementById('assessSection');
+    var reportSection = document.getElementById('reportSection');
+    var defPopover = document.getElementById('skillDefPopover');
+    var assessHeroImg = document.getElementById('assessHeroImg');
+    var reportHeroImg = document.getElementById('reportHeroImg');
+    var HERO_ASSESS = ['skill01.webp', 'skill02.webp', 'skill03.webp', 'skill04.webp'];
+    var LS_REPORT_WEEK = 'rg_skills_report_week_dl';
+    var dragPayload = null;
+    var dndBound = false;
+    var popoverLeaveTimer = null;
+
+    function getWeekMondayKey() {
+        var d = new Date();
+        var day = d.getDay();
+        var diff = d.getDate() - day + (day === 0 ? -6 : 1);
+        var mon = new Date(d.getFullYear(), d.getMonth(), diff);
+        mon.setHours(0, 0, 0, 0);
+        return mon.getFullYear() + '-' + (mon.getMonth() + 1) + '-' + mon.getDate();
+    }
+
+    function collectNames(bucket) {
+        var arr = [];
+        for (var c = 0; c < CATEGORIES.length; c++) {
+            selections[c][bucket].forEach(function (n) {
+                arr.push(n);
+            });
+        }
+        return arr;
+    }
+
+    function hideDefPopover() {
+        if (popoverLeaveTimer) {
+            clearTimeout(popoverLeaveTimer);
+            popoverLeaveTimer = null;
+        }
+        defPopover.classList.remove('is-visible');
+        defPopover.setAttribute('aria-hidden', 'true');
+        defPopover._anchor = null;
+    }
+
+    function showDefPopover(anchor) {
+        if (!anchor || !anchor.dataset.skill) return;
+        var skill = anchor.dataset.skill;
+        defPopover.textContent = SKILL_DEFS[skill] || '（暂无定义）';
+        defPopover.classList.add('is-visible');
+        defPopover.setAttribute('aria-hidden', 'false');
+        defPopover._anchor = anchor;
+        requestAnimationFrame(function () {
+            if (defPopover._anchor !== anchor) return;
+            var r = anchor.getBoundingClientRect();
+            var pw = defPopover.offsetWidth;
+            var ph = defPopover.offsetHeight;
+            var left = r.left + r.width / 2 - pw / 2;
+            left = Math.max(12, Math.min(left, window.innerWidth - pw - 12));
+            var top = r.bottom + 8;
+            if (top + ph > window.innerHeight - 10) {
+                top = Math.max(12, r.top - ph - 8);
+            }
+            defPopover.style.left = left + 'px';
+            defPopover.style.top = top + 'px';
+        });
+    }
+
+    function bindDefPopoverHandlers(el) {
+        if (!el || el._defPopoverBound) return;
+        el._defPopoverBound = true;
+        el.addEventListener('mouseenter', function () {
+            if (popoverLeaveTimer) {
+                clearTimeout(popoverLeaveTimer);
+                popoverLeaveTimer = null;
+            }
+            showDefPopover(el);
+        });
+        el.addEventListener('mouseleave', function () {
+            popoverLeaveTimer = setTimeout(hideDefPopover, 120);
+        });
+        el.addEventListener('dragstart', hideDefPopover);
+    }
+
+    function getZones() {
+        return {
+            expert: assessSection.querySelector('.skills-drop-zone[data-bucket="expert"]'),
+            proficient: assessSection.querySelector('.skills-drop-zone[data-bucket="proficient"]'),
+            weak: assessSection.querySelector('.skills-drop-zone[data-bucket="weak"]')
+        };
+    }
+
+    function updateStatusTexts() {
+        var sel = selections[currentPage];
+        BUCKETS.forEach(function (b) {
+            var n = sel[b].length;
+            var el = assessSection.querySelector('.skills-status[data-status="' + b + '"]');
+            if (el) el.textContent = '已选' + n + '项，最多2项';
+        });
+    }
+
+    function flashStatus(bucket) {
+        var el = assessSection.querySelector('.skills-status[data-status="' + bucket + '"]');
+        if (!el) return;
+        el.classList.remove('flash-warn');
+        void el.offsetWidth;
+        el.classList.add('flash-warn');
+        setTimeout(function () { el.classList.remove('flash-warn'); }, 1600);
+    }
+
+    function clearDragOver() {
+        assessSection.querySelectorAll('.drag-over').forEach(function (node) {
+            node.classList.remove('drag-over');
+        });
+    }
+
+    function findTagInDom(skill) {
+        var all = assessSection.querySelectorAll('.skill-tag');
+        for (var i = 0; i < all.length; i++) {
+            if (all[i].dataset.skill === skill) return all[i];
+        }
+        return null;
+    }
+
+    function removeSkillFromCurrentSelections(skill) {
+        var sel = selections[currentPage];
+        BUCKETS.forEach(function (b) {
+            var idx = sel[b].indexOf(skill);
+            if (idx !== -1) sel[b].splice(idx, 1);
+        });
+    }
+
+    function bindDelegatedDnD() {
+        if (dndBound) return;
+        dndBound = true;
+        assessSection.addEventListener('dragover', function (e) {
+            var zone = e.target.closest('#skillPool') || e.target.closest('.skills-drop-zone[data-bucket]');
+            if (!zone || !assessSection.contains(zone)) return;
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            clearDragOver();
+            zone.classList.add('drag-over');
+        });
+        assessSection.addEventListener('drop', function (e) {
+            var zone = e.target.closest('#skillPool') || e.target.closest('.skills-drop-zone[data-bucket]');
+            if (!zone || !assessSection.contains(zone)) return;
+            e.preventDefault();
+            clearDragOver();
+            var data;
+            try {
+                data = JSON.parse(e.dataTransfer.getData('text/plain') || '{}');
+            } catch (err) {
+                return;
+            }
+            if (!data.skill) return;
+            var skill = data.skill;
+            var fromCat = typeof data.catIndex === 'number' ? data.catIndex : currentPage;
+            if (fromCat !== currentPage) return;
+            var tagEl = findTagInDom(skill);
+            if (!tagEl) return;
+            var targetBucket = zone.getAttribute('data-bucket');
+            if (zone.id === 'skillPool') targetBucket = 'pool';
+
+            if (targetBucket !== 'pool') {
+                var selPre = selections[currentPage][targetBucket];
+                if (selPre.length >= 2 && selPre.indexOf(skill) === -1) {
+                    flashStatus(targetBucket);
+                    return;
+                }
+            }
+
+            removeSkillFromCurrentSelections(skill);
+
+            if (targetBucket === 'pool') {
+                poolEl.appendChild(tagEl);
+                sortPoolNodes();
+            } else {
+                var sel = selections[currentPage][targetBucket];
+                sel.push(skill);
+                zone.appendChild(tagEl);
+            }
+            updateStatusTexts();
+        });
+        document.addEventListener('dragend', clearDragOver, true);
+    }
+
+    function createTag(name, catIndex) {
+        var el = document.createElement('div');
+        el.className = 'skill-tag skill-tag--c' + catIndex;
+        el.textContent = name;
+        el.setAttribute('draggable', 'true');
+        el.dataset.skill = name;
+        el.dataset.catIndex = String(catIndex);
+        return el;
+    }
+
+    function poolOrderIndex(name) {
+        var tags = CATEGORIES[currentPage].tags;
+        var i = tags.indexOf(name);
+        return i === -1 ? 999 : i;
+    }
+
+    function sortPoolNodes() {
+        var nodes = Array.prototype.slice.call(poolEl.children);
+        nodes.sort(function (a, b) {
+            return poolOrderIndex(a.dataset.skill) - poolOrderIndex(b.dataset.skill);
+        });
+        nodes.forEach(function (n) { poolEl.appendChild(n); });
+    }
+
+    function renderPage() {
+        var cat = CATEGORIES[currentPage];
+        catHeading.textContent = cat.title;
+        stepLine.textContent = '第 ' + (currentPage + 1) + ' / 4 类 · 共 ' + cat.tags.length + ' 项技能';
+
+        if (assessHeroImg) {
+            assessHeroImg.src = 'images/' + HERO_ASSESS[currentPage];
+            assessHeroImg.onerror = function () {
+                this.onerror = null;
+                this.src = 'images/skill01.webp';
+            };
+        }
+        hideDefPopover();
+
+        var zones = getZones();
+        poolEl.innerHTML = '';
+        BUCKETS.forEach(function (b) { zones[b].innerHTML = ''; });
+
+        cat.tags.forEach(function (name) {
+            var tag = createTag(name, currentPage);
+            var placed = null;
+            BUCKETS.forEach(function (b) {
+                if (selections[currentPage][b].indexOf(name) !== -1) placed = b;
+            });
+            if (placed) zones[placed].appendChild(tag);
+            else poolEl.appendChild(tag);
+        });
+
+        sortPoolNodes();
+        updateStatusTexts();
+        wireTags();
+        bindDelegatedDnD();
+        renderNavButtons();
+    }
+
+    function renderNavButtons() {
+        navActions.innerHTML = '';
+        var p = currentPage;
+        if (p > 0) {
+            var prev = document.createElement('button');
+            prev.type = 'button';
+            prev.className = 'btn-secondary';
+            prev.innerHTML = '<i class="fas fa-arrow-left"></i> 上一页';
+            prev.addEventListener('click', function () {
+                currentPage--;
+                renderPage();
+            });
+            navActions.appendChild(prev);
+        }
+        if (p < 3) {
+            var next = document.createElement('button');
+            next.type = 'button';
+            next.className = 'btn-primary';
+            next.innerHTML = '下一页 <i class="fas fa-arrow-right"></i>';
+            next.addEventListener('click', function () {
+                currentPage++;
+                renderPage();
+            });
+            navActions.appendChild(next);
+        } else {
+            var ok = document.createElement('button');
+            ok.type = 'button';
+            ok.className = 'btn-primary';
+            ok.innerHTML = '<i class="fas fa-check"></i> 确认';
+            ok.addEventListener('click', showReport);
+            navActions.appendChild(ok);
+        }
+    }
+
+    function wireTags() {
+        document.querySelectorAll('#assessSection .skill-tag').forEach(function (tag) {
+            bindDefPopoverHandlers(tag);
+            tag.addEventListener('dragstart', function (e) {
+                tag.classList.add('dragging');
+                var parent = tag.parentElement;
+                var fromBucket = 'pool';
+                if (parent && parent.classList.contains('skills-drop-zone')) {
+                    fromBucket = parent.getAttribute('data-bucket') || 'pool';
+                }
+                dragPayload = { skill: tag.dataset.skill, fromBucket: fromBucket, catIndex: parseInt(tag.dataset.catIndex, 10) };
+                e.dataTransfer.setData('text/plain', JSON.stringify(dragPayload));
+                e.dataTransfer.effectAllowed = 'move';
+            });
+            tag.addEventListener('dragend', function () {
+                tag.classList.remove('dragging');
+                dragPayload = null;
+                clearDragOver();
+            });
+        });
+    }
+
+    function showReport() {
+        assessSection.classList.add('is-hidden');
+        reportSection.classList.add('is-visible');
+        if (reportHeroImg) {
+            reportHeroImg.src = 'images/skill01.webp';
+            reportHeroImg.onerror = function () {
+                this.onerror = null;
+                this.src = 'images/participant.webp';
+            };
+        }
+
+        var re = document.getElementById('reportExpert');
+        var rp = document.getElementById('reportProficient');
+        var rw = document.getElementById('reportWeak');
+        re.innerHTML = '';
+        rp.innerHTML = '';
+        rw.innerHTML = '';
+
+        function addReportTag(name, catIdx) {
+            var el = document.createElement('div');
+            el.className = 'skill-tag skill-tag--report-' + catIdx;
+            el.textContent = name;
+            el.dataset.skill = name;
+            el.style.marginBottom = '2px';
+            el.setAttribute('draggable', 'false');
+            bindDefPopoverHandlers(el);
+            return el;
+        }
+
+        function collect(bucket) {
+            var out = [];
+            for (var c = 0; c < CATEGORIES.length; c++) {
+                selections[c][bucket].forEach(function (name) {
+                    out.push({ name: name, cat: c });
+                });
+            }
+            return out;
+        }
+
+        collect('expert').forEach(function (item) { re.appendChild(addReportTag(item.name, item.cat)); });
+        collect('proficient').forEach(function (item) { rp.appendChild(addReportTag(item.name, item.cat)); });
+        collect('weak').forEach(function (item) { rw.appendChild(addReportTag(item.name, item.cat)); });
+
+        var defHost = document.getElementById('reportDefinitions');
+        defHost.innerHTML = '';
+
+        function block(title, items) {
+            var wrap = document.createElement('div');
+            wrap.className = 'report-def-block';
+            var h = document.createElement('h3');
+            h.textContent = title;
+            wrap.appendChild(h);
+            var ol = document.createElement('ol');
+            if (items.length === 0) {
+                var li = document.createElement('li');
+                li.textContent = '（本类暂无选择）';
+                li.style.color = 'var(--text-light)';
+                ol.appendChild(li);
+            } else {
+                items.forEach(function (name, idx) {
+                    var li = document.createElement('li');
+                    var def = SKILL_DEFS[name] || '（暂无定义）';
+                    li.innerHTML = '<strong>' + (idx + 1) + '. ' + name + '</strong>：' + def;
+                    ol.appendChild(li);
+                });
+            }
+            wrap.appendChild(ol);
+            defHost.appendChild(wrap);
+        }
+
+        block('极为熟练的技能', collectNames('expert'));
+        block('熟练掌握的技能', collectNames('proficient'));
+        block('不太熟练的技能', collectNames('weak'));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        hideDefPopover();
+    }
+
+    function buildReportDownloadText() {
+        var lines = [];
+        lines.push('睿观生涯教练 · 职业技能分类测评报告');
+        lines.push('生成时间：' + new Date().toLocaleString('zh-CN', { hour12: false }));
+        lines.push('');
+        lines.push('【极为熟练】');
+        collectNames('expert').forEach(function (n, i) {
+            lines.push((i + 1) + '. ' + n + '：' + (SKILL_DEFS[n] || '（暂无定义）'));
+        });
+        if (collectNames('expert').length === 0) lines.push('（本类暂无选择）');
+        lines.push('');
+        lines.push('【熟练掌握】');
+        collectNames('proficient').forEach(function (n, i) {
+            lines.push((i + 1) + '. ' + n + '：' + (SKILL_DEFS[n] || '（暂无定义）'));
+        });
+        if (collectNames('proficient').length === 0) lines.push('（本类暂无选择）');
+        lines.push('');
+        lines.push('【不太熟练】');
+        collectNames('weak').forEach(function (n, i) {
+            lines.push((i + 1) + '. ' + n + '：' + (SKILL_DEFS[n] || '（暂无定义）'));
+        });
+        if (collectNames('weak').length === 0) lines.push('（本类暂无选择）');
+        lines.push('');
+        lines.push('---');
+        lines.push('说明：可凭本报告联系睿观生涯教练申请一次免费解读；每人每周限一份报告。');
+        return lines.join('\n');
+    }
+
+    function downloadReportFile() {
+        var wk = getWeekMondayKey();
+        if (localStorage.getItem(LS_REPORT_WEEK) === wk) {
+            window.alert('您本周已下载过一份报告。每人每周仅限一份；如需进一步服务，请联系睿观生涯教练。');
+            return;
+        }
+        var raw = buildReportDownloadText();
+        var blob = new Blob([raw], { type: 'text/plain;charset=utf-8' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        var stamp = new Date().toISOString().slice(0, 10);
+        a.href = url;
+        a.download = '职业技能测评报告_' + stamp + '.txt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        localStorage.setItem(LS_REPORT_WEEK, wk);
+    }
+
+    document.getElementById('btnDownloadReport').addEventListener('click', downloadReportFile);
+
+    window.addEventListener('scroll', hideDefPopover, { passive: true });
+    window.addEventListener('resize', function () {
+        if (defPopover._anchor && defPopover.classList.contains('is-visible')) {
+            showDefPopover(defPopover._anchor);
+        }
+    });
+
+    document.getElementById('btnRestart').addEventListener('click', function () {
+        currentPage = 0;
+        selections = CATEGORIES.map(function () {
+            return { expert: [], proficient: [], weak: [] };
+        });
+        reportSection.classList.remove('is-visible');
+        assessSection.classList.remove('is-hidden');
+        renderPage();
+    });
+
+    renderPage();
+})();
+    </script>
+    <script>
+    (function () {
+        var dd = document.getElementById('skillsNavDropdown');
+        var btn = document.getElementById('skillsNavDropdownToggle');
+        if (!dd || !btn) return;
+        btn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var open = dd.classList.toggle('open');
+            btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+        document.addEventListener('click', function (e) {
+            if (!dd.contains(e.target)) {
+                dd.classList.remove('open');
+                btn.setAttribute('aria-expanded', 'false');
+            }
+        });
+    })();
+    </script>
+</body>
+</html>

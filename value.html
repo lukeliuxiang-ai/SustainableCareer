@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>澄清核心价值观测评 | 睿观生涯教练</title>
+    <meta name="description" content="从45项价值观中选出对你最重要的十项，再提炼五项核心价值观并撰写定义，生成可下载报告。">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-blue: #0a1f2e;
+            --navy: #0f2d3d;
+            --slate: #1a3c5c;
+            --steel: #2c5a7a;
+            --gold: #d4a853;
+            --gold-light: #e8c878;
+            --gold-dark: #b8923e;
+            --cream: #faf8f3;
+            --ivory: #f5f0e8;
+            --text-dark: #1e2a35;
+            --text-body: #3d4f5f;
+            --text-light: #6b7d8d;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 16px; scroll-behavior: smooth; }
+        body {
+            font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--cream);
+            color: var(--text-body);
+            line-height: 1.7;
+            padding-top: 96px;
+            padding-bottom: 48px;
+            -webkit-font-smoothing: antialiased;
+        }
+        img { max-width: 100%; height: auto; display: block; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes statusFlash { 0%, 100% { opacity: 1; color: #c0392b; } 50% { opacity: 0.45; color: #e74c3c; } }
+
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            padding: 14px 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+            background: rgba(10,31,46,0.95); backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+        }
+        .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+        .nav-logo-text { color: #fff; font-size: 17px; font-weight: 700; letter-spacing: 1px; }
+        .nav-logo-sub { color: var(--gold); font-size: 9px; letter-spacing: 2px; margin-top: 2px; }
+        .nav-links { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+        .nav-links a { color: rgba(255,255,255,0.88); text-decoration: none; font-size: 14px; font-weight: 500; }
+        .nav-links a:hover { color: #fff; }
+        .nav-dropdown { position: relative; }
+        .nav-dropdown-toggle {
+            color: rgba(255,255,255,0.88); font-size: 14px; font-weight: 500;
+            display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+            background: transparent; border: none; padding: 0; font-family: inherit;
+        }
+        .nav-dropdown-toggle:hover { color: #fff; }
+        .nav-dropdown-toggle i { font-size: 11px; transition: transform 0.25s ease; }
+        .nav-dropdown.open .nav-dropdown-toggle i { transform: rotate(180deg); }
+        .nav-dropdown-menu {
+            position: absolute; top: calc(100% + 12px); left: 0; min-width: 180px; padding: 10px;
+            background: rgba(10,31,46,0.92); backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.15); border-radius: 12px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.25); display: none; z-index: 1100;
+        }
+        .nav-dropdown.open .nav-dropdown-menu { display: block; }
+        .nav-dropdown-menu a {
+            display: block; color: rgba(255,255,255,0.92); font-size: 13px; padding: 8px 10px;
+            border-radius: 8px; text-decoration: none; margin-bottom: 4px; background: rgba(255,255,255,0.06);
+        }
+        .nav-dropdown-menu a:last-child { margin-bottom: 0; }
+        .nav-dropdown-menu a:hover { background: rgba(255,255,255,0.12); color: #fff; }
+        .nav-cta {
+            background: var(--gold); color: var(--deep-blue); padding: 8px 18px; border-radius: 30px;
+            font-size: 13px; font-weight: 700; text-decoration: none;
+        }
+        .nav-cta:hover { filter: brightness(1.05); }
+
+        .values-wrap {
+            max-width: 520px;
+            margin: 0 auto;
+            padding: 0 18px 40px;
+            animation: fadeInUp 0.55s ease-out;
+        }
+        .values-card {
+            background: #fff;
+            border-radius: 24px;
+            box-shadow: 0 12px 48px rgba(10,31,46,0.1);
+            border: 1px solid rgba(212,168,83,0.12);
+            overflow: hidden;
+        }
+        .values-hero {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            background: linear-gradient(135deg, var(--slate), var(--steel));
+        }
+        .values-inner { padding: 18px 16px 22px; }
+        .values-hint-top {
+            font-size: 13px;
+            color: var(--text-body);
+            line-height: 1.65;
+            margin-bottom: 14px;
+            padding: 12px 14px;
+            background: linear-gradient(135deg, rgba(212,168,83,0.1) 0%, rgba(10,31,46,0.04) 100%);
+            border-radius: 12px;
+            border: 1px solid rgba(212,168,83,0.15);
+        }
+        .values-page-label {
+            font-size: 11px; font-weight: 600; color: var(--gold); letter-spacing: 2px;
+            margin-bottom: 8px; display: flex; align-items: center; gap: 8px;
+        }
+        .values-page-label::before { content: ''; width: 22px; height: 2px; background: var(--gold); }
+        .values-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.28rem;
+            color: var(--text-dark);
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+        .values-step { font-size: 12px; color: var(--text-light); margin-bottom: 14px; }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 14px;
+            border: 2px dashed rgba(26,60,92,0.22);
+            border-radius: 16px;
+            background: linear-gradient(180deg, var(--ivory) 0%, #f0ebe3 100%);
+            margin-bottom: 14px;
+        }
+        .values-grid--p4-bottom {
+            grid-template-columns: repeat(3, 1fr);
+            margin-top: 10px;
+        }
+        .value-cell {
+            position: relative;
+            min-height: 48px;
+            padding: 10px 8px;
+            border-radius: 10px;
+            background: #fff;
+            border: 1px solid rgba(26,60,92,0.12);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-dark);
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .value-cell:hover { border-color: rgba(212,168,83,0.45); box-shadow: 0 4px 12px rgba(212,168,83,0.12); }
+        .value-cell.selected {
+            border-color: var(--gold-dark);
+            background: linear-gradient(180deg, #fffbf0 0%, #fff 100%);
+            box-shadow: 0 0 0 1px rgba(212,168,83,0.25);
+        }
+        .value-cell .check-mark {
+            display: none;
+            position: absolute;
+            top: 4px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--deep-blue);
+            font-size: 11px;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+        .value-cell.selected .check-mark { display: flex; }
+
+        .value-custom-slot {
+            position: relative;
+            min-height: 52px;
+            border-radius: 10px;
+            border: 2px dashed rgba(26,60,92,0.2);
+            background: rgba(255,255,255,0.65);
+            padding: 8px 10px;
+        }
+        .value-custom-slot input {
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-size: 13px;
+            font-family: inherit;
+            color: var(--text-dark);
+            outline: none;
+            text-align: center;
+        }
+        .value-custom-slot input::placeholder { color: var(--text-light); font-weight: 400; }
+
+        .pick-status {
+            font-size: 13px;
+            color: var(--text-light);
+            text-align: center;
+            margin: 12px 0 6px;
+            min-height: 1.5em;
+        }
+        .pick-status.flash-warn {
+            animation: statusFlash 0.5s ease-in-out 3;
+            color: #c0392b;
+            font-weight: 600;
+        }
+
+        .values-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 16px;
+        }
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--deep-blue); padding: 12px 26px; border-radius: 50px;
+            font-size: 14px; font-weight: 700; border: none; cursor: pointer;
+            box-shadow: 0 6px 24px rgba(212,168,83,0.35);
+            font-family: inherit;
+            transition: transform 0.2s;
+        }
+        .btn-primary:hover { transform: translateY(-2px); }
+        .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+        .btn-secondary {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: transparent; color: var(--slate);
+            padding: 12px 26px; border-radius: 50px; font-size: 14px; font-weight: 600;
+            border: 2px solid rgba(26,60,92,0.22); cursor: pointer; font-family: inherit;
+        }
+        .btn-secondary:hover { border-color: var(--gold); color: var(--gold-dark); }
+
+        /* 第5页：上方五格投放区 + 下方十项池 */
+        .core-target-box {
+            border: 2px dashed rgba(26, 60, 92, 0.38);
+            border-radius: 16px;
+            background: linear-gradient(180deg, #fff 0%, var(--ivory) 100%);
+            padding: 18px 16px 20px;
+            margin-bottom: 16px;
+            box-shadow: inset 0 0 0 1px rgba(212, 168, 83, 0.12);
+        }
+        .core-target-box h3 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.12rem;
+            color: var(--text-dark);
+            text-align: center;
+            margin-bottom: 6px;
+        }
+        .core-slot-hint {
+            font-size: 12px;
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: 14px;
+        }
+        .core-drop-col {
+            width: 100%;
+            max-width: 240px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .core-drop-zone {
+            min-height: 52px;
+            border-radius: 12px;
+            border: 2px dashed rgba(212, 168, 83, 0.55);
+            background: rgba(255, 255, 255, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 8px;
+            transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+        }
+        .core-drop-zone:empty::after {
+            content: '拖入价值观';
+            font-size: 12px;
+            font-weight: 500;
+            color: rgba(26, 60, 92, 0.35);
+            letter-spacing: 0.05em;
+        }
+        .core-drop-zone.drag-over {
+            border-color: var(--gold-dark);
+            background: rgba(212, 168, 83, 0.14);
+            box-shadow: 0 0 0 2px rgba(212, 168, 83, 0.2);
+        }
+        .core-pool-box {
+            border: 2px dashed rgba(26, 60, 92, 0.26);
+            border-radius: 16px;
+            background: linear-gradient(180deg, var(--ivory) 0%, #f0ebe3 100%);
+            padding: 16px 14px 18px;
+            margin-bottom: 14px;
+        }
+        .core-pool-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 0.98rem;
+            color: var(--text-dark);
+            text-align: center;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+        .core-pool-sub {
+            font-size: 12px;
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .core-pool-box.drag-over {
+            outline: 2px solid rgba(212, 168, 83, 0.55);
+            outline-offset: 2px;
+            background: rgba(255, 255, 255, 0.55);
+        }
+
+        .value-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--slate) 0%, var(--steel) 100%);
+            color: #fff;
+            cursor: grab;
+            border: 1px solid rgba(255,255,255,0.12);
+            user-select: none;
+        }
+        .value-tag:active { cursor: grabbing; }
+        .pool-ten-wrap { width: 100%; margin-bottom: 10px; }
+        .pool-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+        .pool-row--4 .value-tag { flex: 0 0 calc(25% - 8px); max-width: calc(25% - 6px); min-width: 0; }
+        .pool-row--3 .value-tag { flex: 0 0 calc(33.33% - 8px); max-width: calc(33.33% - 6px); min-width: 0; }
+        @media (max-width: 420px) {
+            .pool-row--4 .value-tag { flex: 0 0 calc(50% - 8px); max-width: calc(50% - 6px); }
+        }
+
+        .define-block { margin-bottom: 18px; }
+        .define-block label {
+            display: block;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+        .define-block textarea {
+            width: 100%;
+            min-height: 72px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(26,60,92,0.15);
+            font-family: inherit;
+            font-size: 14px;
+            resize: vertical;
+        }
+        .define-block .char-count { font-size: 11px; color: var(--text-light); margin-top: 4px; text-align: right; }
+
+        .download-hint {
+            margin-top: 18px;
+            padding: 14px;
+            font-size: 13px;
+            line-height: 1.65;
+            color: var(--text-body);
+            background: linear-gradient(135deg, rgba(212,168,83,0.12) 0%, rgba(10,31,46,0.05) 100%);
+            border: 1px solid rgba(212,168,83,0.2);
+            border-radius: 14px;
+        }
+        .download-hint strong { color: var(--text-dark); }
+
+        .screen { display: none; }
+        .screen.is-active { display: block; }
+
+        .slot-popover {
+            position: fixed;
+            z-index: 2500;
+            max-width: min(280px, calc(100vw - 24px));
+            padding: 10px 14px 11px;
+            font-family: 'Noto Sans SC', sans-serif;
+            font-size: 12.5px;
+            font-weight: 300;
+            letter-spacing: 0.06em;
+            line-height: 1.75;
+            color: rgba(30, 42, 53, 0.82);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.62) 0%, rgba(240, 244, 250, 0.48) 100%);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(26, 60, 92, 0.12);
+            border-radius: 10px;
+            box-shadow: 0 10px 36px rgba(10, 31, 46, 0.1);
+            pointer-events: none;
+            display: none;
+        }
+        .slot-popover.is-visible { display: block; }
+
+        .confirm-hint { font-size: 12px; color: var(--text-light); text-align: center; margin-top: 8px; }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="index.html" class="nav-logo">
+            <img src="images/Company logo.png" alt="" style="height:52px;width:auto;object-fit:contain;">
+            <div>
+                <div class="nav-logo-text">睿观生涯教练</div>
+                <div class="nav-logo-sub">核心价值观测评</div>
+            </div>
+        </a>
+        <div class="nav-links">
+            <a href="index.html">首页</a>
+            <a href="index.html#philosophy">服务理念</a>
+            <div class="nav-dropdown" id="navDd">
+                <button type="button" class="nav-dropdown-toggle" id="navDdBtn" aria-expanded="false">其它测评 <i class="fas fa-chevron-down"></i></button>
+                <div class="nav-dropdown-menu">
+                    <a href="AboutHA.html">Harrison测评</a>
+                    <a href="career_assessment.html">霍兰德测评</a>
+                    <a href="Life-pie-chart.html">生命饼图</a>
+                    <a href="value.html">价值观测评</a>
+                </div>
+            </div>
+        </div>
+        <a href="index.html#cta" class="nav-cta">预约诊断</a>
+    </nav>
+
+    <div id="slotPopover" class="slot-popover" role="tooltip" aria-hidden="true"></div>
+
+    <div class="values-wrap">
+        <!-- 选十项：第1–3页 -->
+        <div id="screenPick" class="screen is-active">
+            <div class="values-card">
+                <img id="pickHeroImg" class="values-hero" src="images/value01.webp" alt="" width="800" height="450" decoding="async">
+                <div class="values-inner">
+                    <p class="values-hint-top" id="pickIntro">请用鼠标点击选择您认为最为重要的<strong>十项</strong>价值观。</p>
+                    <div class="values-page-label">VALUES</div>
+                    <h1 class="values-title" id="pickTitle">价值观选择 · 第 1 页</h1>
+                    <p class="values-step" id="pickStepLine">共 4 步选十项 · 本页 12 项</p>
+                    <div class="values-grid" id="pickGrid"></div>
+                    <p class="pick-status" id="pickStatus">已选中0个价值观，一共须选10个</p>
+                    <div class="values-actions" id="pickNav"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 第4页：9项 + 3自定义 -->
+        <div id="screenPick4" class="screen">
+            <div class="values-card">
+                <img class="values-hero" src="images/value04.webp" alt="" width="800" height="450" decoding="async">
+                <div class="values-inner">
+                    <p class="values-hint-top">请继续完成十项选择：本页为最后 9 项预设价值观；您还可在下方自行录入最多 3 项关注的价值观（录入内容也计入十项之内）。</p>
+                    <div class="values-page-label">VALUES</div>
+                    <h1 class="values-title">价值观选择 · 第 4 页</h1>
+                    <p class="values-step">点击卡片勾选；在虚线框内点击并输入自定义价值观</p>
+                    <div class="values-grid" id="pickGrid4"></div>
+                    <div class="values-grid values-grid--p4-bottom" id="pickCustomRow"></div>
+                    <p class="pick-status" id="pickStatus4">已选中0个价值观，一共须选10个</p>
+                    <div class="values-actions">
+                        <button type="button" class="btn-secondary" id="btnPick4Prev"><i class="fas fa-arrow-left"></i> 上一页</button>
+                        <button type="button" class="btn-primary" id="btnPick4Next"><i class="fas fa-check"></i> 确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 拖拽五项核心 -->
+        <div id="screenCore" class="screen">
+            <div class="values-card">
+                <img class="values-hero" src="images/value05.webp" alt="" width="800" height="450" decoding="async">
+                <div class="values-inner">
+                    <p class="values-hint-top">请用鼠标将<strong>下方框内</strong>的价值观标签，<strong>拖入上方</strong>「核心价值观」区域的五个空位中，选出您认为最重要的五项。</p>
+                    <div class="values-page-label">CORE VALUES</div>
+                    <h1 class="values-title">提炼五项核心价值观</h1>
+                    <p class="values-step">上方为 5 个投放空位；下方为您已选出的十项标签，请自下而上拖拽完成。</p>
+
+                    <div class="core-target-box">
+                        <h3>核心价值观</h3>
+                        <p class="core-slot-hint">竖列共 5 格 · 每格拖入 1 项 · 满 5 项后不可再拖入</p>
+                        <div class="core-drop-col" id="coreColumn">
+                            <div class="core-drop-zone" data-slot="0"></div>
+                            <div class="core-drop-zone" data-slot="1"></div>
+                            <div class="core-drop-zone" data-slot="2"></div>
+                            <div class="core-drop-zone" data-slot="3"></div>
+                            <div class="core-drop-zone" data-slot="4"></div>
+                        </div>
+                    </div>
+
+                    <div class="core-pool-box" id="corePoolBox">
+                        <h4 class="core-pool-title">已选十项</h4>
+                        <p class="core-pool-sub">请从本框内按住标签，拖入上方金色虚线空位</p>
+                        <div class="pool-ten-wrap" id="poolTen"></div>
+                    </div>
+                    <p class="pick-status" id="coreStatus">已选择0个价值观，共须选5个</p>
+                    <p class="confirm-hint">请核对无误后点击确认</p>
+                    <div class="values-actions">
+                        <button type="button" class="btn-secondary" id="btnCorePrev"><i class="fas fa-arrow-left"></i> 上一页</button>
+                        <button type="button" class="btn-primary" id="btnCoreConfirm"><i class="fas fa-check"></i> 确认</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 定义五项 -->
+        <div id="screenDefine" class="screen">
+            <div class="values-card">
+                <img class="values-hero" src="images/value06.webp" alt="" width="800" height="450" decoding="async">
+                <div class="values-inner">
+                    <p class="values-hint-top">请给您的五项核心价值观一个定义。无需考虑好坏和世俗挂念，请尊重内心的感受。</p>
+                    <div class="values-page-label">DEFINE</div>
+                    <h1 class="values-title">撰写价值观定义</h1>
+                    <p class="values-step">每项不超过 60 个汉字</p>
+                    <div id="defineFields"></div>
+                    <div class="values-actions">
+                        <button type="button" class="btn-primary" id="btnDefineDone"><i class="fas fa-file-download"></i> 确认并下载报告</button>
+                    </div>
+                    <p class="download-hint" id="defineHintBottom" style="display:none;">
+                        <strong>下载与解读：</strong>确认后将生成可下载的价值观报告。可凭报告联系<strong>睿观生涯教练</strong>申请<strong>免费解读</strong>；<strong>每人每周限一份报告</strong>（以本浏览器本地记录为准）。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 仅下载提示页（定义后显示） -->
+        <div id="screenDone" class="screen">
+            <div class="values-card">
+                <img class="values-hero" src="images/value06.webp" alt="" width="800" height="450" decoding="async">
+                <div class="values-inner">
+                    <div class="values-page-label">DONE</div>
+                    <h1 class="values-title">测评已完成</h1>
+                    <p class="values-step">报告已准备就绪</p>
+                    <p class="download-hint">
+                        <strong>免费解读：</strong>请保存好下载的文件，可凭此向<strong>睿观生涯教练</strong>申请<strong>免费价值观解读</strong>。<strong>每人每周限一份报告。</strong>
+                    </p>
+                    <div class="values-actions">
+                        <button type="button" class="btn-primary" id="btnDownloadAgain"><i class="fas fa-download"></i> 再次下载报告</button>
+                        <a href="index.html" class="btn-secondary" style="text-decoration:none;">返回首页</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+(function () {
+    'use strict';
+
+    var VALUE_ROWS = [
+        ['家庭', '帮助他人', '知名度', '保障', '宗教'],
+        ['彰显个性', '影响他人', '变化与多样性', '诚信', '责任'],
+        ['权力', '忠诚', '成就', '高效产出', '平静'],
+        ['学习成长', '竞争获胜', '自我尊重', '艺术审美', '体验'],
+        ['归属感', '时间自由', '道德伦理', '环保', '快乐'],
+        ['公平透明', '回馈社会', '冒险刺激', '关系和谐', '独立'],
+        ['秩序和条理', '爱情', '勇于挑战', '传统与传承', '友谊'],
+        ['合规', '安全健康', '创新', '稳定与保障', '社会认可'],
+        ['工作生活平衡', '休闲娱乐', '人脉关系', '财富', '健康']
+    ];
+    var ALL = VALUE_ROWS.flat();
+    var SLICES = [ALL.slice(0, 12), ALL.slice(12, 24), ALL.slice(24, 36), ALL.slice(36, 45)];
+
+    var selectedSet = {};
+    var selectionOrder = [];
+    var customSlots = ['', '', ''];
+
+    var coreSlots = [null, null, null, null, null];
+    var dndBound = false;
+
+    var LS_KEY = 'rg_values_report_week_dl';
+
+    function countSelected() {
+        var n = 0;
+        var i;
+        for (i = 0; i < selectionOrder.length; i++) {
+            if (selectionOrder[i].kind === 'preset') n++;
+            else if (selectionOrder[i].kind === 'custom' && selectionOrder[i].text.trim()) n++;
+        }
+        return n;
+    }
+
+    function syncSetFromOrder() {
+        selectedSet = {};
+        var i;
+        for (i = 0; i < selectionOrder.length; i++) {
+            if (selectionOrder[i].kind === 'preset') selectedSet[selectionOrder[i].name] = true;
+        }
+    }
+
+    function removeFromOrder(name) {
+        selectionOrder = selectionOrder.filter(function (e) {
+            return !(e.kind === 'preset' && e.name === name);
+        });
+    }
+
+    function addPreset(name) {
+        if (selectedSet[name]) {
+            delete selectedSet[name];
+            removeFromOrder(name);
+            return true;
+        }
+        if (countSelected() >= 10) return false;
+        selectedSet[name] = true;
+        selectionOrder.push({ kind: 'preset', name: name });
+        return true;
+    }
+
+    function rebuildCustomInOrder() {
+        selectionOrder = selectionOrder.filter(function (e) {
+            return e.kind !== 'custom';
+        });
+        var s;
+        for (s = 0; s < 3; s++) {
+            var t = (customSlots[s] || '').trim();
+            if (t) selectionOrder.push({ kind: 'custom', slot: s, text: t });
+        }
+    }
+
+    function flashEl(id) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.classList.remove('flash-warn');
+        void el.offsetWidth;
+        el.classList.add('flash-warn');
+        setTimeout(function () { el.classList.remove('flash-warn'); }, 1600);
+    }
+
+    function updatePickStatus(elId) {
+        var el = document.getElementById(elId);
+        if (!el) return;
+        var n = countSelected();
+        el.textContent = '已选中' + n + '个价值观，一共须选10个';
+        if (n > 10) flashEl(elId);
+    }
+
+    function renderPickPage(pageIdx) {
+        var grid = document.getElementById('pickGrid');
+        var hero = document.getElementById('pickHeroImg');
+        var titles = ['价值观选择 · 第 1 页', '价值观选择 · 第 2 页', '价值观选择 · 第 3 页'];
+        hero.src = 'images/value0' + (pageIdx + 1) + '.webp';
+        hero.onerror = function () {
+            this.onerror = null;
+            this.src = 'images/participant.webp';
+        };
+        document.getElementById('pickTitle').textContent = titles[pageIdx];
+        document.getElementById('pickStepLine').textContent = '共 4 步选十项 · 第 ' + (pageIdx + 1) + ' / 3 页（每页 12 项）';
+        grid.innerHTML = '';
+        SLICES[pageIdx].forEach(function (name) {
+            var cell = document.createElement('div');
+            cell.className = 'value-cell' + (selectedSet[name] ? ' selected' : '');
+            cell.dataset.name = name;
+            cell.innerHTML = '<span class="check-mark"><i class="fas fa-check"></i></span>' + name;
+            cell.addEventListener('click', function () {
+                if (selectedSet[name]) {
+                    addPreset(name);
+                } else {
+                    if (!addPreset(name)) flashEl('pickStatus');
+                }
+                cell.classList.toggle('selected', !!selectedSet[name]);
+                updatePickStatus('pickStatus');
+            });
+            grid.appendChild(cell);
+        });
+
+        var nav = document.getElementById('pickNav');
+        nav.innerHTML = '';
+        if (pageIdx > 0) {
+            var prev = document.createElement('button');
+            prev.type = 'button';
+            prev.className = 'btn-secondary';
+            prev.innerHTML = '<i class="fas fa-arrow-left"></i> 上一页';
+            prev.addEventListener('click', function () {
+                renderPickPage(pageIdx - 1);
+            });
+            nav.appendChild(prev);
+        }
+        var next = document.createElement('button');
+        next.type = 'button';
+        next.className = 'btn-primary';
+        next.innerHTML = pageIdx < 2 ? '下一页 <i class="fas fa-arrow-right"></i>' : '下一页 <i class="fas fa-arrow-right"></i>';
+        next.addEventListener('click', function () {
+            if (pageIdx < 2) renderPickPage(pageIdx + 1);
+            else goPick4();
+        });
+        nav.appendChild(next);
+        updatePickStatus('pickStatus');
+    }
+
+    function goPick4() {
+        document.getElementById('screenPick').classList.remove('is-active');
+        document.getElementById('screenPick4').classList.add('is-active');
+        var grid = document.getElementById('pickGrid4');
+        grid.innerHTML = '';
+        SLICES[3].forEach(function (name) {
+            var cell = document.createElement('div');
+            cell.className = 'value-cell' + (selectedSet[name] ? ' selected' : '');
+            cell.dataset.name = name;
+            cell.innerHTML = '<span class="check-mark"><i class="fas fa-check"></i></span>' + name;
+            cell.addEventListener('click', function () {
+                if (selectedSet[name]) {
+                    addPreset(name);
+                } else {
+                    if (!addPreset(name)) flashEl('pickStatus4');
+                }
+                cell.classList.toggle('selected', !!selectedSet[name]);
+                rebuildCustomInOrder();
+                updatePickStatus('pickStatus4');
+            });
+            grid.appendChild(cell);
+        });
+
+        var row = document.getElementById('pickCustomRow');
+        row.innerHTML = '';
+        var pop = document.getElementById('slotPopover');
+        var popText = '点击此处可自行录入您关注的价值观';
+        [0, 1, 2].forEach(function (slot) {
+            var wrap = document.createElement('div');
+            wrap.className = 'value-custom-slot';
+            var inp = document.createElement('input');
+            inp.type = 'text';
+            inp.placeholder = '自定义 ' + (slot + 1);
+            inp.value = customSlots[slot];
+            inp.addEventListener('mouseenter', function (e) {
+                pop.textContent = popText;
+                pop.classList.add('is-visible');
+                var r = wrap.getBoundingClientRect();
+                pop.style.left = Math.max(12, r.left + r.width / 2 - pop.offsetWidth / 2) + 'px';
+                pop.style.top = (r.bottom + 8) + 'px';
+            });
+            inp.addEventListener('mouseleave', function () {
+                pop.classList.remove('is-visible');
+            });
+            inp.addEventListener('input', function () {
+                customSlots[slot] = inp.value;
+                rebuildCustomInOrder();
+                updatePickStatus('pickStatus4');
+                if (countSelected() > 10) flashEl('pickStatus4');
+            });
+            wrap.appendChild(inp);
+            row.appendChild(wrap);
+        });
+        rebuildCustomInOrder();
+        updatePickStatus('pickStatus4');
+    }
+
+    document.getElementById('btnPick4Prev').addEventListener('click', function () {
+        document.getElementById('screenPick4').classList.remove('is-active');
+        document.getElementById('screenPick').classList.add('is-active');
+        renderPickPage(2);
+    });
+
+    document.getElementById('btnPick4Next').addEventListener('click', function () {
+        rebuildCustomInOrder();
+        var n = countSelected();
+        if (n > 10) flashEl('pickStatus4');
+        if (n !== 10) {
+            alert('请先恰好选择 10 项价值观（含自定义），当前为 ' + n + ' 项。');
+            return;
+        }
+        goCoreScreen();
+    });
+
+    function tenLabelsInOrder() {
+        rebuildCustomInOrder();
+        return selectionOrder.map(function (e) {
+            return e.kind === 'preset' ? e.name : e.text.trim();
+        });
+    }
+
+    function attachPoolDrag(tag, label) {
+        tag.addEventListener('dragstart', function (e) {
+            e.dataTransfer.setData('text/plain', JSON.stringify({ from: 'pool', label: label }));
+        });
+    }
+
+    function goCoreScreen() {
+        document.getElementById('screenPick4').classList.remove('is-active');
+        document.getElementById('screenCore').classList.add('is-active');
+        coreSlots = [null, null, null, null, null];
+        var pool = document.getElementById('poolTen');
+        pool.innerHTML = '';
+        var labels = tenLabelsInOrder();
+        var chunks = [labels.slice(0, 4), labels.slice(4, 7), labels.slice(7, 10)];
+        var rcls = ['pool-row pool-row--4', 'pool-row pool-row--3', 'pool-row pool-row--3'];
+        var ri;
+        for (ri = 0; ri < 3; ri++) {
+            var row = document.createElement('div');
+            row.className = rcls[ri];
+            chunks[ri].forEach(function (text) {
+                var tag = document.createElement('div');
+                tag.className = 'value-tag';
+                tag.textContent = text;
+                tag.setAttribute('draggable', 'true');
+                tag.dataset.label = text;
+                attachPoolDrag(tag, text);
+                row.appendChild(tag);
+            });
+            pool.appendChild(row);
+        }
+        document.querySelectorAll('.core-drop-zone').forEach(function (z) {
+            z.innerHTML = '';
+        });
+        updateCoreStatus();
+        if (!dndBound) bindCoreDnD();
+    }
+
+    function updateCoreStatus() {
+        var n = coreSlots.filter(Boolean).length;
+        var el = document.getElementById('coreStatus');
+        el.textContent = '已选择' + n + '个价值观，共须选5个';
+        if (n > 5) flashEl('coreStatus');
+    }
+
+    function bindCoreDnD() {
+        dndBound = true;
+        var poolWrap = document.getElementById('poolTen');
+
+        function zones() {
+            return document.querySelectorAll('.core-drop-zone');
+        }
+
+        function clearHigh() {
+            zones().forEach(function (z) { z.classList.remove('drag-over'); });
+            poolWrap.classList.remove('drag-over');
+            var cpb = document.getElementById('corePoolBox');
+            if (cpb) cpb.classList.remove('drag-over');
+        }
+
+        function appendTagToPool(tag) {
+            var lastRow = poolWrap.querySelector('.pool-row:last-of-type');
+            if (!lastRow) {
+                lastRow = document.createElement('div');
+                lastRow.className = 'pool-row pool-row--3';
+                poolWrap.appendChild(lastRow);
+            }
+            lastRow.appendChild(tag);
+        }
+
+        function handleDrop(e, zone) {
+            e.preventDefault();
+            clearHigh();
+            var raw = e.dataTransfer.getData('text/plain');
+            var data;
+            try { data = JSON.parse(raw); } catch (err) { return; }
+            var label = data.label;
+            if (!label) return;
+            var zList = zones();
+            var isPool = zone === poolWrap || (zone && zone.id === 'corePoolBox');
+
+            if (data.from === 'pool') {
+                var filled = coreSlots.filter(Boolean).length;
+                if (isPool) return;
+                if (filled >= 5) {
+                    flashEl('coreStatus');
+                    return;
+                }
+                var zi = zone.getAttribute ? parseInt(zone.getAttribute('data-slot'), 10) : NaN;
+                if (isNaN(zi) || zi < 0 || zi > 4) return;
+                if (coreSlots[zi]) return;
+                var tag = document.createElement('div');
+                tag.className = 'value-tag';
+                tag.textContent = label;
+                tag.setAttribute('draggable', 'true');
+                tag.dataset.label = label;
+                tag.addEventListener('dragstart', function (ev) {
+                    ev.dataTransfer.setData('text/plain', JSON.stringify({ from: 'core', slot: zi, label: label }));
+                });
+                zone.appendChild(tag);
+                coreSlots[zi] = label;
+                var poolTags = poolWrap.querySelectorAll('.value-tag');
+                var i;
+                for (i = 0; i < poolTags.length; i++) {
+                    if (poolTags[i].dataset.label === label && poolTags[i].parentElement !== zone) {
+                        poolTags[i].remove();
+                        break;
+                    }
+                }
+            } else if (data.from === 'core') {
+                var slot = data.slot;
+                if (isPool) {
+                    var released = coreSlots[slot];
+                    if (!released) return;
+                    var t = document.createElement('div');
+                    t.className = 'value-tag';
+                    t.textContent = released;
+                    t.setAttribute('draggable', 'true');
+                    t.dataset.label = released;
+                    attachPoolDrag(t, released);
+                    appendTagToPool(t);
+                    coreSlots[slot] = null;
+                    zList[slot].innerHTML = '';
+                }
+            }
+            updateCoreStatus();
+        }
+
+        function poolDragOver(e) {
+            e.preventDefault();
+            clearHigh();
+            poolWrap.classList.add('drag-over');
+            var cpb = document.getElementById('corePoolBox');
+            if (cpb) cpb.classList.add('drag-over');
+            e.dataTransfer.dropEffect = 'move';
+        }
+        poolWrap.addEventListener('dragover', poolDragOver, true);
+        poolWrap.addEventListener('dragleave', clearHigh, true);
+        poolWrap.addEventListener('drop', function (e) {
+            handleDrop(e, poolWrap);
+        }, true);
+
+        var corePoolBox = document.getElementById('corePoolBox');
+        if (corePoolBox) {
+            corePoolBox.addEventListener('dragover', poolDragOver, true);
+            corePoolBox.addEventListener('dragleave', clearHigh, true);
+            corePoolBox.addEventListener('drop', function (e) {
+                handleDrop(e, corePoolBox);
+            }, true);
+        }
+
+        Array.prototype.slice.call(zones()).forEach(function (zone) {
+            zone.addEventListener('dragover', function (e) {
+                e.preventDefault();
+                clearHigh();
+                zone.classList.add('drag-over');
+                e.dataTransfer.dropEffect = 'move';
+            });
+            zone.addEventListener('dragleave', clearHigh);
+            zone.addEventListener('drop', function (e) {
+                handleDrop(e, zone);
+            });
+        });
+    }
+
+    document.getElementById('btnCorePrev').addEventListener('click', function () {
+        document.getElementById('screenCore').classList.remove('is-active');
+        document.getElementById('screenPick4').classList.add('is-active');
+        updatePickStatus('pickStatus4');
+    });
+
+    document.getElementById('btnCoreConfirm').addEventListener('click', function () {
+        var core = coreSlots.filter(Boolean);
+        if (core.length !== 5) {
+            alert('请将恰好 5 个价值观拖入「核心价值观」区域。当前为 ' + core.length + ' 个。');
+            if (core.length > 5) flashEl('coreStatus');
+            return;
+        }
+        goDefineScreen(core);
+    });
+
+    function goDefineScreen(coreFive) {
+        window.__coreFive = coreFive;
+        document.getElementById('screenCore').classList.remove('is-active');
+        document.getElementById('screenDefine').classList.add('is-active');
+        var host = document.getElementById('defineFields');
+        host.innerHTML = '';
+        coreFive.forEach(function (name, i) {
+            var blk = document.createElement('div');
+            blk.className = 'define-block';
+            blk.innerHTML = '<label>' + (i + 1) + '. ' + name + '</label>';
+            var ta = document.createElement('textarea');
+            ta.id = 'defTa' + i;
+            ta.maxLength = 60;
+            ta.rows = 3;
+            ta.placeholder = '用您自己的话写下这项价值观对您的意义…';
+            var cc = document.createElement('div');
+            cc.className = 'char-count';
+            cc.textContent = '0 / 60';
+            ta.addEventListener('input', function () {
+                var len = ta.value.length;
+                cc.textContent = len + ' / 60';
+            });
+            blk.appendChild(ta);
+            blk.appendChild(cc);
+            host.appendChild(blk);
+        });
+        document.getElementById('defineHintBottom').style.display = 'block';
+    }
+
+    function getWeekMondayKey() {
+        var d = new Date();
+        var day = d.getDay();
+        var diff = d.getDate() - day + (day === 0 ? -6 : 1);
+        var mon = new Date(d.getFullYear(), d.getMonth(), diff);
+        mon.setHours(0, 0, 0, 0);
+        return mon.getFullYear() + '-' + (mon.getMonth() + 1) + '-' + mon.getDate();
+    }
+
+    function buildReportText(coreFive, defs) {
+        var lines = [];
+        lines.push('睿观生涯教练 · 澄清核心价值观测评报告');
+        lines.push('生成时间：' + new Date().toLocaleString('zh-CN', { hour12: false }));
+        lines.push('');
+        lines.push('【十项重要价值观】');
+        tenLabelsInOrder().forEach(function (t, i) {
+            lines.push((i + 1) + '. ' + t);
+        });
+        lines.push('');
+        lines.push('【五项核心价值观及定义】');
+        coreFive.forEach(function (n, i) {
+            lines.push((i + 1) + '. ' + n);
+            lines.push('   定义：' + (defs[i] || ''));
+        });
+        lines.push('');
+        lines.push('---');
+        lines.push('可凭本报告联系睿观生涯教练申请免费解读；每人每周限一份报告。');
+        return lines.join('\n');
+    }
+
+    function doDownload() {
+        var wk = getWeekMondayKey();
+        if (localStorage.getItem(LS_KEY) === wk) {
+            alert('您本周已下载过一份报告。每人每周仅限一份；如需进一步服务请联系睿观生涯教练。');
+            return;
+        }
+        var core = window.__coreFive;
+        var defs = [];
+        var i;
+        for (i = 0; i < 5; i++) {
+            var ta = document.getElementById('defTa' + i);
+            defs.push(ta ? ta.value.trim() : '');
+        }
+        var blob = new Blob([buildReportText(core, defs)], { type: 'text/plain;charset=utf-8' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = '核心价值观测评报告_' + new Date().toISOString().slice(0, 10) + '.txt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        localStorage.setItem(LS_KEY, wk);
+    }
+
+    document.getElementById('btnDefineDone').addEventListener('click', function () {
+        var core = window.__coreFive;
+        var defs = [];
+        var i;
+        for (i = 0; i < 5; i++) {
+            var ta = document.getElementById('defTa' + i);
+            if (!ta || !ta.value.trim()) {
+                alert('请为五项核心价值观分别填写定义后再确认。');
+                return;
+            }
+            if (ta.value.length > 60) {
+                alert('每项定义请在 60 个汉字以内。');
+                return;
+            }
+            defs.push(ta.value.trim());
+        }
+        doDownload();
+        document.getElementById('screenDefine').classList.remove('is-active');
+        document.getElementById('screenDone').classList.add('is-active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.getElementById('btnDownloadAgain').addEventListener('click', function () {
+        doDownload();
+    });
+
+    document.getElementById('navDdBtn').addEventListener('click', function (e) {
+        e.stopPropagation();
+        document.getElementById('navDd').classList.toggle('open');
+    });
+    document.addEventListener('click', function (e) {
+        var navDd = document.getElementById('navDd');
+        if (navDd && !navDd.contains(e.target)) navDd.classList.remove('open');
+    });
+
+    renderPickPage(0);
+})();
+    </script>
+</body>
+</html>

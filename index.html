@@ -224,6 +224,27 @@
         .experience-floating-card { position: absolute; bottom: -20px; left: -20px; background: #fff; padding: 20px 24px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.12); border: 1px solid rgba(212,168,83,0.15); max-width: 260px; }
         .experience-floating-card p { font-size: 13px; color: var(--text-body); line-height: 1.7; font-style: italic; }
         .experience-floating-card .author { margin-top: 12px; font-size: 12px; color: var(--text-light); font-style: normal; font-weight: 600; }
+        .experience-cases-hint {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin-top: 110px;
+            padding-top: 4px;
+            text-decoration: none;
+            color: var(--steel);
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.5;
+            gap: 4px;
+            transition: color 0.25s ease;
+        }
+        .experience-cases-hint:hover { color: var(--gold-dark); }
+        .experience-cases-hint-finger {
+            font-size: 1.65rem;
+            line-height: 1;
+            animation: float 2.2s ease-in-out infinite;
+        }
 
         /* ===== PRICING ===== */
         .pricing { background: linear-gradient(180deg, var(--ivory) 0%, var(--cream) 100%); position: relative; }
@@ -264,6 +285,13 @@
         .testimonials-header { text-align: center; margin-bottom: 60px; }
         .testimonials-header .section-title { color: #fff; }
         .testimonials-header .section-desc { color: rgba(255,255,255,0.6); }
+        .testimonials-header .testimonials-scroll-hint {
+            margin-top: 14px;
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.78);
+            line-height: 1.65;
+        }
         .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
         .testimonial-card { background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 24px; padding: 32px; transition: all 0.4s; }
         .testimonial-card:hover { background: rgba(255,255,255,0.12); transform: translateY(-6px); }
@@ -334,6 +362,7 @@
             .pillars { grid-template-columns: 1fr; }
             .experience-stats { grid-template-columns: 1fr; }
             .experience-floating-card { position: static; margin-top: 14px; max-width: 100%; }
+            .experience-cases-hint { margin-top: 16px; }
             .pricing-card .price { font-size: 2.2rem; }
             .pricing-guarantee { margin-top: 24px; padding: 16px; }
             .footer { padding: 48px 20px 28px; }
@@ -398,7 +427,6 @@
             </div>
         </a>
         <div class="nav-links">
-            <a href="#hero">首页</a>
             <a href="#philosophy">理念</a>
             <a href="#paths">服务路径</a>
             <a href="#experience">成果</a>
@@ -428,7 +456,6 @@
         <div class="close-btn" onclick="toggleMobileMenu()">
             <i class="fas fa-times"></i>
         </div>
-        <a href="#hero" onclick="toggleMobileMenu()">首页</a>
         <a href="#philosophy" onclick="toggleMobileMenu()">理念</a>
         <a href="#paths" onclick="toggleMobileMenu()">服务路径</a>
         <a href="#experience" onclick="toggleMobileMenu()">成果</a>
@@ -669,6 +696,10 @@
                     <div class="author">— 35岁外企IT工程师，入职大湾区小而美外企</div>
                 </div>
                 </a>
+                <a href="Case_study.html" class="experience-cases-hint" aria-label="点击查看更多成功案例">
+                    <span class="experience-cases-hint-finger" aria-hidden="true">👆</span>
+                    <span>点击查看更多成功案例</span>
+                </a>
             </div>
         </div>
     </section>
@@ -755,6 +786,7 @@
             <div class="section-label">学员心声</div>
             <h2 class="section-title">他们都已经找到新赛道</h2>
             <p class="section-desc">真实反馈，已脱敏处理。每一个数字背后，都是一个重新出发的故事。</p>
+            <p class="testimonials-scroll-hint">点击下方👇查看更多成功案例</p>
         </div>
 
         <div class="testimonial-grid">
@@ -862,7 +894,7 @@
     </footer>
 
     <!-- Floating CTA -->
-    <a href="#cta" class="floating-cta" onclick="showWechatModal(); return false;">
+    <a href="#" class="floating-cta" onclick="showQRModal('wechat'); return false;" aria-label="免费咨询，弹出微信二维码">
         <i class="fas fa-comments"></i>
         免费咨询
     </a>

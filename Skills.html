@@ -792,6 +792,7 @@
     }
 
     function hideDefPopover() {
+        if (!defPopover) return;
         if (popoverLeaveTimer) {
             clearTimeout(popoverLeaveTimer);
             popoverLeaveTimer = null;
@@ -855,7 +856,6 @@
         el.addEventListener('mouseleave', function () {
             popoverLeaveTimer = setTimeout(hideDefPopover, 120);
         });
-        el.addEventListener('dragstart', hideDefPopover);
     }
 
     function getZones() {
@@ -930,7 +930,7 @@
             }
             if (!data.skill) return;
             var skill = data.skill;
-            var fromCat = typeof data.catIndex === 'number' ? data.catIndex : currentPage;
+            var fromCat = typeof data.catIndex === 'number' && !isNaN(data.catIndex) ? data.catIndex : currentPage;
             if (fromCat !== currentPage) return;
             var tagEl = findTagInDom(skill);
             if (!tagEl) return;
@@ -1042,84 +1042,94 @@
         if (!dt || typeof dt.setDragImage !== 'function') return;
 
         tag._dragGhostEl = null;
-
-        var text = (tag.textContent || '').trim();
-        var cs = window.getComputedStyle(tag);
-        var fontFamily = (cs.fontFamily || 'sans-serif').split(',')[0].replace(/["']/g, '').trim();
-        var fontWeight = cs.fontWeight || '600';
-        var baseFont = parseFloat(cs.fontSize) || 12;
-        var padX = 10;
-        var padY = 6;
-        var maxCanvasW = Math.min(260, Math.max(100, window.innerWidth - 32));
-        var dpr = Math.min(window.devicePixelRatio || 1, 3);
-
-        var canvas = document.createElement('canvas');
-        var ctx = canvas.getContext('2d');
-        if (!ctx) return;
-
-        var fontSize = Math.max(9, Math.round(baseFont));
-        var tw;
-        for (;;) {
-            ctx.font = fontWeight + ' ' + fontSize + 'px ' + fontFamily;
-            tw = ctx.measureText(text).width;
-            if (tw + padX * 2 <= maxCanvasW || fontSize <= 9) break;
-            fontSize--;
+        if (tag._dragImageCanvas && tag._dragImageCanvas.parentNode) {
+            tag._dragImageCanvas.parentNode.removeChild(tag._dragImageCanvas);
         }
+        tag._dragImageCanvas = null;
 
-        var cw = Math.ceil(Math.min(tw + padX * 2, maxCanvasW));
-        var ch = Math.ceil(fontSize * 1.45 + padY * 2);
-
-        canvas.width = Math.ceil(cw * dpr);
-        canvas.height = Math.ceil(ch * dpr);
-        ctx.setTransform(1, 0, 0, 1, 0, 0);
-        ctx.scale(dpr, dpr);
-
-        var bg = cs.backgroundColor;
-        if (!bg || bg === 'rgba(0, 0, 0, 0)' || bg === 'transparent') {
-            bg = '#d8f3dc';
-        }
-        var fg = cs.color || '#1e2a35';
-        var br = 8;
-
-        function roundRectPath(x, y, w, h, r) {
-            r = Math.min(r, w / 2, h / 2);
-            ctx.beginPath();
-            ctx.moveTo(x + r, y);
-            ctx.lineTo(x + w - r, y);
-            ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-            ctx.lineTo(x + w, y + h - r);
-            ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-            ctx.lineTo(x + r, y + h);
-            ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-            ctx.lineTo(x, y + r);
-            ctx.quadraticCurveTo(x, y, x + r, y);
-            ctx.closePath();
-        }
-
-        roundRectPath(0, 0, cw, ch, br);
-        ctx.fillStyle = bg;
-        ctx.fill();
-        ctx.strokeStyle = 'rgba(0,0,0,0.1)';
-        ctx.lineWidth = 1;
-        ctx.stroke();
-
-        ctx.fillStyle = fg;
-        ctx.font = fontWeight + ' ' + fontSize + 'px ' + fontFamily;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(text, cw / 2, ch / 2);
-
-        var rect = tag.getBoundingClientRect();
-        var cx = cw / 2;
-        var cy = ch / 2;
-        if (typeof e.clientX === 'number' && typeof e.clientY === 'number' &&
-            !(e.clientX === 0 && e.clientY === 0)) {
-            cx = Math.min(Math.max(e.clientX - rect.left, 0), cw);
-            cy = Math.min(Math.max(e.clientY - rect.top, 0), ch);
-        }
         try {
+            var text = (tag.textContent || '').trim();
+            var cs = window.getComputedStyle(tag);
+            var fontFamily = (cs.fontFamily || 'sans-serif').split(',')[0].replace(/["']/g, '').trim();
+            var fontWeight = String(cs.fontWeight || '600');
+            var baseFont = parseFloat(cs.fontSize) || 12;
+            var padX = 10;
+            var padY = 6;
+            var maxCanvasW = Math.min(260, Math.max(100, window.innerWidth - 32));
+            var dpr = Math.min(window.devicePixelRatio || 1, 3);
+
+            var canvas = document.createElement('canvas');
+            var ctx = canvas.getContext('2d');
+            if (!ctx) return;
+
+            var fontSize = Math.max(9, Math.round(baseFont));
+            var tw;
+            for (;;) {
+                ctx.font = fontWeight + ' ' + fontSize + 'px ' + fontFamily;
+                tw = ctx.measureText(text).width;
+                if (tw + padX * 2 <= maxCanvasW || fontSize <= 9) break;
+                fontSize--;
+            }
+
+            var cw = Math.max(1, Math.ceil(Math.min(tw + padX * 2, maxCanvasW)));
+            var ch = Math.max(1, Math.ceil(fontSize * 1.45 + padY * 2));
+
+            canvas.width = Math.max(1, Math.ceil(cw * dpr));
+            canvas.height = Math.max(1, Math.ceil(ch * dpr));
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.scale(dpr, dpr);
+
+            var bg = cs.backgroundColor;
+            if (!bg || bg === 'rgba(0, 0, 0, 0)' || bg === 'transparent') {
+                bg = '#d8f3dc';
+            }
+            var fg = cs.color || '#1e2a35';
+            var br = 8;
+
+            function roundRectPath(x, y, w, h, r) {
+                r = Math.min(r, w / 2, h / 2);
+                ctx.beginPath();
+                ctx.moveTo(x + r, y);
+                ctx.lineTo(x + w - r, y);
+                ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+                ctx.lineTo(x + w, y + h - r);
+                ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+                ctx.lineTo(x + r, y + h);
+                ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+                ctx.lineTo(x, y + r);
+                ctx.quadraticCurveTo(x, y, x + r, y);
+                ctx.closePath();
+            }
+
+            roundRectPath(0, 0, cw, ch, br);
+            ctx.fillStyle = bg;
+            ctx.fill();
+            ctx.strokeStyle = 'rgba(0,0,0,0.1)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            ctx.fillStyle = fg;
+            ctx.font = fontWeight + ' ' + fontSize + 'px ' + fontFamily;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(text, cw / 2, ch / 2);
+
+            canvas.style.cssText = 'position:fixed;left:-9999px;top:0;width:' + cw + 'px;height:' + ch + 'px;opacity:0;pointer-events:none';
+            document.body.appendChild(canvas);
+            tag._dragImageCanvas = canvas;
+
+            var rect = tag.getBoundingClientRect();
+            var cx = cw / 2;
+            var cy = ch / 2;
+            if (typeof e.clientX === 'number' && typeof e.clientY === 'number' &&
+                !(e.clientX === 0 && e.clientY === 0)) {
+                cx = Math.min(Math.max(e.clientX - rect.left, 0), cw);
+                cy = Math.min(Math.max(e.clientY - rect.top, 0), ch);
+            }
             dt.setDragImage(canvas, Math.round(cx), Math.round(cy));
-        } catch (err) { /* 个别环境不支持 */ }
+        } catch (err) {
+            /* 预览失败不影响拖拽：data 已在 dragstart 中先行设置 */
+        }
     }
 
     function wireTags() {
@@ -1127,22 +1137,28 @@
             tag.setAttribute('draggable', 'true');
             bindDefPopoverHandlers(tag);
             tag.addEventListener('dragstart', function (e) {
-                setSkillTagDragImage(e, tag);
+                hideDefPopover();
                 tag.classList.add('dragging');
                 var parent = tag.parentElement;
                 var fromBucket = 'pool';
                 if (parent && parent.classList.contains('skills-drop-zone')) {
                     fromBucket = parent.getAttribute('data-bucket') || 'pool';
                 }
-                dragPayload = { skill: tag.dataset.skill, fromBucket: fromBucket, catIndex: parseInt(tag.dataset.catIndex, 10) };
+                var ci = parseInt(tag.dataset.catIndex, 10);
+                dragPayload = { skill: tag.dataset.skill, fromBucket: fromBucket, catIndex: isNaN(ci) ? currentPage : ci };
                 e.dataTransfer.setData('text/plain', JSON.stringify(dragPayload));
                 e.dataTransfer.effectAllowed = 'move';
+                setSkillTagDragImage(e, tag);
             });
             tag.addEventListener('dragend', function () {
                 tag.classList.remove('dragging');
                 if (tag._dragGhostEl && tag._dragGhostEl.parentNode) {
                     tag._dragGhostEl.parentNode.removeChild(tag._dragGhostEl);
                     tag._dragGhostEl = null;
+                }
+                if (tag._dragImageCanvas && tag._dragImageCanvas.parentNode) {
+                    tag._dragImageCanvas.parentNode.removeChild(tag._dragImageCanvas);
+                    tag._dragImageCanvas = null;
                 }
                 dragPayload = null;
                 clearDragOver();

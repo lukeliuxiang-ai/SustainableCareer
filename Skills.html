@@ -235,12 +235,24 @@
             margin-bottom: 18px;
         }
 
-        /* 三列拖拽区 */
+        /* 拖拽区：桌面三列；手机单列。技能池与方框包在 .skills-dnd-layout 内，小屏用 order 把池子移到上方，减少「从底拖到顶」距离 */
+        .skills-dnd-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
         .skills-buckets {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
             margin-bottom: 20px;
+        }
+        @media (max-width: 640px) {
+            .skills-dnd-layout .skills-pool-block {
+                order: -1;
+                margin-bottom: 16px;
+            }
+            .skills-buckets { grid-template-columns: 1fr; margin-bottom: 12px; }
         }
         @media (max-width: 480px) {
             .skills-buckets { grid-template-columns: 1fr; }
@@ -273,6 +285,25 @@
             border-color: var(--gold);
             background: rgba(212,168,83,0.08);
         }
+        @media (max-width: 640px) {
+            .skills-drop-zone {
+                min-height: calc(4 * (var(--tag-h) + var(--tag-gap)) + 14px);
+            }
+            .skills-bucket h3 {
+                padding: 8px 6px;
+                margin-bottom: 6px;
+                border-radius: 10px;
+                -webkit-tap-highlight-color: transparent;
+            }
+            .skills-drop-zone {
+                -webkit-tap-highlight-color: transparent;
+            }
+        }
+        .skills-bucket.skills-bucket--tap-wait {
+            outline: 2px solid rgba(212,168,83,0.55);
+            outline-offset: 2px;
+            border-radius: 16px;
+        }
         .skills-status {
             font-size: 11px;
             color: var(--text-light);
@@ -291,6 +322,26 @@
             font-size: 12px; color: var(--text-light);
             margin: 16px 0 10px;
             font-weight: 600;
+        }
+        @media (max-width: 640px) {
+            .skills-pool-block .skills-pool-title {
+                margin-top: 0;
+            }
+        }
+        .skills-touch-hint {
+            display: none;
+            font-size: 12px;
+            color: var(--steel);
+            text-align: center;
+            line-height: 1.55;
+            margin: 0 0 12px;
+            padding: 10px 12px;
+            background: rgba(44,90,122,0.06);
+            border-radius: 12px;
+            border: 1px solid rgba(44,90,122,0.12);
+        }
+        @media (max-width: 640px) {
+            .skills-touch-hint { display: block; }
         }
         .skills-pool {
             display: grid;
@@ -321,10 +372,20 @@
             align-items: center;
             justify-content: center;
             line-height: 1.25;
-            touch-action: none;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: rgba(212,168,83,0.25);
+        }
+        @media (pointer: fine) {
+            .skill-tag { touch-action: none; }
         }
         .skill-tag:active { cursor: grabbing; }
         .skill-tag.dragging { opacity: 0.55; }
+        .skill-tag.skill-tag--selected {
+            box-shadow: 0 0 0 2px var(--gold-dark), 0 4px 14px rgba(212,168,83,0.35);
+            transform: scale(1.02);
+            z-index: 2;
+            position: relative;
+        }
         .skill-tag--c0 { background: var(--pool-cat1-bg); color: var(--pool-cat1); border-color: rgba(45,106,79,0.25); }
         .skill-tag--c1 { background: var(--pool-cat2-bg); color: var(--pool-cat2); border-color: rgba(154,114,9,0.25); }
         .skill-tag--c2 { background: var(--pool-cat3-bg); color: var(--pool-cat3); border-color: rgba(29,78,137,0.25); }

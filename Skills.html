@@ -764,6 +764,8 @@
     var dragPayload = null;
     var dndBound = false;
     var popoverLeaveTimer = null;
+    /** 定义浮层展示 1.5s 后自动关闭，避免小屏遮挡操作 */
+    var popoverAutoHideTimer = null;
     /** 小屏「点技能 → 点方框」归类 */
     var touchPick = null;
     var touchTapBound = false;
@@ -895,6 +897,10 @@
             clearTimeout(popoverLeaveTimer);
             popoverLeaveTimer = null;
         }
+        if (popoverAutoHideTimer) {
+            clearTimeout(popoverAutoHideTimer);
+            popoverAutoHideTimer = null;
+        }
         defPopover.classList.remove('is-visible');
         defPopover.setAttribute('aria-hidden', 'true');
         defPopover._anchor = null;
@@ -902,6 +908,10 @@
 
     function showDefPopover(anchor) {
         if (!anchor || !anchor.dataset.skill) return;
+        if (popoverAutoHideTimer) {
+            clearTimeout(popoverAutoHideTimer);
+            popoverAutoHideTimer = null;
+        }
         var skill = anchor.dataset.skill;
         defPopover.textContent = SKILL_DEFS[skill] || '（暂无定义）';
         defPopover.classList.add('is-visible');
@@ -921,6 +931,10 @@
             defPopover.style.left = left + 'px';
             defPopover.style.top = top + 'px';
         });
+        popoverAutoHideTimer = setTimeout(function () {
+            popoverAutoHideTimer = null;
+            hideDefPopover();
+        }, 1500);
     }
 
     function bindDefPopoverHandlers(el) {

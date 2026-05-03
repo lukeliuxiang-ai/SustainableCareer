@@ -295,7 +295,6 @@
                 min-height: calc(3 * (var(--tag-h) + var(--tag-gap)) + 12px);
                 padding: 6px 4px;
                 border-radius: 10px;
-                cursor: pointer;
                 -webkit-tap-highlight-color: transparent;
             }
             .skills-buckets .skills-bucket h3 {
@@ -304,7 +303,6 @@
                 margin-bottom: 5px;
                 border-radius: 8px;
                 letter-spacing: 0;
-                cursor: pointer;
                 -webkit-tap-highlight-color: transparent;
             }
             .skills-buckets .skills-status {
@@ -323,11 +321,6 @@
                 overflow-wrap: break-word;
                 word-break: keep-all;
             }
-        }
-        .skills-bucket.skills-bucket--tap-wait {
-            outline: 2px solid rgba(212,168,83,0.55);
-            outline-offset: 2px;
-            border-radius: 16px;
         }
         .skills-status {
             font-size: 11px;
@@ -352,21 +345,6 @@
             .skills-pool-block .skills-pool-title {
                 margin-top: 0;
             }
-        }
-        .skills-touch-hint {
-            display: none;
-            font-size: 12px;
-            color: var(--steel);
-            text-align: center;
-            line-height: 1.55;
-            margin: 0 0 12px;
-            padding: 10px 12px;
-            background: rgba(44,90,122,0.06);
-            border-radius: 12px;
-            border: 1px solid rgba(44,90,122,0.12);
-        }
-        @media (max-width: 640px) {
-            .skills-touch-hint { display: block; }
         }
         .skills-pool {
             display: grid;
@@ -403,12 +381,6 @@
         }
         .skill-tag:active { cursor: grabbing; }
         .skill-tag.dragging { opacity: 0.55; }
-        .skill-tag.skill-tag--selected {
-            box-shadow: 0 0 0 2px var(--gold-dark), 0 4px 14px rgba(212,168,83,0.35);
-            transform: scale(1.02);
-            z-index: 2;
-            position: relative;
-        }
         .skill-tag--c0 { background: var(--pool-cat1-bg); color: var(--pool-cat1); border-color: rgba(45,106,79,0.25); }
         .skill-tag--c1 { background: var(--pool-cat2-bg); color: var(--pool-cat2); border-color: rgba(154,114,9,0.25); }
         .skill-tag--c2 { background: var(--pool-cat3-bg); color: var(--pool-cat3); border-color: rgba(29,78,137,0.25); }
@@ -585,7 +557,6 @@
                     <h1 class="skills-cat-title" id="catHeading">个人能力</h1>
                     <p class="skills-step" id="stepLine">第 1 / 4 类 · 请从下方拖拽技能至上方对应方框</p>
                     <p class="skills-intro">将最符合您现状的技能分别放入「极为熟练」「熟练掌握」「不太熟练」。每列最多 2 项。</p>
-                    <p class="skills-touch-hint">小屏操作：<strong>按住技能拖到</strong>对应方框即可（与电脑相同）；也可<strong>先点选</strong>技能（金色高亮）再<strong>点方框</strong>归类；要放回池内可先点选再点下方「可选技能」区域。</p>
 
                     <div class="skills-dnd-layout">
                         <div class="skills-buckets">
@@ -607,7 +578,7 @@
                         </div>
 
                         <div class="skills-pool-block">
-                            <div class="skills-pool-title">可选技能（拖拽 / 点选归类）</div>
+                            <div class="skills-pool-title">可选技能（拖拽）</div>
                             <div class="skills-pool" id="skillPool"></div>
                         </div>
                     </div>
@@ -766,31 +737,6 @@
     var popoverLeaveTimer = null;
     /** 定义浮层展示 1.5s 后自动关闭，避免小屏遮挡操作 */
     var popoverAutoHideTimer = null;
-    /** 小屏「点技能 → 点方框」归类 */
-    var touchPick = null;
-    var touchTapBound = false;
-
-    function isTouchPlacementMode() {
-        try {
-            if (window.matchMedia('(pointer: coarse)').matches) return true;
-            if (window.matchMedia('(hover: none)').matches && window.innerWidth <= 900) return true;
-        } catch (err) { /* ignore */ }
-        return window.innerWidth <= 640;
-    }
-
-    function clearTouchSelection() {
-        if (touchPick) {
-            touchPick.classList.remove('skill-tag--selected');
-            touchPick = null;
-        }
-        setBucketsTapWait(false);
-    }
-
-    function setBucketsTapWait(on) {
-        assessSection.querySelectorAll('.skills-bucket').forEach(function (b) {
-            b.classList.toggle('skills-bucket--tap-wait', !!on);
-        });
-    }
 
     /**
      * 将技能标签移动到目标：'pool' | 'expert' | 'proficient' | 'weak'
@@ -824,54 +770,6 @@
         }
         updateStatusTexts();
         return true;
-    }
-
-    function bindTouchTapPlacement() {
-        if (touchTapBound) return;
-        touchTapBound = true;
-        assessSection.addEventListener('click', function (e) {
-            if (!isTouchPlacementMode()) return;
-
-            var tag = e.target.closest('.skill-tag');
-            if (tag && assessSection.contains(tag)) {
-                hideDefPopover();
-                if (touchPick === tag) {
-                    clearTouchSelection();
-                    setBucketsTapWait(false);
-                } else {
-                    clearTouchSelection();
-                    tag.classList.add('skill-tag--selected');
-                    touchPick = tag;
-                    setBucketsTapWait(true);
-                }
-                return;
-            }
-
-            var bucketWrap = e.target.closest('.skills-bucket');
-            var zone = e.target.closest('.skills-drop-zone[data-bucket]');
-            if (!zone && bucketWrap && assessSection.contains(bucketWrap)) {
-                zone = bucketWrap.querySelector('.skills-drop-zone[data-bucket]');
-            }
-
-            if (touchPick && zone && assessSection.contains(zone)) {
-                e.preventDefault();
-                var bucket = zone.getAttribute('data-bucket');
-                if (assignSkillToBucketTag(touchPick, bucket)) {
-                    clearTouchSelection();
-                    setBucketsTapWait(false);
-                }
-                return;
-            }
-
-            var poolBlock = e.target.closest('.skills-pool-block');
-            if (touchPick && poolBlock && assessSection.contains(poolBlock)) {
-                e.preventDefault();
-                if (assignSkillToBucketTag(touchPick, 'pool')) {
-                    clearTouchSelection();
-                    setBucketsTapWait(false);
-                }
-            }
-        });
     }
 
     function getWeekMondayKey() {
@@ -1068,7 +966,6 @@
     }
 
     function renderPage() {
-        clearTouchSelection();
         var cat = CATEGORIES[currentPage];
         catHeading.textContent = cat.title;
         stepLine.textContent = '第 ' + (currentPage + 1) + ' / 4 类 · 共 ' + cat.tags.length + ' 项技能';
@@ -1100,7 +997,6 @@
         updateStatusTexts();
         wireTags();
         bindDelegatedDnD();
-        bindTouchTapPlacement();
         renderNavButtons();
     }
 
@@ -1255,7 +1151,6 @@
     }
 
     function showReport() {
-        clearTouchSelection();
         assessSection.classList.add('is-hidden');
         reportSection.classList.add('is-visible');
         if (reportHeroImg) {
@@ -1409,14 +1304,6 @@
         reportSection.classList.remove('is-visible');
         assessSection.classList.remove('is-hidden');
         renderPage();
-    });
-
-    var skillsResizeTimer = null;
-    window.addEventListener('resize', function () {
-        clearTimeout(skillsResizeTimer);
-        skillsResizeTimer = setTimeout(function () {
-            if (!isTouchPlacementMode()) clearTouchSelection();
-        }, 150);
     });
 
     renderPage();

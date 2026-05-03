@@ -1131,11 +1131,45 @@
         }
     }
 
+    /**
+     * 移动端默认拖拽预览常会截到整块网格/白底；用与标签同尺寸的克隆作为 setDragImage，预览与电脑一致。
+     */
+    function setSkillTagDragImage(e, tag) {
+        var dt = e.dataTransfer;
+        if (!dt || typeof dt.setDragImage !== 'function') return;
+        var rect = tag.getBoundingClientRect();
+        var w = Math.max(1, Math.ceil(rect.width));
+        var h = Math.max(1, Math.ceil(rect.height));
+        var ghost = tag.cloneNode(true);
+        ghost.classList.remove('dragging', 'skill-tag--selected');
+        ghost.setAttribute('draggable', 'false');
+        ghost.style.cssText =
+            'position:fixed;left:-9999px;top:0;width:' + w + 'px;height:' + h + 'px;' +
+            'min-width:0!important;max-width:none!important;margin:0;padding:inherit;' +
+            'box-sizing:border-box;pointer-events:none;opacity:1;transform:none;' +
+            'box-shadow:0 2px 8px rgba(10,31,46,0.15);overflow:hidden;';
+        document.body.appendChild(ghost);
+        var cx = w / 2;
+        var cy = h / 2;
+        if (typeof e.clientX === 'number' && typeof e.clientY === 'number' &&
+            !(e.clientX === 0 && e.clientY === 0)) {
+            cx = Math.min(Math.max(e.clientX - rect.left, 0), w);
+            cy = Math.min(Math.max(e.clientY - rect.top, 0), h);
+        }
+        try {
+            dt.setDragImage(ghost, Math.round(cx), Math.round(cy));
+        } catch (err) { /* 个别环境不支持 */ }
+        requestAnimationFrame(function () {
+            if (ghost.parentNode) ghost.parentNode.removeChild(ghost);
+        });
+    }
+
     function wireTags() {
         document.querySelectorAll('#assessSection .skill-tag').forEach(function (tag) {
             tag.setAttribute('draggable', 'true');
             bindDefPopoverHandlers(tag);
             tag.addEventListener('dragstart', function (e) {
+                setSkillTagDragImage(e, tag);
                 tag.classList.add('dragging');
                 var parent = tag.parentElement;
                 var fromBucket = 'pool';

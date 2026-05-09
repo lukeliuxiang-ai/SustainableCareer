@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>向上管理自测 · 你和老板同频吗？ | 睿观生涯</title>
+    <meta name="description" content="3分钟自测：识别你与上级沟通的核心障碍。新老板、新语境、晋升瓶颈——找到你的向上管理抓手。">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-blue: #0a1f2e;
+            --navy: #0f2d3d;
+            --slate: #1a3c5c;
+            --steel: #2c5a7a;
+            --gold: #d4a853;
+            --gold-light: #e8c878;
+            --gold-dark: #b8923e;
+            --cream: #faf8f3;
+            --ivory: #f5f0e8;
+            --text-dark: #1e2a35;
+            --text-body: #3d4f5f;
+            --text-light: #6b7d8d;
+            --glass: rgba(255,255,255,0.08);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--cream);
+            color: var(--text-body);
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        img { max-width: 100%; height: auto; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(212,168,83,0.4); } 50% { box-shadow: 0 0 0 12px rgba(212,168,83,0); } }
+        .animate-on-scroll { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+        .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+
+        /* ===== TOP BAR ===== */
+        .top-bar {
+            background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);
+            padding: max(12px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 12px max(16px, env(safe-area-inset-left));
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .back-link {
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .back-link:hover { color: var(--gold); }
+        .top-cta {
+            background: var(--gold);
+            color: var(--deep-blue);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .top-cta:hover { background: var(--gold-light); transform: scale(1.05); }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(135deg, var(--deep-blue) 0%, var(--navy) 50%, var(--slate) 100%);
+            padding: 60px 24px 48px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(212,168,83,0.08) 0%, transparent 50%);
+        }
+        .hero-content { position: relative; z-index: 2; max-width: 720px; margin: 0 auto; }
+        .hero h1 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            color: #fff;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            color: rgba(255,255,255,0.65);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+        .hero-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+        }
+        .hero-meta-item i { color: var(--gold); font-size: 14px; }
+
+        /* ===== QUIZ CONTAINER ===== */
+        .quiz-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 48px 20px 80px;
+        }
+
+        /* Progress */
+        .progress-bar {
+            background: var(--ivory);
+            border-radius: 10px;
+            height: 6px;
+            margin-bottom: 32px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+        .progress-text {
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+
+        /* Question Card */
+        .question-card {
+            background: #fff;
+            border-radius: 24px;
+            padding: 32px 28px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0,0,0,0.06);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            display: none;
+        }
+        .question-card.active {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+        .question-number {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gold);
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+        .question-number::before {
+            content: '';
+            width: 24px;
+            height: 2px;
+            background: var(--gold);
+        }
+        .question-text {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.25rem;
+            color: var(--text-dark);
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+        .question-context {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 24px;
+            padding: 12px 16px;
+            background: var(--ivory);
+            border-radius: 12px;
+            border-left: 3px solid var(--gold);
+        }
+
+        /* Options */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            border-radius: 16px;
+            border: 2px solid rgba(0,0,0,0.06);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+        .option:hover {
+            border-color: rgba(212,168,83,0.4);
+            background: var(--ivory);
+            transform: translateX(4px);
+        }
+        .option.selected {
+            border-color: var(--gold);
+            background: linear-gradient(135deg, var(--ivory) 0%, var(--cream) 100%);
+        }
+        .option-marker {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-light);
+            flex-shrink: 0;
+            transition: all 0.3s;
+        }
+        .option.selected .option-marker {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            border-color: var(--gold);
+            color: var(--deep-blue);
+        }
+        .option-text {
+            font-size: 15px;
+            color: var(--text-body);
+            line-height: 1.5;
+        }
+
+        /* Navigation */
+        .quiz-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 24px;
+            gap: 12px;
+        }
+        .nav-btn {
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-btn-prev {
+            background: var(--ivory);
+            color: var(--text-body);
+            border: 2px solid rgba(0,0,0,0.08);
+        }
+        .nav-btn-prev:hover {
+            background: var(--cream);
+            border-color: rgba(212,168,83,0.3);
+        }
+        .nav-btn-next {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--deep-blue);
+            box-shadow: 0 4px 16px rgba(212,168,83,0.3);
+        }
+        .nav-btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(212,168,83,0.4);
+        }
+        .nav-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .nav-btn-next:disabled {
+            background: var(--ivory);
+            color: var(--text-light);
+            box-shadow: none;
+        }
+
+        /* Result Section */
+        .result-section {
+            display: none;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 48px 20px 80px;
+        }
+        .result-section.active {
+            display: block;
+            animation: fadeInUp 0.8s ease;
+        }
+        .result-card {
+            background: #fff;
+            border-radius: 28px;
+            padding: 40px 32px;
+            border: 1px solid rgba(0,0,0,0.06);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        .result-score {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .result-label {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 24px;
+        }
+        .result-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .result-desc {
+            font-size: 15px;
+            color: var(--text-body);
+            line-height: 1.8;
+            margin-bottom: 28px;
+            text-align: left;
+        }
+        .result-insights {
+            text-align: left;
+            margin: 24px 0;
+        }
+        .insight-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+            background: var(--ivory);
+            border-radius: 14px;
+            margin-bottom: 10px;
+        }
+        .insight-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--deep-blue);
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .insight-text {
+            font-size: 14px;
+            color: var(--text-body);
+            line-height: 1.6;
+        }
+        .insight-text strong { color: var(--gold-dark); }
+
+        /* Dimension Scores */
+        .dimension-scores {
+            margin: 28px 0;
+            text-align: left;
+        }
+        .dimension-item {
+            margin-bottom: 16px;
+        }
+        .dimension-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .dimension-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        .dimension-score {
+            font-size: 13px;
+            color: var(--gold-dark);
+            font-weight: 700;
+        }
+        .dimension-bar {
+            background: var(--ivory);
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
+        }
+        .dimension-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 1s ease 0.5s;
+            width: 0%;
+        }
+        .fill-high { background: linear-gradient(90deg, #4caf50, #66bb6a); }
+        .fill-mid { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
+        .fill-low { background: linear-gradient(90deg, #e57373, #ef5350); }
+
+        /* CTA Cards */
+        .result-cta {
+            background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);
+            border-radius: 20px;
+            padding: 28px 24px;
+            text-align: center;
+            margin-top: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+        .result-cta::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(212,168,83,0.08) 0%, transparent 50%);
+        }
+        .result-cta h3 {
+            font-family: 'Noto Serif SC', serif;
+            color: #fff;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 2;
+        }
+        .result-cta p {
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--deep-blue);
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 4px 16px rgba(212,168,83,0.3);
+            border: none;
+            cursor: pointer;
+        }
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(212,168,83,0.4);
+        }
+
+        .secondary-cta {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+        .secondary-cta a {
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .cta-outline {
+            border: 2px solid rgba(255,255,255,0.3);
+            color: #fff;
+            background: transparent;
+        }
+        .cta-outline:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        /* Share */
+        .share-section {
+            margin-top: 24px;
+            text-align: center;
+        }
+        .share-section p {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 12px;
+        }
+        .share-btns {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+        .share-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .share-wechat { background: #07c160; }
+        .share-link { background: var(--steel); }
+        .share-btn:hover { transform: scale(1.1); }
+
+        /* Floating CTA */
+        .floating-cta {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--deep-blue);
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 8px 24px rgba(212,168,83,0.4);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 200;
+            transition: all 0.3s;
+            animation: pulse 2s infinite;
+            border: none;
+            cursor: pointer;
+        }
+        .floating-cta:hover { transform: scale(1.05); }
+
+        /* QR Modal */
+        #qrModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+        #qrModal > div {
+            background: #fff;
+            border-radius: 28px;
+            padding: 40px;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        }
+        #qrModal button {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .hero { padding: 40px 16px 32px; }
+            .quiz-container { padding: 28px 14px max(72px, calc(56px + env(safe-area-inset-bottom))); }
+            .question-card { padding: 24px 18px; border-radius: 20px; }
+            .question-text { font-size: 1.1rem; }
+            .option { padding: 14px 16px; }
+            .result-card { padding: 28px 20px; }
+            .result-score { font-size: 2.8rem; }
+            .nav-btn { padding: 10px 18px; font-size: 13px; }
+            .floating-cta {
+                bottom: calc(12px + env(safe-area-inset-bottom));
+                right: 12px;
+                left: 12px;
+                justify-content: center;
+                padding: 12px 16px;
+                font-size: 13px;
+            }
+            #qrModal > div { padding: 24px 18px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="toolbox.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> 返回工具箱
+        </a>
+        <a href="index.html" class="back-link" style="margin-left:auto;">
+            返回首页 <i class="fas fa-home" style="margin-left:6px;"></i>
+        </a>
+    </div>
+
+    <div class="hero">
+        <div class="hero-content">
+            <h1>向上管理自测<br><span>你和老板，真的同频吗？</span></h1>
+            <p>3分钟，识别你与上级沟通的隐性障碍。<br>新老板、晋升瓶颈、跨部门协调——找到你的向上管理抓手。</p>
+            <div class="hero-meta">
+                <div class="hero-meta-item"><i class="fas fa-clock"></i> 约3分钟</div>
+                <div class="hero-meta-item"><i class="fas fa-chart-bar"></i> 6个维度</div>
+                <div class="hero-meta-item"><i class="fas fa-user-check"></i> 基于500+中高阶案例</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz Section -->
+    <div class="quiz-container" id="quizSection">
+        <div class="progress-text" id="progressText">问题 1 / 8</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <!-- Q1 -->
+        <div class="question-card active" data-q="0">
+            <div class="question-number">问题 01</div>
+            <div class="question-text">当你有一个新想法或项目建议时，通常会怎样与上级沟通？</div>
+            <div class="question-context">向上管理的第一步，是让对方"听得进去"。不同风格的上级，接收信息的方式截然不同。</div>
+            <div class="options">
+                <div class="option" data-score="3"><div class="option-marker">A</div><div class="option-text">先写一份完整的方案文档，再找合适时机正式汇报</div></div>
+                <div class="option" data-score="2"><div class="option-marker">B</div><div class="option-text">先在非正式场合（如午餐、走廊）随口提一下，探探反应</div></div>
+                <div class="option" data-score="1"><div class="option-marker">C</div><div class="option-text">等老板主动问起，或者等时机"成熟"再说</div></div>
+                <div class="option" data-score="0"><div class="option-marker">D</div><div class="option-text">直接发邮件或在工作群里提出，让大家一起讨论</div></div>
+            </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-card" data-q="1">
+            <div class="question-number">问题 02</div>
+            <div class="question-text">你的上级最近换了工作风格（比如从放权变微观管理），你的第一反应是？</div>
+            <div class="question-context">新老板或风格突变，是高阶职场人最常见的向上管理挑战。你的反应模式，决定了适应速度。</div>
+            <div class="options">
+                <div class="option" data-score="3"><div class="option-marker">A</div><div class="option-text">主动约一对一，了解他的焦虑点和成功定义，调整沟通节奏</div></div>
+                <div class="option" data-score="2"><div class="option-marker">B</div><div class="option-text">观察几周，看看是临时状态还是长期风格，再决定对策</div></div>
+                <div class="option" data-score="1"><div class="option-marker">C</div><div class="option-text">心里不舒服，但表面上配合，私下跟朋友吐槽</div></div>
+                <div class="option" data-score="0"><div class="option-marker">D</div><div class="option-text">觉得被不信任，防御性解释自己过去的工作方式</div></div>
+            </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-card" data-q="2">
+            <div class="question-number">问题 03</div>
+            <div class="question-text">项目遇到风险或可能延期，你会在什么时候告诉上级？</div>
+            <div class="question-context">"No surprises"是向上管理的黄金法则。坏消息的时机和方式，直接影响信任账户。</div>
+            <div class="options">
+                <div class="option" data-score="3"><div class="option-marker">A</div><div class="option-text">一有迹象就同步，同时带2-3个应对方案，让他做选择题</div></div>
+                <div class="option" data-score="2"><div class="option-marker">B</div><div class="option-text">等自己先想办法解决，实在搞不定再汇报</div></div>
+                <div class="option" data-score="1"><div class="option-marker">C</div><div class="option-text">按常规节奏在周报或例会上提及，不特别突出</div></div>
+                <div class="option" data-score="0"><div class="option-marker">D</div><div class="option-text">尽量自己扛，怕上级觉得"这点事都搞不定"</div></div>
+            </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question-card" data-q="3">
+            <div class="question-number">问题 04</div>
+            <div class="question-text">跨部门协调资源遇到困难，你通常会怎么做？</div>
+            <div class="question-context">35+职场人的价值，很大程度上体现在"搞定复杂关系"。向上管理不只是对老板，也包括借老板之力推动横向协作。</div>
+            <div class="options">
+                <div class="option" data-score="3"><div class="option-marker">A</div><div class="option-text">先梳理利益相关者地图，找老板或赞助人背书，再推进</div></div>
+                <div class="option" data-score="2"><div class="option-marker">B</div><div class="option-text">直接找对方部门负责人谈，用"共同收益"说服</div></div>
+                <div class="option" data-score="1"><div class="option-marker">C</div><div class="option-text">发邮件抄送双方上级，用"升级"施压</div></div>
+                <div class="option" data-score="0"><div class="option-marker">D</div><div class="option-text">先自己反复尝试，实在不行再求助</div></div>
+            </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question-card" data-q="4">
+            <div class="question-number">问题 05</div>
+            <div class="question-text">你觉得目前与上级的沟通中，最大的卡点是什么？</div>
+            <div class="question-context">自我觉察是改变的起点。识别卡点，才能找到对应的向上管理策略。</div>
+            <div class="options">
+                <div class="option" data-score="3"><div class="option-marker">A</div><div class="option-text">信息颗粒度不匹配——我说太细他嫌啰嗦，说太粗他说不落地</div></div>
+                <div class="option" data-score="2"><div class="option-marker">B</div><div class="option-text">节奏不同频——他偏好快速试错，我倾向系统规划（或相反）</div></div>
+                <div class="option" data-score="1"><div class="option-marker">C</div><div class="option-text">信任不足——他总追问细节，我觉得被微观管理</div></div>
+                <div class="option" data-score="0"><div class="option-marker">D</div><div class="option-text">价值观冲突——对某些事的优先级判断根本不一致</div></div>
+            </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question-card" data-q="5">
+            <div class="question-number">问题 06</div>
+            <div class="question-text">在一次关键汇报中，你更希望上级扮演什么角色？</div>
+            <div class="question-context">你对"理想上级"的期待，反映了你的贡献模式偏好。匹配或不匹配，都是向上管理的设计素材。</div>
+            <div class="options">
+                <div class="option" data-score="3"><div class="option-marker">A</div><div class="option-text">战略合伙人——帮我拓宽选项，挑战我的盲区</div></div>
+                <div class="option" data-score="2"><div class="option-marker">B</div><div class="option-text">决策拍板人——给我方向，让我高效执行</div></div>
+                <div class="option" data-score="1"><div class="option-marker">C</div><div class="option-text">资源支持者——帮我协调跨部门资源，扫清障碍</div></div>
+                <div class="option" data-score="0"><div class="option-marker">D</div><div class="option-text">背书人——在更高层面前认可我的价值和贡献</div></div>
+            </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="question-card" data-q="6">
+            <div class="question-number">问题 07</div>
+            <div class="question-text">如果上级对你的工作成果提出质疑，你通常如何应对？</div>
+            <div class="question-context">被质疑时的反应模式，直接暴露了你的防御机制和成长空间。向上管理高手把质疑转化为校准机会。</div>
+            <div class="options">
+                <div class="option" data-score="3"><div class="option-marker">A</div><div class="option-text">先确认他的具体关切点，再用数据/案例回应，最后确认是否对齐</div></div>
+                <div class="option" data-score="2"><div class="option-marker">B</div><div class="option-text">解释当时的决策背景和限制条件，让他理解"为什么这样做"</div></div>
+                <div class="option" data-score="1"><div class="option-marker">C</div><div class="option-text">心里不服但表面接受，私下找同事验证自己是否真的错了</div></div>
+                <div class="option" data-score="0"><div class="option-marker">D</div><div class="option-text">感到被否定，情绪低落，需要较长时间恢复状态</div></div>
+            </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="question-card" data-q="7">
+            <div class="question-number">问题 08</div>
+            <div class="question-text">你目前最希望在向上管理方面获得什么支持？</div>
+            <div class="question-context">这个问题帮你把"测评"连接到"行动"。也是教练介入的最佳切入点。</div>
+            <div class="options">
+                <div class="option" data-score="3"><div class="option-marker">A</div><div class="option-text">一套与当前上级"共创"的沟通协议和汇报模板</div></div>
+                <div class="option" data-score="2"><div class="option-marker">B</div><div class="option-text">读懂不同风格上级的"解码器"，快速适应新语境</div></div>
+                <div class="option" data-score="1"><div class="option-marker">C</div><div class="option-text">在关键会议/谈判中的话术预演和立场设计</div></div>
+                <div class="option" data-score="0"><div class="option-marker">D</div><div class="option-text">厘清：到底是向上管理问题，还是这个岗位/组织根本不适合我</div></div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="quiz-nav">
+            <button class="nav-btn nav-btn-prev" id="prevBtn" onclick="prevQuestion()" disabled>
+                <i class="fas fa-arrow-left"></i> 上一题
+            </button>
+            <button class="nav-btn nav-btn-next" id="nextBtn" onclick="nextQuestion()" disabled>
+                下一题 <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Result Section -->
+    <div class="result-section" id="resultSection">
+        <div class="result-card">
+            <div class="result-score" id="resultScore">0</div>
+            <div class="result-label">向上管理指数 / 24分</div>
+            <div class="result-title" id="resultTitle">测评结果</div>
+            <div class="result-desc" id="resultDesc"></div>
+
+            <div class="dimension-scores" id="dimensionScores"></div>
+
+            <div class="result-insights" id="resultInsights"></div>
+
+            <div class="result-cta">
+                <h3>向上管理不是讨好，是降低组织交易成本</h3>
+                <p>你的测评结果已经揭示了关键卡点。下一步，是把洞察转化为可练习的日常抓手。</p>
+                <button class="cta-btn" onclick="showQRModal()">
+                    <i class="fab fa-weixin"></i> 预约免费20分钟诊断
+                </button>
+                <div class="secondary-cta">
+                    <a href="workplace2.html" class="cta-outline">查看职场陪跑手册</a>
+                    <a href="index.html#pricing" class="cta-outline">了解陪跑服务</a>
+                </div>
+            </div>
+
+            <div class="share-section">
+                <p>觉得这个自测有帮助？分享给同样卡在向上管理的同事</p>
+                <div class="share-btns">
+                    <a href="#" class="share-btn share-wechat" onclick="showQRModal(); return false;" title="分享给微信好友"><i class="fab fa-weixin"></i></a>
+                    <a href="#" class="share-btn share-link" onclick="copyLink(); return false;" title="复制链接"><i class="fas fa-link"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="#" class="floating-cta" onclick="showQRModal(); return false;">
+        <i class="fas fa-comments"></i>
+        免费咨询
+    </a>
+
+    <!-- QR Modal -->
+    <div id="qrModal">
+        <div>
+            <button onclick="closeQRModal()">&times;</button>
+            <div style="width:80px;height:80px;background:linear-gradient(135deg, var(--slate) 0%, var(--steel) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:var(--gold);font-size:36px;">
+                <i class="fab fa-weixin"></i>
+            </div>
+            <h3 style="font-family:'Noto Serif SC',serif;font-size:1.4rem;color:var(--text-dark);margin-bottom:12px;">添加教练微信</h3>
+            <p style="color:var(--text-light);font-size:14px;line-height:1.7;margin-bottom:24px;">
+                扫码添加微信 <strong style="color:var(--gold-dark);">lukeliu2017</strong><br>
+                预约免费20分钟诊断通话
+            </p>
+            <div style="width:200px;height:200px;margin:0 auto 20px;border-radius:16px;overflow:hidden;border:2px solid rgba(212,168,83,0.2);">
+                <img src="images/qrcode.jpeg" alt="微信二维码" style="width:100%;height:100%;object-fit:cover;display:block;">
+            </div>
+            <a href="weixin://" style="display:inline-block;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);color:var(--deep-blue);padding:12px 32px;border-radius:50px;font-weight:700;text-decoration:none;font-size:14px;">
+                <i class="fab fa-weixin"></i> 打开微信添加
+            </a>
+        </div>
+    </div>
+
+    <script>
+        let currentQ = 0;
+        const totalQ = 8;
+        let scores = [];
+        let selectedOptions = [];
+
+        // Initialize option click handlers
+        document.querySelectorAll('.option').forEach(function(opt) {
+            opt.addEventListener('click', function() {
+                var card = this.closest('.question-card');
+                var qIndex = parseInt(card.getAttribute('data-q'));
+
+                // Remove selected from siblings
+                card.querySelectorAll('.option').forEach(function(o) {
+                    o.classList.remove('selected');
+                });
+
+                // Add selected to clicked option
+                this.classList.add('selected');
+
+                // Store score
+                scores[qIndex] = parseInt(this.getAttribute('data-score'));
+                selectedOptions[qIndex] = this.querySelector('.option-text').textContent;
+
+                // Enable next button
+                document.getElementById('nextBtn').disabled = false;
+            });
+        });
+
+        function updateProgress() {
+            var pct = ((currentQ + 1) / totalQ) * 100;
+            document.getElementById('progressFill').style.width = pct + '%';
+            document.getElementById('progressText').textContent = '问题 ' + (currentQ + 1) + ' / ' + totalQ;
+        }
+
+        function showQuestion(index) {
+            document.querySelectorAll('.question-card').forEach(function(card, i) {
+                if (i === index) {
+                    card.classList.add('active');
+                } else {
+                    card.classList.remove('active');
+                }
+            });
+
+            document.getElementById('prevBtn').disabled = (index === 0);
+
+            // Check if current question has answer
+            var currentCard = document.querySelector('.question-card[data-q="' + index + '"]');
+            var hasAnswer = currentCard.querySelector('.option.selected') !== null;
+            document.getElementById('nextBtn').disabled = !hasAnswer;
+
+            // Change next button text on last question
+            if (index === totalQ - 1) {
+                document.getElementById('nextBtn').innerHTML = '查看结果 <i class="fas fa-chart-bar"></i>';
+            } else {
+                document.getElementById('nextBtn').innerHTML = '下一题 <i class="fas fa-arrow-right"></i>';
+            }
+
+            updateProgress();
+        }
+
+        function nextQuestion() {
+            if (currentQ < totalQ - 1) {
+                currentQ++;
+                showQuestion(currentQ);
+            } else {
+                showResult();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQ > 0) {
+                currentQ--;
+                showQuestion(currentQ);
+            }
+        }
+
+        function showResult() {
+            document.getElementById('quizSection').style.display = 'none';
+            document.getElementById('resultSection').classList.add('active');
+
+            var totalScore = scores.reduce(function(a, b) { return (a || 0) + (b || 0); }, 0);
+            document.getElementById('resultScore').textContent = totalScore;
+
+            // Determine result category
+            var title, desc, insights;
+
+            if (totalScore >= 20) {
+                title = "🟢 向上管理高手：同频且互信";
+                desc = "你与上级的互动模式已经相当成熟。你懂得主动对齐、提前预警、用对方听得懂的语言沟通。当前的核心课题不是'修复关系'，而是<strong>把这套能力复制到新场景</strong>——比如新老板、跨部门影响力、或者从执行者升级为'思想合伙人'。";
+                insights = [
+                    "你的'主动对齐'习惯是核心资产，建议把它写成可复用的'沟通协议模板'",
+                    "考虑把向上管理能力转化为团队资产：带下属时，教他们如何与你同频",
+                    "若准备晋升或跳槽，把'向上管理案例'作为面试中的领导力证据"
+                ];
+            } else if (totalScore >= 14) {
+                title = "🟡 向上管理进阶者：有基础，有盲区";
+                desc = "你已经掌握了向上管理的基本功，但在<strong>高压场景、风格冲突、或新语境切换</strong>时，偶尔会出现'知道该做什么，但做不到'的情况。这不是能力问题，是<strong>情绪管理和场景演练</strong>的问题。";
+                insights = [
+                    "你的盲区可能在'坏消息怎么报'或'被质疑时怎么接'——这两个场景最需要预演",
+                    "建议与上级共创一个简单的'沟通协议'：什么节奏汇报、什么颗粒度、紧急线怎么分",
+                    "若换了新老板，前90天宁可'过度沟通'也不要'默认他懂你'"
+                ];
+            } else if (totalScore >= 8) {
+                title = "🟠 向上管理挑战者：卡点在'不敢'或'不会'";
+                desc = "你与上级的互动中，存在明显的<strong>信息断层或信任赤字</strong>。你可能觉得'说了也没用'、'他反正不听'，或者'我说了他会觉得我能力不行'。这些想法本身，就是向上管理最需要打破的假设。";
+                insights = [
+                    "你的首要任务是建立'最小可行信任'：找一件小事，超预期交付，然后主动汇报",
+                    "练习'结论先行'的汇报结构：现状+风险+需要他做什么决定，控制在3句话",
+                    "若长期无法建立信任，需要诚实评估：是方法问题，还是这个岗位/组织根本不适合你"
+                ];
+            } else {
+                title = "🔴 向上管理重构者：关系需要重启";
+                desc = "你与上级的互动模式已经进入了<strong>负向循环</strong>：防御、回避、或对抗。继续这样下去，不仅影响当前绩效，更会消耗你的职业声誉和身心健康。需要<strong>系统性干预</strong>，而不是小修小补。";
+                insights = [
+                    "建议先做一次Harrison测评，识别你的默认行为风格与上级的冲突点在哪里",
+                    "考虑引入第三方（如教练）作为'翻译层'，帮你们重建沟通协议",
+                    "同时准备Plan B：如果6个月内无法改善，你的切换成本和时间窗口是多少？"
+                ];
+            }
+
+            document.getElementById('resultTitle').textContent = title;
+            document.getElementById('resultDesc').innerHTML = desc;
+
+            // Build insights
+            var insightsHtml = insights.map(function(insight) {
+                return '<div class="insight-item"><div class="insight-icon"><i class="fas fa-lightbulb"></i></div><div class="insight-text">' + insight + '</div></div>';
+            }).join('');
+            document.getElementById('resultInsights').innerHTML = insightsHtml;
+
+            // Build dimension scores
+            var dimensions = [
+                { name: "主动对齐", score: Math.min(100, ((scores[0] || 0) + (scores[4] || 0)) / 6 * 100) },
+                { name: "风格适应", score: Math.min(100, ((scores[1] || 0) + (scores[5] || 0)) / 6 * 100) },
+                { name: "风险预警", score: Math.min(100, ((scores[2] || 0) + (scores[6] || 0)) / 6 * 100) },
+                { name: "横向影响", score: Math.min(100, ((scores[3] || 0) + (scores[7] || 0)) / 6 * 100) }
+            ];
+
+            var dimensionsHtml = "<h3 style=\"font-family:'Noto Serif SC',serif;font-size:1.1rem;color:var(--text-dark);margin-bottom:16px;\">四维能力画像</h3>";
+            dimensions.forEach(function(d) {
+                var fillClass = d.score >= 70 ? 'fill-high' : d.score >= 40 ? 'fill-mid' : 'fill-low';
+                dimensionsHtml += '<div class="dimension-item"><div class="dimension-header"><span class="dimension-name">' + d.name + '</span><span class="dimension-score">' + Math.round(d.score) + '分</span></div><div class="dimension-bar"><div class="dimension-fill ' + fillClass + '" style="width: ' + d.score + '%"></div></div></div>';
+            });
+            document.getElementById('dimensionScores').innerHTML = dimensionsHtml;
+
+            // Scroll to result
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showQRModal() {
+            document.getElementById('qrModal').style.display = 'flex';
+        }
+        function closeQRModal() {
+            document.getElementById('qrModal').style.display = 'none';
+        }
+        document.getElementById('qrModal').addEventListener('click', function(e) {
+            if (e.target === document.getElementById('qrModal')) closeQRModal();
+        });
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(function() {
+                alert('链接已复制，可以分享给同事或朋友');
+            }).catch(function() {
+                alert('复制失败，请手动复制地址栏链接');
+            });
+        }
+
+        // Initialize progress
+        updateProgress();
+    </script>
+
+</body>
+</html>

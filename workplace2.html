@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>职场进阶陪跑手册 · 意义、跃迁与新语境下的向上管理 | 睿观生涯</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --deep-blue: #0a1f2e;
+      --navy: #0f2d3d;
+      --slate: #1a3c5c;
+      --steel: #2c5a7a;
+      --gold: #d4a853;
+      --gold-light: #e8c878;
+      --gold-dark: #b8923e;
+      --cream: #faf8f3;
+      --ivory: #f5f0e8;
+      --text-dark: #1e2a35;
+      --text-body: #3d4f5f;
+      --text-light: #6b7d8d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background: var(--cream);
+      color: var(--text-body);
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; height: auto; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(212,168,83,0.4); } 50% { box-shadow: 0 0 0 12px rgba(212,168,83,0); } }
+    .animate-on-scroll { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+    .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+
+    .top-bar {
+      background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);
+      padding: max(12px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 12px max(16px, env(safe-area-inset-left));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .back-link {
+      color: rgba(255,255,255,0.7);
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .back-link:hover { color: var(--gold); }
+    .top-cta {
+      background: var(--gold);
+      color: var(--deep-blue);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .top-cta:hover { background: var(--gold-light); transform: scale(1.05); }
+
+    .hero-mini {
+      background: linear-gradient(135deg, var(--deep-blue) 0%, var(--navy) 50%, var(--slate) 100%);
+      padding: 60px 24px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-mini::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 50%, rgba(212,168,83,0.08) 0%, transparent 50%);
+    }
+    .hero-mini-content { position: relative; z-index: 2; max-width: 720px; margin: 0 auto; }
+    .hero-mini h1 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .hero-mini h1 span {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-mini p {
+      color: rgba(255,255,255,0.65);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .quick-nav {
+      background: var(--ivory);
+      padding: 16px 24px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      position: sticky;
+      top: 48px;
+      z-index: 99;
+    }
+    .quick-nav a {
+      white-space: nowrap;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      color: var(--text-body);
+      text-decoration: none;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.06);
+      transition: all 0.3s;
+    }
+    .quick-nav a:hover, .quick-nav a.active {
+      background: var(--deep-blue);
+      color: var(--gold);
+      border-color: var(--deep-blue);
+    }
+
+    .content { max-width: 800px; margin: 0 auto; padding: 48px 20px 80px; }
+
+    .section { margin-bottom: 56px; }
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+    .section-label::before {
+      content: '';
+      width: 24px;
+      height: 2px;
+      background: var(--gold);
+    }
+    .section h2 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.5rem;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+    .section-quote {
+      background: linear-gradient(135deg, var(--ivory) 0%, #fff 100%);
+      border-left: 3px solid var(--gold);
+      padding: 14px 18px;
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 24px;
+      font-size: 14px;
+      color: var(--text-body);
+      line-height: 1.7;
+    }
+
+    .qa-card {
+      background: #fff;
+      border-radius: 16px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(0,0,0,0.06);
+      overflow: hidden;
+      transition: all 0.3s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .qa-card:hover {
+      border-color: rgba(212,168,83,0.2);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    .qa-q {
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .q-icon {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, var(--ivory) 0%, var(--cream) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: var(--gold-dark);
+      font-size: 13px;
+      flex-shrink: 0;
+      border: 1.5px solid rgba(212,168,83,0.2);
+    }
+    .q-text {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text-dark);
+      flex: 1;
+      line-height: 1.5;
+    }
+    .qa-toggle {
+      color: var(--text-light);
+      font-size: 12px;
+      transition: transform 0.3s;
+    }
+    .qa-card.open .qa-toggle {
+      transform: rotate(180deg);
+    }
+    .qa-a {
+      padding: 0 20px 18px 60px;
+      display: none;
+      border-top: 1px solid rgba(0,0,0,0.04);
+      margin-top: 4px;
+    }
+    .qa-a.active { display: block; }
+    .a-text {
+      font-size: 14px;
+      color: var(--text-body);
+      line-height: 1.75;
+    }
+    .a-text strong { color: var(--gold-dark); font-weight: 600; }
+    .a-text ul { margin: 10px 0 10px 18px; }
+    .a-text li { margin-bottom: 6px; }
+    .tip-box {
+      background: linear-gradient(135deg, var(--ivory) 0%, #fff 100%);
+      border-left: 3px solid var(--gold);
+      padding: 12px 16px;
+      margin: 14px 0;
+      border-radius: 0 10px 10px 0;
+      font-size: 13px;
+      color: var(--text-body);
+    }
+    .grip-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .grip-item {
+      background: var(--ivory);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 12px;
+      color: var(--text-body);
+      border: 1px solid rgba(212,168,83,0.15);
+    }
+
+    .cta-card {
+      background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);
+      border-radius: 20px;
+      padding: 28px 24px;
+      text-align: center;
+      margin: 36px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-card::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle at 50% 50%, rgba(212,168,83,0.08) 0%, transparent 50%);
+    }
+    .cta-card h3 {
+      font-family: 'Noto Serif SC', serif;
+      color: #fff;
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 2;
+    }
+    .cta-card p {
+      color: rgba(255,255,255,0.7);
+      font-size: 14px;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 2;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      color: var(--deep-blue);
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 4px 16px rgba(212,168,83,0.3);
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(212,168,83,0.4);
+    }
+
+    .floating-cta {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      color: var(--deep-blue);
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(212,168,83,0.4);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 200;
+      transition: all 0.3s;
+      animation: pulse 2s infinite;
+    }
+    .floating-cta:hover { transform: scale(1.05); }
+
+    @media (max-width: 640px) {
+      .hero-mini { padding: 40px 16px 28px; }
+      .content { padding: 28px 14px max(72px, calc(56px + env(safe-area-inset-bottom))); }
+      .qa-a { padding-left: 20px; }
+      .quick-nav { padding: 12px 14px; }
+      .floating-cta {
+        bottom: calc(12px + env(safe-area-inset-bottom));
+        right: 12px;
+        left: 12px;
+        justify-content: center;
+        padding: 12px 16px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <a href="index.html" class="back-link">
+      <i class="fas fa-arrow-left"></i> 返回首页
+    </a>
+    <a href="#" class="top-cta" onclick="showPayModal(); return false;">1299元体验</a>
+  </div>
+
+  <div class="hero-mini">
+    <div class="hero-mini-content">
+      <h1>职场进阶陪跑手册<br><span>意义、跃迁与新语境下的同频</span></h1>
+      <p>年薪50万—100万及以上专属 · 已过生存模式：在「想迈不敢迈」与「新环境新老板」之间，重建笃定与影响力</p>
+      <p style="margin-top:14px;font-size:13px;color:rgba(255,255,255,0.55);">年薪约 80—100 万及以上金领？请读 <a href="workplace3.html" style="color:var(--gold-light);text-decoration:underline;text-underline-offset:3px;">进阶手册 · 金领篇</a></p>
+    </div>
+  </div>
+
+  <div class="quick-nav">
+    <a href="#s1">写给谁</a>
+    <a href="#s2">意义与跃迁</a>
+    <a href="#s3">新公司适应</a>
+    <a href="#s4">新老板</a>
+    <a href="#s5">陪跑价值</a>
+    <a href="#s6">测评与价格</a>
+  </div>
+
+  <div class="content">
+
+    <div class="section" id="s1">
+      <div class="section-label">第一章</div>
+      <h2>🎯 这份手册写给谁？</h2>
+      <div class="section-quote">你不是缺能力，而是站在「温饱之上」的十字路口：要么追问意义，要么切换语境——两者都需要新的心智与打法。</div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">为什么说50万—100万+的职场人，痛点和「生存焦虑型」不一样？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">到了这个薪酬带，多数人已经证明过专业能力与结果交付。真正的张力往往来自两层：<strong>意义层</strong>——岗位还能不能承载你的使命感与成长欲；<strong>语境层</strong>——换了公司或换了老板之后，过去那套「有效路径」突然失灵。焦虑不再是「会不会饿死」，而是<strong>会不会在舒适区里钝化、会不会在新棋盘上走错第一步、会不会与关键上级的期待长期错位</strong>。陪跑的重点也从「找饭碗」转向「校准方向、升级互动、把优势翻译进新语境」。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">职场陪跑对我这类人，具体解决什么问题？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">可以概括为两类高频场景：<ul><li><strong>向内</strong>：对现状不满足，想追求更大挑战或人生意义，但顾虑身份、家庭、声誉或不确定性，迟迟不敢迈出去。</li><li><strong>向外</strong>：刚入职新公司，或组织里来了新老板——流程、文化、决策节奏变了，需要<strong>重塑沟通协议与信任账户</strong>，让向上管理从「凭经验」变成「可设计、可复盘」。</li></ul>睿观生涯的职场陪跑，以 Harrison 等行为科学测评为底座，帮你在<strong>不离场（或理性离场）</strong>的前提下，看清自己的驱动与风格，并把行动落到可练习的日常场景里。<div class="tip-box">若你同时卡在「想转型」与「新老板要结果」之间，教练会协助你拆分时间线与风险边界：哪些是立即要向新语境妥协的，哪些是中长期必须为自己守住的底线。</div></div></div></div>
+
+      <div style="margin: 36px 0;">
+      <a href="career_assessment.html" style="display:flex;align-items:center;gap:16px;background:linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);border-radius:20px;padding:24px 28px;text-decoration:none;transition:all 0.4s ease;box-shadow:0 8px 24px rgba(10,31,46,0.15);border:1px solid rgba(212,168,83,0.2);">
+        <div style="width:56px;height:56px;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 12px rgba(212,168,83,0.3);">
+          <i class="fas fa-clipboard-check" style="color:var(--deep-blue);font-size:24px;"></i>
+        </div>
+        <div style="flex:1;">
+          <div style="color:#fff;font-size:16px;font-weight:700;margin-bottom:4px;">先测评，再陪跑</div>
+          <div style="color:rgba(255,255,255,0.6);font-size:13px;">看清驱动与行为偏好，为高阶决策与向上管理提供共同语言</div>
+        </div>
+        <div style="width:40px;height:40px;background:rgba(255,255,255,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <i class="fas fa-arrow-right" style="color:var(--gold);font-size:16px;"></i>
+        </div>
+      </a>
+    </div>
+    </div>
+
+    <div class="section" id="s2">
+      <div class="section-label">第二章</div>
+      <h2>🌅 意义感稀薄 · 想要更大挑战 · 又不敢迈那一步</h2>
+      <div class="section-quote">犹豫不是懦弱，往往是你同时在乎「自我实现」与「责任与安全感」——需要的是结构化决策，而不是鸡汤式冲动。</div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">收入不错、职位也体面，但就是觉得「这不是我要的人生」，正常吗？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">非常正常，而且是高成就者常见的<strong>第二阶段倦怠</strong>：外部指标已达标，内部坐标系却还没升级。你会感到空洞，往往是因为过去十年你一直在回应外部 KPI，却很少系统问过自己：<strong>什么事让我有持续的能量？哪种「难」我愿意主动扛？我愿意为什么样的人群或使命付代价？</strong>测评与教练对话的价值，是把这类大问题拆成可验证的假设——例如「我以为是行业问题，其实是角色自主权问题」——避免用一次草率跳槽去逃避一次该做的人生复盘。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我想追求更有意义或更有挑战的事，但怕一步走错满盘皆输，怎么破？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">高阶决策最怕「全有或全无」。建议把行动分成三层：<ul><li><strong>探索层（低风险）</strong>：行业访谈、副业试验、内部横向项目，验证「意义」是否经得起真实摩擦。</li><li><strong>能力层（中风险）</strong>：在现岗上有意识地承接更接近终局画像的责任，积累可迁移作品与口碑。</li><li><strong>切换层（高风险）</strong>：仅在前两层有正反馈时再谈离职、创业或大幅转型。</li></ul>陪跑教练会陪你厘清<strong>不可妥协的底线、可承受的时间与财务边界、以及向家人与团队沟通的节奏</strong>，让「迈出去」变成渐进实验，而不是情绪单押。<div class="tip-box">若你迟迟不动，往往不是缺信息，而是缺「被允许试错的叙事」——教练的一个重要角色，是帮你把自我评判降下来，把可执行步骤抬上去。</div></div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我不确定是该内部转岗、外部跳槽，还是先做副业探索？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">先对齐三件事：<strong>你要的是「新的意义来源」还是「新的权力半径」？你的性格与测评 profile 更适合渐进渗透还是干净切换？你未来三到五年愿意牺牲什么、必须守住什么？</strong>内部转岗适合想换语境但希望保留安全垫的人；外部跳槽适合行业或组织价值观与个人驱动严重不匹配时；副业适合想验证市场与自我叙事、但主职仍需现金流的人。没有标准答案，只有<strong>与你风险承受度匹配的路径设计</strong>。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">身边人觉得我已经「很好了」，这种孤独感怎么消化？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">这是典型的高阶情绪劳动：你的痛苦不便对外人说，说出来容易被误解为「凡尔赛」。教练关系提供的是<strong>去评判的第三空间</strong>——既不把你神圣化为「成功人士必须感恩」，也不把你病理化为「不知足」。在安全的对话里，你可以同时承认感恩与不甘，并把不甘翻译成<strong>下一步最小可行行动</strong>，而不是内耗。</div></div></div>
+    </div>
+
+    <div class="section" id="s3">
+      <div class="section-label">第三章</div>
+      <h2>🧭 刚入职新公司 · 流程、文化与「老板的频道」</h2>
+      <div class="section-quote">高阶人才换语境，最大的坑不是能力，而是误把「上一家的政治与默契」当成普世真理。</div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我以前在旧公司很顺，新公司却处处别扭，是不是我不行了？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">多半不是能力降级，而是<strong>隐性规则重置</strong>：谁算关键利益相关者、什么算「早汇报」、什么算「越权」、会议里的话怎么说才算「有观点」——每家组织不同。你需要刻意做一轮「人类学观察」：读懂决策链、节奏文化与冲突处理习惯。测评能加速的是<strong>自知</strong>——你默认是结果驱动还是关系驱动？偏好先共识再推进还是先试错再对齐？当自我风格与新公司默认值冲突时，不是硬改性格，而是<strong>在关键接口（尤其老板）上配置「翻译层」</strong>：用对方听得懂的语言与颗粒度交付信任。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">新公司流程更繁、层级更多，我习惯扁平高效，很容易不耐烦，怎么办？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">把「流程」从情绪对立面，改看成<strong>组织的免疫系统</strong>。高阶玩家的策略是：<ul><li>先<strong>合规生存</strong>：在规则内建立可靠人设，避免早期被贴上「刺头」标签。</li><li>再<strong>局部优化</strong>：用数据与小闭环证明「简化某一步」的收益，争取改革盟友。</li><li>全程<strong>管理老板的焦虑点</strong>：他更怕失控还是怕慢？你的沟通要对着他的恐惧定价。</li></ul><div class="tip-box">前90天宁可「过度沟通」也不要「默认别人懂你」。高阶反而更要练习把复杂思考压缩成老板关心的三句话：现状、风险、你要他做什么决定。</div></div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">和老板的沟通总是「差一点」——要么太细被嫌啰嗦，要么太粗被说不落地？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">本质是<strong>信息带宽不匹配</strong>。建议与老板共创一个简单的沟通协议（哪怕是非正式的）：<div class="grip-grid"><span class="grip-item">固定节奏的一对一：议题提前24小时发大纲</span><span class="grip-item">紧急线 vs 非紧急线的分流方式</span><span class="grip-item">他偏好的证据形态：数据、案例还是客户原声</span><span class="grip-item">「无 surprises」原则：坏消息早说、带方案说</span></div>测评帮助你看清自己的默认表达，教练帮助你对照老板的决策风格做微调——<strong>同频不是讨好，是降低组织交易成本</strong>。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">跨部门资源难协调，我在新公司还没有政治资本，怎么破局？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">政治资本来自<strong>可预测的成功交付 + 清晰的利益交换叙事</strong>。早期少谈「我认为」，多谈「我们一起把这件事做成的共同收益」。同时主动绑定一个内部赞助人（Sponsor）——往往是你的老板或他指定的盟友——让跨部门请求「带着背书」出现。陪跑中可以针对具体阻力场景做演练：邮件怎么写、会怎么开、拒绝怎么接、升级怎么升，避免你在孤立中硬扛。</div></div></div>
+    </div>
+
+    <div class="section" id="s4">
+      <div class="section-label">第四章</div>
+      <h2>🔄 新老板来了 · 向上管理要「重启」而不是「延续」</h2>
+      <div class="section-quote">老板换了，游戏规则就换了；你还在用旧地图，就会误把「忠诚」当成「有效」。</div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">前任老板很信任我，新老板风格完全不同，我很有落差感。</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">落差感来自<strong>心理契约被单方面重签</strong>。你需要完成一次「关系重启」：带着谦逊的好奇心，重新证明三件事——<strong>可靠、同频、有增量</strong>。具体做法包括：主动对齐他的优先级与成功定义；用他习惯的节奏汇报；在早期多交付小胜利建立信用。旧老板的信任是资产，但不能自动过户；能过户的是<strong>你经手的结果与口碑</strong>，要用新老板认可的叙事重新包装一次。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">新老板更微观管理、更爱追问细节，我觉得被不信任。</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">先区分两种动机：<strong>控制型焦虑</strong>（他需要可视性来安心）与<strong>能力怀疑</strong>（他尚未验证你能独立扛事）。对策不同：前者用更高频、更结构化的透明沟通「喂饱可视性」，逐步争取授权；后者用里程碑与复盘证明<strong>闭环能力</strong>。无论哪种，避免防御性解释；用「我们如何把监督成本降下来」的协作姿态对话。测评可帮你觉察自己是否把「被追问」自动解读为「被贬低」，从而减少情绪内耗、把能量放回问题解决。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">新老板的价值观和我有冲突，还要不要「向上管理」？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">向上管理不是价值观认同，而是<strong>在可接受的伦理边界内管理职业风险</strong>。先划红线：哪些要求触碰法律、诚信或你长期无法自洽的底线——红线之上谈策略，红线之下谈离场。若冲突仍在可谈范围，可尝试「价值观翻译」：把你的坚持改写成他关心的组织结果（客户、利润、风险、品牌）。若长期无法翻译，教练会支持你评估<strong>沉默成本 vs 切换成本</strong>，避免在慢性消耗里拖垮身心。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我想在新老板面前建立「思想合伙人」形象，而不是只会执行，怎么做才不过界？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">思想合伙人的前提是<strong>信任账户充足</strong>。路径建议：先超预期完成明确指令，再在复盘时插入「可选视角」——用「如果我是你，会多考虑一个风险/机会」而非「你错了」。同时尊重他的决策权：你的价值是扩大他的选项，而不是替他拍板。测评有助于识别你是「战略发散型」还是「系统落地型」，从而避免在早期用错贡献姿势。<div class="grip-grid"><span class="grip-item">会前：给两份方案 + 推荐项 + 需要他拍板的点</span><span class="grip-item">会后：书面确认决策与责任</span><span class="grip-item">危机时：先给稳定感再给洞察</span></div></div></div></div>
+    </div>
+
+    <div class="section" id="s5">
+      <div class="section-label">第五章</div>
+      <h2>🧩 陪跑与测评：如何同时服务「意义追问」与「语境切换」</h2>
+      <div class="section-quote">同一份报告，既能回答「我到底要什么」，也能回答「在新权力结构里我该如何呈现自己」。</div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">Harrison 测评对高阶管理者还有什么新东西可看？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">在生存模式里，测评常被用来「找工作」；在进阶模式里，它更像<strong>个人操作系统说明书</strong>：你在高压下的默认策略、你对自主与结构的真实需求、你影响他人的习惯路径。对「想迈不敢迈」的人，它帮助区分<strong>真正的驱动 vs 社会脚本</strong>；对「新语境」的人，它帮助把优势翻译成<strong>新老板听得懂、新团队接得住的行为</strong>。解读不是贴标签，而是生成接下来 90 天的练习清单。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">职场陪跑和猎头、心理咨询有什么边界？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><ul><li><strong>猎头</strong>服务雇主找人，时间窗口紧，未必陪你做深度自我与语境校准。</li><li><strong>心理咨询</strong>侧重情绪与创伤疗愈，不替代组织内的战略与影响力设计。</li><li><strong>职场陪跑</strong>以你的职业目标为中心，把测评洞察、组织现实与行动实验缝在一起——既谈意义，也谈周一早上第一封邮件怎么写。</li></ul>若你已有心理咨询师，两者可以互补：一个处理「我为什么这么难受」，一个处理「我下一步在职场怎么做」。<div class="tip-box">睿观陪跑强调「觉知探索，知行合一」：向内看清，向外落地。</div></div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我时间极碎，陪跑会不会成为负担？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">高阶陪跑的设计原则是<strong>嵌入工作流</strong>，而不是额外上课。每次教练对话产出的是「下两周的三条杠杆动作」——可能是一次关键汇报的结构、一次与老板的对齐问题清单、一次跨部门会议的立场预演。时长常见为 3—12 个月不等，也可长期陪跑；节奏与你所处变局（入职、换帅、组织变革）对齐。</div></div></div>
+    </div>
+
+    <div class="section" id="s6">
+      <div class="section-label">第六章</div>
+      <h2>💰 1299元体验 · 你能带走什么</h2>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">1299元包含哪些服务？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><strong>✅ Harrison 职业测评（特性报告）</strong><br><strong>✅ 领导力/潜力测评报告解读详解（PDF版，永久可查）</strong><br><strong>✅ 60—75 分钟 1 对 1 教练深度解读（线上视频/语音）</strong><br><strong>✅ 2—3 个与当前变局相关的「日常抓手」建议</strong>（意义探索 / 新语境向上管理可二选一侧重）<br><strong>✅ 3 天微信持续答疑</strong><br><strong>✅ 领取高薪求职面试秘籍（备用）</strong><br>用不到你月薪的很小比例，换一套<strong>可反复调用的自我认知与沟通框架</strong>。</div></div></div>
+
+      <div class="qa-card" id="daily-grip"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">针对本手册读者，「日常抓手」长什么样？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">抓手是可观察、可复盘的小场景，例如：<div class="grip-grid"><span class="grip-item">每周与老板对齐：他的 TOP3 焦虑 + 你的 TOP3 进展</span><span class="grip-item">把「意义探索」写成一页纸假设，找人做三次验证访谈</span><span class="grip-item">重要邮件练习「结论—依据—需要对方什么」三句版</span><span class="grip-item">新 stakeholder 地图：谁影响资源、谁影响叙事</span><span class="grip-item">会前 3 分钟：若只能讲一句话我会讲什么</span><span class="grip-item">识别一种旧习惯（如过度兜底）并设「停止触发条件」</span></div>关键不在多，而在<strong>与未来角色画像一致、可重复练习</strong>。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">一个典型的进阶陪跑计划可能包含哪些模块？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">可依个人变局裁剪，常见模块包括：<div class="grip-grid"><span class="grip-item">身心灵智：精力与情绪在高压决策下的可持续</span><span class="grip-item">意义与职业叙事：从履历逻辑到人生主线</span><span class="grip-item">战略同频：读懂组织议程与老板优先级</span><span class="grip-item">影响力网络：从部门到生态位的资源经营</span><span class="grip-item">刚柔并济的沟通：谈判、拒绝、升级与修复关系</span><span class="grip-item">Plan B：在不冲动离职的前提下保持市场敏感度</span></div><strong>有目标的日常，是修炼；没目标的忙碌，是消耗。</strong></div></div></div>
+    </div>
+
+    <div class="cta-card animate-on-scroll">
+      <h3>站在温饱之上，下一步你想校准什么？</h3>
+      <p>预约免费 20 分钟诊断通话：意义感、新语境或新老板——任选其一切入</p>
+      <a href="#" class="cta-btn" onclick="showQRModal('wechat'); return false;">
+        <i class="fab fa-weixin"></i> 添加微信 lukeliu2017
+      </a>
+    </div>
+
+  </div>
+
+  <a href="career_assessment.html" class="floating-cta" style="bottom:80px;right:20px;background:linear-gradient(135deg, var(--slate) 0%, var(--steel) 100%);color:#fff;animation:none;">
+    <i class="fas fa-clipboard-check"></i>
+    职业测评
+  </a>
+
+  <a href="#" class="floating-cta" onclick="showQRModal('wechat'); return false;">
+    <i class="fas fa-comments"></i>
+    免费咨询
+  </a>
+
+  <script>
+    document.querySelectorAll('.qa-card').forEach(card => {
+      const q = card.querySelector('.qa-q');
+      const a = card.querySelector('.qa-a');
+      const icon = card.querySelector('.qa-toggle');
+      if (!q || !a) return;
+
+      q.addEventListener('click', () => {
+        const isOpen = a.classList.contains('active');
+        if (isOpen) {
+          a.classList.remove('active');
+          card.classList.remove('open');
+          if (icon) icon.style.transform = 'rotate(0deg)';
+        } else {
+          a.classList.add('active');
+          card.classList.add('open');
+          if (icon) icon.style.transform = 'rotate(180deg)';
+        }
+      });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+    const sections = document.querySelectorAll('.section[id]');
+    const navLinks = document.querySelectorAll('.quick-nav a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (scrollY >= sectionTop - 100) current = section.getAttribute('id');
+      });
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+      });
+    });
+
+    function showPayModal() {
+      document.getElementById('payModal').style.display = 'flex';
+    }
+    function closePayModal() {
+      document.getElementById('payModal').style.display = 'none';
+    }
+    document.getElementById('payModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('payModal')) {
+        closePayModal();
+      }
+    });
+
+    function showQRModal(type) {
+      document.getElementById('qrModal').style.display = 'flex';
+    }
+    function closeQRModal() {
+      document.getElementById('qrModal').style.display = 'none';
+    }
+    document.getElementById('qrModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('qrModal')) {
+        closeQRModal();
+      }
+    });
+  </script>
+
+  <div id="payModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:10001;align-items:center;justify-content:center;backdrop-filter:blur(10px);">
+    <div style="background:#fff;border-radius:28px;padding:40px;max-width:420px;width:90%;text-align:center;position:relative;box-shadow:0 30px 60px rgba(0,0,0,0.3);">
+      <button onclick="closePayModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;color:var(--text-light);">&times;</button>
+      <div style="width:80px;height:80px;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:var(--deep-blue);font-size:36px;">
+        <i class="fas fa-qrcode"></i>
+      </div>
+      <h3 style="font-family:'Noto Serif SC',serif;font-size:1.4rem;color:var(--text-dark);margin-bottom:12px;">扫码支付</h3>
+      <p style="color:var(--text-light);font-size:14px;line-height:1.7;margin-bottom:24px;">
+        请使用微信或支付宝扫描下方二维码完成支付<br>
+        支付完成后请截图联系客服确认
+      </p>
+      <div style="width:240px;height:240px;margin:0 auto 20px;border-radius:16px;overflow:hidden;border:2px solid rgba(212,168,83,0.2);background:var(--ivory);display:flex;align-items:center;justify-content:center;">
+        <img src="images/pay.png" alt="付款二维码" style="width:100%;height:100%;object-fit:contain;display:block;">
+      </div>
+      <p style="color:var(--text-light);font-size:12px;margin-bottom:16px;">
+        支付遇到问题？<a href="#" onclick="showQRModal('wechat'); closePayModal(); return false;" style="color:var(--gold-dark);text-decoration:underline;">联系客服</a>
+      </p>
+      <a href="#" onclick="closePayModal(); return false;" style="display:inline-block;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);color:var(--deep-blue);padding:12px 32px;border-radius:50px;font-weight:700;text-decoration:none;font-size:14px;">
+        <i class="fas fa-check"></i> 已完成支付
+      </a>
+    </div>
+  </div>
+
+  <div id="qrModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(10px);">
+    <div style="background:#fff;border-radius:28px;padding:40px;max-width:420px;width:90%;text-align:center;position:relative;box-shadow:0 30px 60px rgba(0,0,0,0.3);">
+      <button onclick="closeQRModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;color:var(--text-light);">&times;</button>
+      <div style="width:80px;height:80px;background:linear-gradient(135deg, var(--slate) 0%, var(--steel) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:var(--gold);font-size:36px;">
+        <i class="fab fa-weixin"></i>
+      </div>
+      <h3 style="font-family:'Noto Serif SC',serif;font-size:1.4rem;color:var(--text-dark);margin-bottom:12px;">添加教练微信</h3>
+      <p style="color:var(--text-light);font-size:14px;line-height:1.7;margin-bottom:24px;">
+        扫码添加微信 <strong style="color:var(--gold-dark);">lukeliu2017</strong><br>
+        预约免费20分钟诊断通话
+      </p>
+      <div style="width:200px;height:200px;margin:0 auto 20px;border-radius:16px;overflow:hidden;border:2px solid rgba(212,168,83,0.2);">
+        <img id="qrImage" src="images/qrcode.jpeg" alt="微信二维码" style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+      <a href="weixin://" style="display:inline-block;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);color:var(--deep-blue);padding:12px 32px;border-radius:50px;font-weight:700;text-decoration:none;font-size:14px;">
+        <i class="fab fa-weixin"></i> 打开微信添加
+      </a>
+    </div>
+  </div>
+
+</body>
+</html>

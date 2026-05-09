@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>职场破局陪跑手册 · 在岗位上找到跃升抓手 | 睿观生涯</title>
+  <title>职场进阶陪跑手册 · 金领篇 | 睿观生涯</title>
+  <meta name="description" content="年薪80万—100万及以上金领精英：声誉与筹码、第二曲线与退场节奏、高密度保密陪跑——在权力半径与人生主线之间做清醒选择。">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
@@ -32,12 +33,10 @@
       -webkit-font-smoothing: antialiased;
     }
     img { max-width: 100%; height: auto; }
-    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(212,168,83,0.4); } 50% { box-shadow: 0 0 0 12px rgba(212,168,83,0); } }
     .animate-on-scroll { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
     .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
 
-    /* ===== TOP BAR ===== */
     .top-bar {
       background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);
       padding: max(12px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 12px max(16px, env(safe-area-inset-left));
@@ -72,7 +71,6 @@
     }
     .top-cta:hover { background: var(--gold-light); transform: scale(1.05); }
 
-    /* ===== HERO MINI ===== */
     .hero-mini {
       background: linear-gradient(135deg, var(--deep-blue) 0%, var(--navy) 50%, var(--slate) 100%);
       padding: 60px 24px 48px;
@@ -86,7 +84,7 @@
       inset: 0;
       background: radial-gradient(circle at 30% 50%, rgba(212,168,83,0.08) 0%, transparent 50%);
     }
-    .hero-mini-content { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
+    .hero-mini-content { position: relative; z-index: 2; max-width: 760px; margin: 0 auto; }
     .hero-mini h1 {
       font-family: 'Noto Serif SC', serif;
       font-size: clamp(1.6rem, 4vw, 2.4rem);
@@ -100,13 +98,19 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .hero-mini p {
-      color: rgba(255,255,255,0.65);
-      font-size: 1rem;
-      line-height: 1.7;
+    .hero-mini p { color: rgba(255,255,255,0.65); font-size: 1rem; line-height: 1.7; }
+    .hero-cross {
+      margin-top: 16px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
     }
+    .hero-cross a {
+      color: var(--gold-light);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .hero-cross a:hover { color: #fff; }
 
-    /* ===== QUICK NAV ===== */
     .quick-nav {
       background: var(--ivory);
       padding: 16px 24px;
@@ -135,10 +139,7 @@
       border-color: var(--deep-blue);
     }
 
-    /* ===== CONTENT ===== */
     .content { max-width: 800px; margin: 0 auto; padding: 48px 20px 80px; }
-
-    /* ===== SECTION ===== */
     .section { margin-bottom: 56px; }
     .section-label {
       display: inline-flex;
@@ -174,7 +175,6 @@
       line-height: 1.7;
     }
 
-    /* ===== QA CARD ===== */
     .qa-card {
       background: #fff;
       border-radius: 16px;
@@ -222,9 +222,7 @@
       font-size: 12px;
       transition: transform 0.3s;
     }
-    .qa-card.open .qa-toggle {
-      transform: rotate(180deg);
-    }
+    .qa-card.open .qa-toggle { transform: rotate(180deg); }
     .qa-a {
       padding: 0 20px 18px 60px;
       display: none;
@@ -264,7 +262,6 @@
       border: 1px solid rgba(212,168,83,0.15);
     }
 
-    /* ===== CTA CARD ===== */
     .cta-card {
       background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);
       border-radius: 20px;
@@ -317,7 +314,6 @@
       box-shadow: 0 8px 24px rgba(212,168,83,0.4);
     }
 
-    /* ===== FLOATING CTA ===== */
     .floating-cta {
       position: fixed;
       bottom: 20px;
@@ -339,7 +335,6 @@
     }
     .floating-cta:hover { transform: scale(1.05); }
 
-    /* ===== RESPONSIVE ===== */
     @media (max-width: 640px) {
       .hero-mini { padding: 40px 16px 28px; }
       .content { padding: 28px 14px max(72px, calc(56px + env(safe-area-inset-bottom))); }
@@ -358,140 +353,109 @@
 </head>
 <body>
 
-  <!-- Top Bar -->
   <div class="top-bar">
-    <a href="index.html" class="back-link">
-      <i class="fas fa-arrow-left"></i> 返回首页
-    </a>
+    <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> 返回首页</a>
     <a href="#" class="top-cta" onclick="showPayModal(); return false;">1299元体验</a>
   </div>
 
-  <!-- Hero Mini -->
   <div class="hero-mini">
     <div class="hero-mini-content">
-      <h1>职场破局陪跑手册<br><span>在岗位上找到跃升抓手</span></h1>
-      <p>35+中高阶职场精英专属 · 不跳槽也能破局，在日常工作中修炼可持续竞争力</p>
+      <h1>职场进阶陪跑手册<br><span>金领篇 · 权力半径与人生主线</span></h1>
+      <p>年薪 80 万—100 万及以上专属 · 你已越过「证明自己」的阶段：在声誉、筹码与第二曲线之间，做更少人敢公开讨论的决定。</p>
+      <p class="hero-cross">若你处于约 50—100 万薪酬带，可对照阅读 <a href="workplace2.html">进阶手册（中高产篇）</a>。</p>
     </div>
   </div>
 
-  <!-- Quick Nav -->
   <div class="quick-nav">
-    <a href="#s1">什么是</a>
-    <a href="#s2">区别</a>
-    <a href="#s3">焦虑</a>
-    <a href="#s4">向上管理</a>
-    <a href="#s5">职业瓶颈</a>
-    <a href="#s6">跃升途径</a>
-    <a href="#s7">日常抓手</a>
+    <a href="#s1">金领画像</a>
+    <a href="#s2">声誉与可见</a>
+    <a href="#s3">筹码与选择</a>
+    <a href="#s4">第二曲线</a>
+    <a href="#s5">陪跑价值</a>
+    <a href="#s6">测评与体验</a>
   </div>
 
   <div class="content">
 
-        <!-- 第一章：什么是职场陪跑 -->
     <div class="section" id="s1">
       <div class="section-label">第一章</div>
-      <h2>🎯 什么是职场陪跑？</h2>
-      <div class="section-quote">不是帮你找下一份工作，而是帮你在现在的岗位上找到跃升抓手。</div>
+      <h2>👔 这份「金领篇」写给谁？</h2>
+      <div class="section-quote">钱与头衔不再是唯一叙事：你更在意的是——影响力是否可持续、决策是否与自我叙事一致、以及「退场」时是否仍保有选择权。</div>
 
-      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">什么是职场陪跑？和求职陪跑有什么区别？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">在VUCA时代，企业为生存发展挣扎，职场个体的个人成长被严重忽视，可持续职业发展岌岌可危。睿观生涯教练的职场陪跑，就是要帮助中高阶职场人士在<strong>现有的岗位上找到跃升抓手</strong>，在日常工作中修炼可持续竞争力。<br><br>与求职陪跑的区别：<ul><li><strong>求职陪跑</strong> = 方向迷茫 → 测评定位 → 跳槽转型</li><li><strong>职场陪跑</strong> = 在岗瓶颈 → 发现优势 → 原地破局</li></ul>你不需要辞职，不需要换公司。我们的做法是：通过 Harrison 测评识别你的核心优势，找到 2-3 个与职业目标高度相关的「日常抓手」，让你在现有岗位上就能刻意练习、积累影响力，最终在组织内部或外部实现晋升或转岗。<div class="tip-box">适合谁：公司下滑但暂不想跳槽、晋升无望但还想成长、刚入职需要快速适应、自我期许高不满足现状的 35岁+ 中高阶职场人。根据不同情况，职场陪跑时长为 3-12 个月，甚至可以长期陪跑。</div></div></div></div>
-    
-    <!-- 测评引导 -->
-    <div style="margin: 36px 0;">
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">为什么说 80 万—100 万+ 的议题，和「再冲一级总监」不完全是一回事？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">到这个量级，<strong>个人品牌与组织角色往往强绑定</strong>：你的一言一行会被放大解读，容错率反而更低。焦虑更多来自<strong>声誉风险、政治博弈、资本结构（股权/递延/竞业）与人生阶段切换</strong>，而不是「会不会被优化」。陪跑的重点是：<strong>在高压可见度下保持清醒叙事、在筹码复杂时做结构化取舍、在少有人敢说真话的环境里保留外脑</strong>。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">金领篇和《进阶手册》中高产篇（workplace2）怎么分工？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><strong>中高产篇</strong>更贴近「温饱之上」的十字路口：意义感、新公司/新老板、向上管理重启等。<strong>金领篇</strong>更贴近<strong>权力半径顶端</strong>：可见度与舆论、资本与金手铐、第二曲线与退场节奏、与董事会/一号位同频的高风险沟通。两篇可连读；若你介于两带之间，以<strong>当前决策 stakes（赌注）</strong>更高的那一篇为主。<div class="tip-box"><a href="workplace2.html" style="color:var(--gold-dark);font-weight:600;">打开进阶手册（中高产篇）</a></div></div></div></div>
+
+      <div style="margin: 36px 0;">
       <a href="career_assessment.html" style="display:flex;align-items:center;gap:16px;background:linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);border-radius:20px;padding:24px 28px;text-decoration:none;transition:all 0.4s ease;box-shadow:0 8px 24px rgba(10,31,46,0.15);border:1px solid rgba(212,168,83,0.2);">
         <div style="width:56px;height:56px;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 12px rgba(212,168,83,0.3);">
           <i class="fas fa-clipboard-check" style="color:var(--deep-blue);font-size:24px;"></i>
         </div>
         <div style="flex:1;">
-          <div style="color:#fff;font-size:16px;font-weight:700;margin-bottom:4px;">🎯 先测评，再陪跑</div>
-          <div style="color:rgba(255,255,255,0.6);font-size:13px;">10分钟完成霍兰德职业兴趣测评，发现你的核心优势与日常抓手</div>
+          <div style="color:#fff;font-size:16px;font-weight:700;margin-bottom:4px;">先测评，再陪跑</div>
+          <div style="color:rgba(255,255,255,0.6);font-size:13px;">在高压角色里，用 Harrison 等工具把「默认策略」摊开，避免只靠直觉硬扛</div>
         </div>
         <div style="width:40px;height:40px;background:rgba(255,255,255,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
           <i class="fas fa-arrow-right" style="color:var(--gold);font-size:16px;"></i>
         </div>
       </a>
     </div>
-</div>
+    </div>
 
-    <!-- 第二章：与猎头服务的区别 -->
     <div class="section" id="s2">
       <div class="section-label">第二章</div>
-      <h2>🎭 我们不是什么</h2>
-      <div class="section-quote">猎头为雇主找人，我们为你找路。</div>
+      <h2>🎭 声誉、可见度与「能说什么」</h2>
+      <div class="section-quote">你越成功，能说真话的圈子越小；教练关系提供的是无利害的镜子，不是饭局上的附和。</div>
 
-      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">职场陪跑和猎头服务有什么区别？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">最大的区别在于<strong>猎头服务的对象是雇主，目的是为了帮雇主找人，而非服务求职者</strong>。顶尖的猎头具有卓越的判断力，在时间管理上也极为苛刻。如果你不能在60秒内讲清楚个人独特优势，他/她也不会在你身上多花一分钟时间。在我辅导的300多位职场精英当中，仅有10-12%左右是通过猎头找到工作的。<br><br>职场陪跑教练的角色则是<strong>以你为中心，致力于让你由内至外获得信心和力量</strong>。有了清晰的职业目标，你才能在日常的"搬砖"工作当中有意识地构建自己的能力和影响力。无论职场如何风云变化，你与时俱进，坚毅前行，时刻为最坏的打算做好 Plan B。</div></div></div>
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">职位越高越孤独，很多话不能对团队说、不能对家人说、也不能对老板说。</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">这是结构性的：<strong>你的信息本身就有价格</strong>，倾听者会被动卷入立场。教练场景的价值在于<strong>保密协议与角色边界</strong>——讨论你的恐惧、野心与道德两难，而不触发组织政治。陪跑可以聚焦「如何把复杂情绪翻译成可执行策略」，而不是停留在吐槽。<div class="tip-box">若你长期只「憋着」或只在酒桌上宣泄，容易出现决策变形或身体报警——及早引入结构化对话是自我负责，不是软弱。</div></div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我的决策影响面很大，怕一步错，团队与市场都受伤。</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">把决策拆成<strong>不可逆部分 / 可逆部分 / 可沟通部分</strong>：先保护人与合规底线，再谈速度与野心。陪跑可协助你做「战情室式」预演：<div class="grip-grid"><span class="grip-item">最坏情景与触发条件</span><span class="grip-item">利益相关者反应谱</span><span class="grip-item">对内对外两套叙事是否自洽</span><span class="grip-item">何时必须拉一号位对齐</span></div>目标不是消灭风险，而是<strong>在可接受尾部风险下睡得着觉</strong>。</div></div></div>
+
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">如何在「组织的代言人」与「自己的价值观」之间自洽？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">金领常做的是<strong>价值观翻译</strong>：把个人坚持改写成组织语言（客户、现金流、合规、品牌）。若长期无法翻译，要诚实区分是「技巧问题」还是「底线冲突」。陪跑帮你划<strong>红线、灰线、可谈判线</strong>，避免在慢性道德消耗里耗尽心力，也避免在情绪顶点做不可逆声明。</div></div></div>
     </div>
 
-<!-- 第一章：年龄焦虑/公司下滑 -->
     <div class="section" id="s3">
       <div class="section-label">第三章</div>
-      <h2>🌪️ 公司业绩下滑 · 年龄增长 · 未来焦虑</h2>
-      <div class="section-quote">年薪30万+的你不是没有能力，你只是在一个不确定的环境里，忘了自己还有什么。</div>
+      <h2>💎 资本结构、「金手铐」与真实选择权</h2>
+      <div class="section-quote">高薪有时是奖励，有时是锁链：看清现金流、股权、递延与竞业的组合，才能谈「自由」。</div>
 
-      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">公司业绩一年不如一年，我35+了，担心随时被裁，怎么办？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">这种焦虑非常真实。但根源不是你不<strong>行，而是你失去了对自己优势的掌控感</strong>。测评的价值不是给你新工作，而是让你回到日常工作中，重新找到"我比别人做得好的那个点"。<div class="tip-box">比如：你天生擅长数据分析？特别会协调冲突？汇报时总能抓住重点？在创新方面，你总是领先一筹？看清这些，你就不再把命运交给公司的涨跌。</div></div></div></div>
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">现金已不是唯一变量，股权、奖金递延、竞业让我「动不了」，怎么办？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">先做一张<strong>个人资产负债表式的职业账本</strong>：未来 12—36 个月，哪些收入是确定的、哪些是或有、哪些与留任挂钩。再区分「不想走」与「不能走」——后者需要法律/税务专业意见，教练侧重点是<strong>决策心理与谈判剧本</strong>：什么可换、什么不可换、何时启动对话。许多「动不了」里混着<strong>恐惧与想象</strong>，结构化后会发现选项比直觉多。<div class="grip-grid"><span class="grip-item">竞业与窗口期</span><span class="grip-item">税务与现金流压力测试</span><span class="grip-item">家庭安全垫</span><span class="grip-item">声誉与下家匹配度</span></div></div></div></div>
 
-      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">测评能帮我保住现在的工作吗？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">不能直接"保住"，但能让你<strong>的职业发展变得可持续</strong>。VUCA环境下，70%的人都要准备3-5年换一份工作。破局之道在于<strong>发现你的个人独特优势</strong>。当向内看变得清澈，向前看才能笃定自信。觉知探索，知行合一，以客户为中心在属于你的细分赛道持续深耕，你才能在职场上长期立足。</div></div></div>
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">家里财务自由度已经不错，仍觉得工作无意义——这算不算矫情？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">不算。金领阶段常见的是<strong>意义通胀</strong>：外部激励边际效用递减，内心却还没有新的「北极星」。这不是道德问题，是发展任务变了——从「积累」转向「分配与传承」：时间、注意力、影响力如何配置。陪跑可协助你把「空」翻译成<strong>可试的第二曲线假设</strong>（顾问、投后、公益、教育、董事会路径等），并用小步实验验证，而不是用一次辞职解决存在主义。</div></div></div>
     </div>
 
-    <!-- 第二章：新公司适应/向上管理 -->
     <div class="section" id="s4">
       <div class="section-label">第四章</div>
-      <h2>🪜 刚入职新公司 · 适应困难 · 向上管理</h2>
-      <div class="section-quote">适应新环境不是靠"熬"，而是靠"看懂自己"和"看懂老板"。</div>
+      <h2>🌿 第二曲线、退场节奏与非连续跃迁</h2>
+      <div class="section-quote">真正的跃迁往往不是直线晋升，而是身份切换：从「做事的人」到「配置资源的人」。</div>
 
-      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我之前跳槽几次，每次都有适应问题，这次刚入职新公司，很担心重蹈覆辙。</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">反复适应不良，往往不是能力问题，而是<strong>你不了解自己的职业兴趣和行为偏好，也不了解老板的管理风格，以及新公司的企业文化。</strong>。测评会告诉你：你期望明确指令还是自主发挥？倾向提前规划还是临场应变？<div class="tip-box">你对自己的做事方式了有觉察，再通过教练辅导理解公司的战略、文化以及老板的想法，在向上管理与日常工作决策与部门协作才能有的放矢，每一步都走的踏实。</div></div></div></div>
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">想从执行者转向资源连接者、顾问或董事会路径，第一步该落在哪里？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">先回答：<strong>市场认你的稀缺性是什么</strong>——是行业洞察、组织设计、危机处理，还是资本与监管经验？再设计<strong>可见度与信任累积</strong>：选择性出席、写作、私董会、非营利理事、被投企业董事等。陪跑可帮你压缩试错：哪些场合投入 ROI 高、哪些只会稀释品牌；同时管理「仍在岗」与「向外生长」之间的<strong>利益冲突与合规边界</strong>。</div></div></div>
 
-      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">向上管理具体怎么做？测评能帮我吗？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">向上管理的核心是<strong>以共同的价值观为压舱石，在战略上与老板的角色和挑战同频共振，在战术上与他的沟通风格和做事节奏柔性适配。</strong>。基于测评结果，给你具体场景建议：<div class="grip-grid"><span class="grip-item">📋 每周例会怎么发言更出彩</span><span class="grip-item">⏰ 每日3分钟汇报说什么</span><span class="grip-item">🤝 与其他部门经理有异议时持什么立场</span><span class="grip-item">💡 如何向老板中肯地提出建议与反馈</span>><span class="grip-item">💬如何有效地寻求老板的反馈</span></div>这些日常小事，恰恰是建立信任和个人影响力的关键。测评仅仅是开始，<strong>强力推荐睿观生涯教练的职场陪跑服务</strong>,助力你的职场跃迁与腾飞。</div></div></div>
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">什么时候该把「离开」当成严肃备选，而不只是情绪？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">当出现<strong>持续不可逆的红线侵蚀</strong>（健康、家庭、诚信或价值观），或组织战略与个人技能树的错配已无法通过转岗修复，且外部市场窗口对你友好时，「离开」应进入正式情景规划。陪跑的价值是避免两类极端：<strong>冲动裸辞</strong>与<strong>无限拖延</strong>——用时间表、里程碑与情绪监测把决定「工程化」。</div></div></div>
     </div>
 
-    <!-- 第三章：发展受限/晋升瓶颈 -->
     <div class="section" id="s5">
       <div class="section-label">第五章</div>
-      <h2>📈 发展受限 · 无晋升可能 · 对外面没信心</h2>
-      <div class="section-quote">你看不到希望，不是因为你不行，而是因为你只看到了公司的天花板，没看到自己的潜力。</div>
+      <h2>🛡️ 金领为什么更需要「高密度、保密」的陪跑？</h2>
+      <div class="section-quote">你要的不是更多建议，而是更少噪音、更高信噪比的对话。</div>
 
-      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我在公司5年了，升职无望，加薪没戏，但又不敢跳槽，怎么办？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">这是典型的"瓶颈期"。我们的做法不是催你跳槽，而是帮你<strong>设定未来职业目标，在当前岗位上重新找到成长感</strong>。<div class="tip-box">比如你希望晋升总监，测评发现你有极高的情商与人际沟通能力，你可以有意识地在项目协调中发挥对不同利益相关者的影响力，这可能包括你的N+1，N+2，也包括你的同僚、下属以及同行和供应商、媒体和政府部门等。</div>有了职业目标，日复一日的工作就不再是"搬砖"，而是"修炼"。</div></div></div>
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我已经很会做事，Harrison 这类测评对我还有什么用？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">在顶尖执行层，测评不再是「找短板」，而是<strong>识别你在极限压力下的默认脚本</strong>：过度控制、回避冲突、取悦权威、完美主义拖延等——这些脚本在百万年薪场景里代价极高。报告提供<strong>共同语言</strong>，让教练对话快速进入深水区，而不是停留在故事表层。</div></div></div>
 
-      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">对外面市场不熟悉，不知道自己出去值多少钱，缺乏信心。</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">信心来自<strong>对自己优势的确定性</strong>。你的市场价值判断不光是参考薪酬报告，更要基于过往业绩大小，更重要的是<strong>脱离大厂平台后，你是否还能复刻辉煌</strong>。作为资深HR总监，我可以给你提供客观中允的专业意见。<strong>因为知道自己"与众不同的非凡价值"，面试时底气完全不同</strong>。</div></div></div>
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">和猎头、家办顾问、心理咨询有什么边界？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><ul><li><strong>猎头</strong>：常为职位服务，未必陪你处理身份转换与声誉叙事。</li><li><strong>家办/财务顾问</strong>：优化资产与税务，不替代职业身份与组织政治策略。</li><li><strong>心理咨询</strong>：疗愈与临床议题；职场陪跑聚焦<strong>目标、行为与组织互动</strong>的设计与复盘。</li></ul>睿观陪跑把测评洞察与<strong>下周就要发生的会议、谈判、邮件</strong>连在一起——金领最缺的是时间，最要的是<strong>可执行密度</strong>。</div></div></div>
     </div>
 
-    <!-- 第四章：自我期许高/不满足现状 -->
     <div class="section" id="s6">
       <div class="section-label">第六章</div>
-      <h2>🚀 自我期许高 · 不满足现状 · 想要跃升</h2>
-      <div class="section-quote">你不是不想努力，你是不想在看不到未来的方向上努力。</div>
+      <h2>💰 1299 元体验 · 金领同样适用</h2>
 
-      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我没有被裁员风险，但每天像在"搬砖"，感觉自己在退步，怎么办？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">这是很多优秀职场人的"体面困境"——<strong>工作稳定，但成长停滞</strong>。你对未来有高期许，说明你缺的是一个<strong>可以发力、看得见成长的方向</strong>。<div class="tip-box">测评会帮你找到那个方向：你可以在每周例会上刻意练习"结构化表达"，在跨部门协作中练习"影响力谈判"，用商业而非纯技术的眼光识别项目，<strong>有意识地在公司内部、公司外部以及行业里打造你的个人影响力</strong>。有了目标，每一件日常工作都是能力的修炼场。</div></div></div></div>
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">1299 元体验包含什么？适合作为金领的「试水」吗？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><strong>✅ Harrison 职业测评（特性报告）</strong><br><strong>✅ 领导力/潜力报告解读（PDF）</strong><br><strong>✅ 60—75 分钟 1 对 1 教练深度解读</strong><br><strong>✅ 2—3 个高密度「抓手」</strong>（如关键会议预演、一号位对齐提纲、第二曲线试点设计等）<br><strong>✅ 3 天微信答疑</strong><br>适合作为<strong>低摩擦试水</strong>：用一顿饭预算，验证教练的信噪比与化学反应，再决定是否进入长期陪跑。<div class="tip-box">长期陪跑可与你的变局对齐（组织变革、接班、退场、新身份启动），周期与节奏单独商议。</div></div></div></div>
 
-      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我希望能让自己变得更有竞争力，但不知道从哪里开始。</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">从"看清自己"开始。我们的服务就是<strong>一份基于30年行为科学的专业测评 + 一次60分钟的教练解读</strong>。解读结束后，你会带走：<ul><li>📊 你的3-5个核心优势（别人很难复制的）</li><li>🎯 2-3个日常工作中可以立即开始练习的"抓手"</li><li>📈 一个初步的可持续职业发展目标</li></ul><strong>你不需要辞职，不需要转行，只需要在每天的工作中多一个视角、多一个练习</strong>。</div></div></div>
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">金领读者的「日常抓手」可能长什么样？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">示例：<div class="grip-grid"><span class="grip-item">董事会/执委会材料：一页结论 + 三风险 + 两选项</span><span class="grip-item">敏感人事议题：书面纪要模板与话术边界</span><span class="grip-item">对外发声：个人叙事与公司叙事的校准清单</span><span class="grip-item">第二曲线：每季度一次「可证伪」试点复盘</span><span class="grip-item">能量管理：高压周的前后缓冲设计</span></div>抓手越少越狠，<strong>与当下 stakes 对齐</strong>才有用。</div></div></div>
     </div>
 
-    <!-- 附加：年龄不是问题 -->
-    <div class="section">
-      <div class="section-label">附加</div>
-      <h2>⏰ 年龄不是问题 · 任何时候都不晚</h2>
-
-      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我40+了，做测评会不会太晚？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><strong>一点也不晚。</strong>我们服务过的学员中，40岁以上占比超过35%，最高龄的51岁。40+恰恰是职场人最具爆发力的阶段——你比年轻人更懂行业、更懂人性、更懂自己真正想要什么。<strong>测评不是改变你，而是让你用好已有的积累。</strong>一位46岁学员感慨："早十年做就好了，但现在做也不晚——至少未来的二十年，我不会再走弯路了。"</div></div></div>
-    </div>
-
-    <!-- 第五章：价格与核心价值 -->
-    <div class="section" id="s7">
-      <div class="section-label">第七章</div>
-      <h2>💰 1299元 · 你能得到什么</h2>
-
-      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">1299元包含哪些服务？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><strong>✅ Harrison职业测评（特性报告） </strong><br><strong>✅ 领导力/潜力测评报告解读详解（PDF版，永久可查）</strong><br><strong>✅60-75分钟1对1教练深度解读（线上视频/语音）</strong><br><strong>✅ 2-3个日常工作中的"可练习抓手"建议</strong><br><strong>✅ 3天微信持续答疑</strong><br><strong>✅ 领取30万+高薪求职面试秘籍</strong><br>投资仅月薪的5%甚至更低<strong>就可以在日常工作中找到可持续职业发展的起点</strong>。</div></div></div>
-
-      <div class="qa-card" id="daily-grip"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">什么是"日常抓手"？能举个例子吗？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">"抓手"是你不需要换工作、不需要额外时间，在现有岗位上就能刻意练习的具体场景。<a href="#daily-grip" style="color:var(--gold-dark);text-decoration:underline;font-weight:600;">了解更多👉</a> 比如：<div class="grip-grid"><span class="grip-item">🗣️ 每周例会发言时练习"结论先行"</span><span class="grip-item">📈 在N+1和N+2都在场的情况下探讨公司战略层面的问题</span><span class="grip-item">🤝 与供应商谈判时练习"专业影响力表达"</span><span class="grip-item">🤝 处理员工冲突与客户投诉时练习"高情商沟通"</span></div>抓手本身可能事情不大，关键在于<strong>它与你未来的职业目标息息相关</strong>。有了职业目标，日复一日的工作就不再是"消耗"，<strong>而是"修炼"</strong>。</div></div></div>
-     
-       <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">一个典型的职场陪跑的实施计划可能包括什么内容？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">脱离职业倦怠最好的办法就是<strong>设定清晰的职业目标，以及实现这些目标的里程碑事件</strong>。比如：<div class="grip-grid"><span class="grip-item">🧘‍♂️ 身心灵智四维修炼，实现个人情绪和精力管理</span><span class="grip-item">💡非人力资源的人力资源管理，如何积极理解/参与到组织人才的招募与养用育留。</span><span class="grip-item">🧠 建立战略思维，掌握重大决策流程技巧，成为CEO的思想合伙人</span><span class="grip-item">🌐 个人影响力构建：从部门到组织内部，最后外溢到行业与地理区域。</span><span class="grip-item">🎯 培养更为敏锐的洞察与判断力，练习刚柔并济的沟通技巧，建立持久双赢的人际关系。</span></div><strong>有了职业目标，日复一日的工作就不再是"消耗"，而是"修炼"</strong>。</div></div></div>
-
-
-      
-    </div>
-
-    <!-- CTA Card -->
     <div class="cta-card animate-on-scroll">
-      <h3>准备好开启你的职场跃升了吗？</h3>
-      <p>预约免费20分钟诊断通话，聊聊你的焦虑、瓶颈和期望</p>
+      <h3>下一步，你想校准身份、筹码，还是退场节奏？</h3>
+      <p>预约免费 20 分钟诊断通话：可说明是否涉及保密敏感场景，便于匹配对话方式。</p>
       <a href="#" class="cta-btn" onclick="showQRModal('wechat'); return false;">
         <i class="fab fa-weixin"></i> 添加微信 lukeliu2017
       </a>
@@ -499,26 +463,22 @@
 
   </div>
 
-  <!-- Floating Assessment CTA -->
   <a href="career_assessment.html" class="floating-cta" style="bottom:80px;right:20px;background:linear-gradient(135deg, var(--slate) 0%, var(--steel) 100%);color:#fff;animation:none;">
     <i class="fas fa-clipboard-check"></i>
     职业测评
   </a>
 
-  <!-- Floating CTA -->
   <a href="#" class="floating-cta" onclick="showQRModal('wechat'); return false;">
     <i class="fas fa-comments"></i>
     免费咨询
   </a>
 
   <script>
-    // QA Toggle
     document.querySelectorAll('.qa-card').forEach(card => {
       const q = card.querySelector('.qa-q');
       const a = card.querySelector('.qa-a');
       const icon = card.querySelector('.qa-toggle');
       if (!q || !a) return;
-
       q.addEventListener('click', () => {
         const isOpen = a.classList.contains('active');
         if (isOpen) {
@@ -532,30 +492,21 @@
         }
       });
     });
-
-    // Scroll animations
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-      });
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
     }, { threshold: 0.1 });
     document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
-
-    // Active nav highlight
     const sections = document.querySelectorAll('.section[id]');
     const navLinks = document.querySelectorAll('.quick-nav a');
     window.addEventListener('scroll', () => {
       let current = '';
       sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        if (scrollY >= sectionTop - 100) current = section.getAttribute('id');
+        if (scrollY >= section.offsetTop - 100) current = section.getAttribute('id');
       });
       navLinks.forEach(link => {
         link.classList.toggle('active', link.getAttribute('href') === '#' + current);
       });
     });
-
-    // Payment Modal
     function showPayModal() {
       document.getElementById('payModal').style.display = 'flex';
     }
@@ -563,12 +514,8 @@
       document.getElementById('payModal').style.display = 'none';
     }
     document.getElementById('payModal').addEventListener('click', (e) => {
-      if (e.target === document.getElementById('payModal')) {
-        closePayModal();
-      }
+      if (e.target === document.getElementById('payModal')) closePayModal();
     });
-
-    // QR Code Modal
     function showQRModal(type) {
       document.getElementById('qrModal').style.display = 'flex';
     }
@@ -576,14 +523,10 @@
       document.getElementById('qrModal').style.display = 'none';
     }
     document.getElementById('qrModal').addEventListener('click', (e) => {
-      if (e.target === document.getElementById('qrModal')) {
-        closeQRModal();
-      }
+      if (e.target === document.getElementById('qrModal')) closeQRModal();
     });
   </script>
 
-
-  <!-- Payment QR Code Modal -->
   <div id="payModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:10001;align-items:center;justify-content:center;backdrop-filter:blur(10px);">
     <div style="background:#fff;border-radius:28px;padding:40px;max-width:420px;width:90%;text-align:center;position:relative;box-shadow:0 30px 60px rgba(0,0,0,0.3);">
       <button onclick="closePayModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;color:var(--text-light);">&times;</button>
@@ -607,7 +550,6 @@
     </div>
   </div>
 
-  <!-- QR Code Modal -->
   <div id="qrModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(10px);">
     <div style="background:#fff;border-radius:28px;padding:40px;max-width:420px;width:90%;text-align:center;position:relative;box-shadow:0 30px 60px rgba(0,0,0,0.3);">
       <button onclick="closeQRModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;color:var(--text-light);">&times;</button>

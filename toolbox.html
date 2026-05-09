@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>资源工具箱 · 职业测评与生涯工具 | 睿观生涯</title>
-    <meta name="description" content="睿观生涯资源工具箱：职业测评、生涯饼图、向上管理自测、CIP/CASVE 生涯决策、生涯画布等实用工具，助你向内看、向前看、选对赛道跟对人。">
+    <meta name="description" content="睿观生涯资源工具箱：职业测评、生涯饼图、向上管理自测、CIP/CASVE 生涯决策、突破35岁职场魔咒公众号长文等实用工具，助你向内看、向前看、选对赛道跟对人。">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -242,8 +242,12 @@
             color: var(--text-light);
             border: 1px solid rgba(0,0,0,0.08);
         }
+        .badge-download {
+            background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%);
+            color: #fff;
+        }
 
-        /* 付费学员密码入口（职业技能 / 价值观 / 生涯饼图 / 生涯画布） */
+        /* 付费学员密码入口（职业技能 / 价值观 / 生涯饼图） */
         .tool-card--gated {
             cursor: pointer;
         }
@@ -542,7 +546,7 @@
     <div style="max-width: 1100px; margin: 0 auto;">
       <div class="section-label">生涯工具</div>
       <h2>把认知转化为可落地的行动</h2>
-      <p class="section-desc">从理论到实践：<strong>生涯决策</strong>页梳理 CIP / CASVE 经典流程；TOP、贡献模式与三条路径等可立即使用；生涯画布等将持续上线。</p>
+      <p class="section-desc">从理论到实践：<strong>生涯决策</strong>页梳理 CIP / CASVE 经典流程；TOP、贡献模式与三条路径等可立即使用；另有<strong>高薪面试 PDF 秘籍</strong>可一键下载；公众号长文<strong>《如何突破 35 岁职场魔咒》</strong>等可延伸阅读。</p>
 
       <div class="tool-grid">
         <a href="TOP_model.html" class="tool-card animate-on-scroll">
@@ -559,13 +563,12 @@
           <span class="tool-badge badge-tool">立即使用</span>
         </a>
 
-        <div class="tool-card tool-card--gated animate-on-scroll delay-2" role="button" tabindex="0" title="点击查看说明并输入学员密码" data-gate-url="" data-gate-canvas="1" onclick="openPaidAccessGate(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPaidAccessGate(this);}">
-          <span class="gate-badge" aria-hidden="true"><i class="fas fa-lock"></i></span>
-          <div class="tool-icon">🎨</div>
-          <h3>生涯画布</h3>
-          <p>一页纸梳理你的职业资产、关键关系与下一步行动</p>
-          <span class="tool-badge badge-soon">即将上线</span>
-        </div>
+        <a href="https://mp.weixin.qq.com/s/yj4_zlr7O95qP5B5P5_VWg" class="tool-card animate-on-scroll delay-2" target="_blank" rel="noopener noreferrer" aria-label="如何突破35岁职场魔咒：在新窗口打开微信公众号文章">
+          <div class="tool-icon">📰</div>
+          <h3>如何突破 35 岁职场魔咒</h3>
+          <p>选对赛道跟对人：以<strong>觉知 · 探索 · 聚焦 · 赋能</strong>四部曲，逐步实现中高阶职场破局。<strong>点击本卡片任意区域</strong>，在新窗口阅读微信公众号全文。</p>
+          <span class="tool-badge badge-tool">公众号文章</span>
+        </a>
 
         <a href="3life.html" class="tool-card animate-on-scroll delay-1">
           <div class="tool-icon">📈</div>
@@ -579,6 +582,13 @@
           <h3>生涯决策</h3>
           <p>经典生涯决策工具：CIP 模型与 CASVE 流程，专为 35 岁+ 职场人的两难而写——留守或跳槽、转型或深耕，把纠结变成可复盘的一步棋</p>
           <span class="tool-badge badge-tool">立即阅读</span>
+        </a>
+
+        <a href="images/Career_transition_guide.pdf" class="tool-card animate-on-scroll" download="Career_transition_guide.pdf" id="careerGuidePdfCard" aria-label="下载高薪求职面试秘籍 PDF">
+          <div class="tool-icon">📑</div>
+          <h3>高薪求职面试秘籍</h3>
+          <p>面向年薪 <strong>30-50 万+</strong>：先完成自我认知升级，再按此秘籍认真打磨面试技巧，<strong>从面试到拿offer的成功率明显抬升约80%</strong>。<strong>点击本卡片任意位置</strong>即可下载 PDF。</p>
+          <span class="tool-badge badge-download">下载 PDF</span>
         </a>
       </div>
     </div>
@@ -682,12 +692,7 @@
         return;
       }
       const url = paidGateTargetEl.getAttribute('data-gate-url') || '';
-      const isCanvas = paidGateTargetEl.getAttribute('data-gate-canvas') === '1';
       closePaidAccessGate();
-      if (isCanvas) {
-        alert('「生涯画布」页面仍在打磨与内测中。若你已具备付费学员身份，可联系睿观生涯教练了解上线进展与优先体验方式。');
-        return;
-      }
       if (url) window.location.href = url;
     }
 

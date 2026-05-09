@@ -871,11 +871,11 @@
                 <a href="#pricing">1299深度体验</a>
             </div>
             <div class="footer-col">
-                <h4>资源</h4>
-                <a href="career_assessment.html">可持续职业发展测评</a>
-                <a href="https://mp.weixin.qq.com/s/yj4_zlr7O95qP5B5P5_VWg" target="_blank">突破35岁职场魔咒</a>
-                <a href="#" onclick="downloadWithPassword(); return false;">高薪求职面试秘籍</a>
+                <h4>资源与工具</h4>
+                <a href="toolbox.html">测评工具与生涯理念</a>
                 <a href="AboutHA.html">Harrison测评介绍</a>
+                <a href="https://mp.weixin.qq.com/s/yj4_zlr7O95qP5B5P5_VWg" target="_blank" rel="noopener noreferrer">突破35岁职场魔咒</a>
+                <a href="images/Career_transition_guide.pdf" download="Career_transition_guide.pdf">高薪求职面试秘籍</a>
                 <a href="Case_study.html">学员成功案例</a>
             </div>
             <div class="footer-col">
@@ -1102,20 +1102,6 @@
             }
         });
 
-        // ===== PASSWORD PROTECTED PDF DOWNLOAD =====
-        function downloadWithPassword() {
-            const pwd = prompt('请联系转型教练Luke Liu输入下载密码：');
-            if (pwd === '8888') {
-                const link = document.createElement('a');
-                link.href = 'images/Career_transition_guide.pdf';
-                link.download = 'Career_transition_guide.pdf';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            } else if (pwd !== null) {
-                alert('密码错误，请重试。');
-            }
-        }
     </script>
 </body>
 </html>

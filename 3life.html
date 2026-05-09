@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三种职场人生收入曲线对比</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0a0e1a 0%, #1a1f3a 40%, #0d1127 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Inter', 'Noto Serif SC', sans-serif;
+        }
+
+        /* 背景粒子效果 */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        #chart-container {
+            position: relative;
+            width: 1200px;
+            height: 750px;
+            z-index: 1;
+        }
+
+        #chart {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 标题样式 - 金色奢华 */
+        .title {
+            position: absolute;
+            top: 25px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: #e8d5a3;
+            font-size: 32px;
+            font-weight: 700;
+            font-family: 'Noto Serif SC', serif;
+            letter-spacing: 4px;
+            text-shadow: 0 2px 20px rgba(232, 213, 163, 0.3), 0 0 60px rgba(232, 213, 163, 0.1);
+        }
+
+        .subtitle {
+            position: absolute;
+            top: 68px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: rgba(232, 213, 163, 0.5);
+            font-size: 13px;
+            font-weight: 300;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+        }
+
+        /* 坐标轴标签 */
+        .x-axis-label, .y-axis-label {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 13px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .x-axis-label {
+            bottom: 55px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* 纵轴标签远离纵轴，避免与50万数字重合 */
+        .y-axis-label {
+            top: 50%;
+            left: -5px;
+            transform: translateY(-50%) rotate(-90deg);
+            transform-origin: center;
+            white-space: nowrap;
+        }
+
+        /* 工具提示 - 毛玻璃效果 */
+        .tooltip {
+            position: absolute;
+            background: rgba(20, 25, 45, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(232, 213, 163, 0.2);
+            padding: 12px 18px;
+            border-radius: 10px;
+            pointer-events: none;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            color: #fff;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            z-index: 100;
+        }
+
+        .tooltip.show {
+            opacity: 1;
+        }
+
+        .tooltip-title {
+            color: #e8d5a3;
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 6px;
+            font-family: 'Noto Serif SC', serif;
+        }
+
+        .tooltip-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin: 3px 0;
+            font-size: 13px;
+        }
+
+        .tooltip-label {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .tooltip-value {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        /* 曲线标题 - 精致卡片 */
+        .curve-title {
+            position: absolute;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            border: 1px solid;
+            letter-spacing: 1px;
+            font-family: 'Noto Serif SC', serif;
+            transition: all 0.5s ease;
+            cursor: default;
+        }
+
+        .curve-title:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        #wealthy-title {
+            top: 110px;
+            left: 80px;
+            color: #c8e6c9;
+            border-color: rgba(76, 175, 80, 0.4);
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.15);
+        }
+
+        #transition-title {
+            top: 110px;
+            left: 480px;
+            color: #90caf9;
+            border-color: rgba(33, 150, 243, 0.4);
+            box-shadow: 0 0 20px rgba(33, 150, 243, 0.15);
+        }
+
+        #turbulent-title {
+            top: 110px;
+            left: 880px;
+            color: #ef9a9a;
+            border-color: rgba(244, 67, 54, 0.4);
+            box-shadow: 0 0 20px rgba(244, 67, 54, 0.15);
+        }
+
+        /* 动画结束后的提问区域 */
+        .question-area {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1.5s ease, transform 1.5s ease;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        .question-area.show {
+            opacity: 1;
+            transform: translate(-50%, -60%);
+            pointer-events: auto;
+        }
+
+        .question-text {
+            color: #e8d5a3;
+            font-size: 36px;
+            font-weight: 700;
+            font-family: 'Noto Serif SC', serif;
+            letter-spacing: 6px;
+            text-shadow: 0 2px 30px rgba(232, 213, 163, 0.4), 0 0 80px rgba(232, 213, 163, 0.15);
+            margin-bottom: 30px;
+            white-space: nowrap;
+        }
+
+        .if-button {
+            display: inline-block;
+            padding: 14px 48px;
+            background: rgba(232, 213, 163, 0.1);
+            color: #e8d5a3;
+            border: 1px solid rgba(232, 213, 163, 0.4);
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            font-family: 'Noto Serif SC', serif;
+            letter-spacing: 4px;
+            transition: all 0.5s ease;
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .if-button:hover {
+            background: rgba(232, 213, 163, 0.2);
+            border-color: rgba(232, 213, 163, 0.7);
+            box-shadow: 0 0 40px rgba(232, 213, 163, 0.3), 0 8px 32px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .if-button:active {
+            transform: translateY(0);
+        }
+
+        /* 点击后出现的揭示文字 */
+        .reveal-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1s ease, transform 1s ease;
+            pointer-events: none;
+            z-index: 60;
+            max-width: 800px;
+        }
+
+        .reveal-text.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+            pointer-events: auto;
+        }
+
+        .reveal-text p {
+            color: #fff;
+            font-size: 28px;
+            font-weight: 600;
+            font-family: 'Noto Serif SC', serif;
+            letter-spacing: 3px;
+            line-height: 1.8;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+            background: rgba(20, 25, 45, 0.7);
+            backdrop-filter: blur(16px);
+            padding: 40px 60px;
+            border-radius: 16px;
+            border: 1px solid rgba(232, 213, 163, 0.2);
+            box-shadow: 0 16px 64px rgba(0, 0, 0, 0.4);
+        }
+
+        .reveal-text .highlight {
+            color: #e8d5a3;
+            font-weight: 700;
+        }
+
+        /* 控制按钮 - 精致设计，向下挪动 */
+        .controls {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 16px;
+            z-index: 10;
+        }
+
+        button {
+            padding: 10px 28px;
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            font-family: 'Inter', sans-serif;
+            backdrop-filter: blur(8px);
+        }
+
+        button:hover {
+            background: rgba(232, 213, 163, 0.15);
+            border-color: rgba(232, 213, 163, 0.4);
+            color: #e8d5a3;
+            box-shadow: 0 0 20px rgba(232, 213, 163, 0.2);
+            transform: translateY(-1px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.primary {
+            background: rgba(232, 213, 163, 0.15);
+            border-color: rgba(232, 213, 163, 0.4);
+            color: #e8d5a3;
+        }
+
+        button.primary:hover {
+            background: rgba(232, 213, 163, 0.25);
+            box-shadow: 0 0 30px rgba(232, 213, 163, 0.3);
+        }
+
+        /* 进度条 - 渐变光效 */
+        .progress-container {
+            position: absolute;
+            bottom: 50px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .progress-bar {
+            width: 60%;
+            height: 3px;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, 
+                rgba(76, 175, 80, 0.8) 0%, 
+                rgba(33, 150, 243, 0.8) 50%, 
+                rgba(244, 67, 54, 0.8) 100%);
+            width: 0%;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .progress-glow {
+            position: absolute;
+            top: -2px;
+            right: 0;
+            width: 20px;
+            height: 7px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 3px;
+            filter: blur(4px);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .time-indicator {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 2px;
+            font-weight: 300;
+        }
+
+        /* 装饰线条 */
+        .decoration-line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, rgba(232, 213, 163, 0.2), transparent);
+            height: 1px;
+        }
+
+        .decoration-line.top {
+            top: 105px;
+            left: 10%;
+            width: 80%;
+        }
+
+        .decoration-line.bottom {
+            bottom: 120px;
+            left: 10%;
+            width: 80%;
+        }
+
+        /* 角落装饰 */
+        .corner-decoration {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(232, 213, 163, 0.15);
+        }
+
+        .corner-decoration.tl {
+            top: 15px;
+            left: 15px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .corner-decoration.tr {
+            top: 15px;
+            right: 15px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .corner-decoration.bl {
+            bottom: 15px;
+            left: 15px;
+            border-right: none;
+            border-top: none;
+        }
+
+        .corner-decoration.br {
+            bottom: 15px;
+            right: 15px;
+            border-left: none;
+            border-top: none;
+        }
+
+        /* 工具箱返回 + 音乐控制（不遮挡主视觉） */
+        .page-ui {
+            position: fixed;
+            top: max(12px, env(safe-area-inset-top));
+            left: max(12px, env(safe-area-inset-left));
+            right: max(12px, env(safe-area-inset-right));
+            z-index: 300;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            pointer-events: none;
+        }
+        .page-ui a,
+        .page-ui button {
+            pointer-events: auto;
+            font-size: 12px;
+            color: rgba(232, 213, 163, 0.9);
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(232, 213, 163, 0.35);
+            background: rgba(10, 14, 26, 0.65);
+            backdrop-filter: blur(8px);
+            font-family: 'Noto Serif SC', serif;
+            letter-spacing: 0.05em;
+            transition: background 0.25s, border-color 0.25s;
+        }
+        .page-ui a:hover,
+        .page-ui button:hover {
+            background: rgba(232, 213, 163, 0.12);
+            border-color: rgba(232, 213, 163, 0.55);
+        }
+        .page-ui button {
+            cursor: pointer;
+            color: #e8d5a3;
+        }
+    </style>
+</head>
+<body>
+    <audio id="bgMusic" src="images/music.wav" preload="auto" loop playsinline></audio>
+    <div class="page-ui">
+        <a href="toolbox.html">← 资源工具箱</a>
+        <button type="button" id="musicToggle" aria-pressed="false" title="背景音乐">🔊 音乐</button>
+    </div>
+    <canvas id="particles"></canvas>
+
+    <div id="chart-container">
+        <div class="corner-decoration tl"></div>
+        <div class="corner-decoration tr"></div>
+        <div class="corner-decoration bl"></div>
+        <div class="corner-decoration br"></div>
+
+        <div class="decoration-line top"></div>
+        <div class="decoration-line bottom"></div>
+
+        <div class="title">三十年职场人生 vs 年薪收入 </div>
+        <div class="subtitle">Career Income Trajectory Analysis</div>
+
+        <div class="x-axis-label">年 龄</div>
+        <div class="y-axis-label">年 收 入（万元）</div>
+
+        <div class="tooltip" id="tooltip">
+            <div class="tooltip-title" id="tooltip-title"></div>
+            <div class="tooltip-row">
+                <span class="tooltip-label">年龄</span>
+                <span class="tooltip-value" id="tooltip-age"></span>
+            </div>
+            <div class="tooltip-row">
+                <span class="tooltip-label">年收入</span>
+                <span class="tooltip-value" id="tooltip-income"></span>
+            </div>
+            <div class="tooltip-row">
+                <span class="tooltip-label">累计收入</span>
+                <span class="tooltip-value" id="tooltip-total"></span>
+            </div>
+        </div>
+
+        <div class="curve-title" id="wealthy-title">平安富足</div>
+        <div class="curve-title" id="transition-title">职业转型成功</div>
+        <div class="curve-title" id="turbulent-title">波折人生</div>
+
+        <!-- 动画结束后的问题区域 -->
+        <div class="question-area" id="questionArea">
+            <div class="question-text">请问你选择什么人生？</div>
+            <button class="if-button" id="ifButton">如果</button>
+        </div>
+
+        <!-- 点击"如果"后出现的揭示文字 -->
+        <div class="reveal-text" id="revealText">
+            <p>如果三种人生活法<br>最终的总收入都是<span class="highlight">1000万</span></p>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+                <div class="progress-glow" id="progress-glow"></div>
+            </div>
+            <div class="time-indicator" id="timeIndicator">00:00</div>
+        </div>
+
+        <div class="controls">
+            <button id="playBtn" class="primary">▶ 播放</button>
+            <button id="pauseBtn">⏸ 暂停</button>
+            <button id="resetBtn">↺ 重置</button>
+        </div>
+
+        <canvas id="chart"></canvas>
+    </div>
+
+    <script>
+        // 粒子背景效果
+        const particleCanvas = document.getElementById('particles');
+        const pCtx = particleCanvas.getContext('2d');
+        let particles = [];
+
+        function initParticles() {
+            particleCanvas.width = window.innerWidth;
+            particleCanvas.height = window.innerHeight;
+            particles = [];
+            const count = Math.floor((window.innerWidth * window.innerHeight) / 15000);
+
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * particleCanvas.width,
+                    y: Math.random() * particleCanvas.height,
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: (Math.random() - 0.5) * 0.3,
+                    size: Math.random() * 2 + 0.5,
+                    opacity: Math.random() * 0.5 + 0.1,
+                    color: Math.random() > 0.7 ? '232, 213, 163' : '255, 255, 255'
+                });
+            }
+        }
+
+        function animateParticles() {
+            pCtx.clearRect(0, 0, particleCanvas.width, particleCanvas.height);
+
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > particleCanvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > particleCanvas.height) p.vy *= -1;
+
+                pCtx.beginPath();
+                pCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                pCtx.fillStyle = `rgba(${p.color}, ${p.opacity})`;
+                pCtx.fill();
+            });
+
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 120) {
+                        pCtx.beginPath();
+                        pCtx.moveTo(particles[i].x, particles[i].y);
+                        pCtx.lineTo(particles[j].x, particles[j].y);
+                        pCtx.strokeStyle = `rgba(232, 213, 163, ${0.05 * (1 - dist / 120)})`;
+                        pCtx.lineWidth = 0.5;
+                        pCtx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
+
+        window.addEventListener('resize', initParticles);
+
+        // 主图表
+        const canvas = document.getElementById('chart');
+        const ctx = canvas.getContext('2d');
+        const tooltip = document.getElementById('tooltip');
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const progressBar = document.getElementById('progress');
+        const progressGlow = document.getElementById('progress-glow');
+        const timeIndicator = document.getElementById('timeIndicator');
+        const questionArea = document.getElementById('questionArea');
+        const ifButton = document.getElementById('ifButton');
+        const revealText = document.getElementById('revealText');
+
+        canvas.width = 1200;
+        canvas.height = 750;
+
+        // 修改：横轴显示到52岁（30年）
+        const padding = { top: 130, right: 80, bottom: 100, left: 100 };
+        const startAge = 22;
+        const endAge = 52;
+        const maxIncome = 120;
+        const targetTotalIncome = 1000;
+
+        // 三种收入曲线数据 - 更新到52岁
+        const curves = {
+            wealthy: {
+                title: "大富大贵",
+                color: "#81c784",
+                glowColor: "rgba(129, 199, 132, 0.3)",
+                points: [
+                    { age: 22, income: 20 },
+                    { age: 25, income: 30 },
+                    { age: 30, income: 50 },
+                    { age: 35, income: 70 },
+                    { age: 40, income: 80 },
+                    { age: 45, income: 85 },
+                    { age: 50, income: 90 },
+                    { age: 52, income: 92 }
+                ],
+                currentTotal: 0,
+                dot: { x: 0, y: 0 }
+            },
+            transition: {
+                title: "职业转型成功",
+                color: "#64b5f6",
+                glowColor: "rgba(100, 181, 246, 0.3)",
+                points: [
+                    { age: 22, income: 20 },
+                    { age: 25, income: 35 },
+                    { age: 28, income: 50 },
+                    { age: 30, income: 60 },
+                    { age: 32, income: 40 },
+                    { age: 35, income: 15 },
+                    { age: 38, income: 15 },
+                    { age: 40, income: 20 },
+                    { age: 42, income: 30 },
+                    { age: 45, income: 50 },
+                    { age: 48, income: 25 },
+                    { age: 50, income: 22 },
+                    { age: 52, income: 20 }
+                ],
+                currentTotal: 0,
+                dot: { x: 0, y: 0 }
+            },
+            turbulent: {
+                title: "波折人生",
+                color: "#e57373",
+                glowColor: "rgba(229, 115, 115, 0.3)",
+                points: [
+                    { age: 22, income: 20 },
+                    { age: 25, income: 40 },
+                    { age: 28, income: 60 },
+                    { age: 30, income: 30 },
+                    { age: 32, income: 50 },
+                    { age: 35, income: 20 },
+                    { age: 38, income: 40 },
+                    { age: 40, income: 15 },
+                    { age: 42, income: 30 },
+                    { age: 45, income: 15 },
+                    { age: 48, income: 12 },
+                    { age: 50, income: 10 },
+                    { age: 52, income: 8 }
+                ],
+                currentTotal: 0,
+                dot: { x: 0, y: 0 }
+            }
+        };
+
+        function adjustCurvesToTarget() {
+            Object.values(curves).forEach(curve => {
+                let total = calculateTotalIncome(curve.points);
+                const factor = targetTotalIncome / total;
+                curve.points.forEach(point => {
+                    point.income *= factor;
+                });
+                curve.totalIncome = calculateTotalIncome(curve.points);
+            });
+        }
+
+        function calculateTotalIncome(points) {
+            let total = 0;
+            for (let i = 1; i < points.length; i++) {
+                const prev = points[i-1];
+                const curr = points[i];
+                const years = curr.age - prev.age;
+                total += (prev.income + curr.income) / 2 * years;
+            }
+            return total;
+        }
+
+        function getX(age) {
+            return padding.left + ((age - startAge) / (endAge - startAge)) * (canvas.width - padding.left - padding.right);
+        }
+
+        function getY(income) {
+            return canvas.height - padding.bottom - (income / maxIncome * (canvas.height - padding.top - padding.bottom));
+        }
+
+        // 绘制网格背景
+        function drawGrid() {
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+            ctx.lineWidth = 1;
+
+            for (let i = 0; i <= maxIncome; i += 10) {
+                const y = getY(i);
+                ctx.beginPath();
+                ctx.moveTo(padding.left, y);
+                ctx.lineTo(canvas.width - padding.right, y);
+                ctx.stroke();
+            }
+
+            for (let age = startAge; age <= endAge; age += 2) {
+                const x = getX(age);
+                ctx.beginPath();
+                ctx.moveTo(x, padding.top);
+                ctx.lineTo(x, canvas.height - padding.bottom);
+                ctx.stroke();
+            }
+        }
+
+        // 绘制坐标轴
+        function drawAxes() {
+            ctx.strokeStyle = 'rgba(232, 213, 163, 0.3)';
+            ctx.lineWidth = 1.5;
+
+            ctx.beginPath();
+            ctx.moveTo(padding.left, padding.top);
+            ctx.lineTo(padding.left, canvas.height - padding.bottom);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(padding.left, canvas.height - padding.bottom);
+            ctx.lineTo(canvas.width - padding.right, canvas.height - padding.bottom);
+            ctx.stroke();
+
+            ctx.textAlign = 'right';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+            ctx.font = '12px Inter, sans-serif';
+
+            for (let i = 0; i <= maxIncome; i += 20) {
+                const y = getY(i);
+                ctx.beginPath();
+                ctx.moveTo(padding.left - 6, y);
+                ctx.lineTo(padding.left, y);
+                ctx.strokeStyle = 'rgba(232, 213, 163, 0.2)';
+                ctx.stroke();
+
+                ctx.fillText(i.toString(), padding.left - 12, y + 4);
+            }
+
+            ctx.textAlign = 'center';
+
+            for (let age = startAge; age <= endAge; age += 5) {
+                const x = getX(age);
+                ctx.beginPath();
+                ctx.moveTo(x, canvas.height - padding.bottom);
+                ctx.lineTo(x, canvas.height - padding.bottom + 6);
+                ctx.strokeStyle = 'rgba(232, 213, 163, 0.2)';
+                ctx.stroke();
+
+                ctx.fillText(age.toString(), x, canvas.height - padding.bottom + 22);
+            }
+        }
+
+        function calculatePath(points, progress) {
+            const path = new Path2D();
+            const visiblePoints = [];
+
+            const totalPoints = points.length;
+            const currentPointIndex = Math.min(Math.floor(progress * totalPoints), totalPoints - 1);
+            const pointProgress = (progress * totalPoints) % 1;
+
+            for (let i = 0; i <= currentPointIndex; i++) {
+                visiblePoints.push({...points[i]});
+            }
+
+            if (pointProgress > 0 && currentPointIndex < totalPoints - 1) {
+                const currentPoint = points[currentPointIndex];
+                const nextPoint = points[currentPointIndex + 1];
+
+                const intermediateAge = currentPoint.age + (nextPoint.age - currentPoint.age) * pointProgress;
+                const intermediateIncome = currentPoint.income + (nextPoint.income - currentPoint.income) * pointProgress;
+
+                visiblePoints.push({
+                    age: intermediateAge,
+                    income: intermediateIncome
+                });
+            }
+
+            if (visiblePoints.length > 0) {
+                const firstPoint = visiblePoints[0];
+                const x = getX(firstPoint.age);
+                const y = getY(firstPoint.income);
+                path.moveTo(x, y);
+
+                for (let i = 1; i < visiblePoints.length; i++) {
+                    const point = visiblePoints[i];
+                    const x = getX(point.age);
+                    const y = getY(point.income);
+
+                    const prevPoint = visiblePoints[i-1];
+                    const prevX = getX(prevPoint.age);
+                    const prevY = getY(prevPoint.income);
+
+                    const cpx = (prevX + x) / 2;
+                    const cpy = (prevY + y) / 2;
+
+                    path.quadraticCurveTo(cpx, cpy, x, y);
+                }
+            }
+
+            return { path, visiblePoints };
+        }
+
+        function calculateCurrentIncome(points, progress) {
+            let total = 0;
+            const { visiblePoints } = calculatePath(points, progress);
+
+            if (visiblePoints.length < 2) return 0;
+
+            for (let i = 1; i < visiblePoints.length; i++) {
+                const prev = visiblePoints[i-1];
+                const curr = visiblePoints[i];
+
+                if (i === visiblePoints.length - 1 && progress < 1) {
+                    const years = curr.age - prev.age;
+                    const partialYear = years * (progress * points.length % 1);
+                    total += (prev.income + curr.income) / 2 * partialYear;
+                } else {
+                    const years = curr.age - prev.age;
+                    total += (prev.income + curr.income) / 2 * years;
+                }
+            }
+
+            return Math.round(total);
+        }
+
+        function drawGlow(path, color, width) {
+            ctx.save();
+            ctx.strokeStyle = color;
+            ctx.lineWidth = width;
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = color;
+            ctx.stroke(path);
+            ctx.restore();
+        }
+
+        function draw(progress) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            drawGrid();
+            drawAxes();
+
+            progressBar.style.width = `${progress * 100}%`;
+            progressGlow.style.opacity = progress > 0 ? '1' : '0';
+            progressGlow.style.left = `${progress * 60}%`;
+
+            const seconds = Math.floor(progress * 20);
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            timeIndicator.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+
+            Object.values(curves).forEach(curve => {
+                const { path, visiblePoints } = calculatePath(curve.points, progress);
+
+                drawGlow(path, curve.glowColor, 8);
+
+                ctx.strokeStyle = curve.color;
+                ctx.lineWidth = 3;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.stroke(path);
+
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                ctx.lineWidth = 1;
+                ctx.stroke(path);
+
+                if (visiblePoints.length > 0) {
+                    const currentPoint = visiblePoints[visiblePoints.length - 1];
+                    const x = getX(currentPoint.age);
+                    const y = getY(currentPoint.income);
+
+                    curve.dot = { x, y, age: currentPoint.age, income: currentPoint.income };
+
+                    ctx.beginPath();
+                    ctx.arc(x, y, 12, 0, Math.PI * 2);
+                    ctx.fillStyle = curve.glowColor;
+                    ctx.fill();
+
+                    ctx.beginPath();
+                    ctx.arc(x, y, 8, 0, Math.PI * 2);
+                    ctx.fillStyle = curve.color;
+                    ctx.fill();
+
+                    ctx.beginPath();
+                    ctx.arc(x, y, 4, 0, Math.PI * 2);
+                    ctx.fillStyle = '#fff';
+                    ctx.fill();
+
+                    ctx.beginPath();
+                    ctx.arc(x, y, 20, 0, Math.PI * 2);
+                    const gradient = ctx.createRadialGradient(x, y, 4, x, y, 20);
+                    gradient.addColorStop(0, curve.glowColor);
+                    gradient.addColorStop(1, 'transparent');
+                    ctx.fillStyle = gradient;
+                    ctx.fill();
+                }
+
+                curve.currentTotal = calculateCurrentIncome(curve.points, progress);
+            });
+        }
+
+        let animationId = null;
+        let startTime = null;
+        let isPlaying = false;
+        const duration = 20000;
+
+        function animate(timestamp) {
+            if (!startTime) startTime = timestamp;
+            const elapsed = timestamp - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+
+            const easedProgress = easeInOutCubic(progress);
+            draw(easedProgress);
+
+            if (progress < 1) {
+                animationId = requestAnimationFrame(animate);
+            } else {
+                isPlaying = false;
+                playBtn.innerHTML = '↺ 重播';
+                // 动画结束后显示问题
+                setTimeout(() => {
+                    questionArea.classList.add('show');
+                }, 500);
+            }
+        }
+
+        function easeInOutCubic(t) {
+            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        }
+
+        function startAnimation() {
+            if (isPlaying) return;
+
+            if (progressBar.style.width === '100%') {
+                resetAnimation();
+            }
+
+            tryPlayBgm();
+
+            isPlaying = true;
+            playBtn.innerHTML = '▶ 播放中...';
+            startTime = null;
+            animationId = requestAnimationFrame(animate);
+        }
+
+        function pauseAnimation() {
+            if (!isPlaying) return;
+
+            isPlaying = false;
+            cancelAnimationFrame(animationId);
+            playBtn.innerHTML = '▶ 继续';
+        }
+
+        function resetAnimation() {
+            pauseAnimation();
+            progressBar.style.width = '0%';
+            timeIndicator.textContent = '00:00';
+            questionArea.classList.remove('show');
+            revealText.classList.remove('show');
+            draw(0);
+            playBtn.innerHTML = '▶ 播放';
+        }
+
+        // "如果"按钮点击事件
+        ifButton.addEventListener('click', () => {
+            questionArea.classList.remove('show');
+            setTimeout(() => {
+                revealText.classList.add('show');
+            }, 300);
+        });
+
+        // 鼠标交互
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+
+            let closestCurve = null;
+            let minDistance = Infinity;
+
+            Object.values(curves).forEach(curve => {
+                const dx = mouseX - curve.dot.x;
+                const dy = mouseY - curve.dot.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < 40 && distance < minDistance) {
+                    minDistance = distance;
+                    closestCurve = curve;
+                }
+            });
+
+            if (closestCurve) {
+                tooltip.style.left = (closestCurve.dot.x + 30) + 'px';
+                tooltip.style.top = (closestCurve.dot.y - 20) + 'px';
+
+                document.getElementById('tooltip-title').textContent = closestCurve.title;
+                document.getElementById('tooltip-age').textContent = Math.round(closestCurve.dot.age) + '岁';
+                document.getElementById('tooltip-income').textContent = closestCurve.dot.income.toFixed(1) + '万元';
+                document.getElementById('tooltip-total').textContent = closestCurve.currentTotal.toLocaleString() + '万元';
+
+                tooltip.classList.add('show');
+                canvas.style.cursor = 'pointer';
+            } else {
+                tooltip.classList.remove('show');
+                canvas.style.cursor = 'default';
+            }
+        });
+
+        canvas.addEventListener('mouseout', () => {
+            tooltip.classList.remove('show');
+        });
+
+        // 初始化
+        adjustCurvesToTarget();
+        draw(0);
+
+        playBtn.addEventListener('click', startAnimation);
+        pauseBtn.addEventListener('click', pauseAnimation);
+        resetBtn.addEventListener('click', resetAnimation);
+
+        // —— 背景音乐 images/music.wav：进入页面即尝试播放；多数浏览器需用户手势，故首次点击页面或点「播放」时再尝试 ——
+        const bgMusic = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        let musicUserMuted = false;
+
+        function tryPlayBgm() {
+            if (!bgMusic || musicUserMuted) return;
+            bgMusic.volume = 0.78;
+            const p = bgMusic.play();
+            if (p && typeof p.catch === 'function') {
+                p.catch(function () { /* 自动播放被拦截时静默，等待用户点击 */ });
+            }
+        }
+
+        function pauseBgm() {
+            if (bgMusic) bgMusic.pause();
+        }
+
+        window.addEventListener('load', tryPlayBgm);
+        document.body.addEventListener('click', tryPlayBgm, { once: true });
+
+        if (musicToggle) {
+            musicToggle.addEventListener('click', function (e) {
+                e.stopPropagation();
+                musicUserMuted = !musicUserMuted;
+                if (musicUserMuted) {
+                    pauseBgm();
+                    musicToggle.textContent = '🔇 已静音';
+                    musicToggle.setAttribute('aria-pressed', 'true');
+                } else {
+                    musicToggle.textContent = '🔊 音乐';
+                    musicToggle.setAttribute('aria-pressed', 'false');
+                    tryPlayBgm();
+                }
+            });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                if (isPlaying) pauseAnimation();
+                else startAnimation();
+            } else if (e.code === 'KeyR') {
+                resetAnimation();
+            }
+        });
+    </script>
+</body>
+</html>

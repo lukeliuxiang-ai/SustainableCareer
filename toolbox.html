@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>资源工具箱 · 职业测评与生涯工具 | 睿观生涯</title>
+    <meta name="description" content="睿观生涯资源工具箱：职业测评、生涯饼图、向上管理自测、CIP/CASVE 生涯决策、生涯画布等实用工具，助你向内看、向前看、选对赛道跟对人。">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-blue: #0a1f2e;
+            --navy: #0f2d3d;
+            --slate: #1a3c5c;
+            --steel: #2c5a7a;
+            --gold: #d4a853;
+            --gold-light: #e8c878;
+            --gold-dark: #b8923e;
+            --cream: #faf8f3;
+            --ivory: #f5f0e8;
+            --text-dark: #1e2a35;
+            --text-body: #3d4f5f;
+            --text-light: #6b7d8d;
+            --glass: rgba(255,255,255,0.08);
+            --glass-border: rgba(255,255,255,0.12);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--cream);
+            color: var(--text-body);
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        img { max-width: 100%; height: auto; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+        .animate-on-scroll { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+        .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+
+        /* ===== TOP BAR ===== */
+        .top-bar {
+            background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);
+            padding: max(12px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 12px max(16px, env(safe-area-inset-left));
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .back-link {
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .back-link:hover { color: var(--gold); }
+        .top-cta {
+            background: var(--gold);
+            color: var(--deep-blue);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .top-cta:hover { background: var(--gold-light); transform: scale(1.05); }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(135deg, var(--deep-blue) 0%, var(--navy) 50%, var(--slate) 100%);
+            padding: 60px 24px 48px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(212,168,83,0.08) 0%, transparent 50%);
+        }
+        .hero-content { position: relative; z-index: 2; max-width: 720px; margin: 0 auto; }
+        .hero h1 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            color: #fff;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            color: rgba(255,255,255,0.65);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* ===== SECTIONS ===== */
+        .section { padding: 60px 24px; max-width: 1100px; margin: 0 auto; }
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gold);
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+        .section-label::before {
+            content: '';
+            width: 24px;
+            height: 2px;
+            background: var(--gold);
+        }
+        .section h2 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .section-desc {
+            color: var(--text-light);
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 32px;
+        }
+
+        /* ===== TOOL GRID ===== */
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .tool-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 28px 24px;
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.06);
+            transition: all 0.4s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        .tool-card:hover::before {
+            transform: scaleX(1);
+        }
+        .tool-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+            border-color: rgba(212,168,83,0.2);
+        }
+        .tool-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--ivory) 0%, var(--cream) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 28px;
+            border: 2px solid rgba(212,168,83,0.15);
+            transition: all 0.3s;
+        }
+        .tool-card:hover .tool-icon {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--deep-blue);
+            transform: scale(1.1);
+        }
+        .tool-card h3 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.15rem;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .tool-card p {
+            font-size: 13px;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        .tool-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 12px;
+            letter-spacing: 0.5px;
+        }
+        .badge-assessment {
+            background: linear-gradient(135deg, var(--slate) 0%, var(--steel) 100%);
+            color: #fff;
+        }
+        .badge-tool {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--deep-blue);
+        }
+        .badge-soon {
+            background: var(--ivory);
+            color: var(--text-light);
+            border: 1px solid rgba(0,0,0,0.08);
+        }
+
+        /* ===== CTA ===== */
+        .cta-card {
+            background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);
+            border-radius: 20px;
+            padding: 28px 24px;
+            text-align: center;
+            margin: 36px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(212,168,83,0.08) 0%, transparent 50%);
+        }
+        .cta-card h3 {
+            font-family: 'Noto Serif SC', serif;
+            color: #fff;
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 2;
+        }
+        .cta-card p {
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--deep-blue);
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 4px 16px rgba(212,168,83,0.3);
+        }
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(212,168,83,0.4);
+        }
+
+        /* ===== FLOATING CTA ===== */
+        .floating-cta {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--deep-blue);
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 8px 24px rgba(212,168,83,0.4);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 200;
+            transition: all 0.3s;
+            animation: pulse 2s infinite;
+        }
+        .floating-cta:hover { transform: scale(1.05); }
+        @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(212,168,83,0.4); } 50% { box-shadow: 0 0 0 12px rgba(212,168,83,0); } }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .tool-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .tool-card { padding: 20px 14px; border-radius: 16px; }
+            .tool-icon { width: 52px; height: 52px; font-size: 22px; }
+            .tool-card h3 { font-size: 1rem; }
+            .tool-card p { font-size: 12px; }
+            .section { padding: 40px 16px; }
+            .hero { padding: 40px 16px 32px; }
+            .floating-cta {
+                bottom: calc(12px + env(safe-area-inset-bottom));
+                right: 12px;
+                left: 12px;
+                justify-content: center;
+                padding: 12px 16px;
+                font-size: 13px;
+            }
+        }
+        @media (max-width: 480px) {
+            .tool-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <a href="index.html" class="back-link">
+      <i class="fas fa-arrow-left"></i> 返回首页
+    </a>
+    <a href="#" class="top-cta" onclick="showQRModal(); return false;">预约诊断</a>
+  </div>
+
+  <div class="hero">
+    <div class="hero-content">
+      <h1>资源工具箱<br><span>向内看 · 向前看 · 在路上找答案</span></h1>
+      <p>职业测评帮你认识自己，生涯工具帮你规划路径。选对赛道跟对人，从觉知开始。</p>
+    </div>
+  </div>
+
+  <!-- 职业测评区 -->
+  <div class="section">
+    <div class="section-label">职业测评</div>
+    <h2>先认识自己，再决定方向</h2>
+    <p class="section-desc">基于 Harrison、霍兰德等科学测评体系，从兴趣、动机、价值观、技能等维度绘制职业画像；并配套<strong>生涯饼图</strong>（精力结构）与<strong>向上管理自测</strong>（与上级同频），让「认识自己」更可感、可用。</p>
+
+    <div class="tool-grid">
+      <a href="AboutHA.html" class="tool-card animate-on-scroll">
+        <div class="tool-icon">🔬</div>
+        <h3>Harrison测评</h3>
+        <p>全球顶尖职业测评，涵盖175+行为维度;识别你的独特优势，厘清职业方向与领导力潜能</p>
+        <span class="tool-badge badge-assessment">专业测评</span>
+      </a>
+
+      <a href="career_assessment.html" class="tool-card animate-on-scroll delay-1">
+        <div class="tool-icon">🎯</div>
+        <h3>霍兰德测评</h3>
+        <p>重新发现你的工作热情所在，找到让你事半功倍的赛道</p>
+        <span class="tool-badge badge-assessment">经典量表</span>
+      </a>
+
+      <a href="value.html" class="tool-card animate-on-scroll delay-2">
+        <div class="tool-icon">⚖️</div>
+        <h3>价值观测评</h3>
+        <p>厘清什么对你真正重要，避免在错误的价值观里消耗人生</p>
+        <span class="tool-badge badge-assessment">决策罗盘</span>
+      </a>
+
+      <a href="Skills.html" class="tool-card animate-on-scroll">
+        <div class="tool-icon">🛠️</div>
+        <h3>职业技能测评</h3>
+        <p>盘点可迁移技能与能力缺口，为转型或跃升找到抓手</p>
+        <span class="tool-badge badge-assessment">能力盘点</span>
+      </a>
+
+      <a href="Life-pie-chart.html" class="tool-card animate-on-scroll delay-1">
+        <div class="tool-icon">🥧</div>
+        <h3>生涯饼图</h3>
+        <p>与测评同源：把时间与精力画成饼，看见失衡与可腾挪的空间，再对照职业目标做微调</p>
+        <span class="tool-badge badge-assessment">结构自测</span>
+      </a>
+
+      <a href="upper_mgt.html" class="tool-card animate-on-scroll delay-2">
+        <div class="tool-icon">📡</div>
+        <h3>向上管理自测</h3>
+        <p>几分钟快速扫描：你与老板的沟通习惯、风险点与可练习的「同频」抓手——新老板、新语境尤其适用</p>
+        <span class="tool-badge badge-assessment">情境自测</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- 生涯工具区 -->
+  <div class="section" style="background: var(--ivory); margin: 0; max-width: 100%; padding: 60px 24px;">
+    <div style="max-width: 1100px; margin: 0 auto;">
+      <div class="section-label">生涯工具</div>
+      <h2>把认知转化为可落地的行动</h2>
+      <p class="section-desc">从理论到实践：<strong>生涯决策</strong>页梳理 CIP / CASVE 经典流程；TOP、贡献模式与三条路径等可立即使用；生涯画布等将持续上线。</p>
+
+      <div class="tool-grid">
+        <a href="TOP_model.html" class="tool-card animate-on-scroll">
+          <div class="tool-icon">🏔️</div>
+          <h3>TOP职业巅峰状态</h3>
+          <p>组织需求、天赋技能与工作热情三圆交叠——交互演示心流与巅峰区如何变化</p>
+          <span class="tool-badge badge-tool">立即使用</span>
+        </a>
+
+        <a href="contribution.html" class="tool-card animate-on-scroll delay-1">
+          <div class="tool-icon">🤝</div>
+          <h3>四个贡献模式</h3>
+          <p>从依赖他人到在组织战略方面做贡献——点击阶梯上的阶段，看见每一层的典型职场状态</p>
+          <span class="tool-badge badge-tool">立即使用</span>
+        </a>
+
+        <a href="#" class="tool-card animate-on-scroll delay-2" onclick="alert('即将上线，敬请期待'); return false;">
+          <div class="tool-icon">🎨</div>
+          <h3>生涯画布</h3>
+          <p>一页纸梳理你的职业资产、关键关系与下一步行动</p>
+          <span class="tool-badge badge-soon">即将上线</span>
+        </a>
+
+        <a href="3life.html" class="tool-card animate-on-scroll delay-1">
+          <div class="tool-icon">📈</div>
+          <h3>职场人生的三条路径</h3>
+          <p>动态对比三条收入曲线：打开页面即伴以背景音乐（可静音），看见「殊途同归」背后的选择与代价</p>
+          <span class="tool-badge badge-tool">立即体验</span>
+        </a>
+
+        <a href="career_decision.html" class="tool-card animate-on-scroll delay-2">
+          <div class="tool-icon">🧭</div>
+          <h3>生涯决策</h3>
+          <p>经典生涯决策工具：CIP 模型与 CASVE 流程，专为 35 岁+ 职场人的两难而写——留守或跳槽、转型或深耕，把纠结变成可复盘的一步棋</p>
+          <span class="tool-badge badge-tool">立即阅读</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="section">
+    <div class="cta-card animate-on-scroll">
+      <h3>工具是起点，教练是加速器</h3>
+      <p>测评帮你看见自己，陪跑帮你把看见转化为改变。预约20分钟免费诊断，看看我们是否适合一起工作。</p>
+      <a href="#" class="cta-btn" onclick="showQRModal(); return false;">
+        <i class="fab fa-weixin"></i> 添加微信 lukeliu2017
+      </a>
+    </div>
+  </div>
+
+  <a href="#" class="floating-cta" onclick="showQRModal(); return false;">
+    <i class="fas fa-comments"></i>
+    免费咨询
+  </a>
+
+  <!-- QR Modal -->
+  <div id="qrModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(10px);">
+    <div style="background:#fff;border-radius:28px;padding:40px;max-width:420px;width:90%;text-align:center;position:relative;box-shadow:0 30px 60px rgba(0,0,0,0.3);">
+      <button onclick="closeQRModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:24px;cursor:pointer;color:var(--text-light);">&times;</button>
+      <div style="width:80px;height:80px;background:linear-gradient(135deg, var(--slate) 0%, var(--steel) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:var(--gold);font-size:36px;">
+        <i class="fab fa-weixin"></i>
+      </div>
+      <h3 style="font-family:'Noto Serif SC',serif;font-size:1.4rem;color:var(--text-dark);margin-bottom:12px;">添加教练微信</h3>
+      <p style="color:var(--text-light);font-size:14px;line-height:1.7;margin-bottom:24px;">
+        扫码添加微信 <strong style="color:var(--gold-dark);">lukeliu2017</strong><br>
+        预约免费20分钟诊断通话
+      </p>
+      <div style="width:200px;height:200px;margin:0 auto 20px;border-radius:16px;overflow:hidden;border:2px solid rgba(212,168,83,0.2);">
+        <img src="images/qrcode.jpeg" alt="微信二维码" style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+      <a href="weixin://" style="display:inline-block;background:linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);color:var(--deep-blue);padding:12px 32px;border-radius:50px;font-weight:700;text-decoration:none;font-size:14px;">
+        <i class="fab fa-weixin"></i> 打开微信添加
+      </a>
+    </div>
+  </div>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+    function showQRModal() {
+      document.getElementById('qrModal').style.display = 'flex';
+    }
+    function closeQRModal() {
+      document.getElementById('qrModal').style.display = 'none';
+    }
+    document.getElementById('qrModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('qrModal')) closeQRModal();
+    });
+  </script>
+
+</body>
+</html>

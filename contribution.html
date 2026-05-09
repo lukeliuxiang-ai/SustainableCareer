@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>四个贡献模式 · 睿观生涯</title>
+    <meta name="description" content="从依赖他人到在组织战略方面做贡献：点击阶梯上的四个阶段，查看每一层典型职场状态解读。">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-blue: #0a1f2e;
+            --navy: #0f2d3d;
+            --slate: #1a3c5c;
+            --steel: #2c5a7a;
+            --gold: #d4a853;
+            --gold-light: #e8c878;
+            --gold-dark: #b8923e;
+            --cream: #faf8f3;
+            --ivory: #f5f0e8;
+            --text-dark: #1e2a35;
+            --text-body: #3d4f5f;
+            --text-light: #6b7d8d;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            min-height: 100dvh;
+            font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--cream);
+            color: var(--text-body);
+            line-height: 1.7;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+        }
+        img { max-width: 100%; height: auto; display: block; }
+
+        .top-bar {
+            background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);
+            padding: max(12px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 12px max(16px, env(safe-area-inset-left));
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            flex-shrink: 0;
+        }
+        .back-link {
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .back-link:hover { color: var(--gold); }
+        .top-link {
+            color: var(--gold);
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .top-link:hover { color: var(--gold-light); }
+
+        .deck-frame {
+            pointer-events: none;
+            position: fixed;
+            inset: 0;
+            z-index: 40;
+        }
+        .deck-colorpatch {
+            position: absolute;
+            top: max(48px, env(safe-area-inset-top));
+            left: 0;
+            max-height: min(20vh, 120px);
+            max-width: min(45vw, 300px);
+            object-fit: contain;
+        }
+        .deck-logo {
+            position: absolute;
+            top: max(52px, calc(8px + env(safe-area-inset-top)));
+            right: max(12px, env(safe-area-inset-right));
+            max-height: min(11vh, 80px);
+            max-width: min(36vw, 150px);
+            object-fit: contain;
+        }
+
+        .shell {
+            position: relative;
+            z-index: 60;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            padding: 0 12px max(88px, calc(72px + env(safe-area-inset-bottom)));
+        }
+
+        .page-head {
+            text-align: center;
+            padding: 14px 8px 10px;
+            flex-shrink: 0;
+        }
+        .page-head h1 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: clamp(1.1rem, 3.2vw, 1.55rem);
+            font-weight: 700;
+            color: var(--text-dark);
+            letter-spacing: 0.06em;
+            line-height: 1.35;
+        }
+
+        .hint-banner {
+            margin: 0 auto 10px;
+            max-width: 640px;
+            padding: 12px 16px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--ivory) 0%, #fff 100%);
+            border: 1px solid rgba(212, 168, 83, 0.25);
+            border-left: 4px solid var(--gold);
+            font-size: 13px;
+            color: var(--text-body);
+            text-align: center;
+            line-height: 1.65;
+        }
+        .hint-banner i { color: var(--gold-dark); margin-right: 6px; }
+
+        .graph-zone {
+            flex: 1;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 4px 0;
+            overflow: hidden;
+            gap: 0;
+        }
+
+        .graph-scaler {
+            width: min(96vw, 1100px);
+            max-height: min(58dvh, 620px);
+            transform-origin: center center;
+            will-change: transform;
+        }
+
+        .stage-frame {
+            position: relative;
+            width: 100%;
+            line-height: 0;
+            border-radius: 16px;
+            overflow: hidden;
+            background: linear-gradient(165deg, #fff 0%, var(--ivory) 100%);
+            border: 1px solid rgba(212, 168, 83, 0.2);
+            box-shadow:
+                0 12px 40px rgba(10, 31, 46, 0.1),
+                0 1px 0 rgba(255, 255, 255, 0.9) inset;
+        }
+        .stage-frame img {
+            width: 100%;
+            height: auto;
+            max-height: min(58dvh, 620px);
+            object-fit: contain;
+        }
+
+        .stage-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .stage-step {
+            position: absolute;
+            pointer-events: none;
+            box-sizing: border-box;
+        }
+        .stage-step:nth-child(1) { left: 16.8%; width: 14.5%; bottom: 10.5%; height: 25%; }
+        .stage-step:nth-child(2) { left: 31.5%; width: 14.2%; bottom: 10.5%; height: 31%; }
+        .stage-step:nth-child(3) { left: 56.2%; width: 13.6%; bottom: 10.5%; height: 37%; }
+        .stage-step:nth-child(4) { left: 71.2%; width: 17.8%; bottom: 10.5%; height: 45%; }
+
+        .step-badge {
+            position: absolute;
+            top: 6%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: clamp(30px, 8vw, 40px);
+            height: clamp(30px, 8vw, 40px);
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--deep-blue);
+            font-weight: 800;
+            font-size: clamp(14px, 3.5vw, 18px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+            box-shadow: 0 4px 14px rgba(10, 31, 46, 0.2);
+            border: 2px solid rgba(255,255,255,0.85);
+            pointer-events: none;
+        }
+
+        /* 各阶梯常驻阶段名称（不随选中隐藏）；与 contribution.png 踏步对齐：1/2 略左，3/4 略右 */
+        .step-name {
+            position: absolute;
+            left: 2%;
+            right: 2%;
+            bottom: 6%;
+            z-index: 2;
+            pointer-events: none;
+            text-align: center;
+            font-size: clamp(9px, 1.85vw, 12px);
+            font-weight: 700;
+            line-height: 1.25;
+            color: var(--text-dark);
+            padding: 4px 4px 5px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(10, 31, 46, 0.08);
+            box-shadow: 0 2px 8px rgba(10, 31, 46, 0.08);
+            transform: translateX(0);
+            transform-origin: center center;
+        }
+        .stage-step:nth-child(1) .step-name {
+            transform: translateX(calc(-1 * clamp(14px, 22%, 36px) - 26px));
+        }
+        .stage-step:nth-child(2) .step-name {
+            transform: translateX(calc(-1 * clamp(10px, 16%, 30px) - 16px));
+        }
+        .stage-step:nth-child(3) .step-name {
+            transform: translateX(calc(clamp(10px, 16%, 30px) + 30px));
+        }
+        .stage-step:nth-child(4) .step-name {
+            transform: translateX(calc(clamp(14px, 20%, 36px) + 20px));
+        }
+
+        .stage-hit {
+            position: absolute;
+            inset: 0;
+            z-index: 4;
+            margin: 0;
+            padding: 0;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            pointer-events: auto;
+            border-radius: 8px;
+            transition: box-shadow 0.2s ease, background 0.2s ease;
+        }
+        .stage-hit:hover {
+            box-shadow: inset 0 0 0 2px rgba(212, 168, 83, 0.45);
+            background: rgba(212, 168, 83, 0.06);
+        }
+        .stage-hit:focus-visible {
+            outline: 2px solid var(--gold-dark);
+            outline-offset: 2px;
+        }
+        .stage-step.is-active .stage-hit {
+            box-shadow: inset 0 0 0 2px rgba(10, 31, 46, 0.2);
+            background: rgba(212, 168, 83, 0.08);
+        }
+
+        /* 图下方 1–4 与解读联动（与 contribution.png 同比例热区互补） */
+        .step-toolbar {
+            width: min(96vw, 680px);
+            margin: 14px auto 0;
+            padding: 12px 14px 14px;
+            flex-shrink: 0;
+            background: #fff;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        .step-toolbar-label {
+            font-size: 12px;
+            color: var(--text-light);
+            letter-spacing: 0.12em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .step-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+        .step-pill {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid rgba(10, 31, 46, 0.12);
+            background: var(--ivory);
+            color: var(--text-body);
+            font-size: 17px;
+            font-weight: 800;
+            font-family: 'Noto Sans SC', sans-serif;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+        .step-pill:hover {
+            border-color: rgba(212, 168, 83, 0.55);
+            background: #fff;
+            transform: translateY(-2px);
+        }
+        .step-pill:focus-visible {
+            outline: 2px solid var(--gold-dark);
+            outline-offset: 2px;
+        }
+        .step-pill.is-selected {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--deep-blue);
+            border-color: var(--gold-dark);
+            box-shadow: 0 4px 16px rgba(212, 168, 83, 0.35);
+        }
+
+        .controls {
+            width: 100%;
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 10px 4px 4px;
+            flex-shrink: 0;
+        }
+        .btn-reset {
+            font-family: inherit;
+            display: block;
+            margin: 0 auto 10px;
+            padding: 8px 24px;
+            border-radius: 999px;
+            border: 1px solid rgba(0,0,0,0.08);
+            background: #fff;
+            color: var(--text-body);
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .btn-reset:hover {
+            background: var(--ivory);
+            border-color: rgba(212, 168, 83, 0.35);
+        }
+
+        .caption {
+            min-height: 7.5em;
+            padding: 16px 18px;
+            border-radius: 14px;
+            background: #fff;
+            border: 1px solid rgba(0,0,0,0.06);
+            font-size: 14px;
+            line-height: 1.75;
+            color: var(--text-body);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        }
+        .caption--idle {
+            background: linear-gradient(135deg, var(--ivory) 0%, #fff 100%);
+            border-left: 3px solid var(--gold);
+            color: var(--text-light);
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 4.5em;
+        }
+        .caption--content h2 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.05rem;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .caption--content h2 span {
+            color: var(--gold-dark);
+            font-weight: 800;
+            margin-right: 8px;
+        }
+        .caption--content p { margin: 0; }
+
+        .insight-footer {
+            margin-top: 14px;
+            padding: 14px 16px 15px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #fff 0%, var(--ivory) 100%);
+            border: 1px solid rgba(212, 168, 83, 0.22);
+            border-left: 4px solid var(--gold);
+            font-size: 13px;
+            line-height: 1.75;
+            color: var(--text-body);
+            text-align: center;
+            box-shadow: 0 2px 12px rgba(10, 31, 46, 0.05);
+        }
+        .insight-footer strong {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .deck-nav {
+            position: fixed;
+            bottom: max(12px, env(safe-area-inset-bottom));
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 max(12px, env(safe-area-inset-left)) 0 max(12px, env(safe-area-inset-right));
+            z-index: 300;
+            pointer-events: none;
+        }
+        .deck-nav a {
+            pointer-events: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 18px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);
+            color: rgba(255,255,255,0.92);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid rgba(212, 168, 83, 0.25);
+            box-shadow: 0 4px 16px rgba(10, 31, 46, 0.2);
+            transition: transform 0.15s ease, border-color 0.2s ease;
+        }
+        .deck-nav a:hover {
+            border-color: var(--gold);
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 480px) {
+            .graph-scaler { max-height: min(50dvh, 480px); }
+            .stage-frame img { max-height: min(50dvh, 480px); }
+            .step-pill { width: 44px; height: 44px; font-size: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="toolbox.html" class="back-link"><i class="fas fa-arrow-left"></i> 资源工具箱</a>
+        <a href="index.html" class="top-link">睿观首页</a>
+    </div>
+
+    <div class="deck-frame" aria-hidden="true">
+        <img class="deck-colorpatch" src="images/colorpatch.png" alt="">
+        <img class="deck-logo" src="images/lh_logo.png" alt="Logo">
+    </div>
+
+    <div class="shell">
+        <div class="page-head">
+            <h1>个体在组织中做贡献的四种模式</h1>
+        </div>
+
+        <div class="hint-banner">
+            <i class="fas fa-hand-pointer"></i>
+            <strong>请注意点击四个阶段</strong>：可点<strong>图中阶梯</strong>对应区域，或点<strong>图下方圆钮 1–4</strong>。图中各阶梯名称常驻显示；最下方出现详细解读；切换阶段会替换上一段文字；再点<strong>同一数字</strong>或「重置」可收起。
+        </div>
+
+        <div class="graph-zone">
+            <div class="graph-scaler" id="graphScaler">
+                <div class="stage-frame">
+                    <img src="images/contribution.png" width="1376" height="768" alt="个体在组织中做贡献的四种模式：四阶段递进示意图（contribution）">
+                    <div class="stage-overlay">
+                        <div class="stage-step" data-step="1">
+                            <span class="step-badge" aria-hidden="true">1</span>
+                            <span class="step-name">依赖他人做贡献</span>
+                            <button type="button" class="stage-hit" data-step="1" aria-label="第1阶段：依赖他人做贡献"></button>
+                        </div>
+                        <div class="stage-step" data-step="2">
+                            <span class="step-badge" aria-hidden="true">2</span>
+                            <span class="step-name">独立贡献</span>
+                            <button type="button" class="stage-hit" data-step="2" aria-label="第2阶段：独立贡献"></button>
+                        </div>
+                        <div class="stage-step" data-step="3">
+                            <span class="step-badge" aria-hidden="true">3</span>
+                            <span class="step-name">通过他人做出贡献</span>
+                            <button type="button" class="stage-hit" data-step="3" aria-label="第3阶段：通过他人做出贡献"></button>
+                        </div>
+                        <div class="stage-step" data-step="4">
+                            <span class="step-badge" aria-hidden="true">4</span>
+                            <span class="step-name">在组织战略方面做贡献</span>
+                            <button type="button" class="stage-hit" data-step="4" aria-label="第4阶段：在组织战略方面做贡献"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="step-toolbar" aria-label="选择贡献阶段">
+                <div class="step-toolbar-label">点选阶段 · 下方显示解读</div>
+                <div class="step-pills">
+                    <button type="button" class="step-pill" data-step="1" aria-pressed="false" aria-label="阶段 1：依赖他人做贡献">1</button>
+                    <button type="button" class="step-pill" data-step="2" aria-pressed="false" aria-label="阶段 2：独立贡献">2</button>
+                    <button type="button" class="step-pill" data-step="3" aria-pressed="false" aria-label="阶段 3：通过他人做出贡献">3</button>
+                    <button type="button" class="step-pill" data-step="4" aria-pressed="false" aria-label="阶段 4：在组织战略方面做贡献">4</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button type="button" class="btn-reset" id="btnReset">收起解读 · 重置</button>
+            <div class="caption caption--idle" id="contribCaption">请点击阶梯上与图示对应的 <strong>1 → 4</strong>，从「依赖他人做贡献」读到「在组织战略方面做贡献」。</div>
+            <p class="insight-footer" role="note">
+                若把职业生涯放在更长的时间轴上看，<strong>可持续的关键</strong>往往在于：能否让自己<strong>较多地处在第三、第四阶段的贡献方式里</strong>——第三阶通过协作、授权与机制放大成果，第四阶与组织战略同频、在取舍中创造长期价值。想结合你的岗位与现状，把「怎么站稳三四阶」讲透、落到日常行动，<strong>欢迎咨询睿观生涯教练</strong>。
+            </p>
+        </div>
+    </div>
+
+    <nav class="deck-nav" aria-label="页面导航">
+        <a href="TOP_model.html" class="nav-prev"><i class="fas fa-arrow-left"></i> TOP 模型</a>
+        <a href="toolbox.html" class="nav-next">工具箱 <i class="fas fa-arrow-right"></i></a>
+    </nav>
+
+    <script>
+        (function () {
+            var selected = null;
+            var caption = document.getElementById("contribCaption");
+            var scaler = document.getElementById("graphScaler");
+            var steps = document.querySelectorAll(".stage-step");
+            var pills = document.querySelectorAll(".step-pill");
+
+            var idleHtml = "请点击图中阶梯上的 <strong>1 → 4</strong>，或使用<strong>图下方圆钮</strong>，从最下方阅读各阶段解读。";
+
+            var blocks = {
+                1: {
+                    title: "依赖他人做贡献",
+                    body: "多见于入职、轮岗或跨领域初期：目标拆解、质量标准和风险边界仍高度依赖上级或资深同事。你的价值体现在执行力与学习速度——主动同步进度、把依赖转化为可复用的方法，是通往下一阶段的关键。"
+                },
+                2: {
+                    title: "独立贡献",
+                    body: "你能对自己责任域闭环交付：问题定义、方案、落地与复盘基本自主完成，仅在例外与资源升级时才频繁求助。组织开始把你当作「可靠接口」——稳定产出、少 surprises，是建立信任与争取更大半径的前提。"
+                },
+                3: {
+                    title: "通过他人做出贡献",
+                    body: "产出不再只靠个人工时，而来自协作设计与他人成长；日常里往往落在这样一串抓手上：<strong>分工授权、辅导反馈、搭建优化系统流程与标准、对齐优先级和化解冲突。</strong>你的贡献体现在团队结果与可复制的能力——影响力从「我做得好」扩展到「我们一起把事做成」。"
+                },
+                4: {
+                    title: "在组织战略方面做贡献",
+                    body: "工作与组织战略议题同频：在不确定性中做取舍，连接资源与利益相关方，推动对长期结果有意义的改变。贡献体现在方向感、杠杆决策与组织韧性——往往伴随更高的可见度与责任，也需要更强的政治智慧与身心管理。"
+                }
+            };
+
+            function syncPills(n) {
+                pills.forEach(function (p) {
+                    var sn = parseInt(p.getAttribute("data-step"), 10);
+                    var on = n !== null && sn === n;
+                    p.classList.toggle("is-selected", on);
+                    p.setAttribute("aria-pressed", on ? "true" : "false");
+                });
+            }
+
+            function setIdle() {
+                selected = null;
+                steps.forEach(function (el) { el.classList.remove("is-active"); });
+                syncPills(null);
+                caption.className = "caption caption--idle";
+                caption.innerHTML = idleHtml;
+                scaleGraph();
+            }
+
+            function setStep(n) {
+                if (selected === n) {
+                    setIdle();
+                    return;
+                }
+                selected = n;
+                steps.forEach(function (el) {
+                    el.classList.toggle("is-active", parseInt(el.getAttribute("data-step"), 10) === n);
+                });
+                syncPills(n);
+                var b = blocks[n];
+                caption.className = "caption caption--content";
+                caption.innerHTML =
+                    "<h2><span>" + n + "</span>" + b.title + "</h2><p>" + b.body + "</p>";
+                scaleGraph();
+            }
+
+            function scaleGraph() {
+                var zone = document.querySelector(".graph-zone");
+                if (!zone || !scaler) return;
+                var frame = scaler.querySelector(".stage-frame");
+                var toolbar = zone.querySelector(".step-toolbar");
+                var w = frame.offsetWidth || 320;
+                var h = frame.offsetHeight || 200;
+                var tbH = toolbar ? toolbar.offsetHeight + 18 : 0;
+                var zw = zone.clientWidth - 8;
+                var zh = zone.clientHeight - tbH - 8;
+                var s = Math.min(1, zw / w, zh / h);
+                s = Math.max(0.35, s);
+                scaler.style.transform = "scale(" + s + ")";
+            }
+
+            document.querySelectorAll(".stage-hit").forEach(function (btn) {
+                btn.addEventListener("click", function () {
+                    setStep(parseInt(btn.getAttribute("data-step"), 10));
+                });
+            });
+
+            pills.forEach(function (p) {
+                p.addEventListener("click", function () {
+                    setStep(parseInt(p.getAttribute("data-step"), 10));
+                });
+            });
+
+            document.getElementById("btnReset").addEventListener("click", setIdle);
+
+            document.addEventListener("keydown", function (e) {
+                var k = parseInt(e.key, 10);
+                if (k >= 1 && k <= 4) {
+                    e.preventDefault();
+                    setStep(k);
+                }
+            });
+
+            window.addEventListener("resize", scaleGraph);
+            window.addEventListener("orientationchange", function () { setTimeout(scaleGraph, 200); });
+            if (document.fonts && document.fonts.ready) document.fonts.ready.then(scaleGraph);
+            window.addEventListener("load", scaleGraph);
+            setTimeout(scaleGraph, 100);
+        })();
+    </script>
+</body>
+</html>

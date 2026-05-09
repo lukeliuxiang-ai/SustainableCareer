@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生涯决策指南 · CIP × CASVE 与陪跑服务 | 睿观生涯</title>
+  <meta name="description" content="年薪30万以上的中高阶职场人：用 CIP 与 CASVE 把两难说清。图文并茂读懂经典框架，并了解睿观求职陪跑与职场陪跑如何陪你落地。">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --deep-blue: #0a1f2e;
+      --navy: #0f2d3d;
+      --slate: #1a3c5c;
+      --steel: #2c5a7a;
+      --gold: #d4a853;
+      --gold-light: #e8c878;
+      --gold-dark: #b8923e;
+      --cream: #faf8f3;
+      --ivory: #f5f0e8;
+      --text-dark: #1e2a35;
+      --text-body: #3d4f5f;
+      --text-light: #6b7d8d;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background: var(--cream);
+      color: var(--text-body);
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    .top-bar {
+      background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);
+      padding: max(12px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 12px max(16px, env(safe-area-inset-left));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .back-link {
+      color: rgba(255,255,255,0.7);
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .back-link:hover { color: var(--gold); }
+    .top-link {
+      color: var(--gold);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .top-link:hover { color: var(--gold-light); }
+    .hero {
+      background: linear-gradient(135deg, var(--deep-blue) 0%, var(--navy) 50%, var(--slate) 100%);
+      padding: 44px 20px 40px;
+      text-align: center;
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 40% 30%, rgba(212,168,83,0.12) 0%, transparent 55%);
+    }
+    .hero-inner { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+    .hero h1 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(1.45rem, 4vw, 2.15rem);
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: 12px;
+      line-height: 1.32;
+    }
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-lead {
+      color: rgba(255,255,255,0.72);
+      font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+      margin-bottom: 18px;
+    }
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px 14px;
+      margin-top: 8px;
+    }
+    .toc a {
+      color: rgba(255,255,255,0.85);
+      font-size: 13px;
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .toc a:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: var(--gold);
+      color: var(--gold-light);
+    }
+    .article {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 36px 18px 72px;
+    }
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gold-dark);
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+    .section-label::before {
+      content: '';
+      width: 22px;
+      height: 2px;
+      background: var(--gold);
+    }
+    .block {
+      background: #fff;
+      border-radius: 18px;
+      padding: 26px 22px 28px;
+      margin-bottom: 22px;
+      border: 1px solid rgba(0,0,0,0.06);
+      box-shadow: 0 4px 20px rgba(10,31,46,0.05);
+    }
+    .block h2 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(1.15rem, 2.8vw, 1.35rem);
+      color: var(--text-dark);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .block h2 i { color: var(--gold-dark); }
+    .block > p, .block li { font-size: 15px; }
+    .block p { margin-bottom: 12px; }
+    .block p:last-of-type { margin-bottom: 0; }
+    strong { color: var(--gold-dark); font-weight: 600; }
+    ul { margin: 12px 0 0 1.15rem; }
+    li { margin-bottom: 8px; }
+    .quote {
+      background: linear-gradient(135deg, var(--ivory) 0%, #fff 100%);
+      border-left: 4px solid var(--gold);
+      padding: 14px 18px;
+      border-radius: 0 14px 14px 0;
+      margin: 18px 0 0;
+      font-size: 14px;
+      color: var(--text-body);
+    }
+    .figure {
+      margin: 20px 0 4px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(212,168,83,0.2);
+      background: linear-gradient(180deg, #fff 0%, var(--ivory) 100%);
+      box-shadow: 0 10px 36px rgba(10,31,46,0.08);
+    }
+    .figure img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+    .figure figcaption {
+      padding: 12px 16px 14px;
+      font-size: 13px;
+      color: var(--text-light);
+      line-height: 1.65;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      background: rgba(255,255,255,0.65);
+    }
+    .steps { display: grid; gap: 11px; margin-top: 16px; }
+    .step {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 13px 15px;
+      background: var(--ivory);
+      border-radius: 12px;
+      border: 1px solid rgba(212,168,83,0.12);
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--deep-blue);
+      color: var(--gold);
+      font-weight: 800;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .step-body h3 { font-size: 14px; color: var(--text-dark); margin-bottom: 4px; }
+    .step-body p { font-size: 14px; margin: 0; color: var(--text-body); line-height: 1.65; }
+    .pyramid-note { font-size: 13px; color: var(--text-light); margin-top: 14px; line-height: 1.65; }
+    .svc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .svc-card {
+      display: block;
+      padding: 20px 18px;
+      border-radius: 16px;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid rgba(212,168,83,0.25);
+      background: linear-gradient(165deg, rgba(255,255,255,0.95) 0%, var(--ivory) 100%);
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+    .svc-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 36px rgba(10,31,46,0.1);
+      border-color: var(--gold);
+    }
+    .svc-card h3 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 1.05rem;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .svc-card h3 i { color: var(--gold-dark); }
+    .svc-card p { font-size: 13px; color: var(--text-body); line-height: 1.65; margin: 0; }
+    .svc-card .go {
+      margin-top: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--steel);
+    }
+    .svc-card:hover .go { color: var(--gold-dark); }
+    .svc-note {
+      font-size: 13px;
+      color: var(--text-light);
+      margin-top: 14px;
+      text-align: center;
+      line-height: 1.65;
+    }
+    .footer-cta {
+      text-align: center;
+      margin-top: 8px;
+      padding: 28px 22px;
+      background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);
+      border-radius: 18px;
+      color: rgba(255,255,255,0.78);
+      font-size: 14px;
+      line-height: 1.7;
+      border: 1px solid rgba(212,168,83,0.2);
+    }
+    .footer-cta .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 16px;
+    }
+    .footer-cta a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      color: var(--deep-blue);
+      padding: 11px 22px;
+      border-radius: 50px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .footer-cta a.secondary {
+      background: transparent;
+      color: rgba(255,255,255,0.92);
+      border: 2px solid rgba(255,255,255,0.35);
+    }
+    .footer-cta a.secondary:hover { border-color: var(--gold); color: var(--gold-light); }
+    .footer-cta a:hover { filter: brightness(1.06); }
+    @media (max-width: 720px) {
+      .svc-grid { grid-template-columns: 1fr; }
+      .article { padding-bottom: max(64px, calc(48px + env(safe-area-inset-bottom))); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <a href="toolbox.html" class="back-link"><i class="fas fa-arrow-left"></i> 返回工具箱</a>
+    <a href="index.html" class="top-link">睿观首页</a>
+  </div>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <h1>年薪 30 万以上的你<br><span>如何用 CIP 与 CASVE 做出生涯决策？</span></h1>
+      <p class="hero-lead">图文并茂读懂经典框架；若仍卡在「走或留」「转或不转」，再看求职陪跑与职场陪跑如何陪你把纸面框架变成可执行的路径。</p>
+      <nav class="toc" aria-label="本页导航">
+        <a href="#meta">全景</a>
+        <a href="#cip">CIP 模型</a>
+        <a href="#casve">CASVE 循环</a>
+        <a href="#coach">陪跑服务</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article">
+
+    <article class="block" id="meta">
+      <div class="section-label">读者画像</div>
+      <h2><i class="fas fa-user-tie"></i> 这篇指南主要写给谁？</h2>
+      <p>若你已在职场站稳脚跟，<strong>年薪约在 30 万—50 万及以上</strong>，通常意味着：生存压力相对可控，但<strong>选择成本变高</strong>——跳槽怕错、留守怕耗；转型怕晚、不动怕钝。你需要的往往不是更多「行业八卦」，而是一套<strong>能把焦虑摊开、命名、排序</strong>的语言与流程。</p>
+      <p>下面三张图分别对应：<strong>决策全景（meta）</strong>、<strong>CIP 认知信息加工</strong>、<strong>CASVE 决策循环</strong>。建议先通读配图，再回到文字对照自己的处境。</p>
+
+      <figure class="figure">
+        <img src="images/meta.png" alt="生涯决策与认知信息加工：全景示意图" width="1200" height="675" loading="lazy">
+        <figcaption>图 1 · 决策全景：把「我在哪、卡在哪、下一步可以是什么」放进同一画面里思考。若图中某一环长期空白，往往就是你在真实工作里反复纠结的根源。</figcaption>
+      </figure>
+
+      <div class="quote">高薪阶段的困惑，很少是「不知道选项」，更多是<strong>不敢为选项负责</strong>，或<strong>说不清自己真正要优化的是哪一层</strong>。</div>
+    </article>
+
+    <article class="block" id="cip">
+      <div class="section-label">基石模型</div>
+      <h2><i class="fas fa-layer-group"></i> CIP：认知信息加工模型</h2>
+      <p>CIP 把生涯决策看成一种<strong>信息加工能力</strong>：能否稳定处理关于自我与职业的信息，并做出可修正的选择。模型强调三块基石，由下至上相互支撑——缺哪一层，都会在「两难」里被放大成失眠与内耗。</p>
+      <ul>
+        <li><strong>自我知识</strong>：兴趣、能力、价值观、工作风格、承压与恢复方式等。没有它，选项再多也像在替别人的剧本选角。</li>
+        <li><strong>职业知识</strong>：行业逻辑、岗位真相、组织政治、薪酬与风险、路径门槛等。没有它，容易把「想象的机会」当成「真实的选择」。</li>
+        <li><strong>通用决策技能</strong>：定义问题、生成方案、权衡标准、执行与复盘——把前两者的原料炼成可执行决定。</li>
+      </ul>
+
+      <figure class="figure">
+        <img src="images/CIP.png" alt="CIP 认知信息加工模型：自我知识、职业知识与通用决策技能" width="1200" height="675" loading="lazy">
+        <figcaption>图 2 · CIP 结构示意：先认识自己，再认识环境，最后练习「如何做决定本身」。任一层长期偏废，都会在 35 岁后的关键节点集中「讨债」。</figcaption>
+      </figure>
+
+      <p class="pyramid-note">自检一句：你最近三个月的精力，主要花在补<strong>自我知识</strong>、补<strong>职业情报</strong>，还是在练<strong>决策与沟通</strong>？若几乎只堆在「刷机会」却回避自我澄清，跳槽也可能只是换地点重演剧本。</p>
+    </article>
+
+    <article class="block" id="casve">
+      <div class="section-label">行动循环</div>
+      <h2><i class="fas fa-sync-alt"></i> CASVE：从觉察到落地的五个站点</h2>
+      <p>CASVE 是 CIP 中常用的<strong>决策流程骨架</strong>（Communication → Analysis → Synthesis → Valuing → Execution）。它提醒你：<strong>跳过某一站，后面迟早要补课</strong>。下图可与下表对照阅读。</p>
+
+      <figure class="figure">
+        <img src="images/CASVE.png" alt="CASVE 生涯决策循环：沟通觉察、分析、综合、评估、执行" width="1200" height="675" loading="lazy">
+        <figcaption>图 3 · CASVE 循环：不是填表交差，而是允许你在新证据出现时，带着数据回到前面的站点——好决策是螺旋上升，不是一条直线赌到底。</figcaption>
+      </figure>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">C</div>
+          <div class="step-body">
+            <h3>沟通与觉察（Communication）</h3>
+            <p>我到底「不爽」什么？是意义、权力、节奏、人，还是风险边界？把模糊情绪翻译成<strong>可被讨论的问题陈述</strong>。</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">A</div>
+          <div class="step-body">
+            <h3>分析（Analysis）</h3>
+            <p>盘点资源与约束：家庭、现金流、声誉、学习曲线、时间窗口。区分<strong>事实、推断与恐惧</strong>，避免在假问题上用力。</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">S</div>
+          <div class="step-body">
+            <h3>综合（Synthesis）</h3>
+            <p>扩大选项：不止「走/留」二元，是否有内部转岗、渐进转型、谈判缓冲期等第三条路？先发散，再收敛。</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">V</div>
+          <div class="step-body">
+            <h3>评估（Valuing）</h3>
+            <p>为少数备选建立<strong>显性标准</strong>（收入、成长、健康、关系、意义感权重）。权衡是反复对齐「什么对我真正重要」，不是一次算清就封箱。</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">E</div>
+          <div class="step-body">
+            <h3>执行（Execution）</h3>
+            <p>把决定拆成下一步可验证行动，并设复盘点。新信息涌入时，允许<strong>带着数据回到 C 或 A</strong>。</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="block">
+      <div class="section-label">心法小结</div>
+      <h2><i class="fas fa-lightbulb"></i> 读完图之后，可以立刻做的三件事</h2>
+      <ul>
+        <li><strong>命名阶段</strong>：若总在「评估」里打转，可能其实是「自我知识」不足；若很快「执行」却屡屡后悔，可能跳过了「综合」与「评估」。</li>
+        <li><strong>小步实验</strong>：用行业访谈、内部项目、三个月窗口等<strong>低成本探路</strong>，代替一次性押上全部筹码。</li>
+        <li><strong>外脑与镜子</strong>：教练的价值，是帮你在 CASVE 各站之间<strong>既不逃避、也不空转</strong>，并把结论翻译成下周就能动的一两步。</li>
+      </ul>
+    </article>
+
+    <article class="block" id="coach">
+      <div class="section-label">睿观服务</div>
+      <h2><i class="fas fa-handshake"></i> 若框架读懂了，人仍然卡住——求职陪跑与职场陪跑能做什么？</h2>
+      <p>对<strong>年薪 30 万—50 万及以上</strong>的中高阶伙伴来说，常见痛点有两类：<strong>向外</strong>——要不要动、往哪动、如何谈薪与谈角色；<strong>向内</strong>——在现岗位上如何重建成长感、如何与新老板同频、如何把优势翻译成组织听得懂的结果。两者都可能需要<strong>测评 + 结构化对话 + 行动约定</strong>，而不是再多刷几份面经。</p>
+      <p>睿观将 Harrison 等测评与教练技术结合：<strong>求职陪跑</strong>侧重方向、履历与面试闭环；<strong>职场陪跑</strong>侧重在岗破局、向上管理与影响力。你可先通过工具箱中的测评与手册建立共同语言，再决定是否需要一对一陪跑加深。</p>
+
+      <div class="svc-grid">
+        <a class="svc-card" href="job_index.html">
+          <h3><i class="fas fa-briefcase"></i> 求职陪跑</h3>
+          <p>适合：计划跳槽/转型、希望厘清定位、强化面试与谈判、需要外部视角盯紧节奏的你。</p>
+          <p class="go">打开求职陪跑手册 <i class="fas fa-arrow-right"></i></p>
+        </a>
+        <a class="svc-card" href="workplace_index.html">
+          <h3><i class="fas fa-chart-line"></i> 职场陪跑</h3>
+          <p>适合：暂不离职但遇瓶颈、新语境适应、向上管理与日常抓手需要刻意练习的你。</p>
+          <p class="go">打开职场破局手册 <i class="fas fa-arrow-right"></i></p>
+        </a>
+      </div>
+      <p class="svc-note">约 50—100 万带、偏「意义与跃迁 / 新老板」可对照 <a href="workplace2.html" style="color:var(--steel);font-weight:600;">进阶手册（中高产篇）</a>；约 <strong>80—100 万及以上金领</strong>可对照 <a href="workplace3.html" style="color:var(--steel);font-weight:600;">进阶手册 · 金领篇</a>。</p>
+    </article>
+
+    <div class="footer-cta">
+      <p style="margin:0;">从读到做：<strong>工具箱</strong>内可预约测评与体验；首页了解服务与价格。</p>
+      <div class="row">
+        <a href="toolbox.html"><i class="fas fa-toolbox"></i> 资源工具箱</a>
+        <a href="career_assessment.html" class="secondary"><i class="fas fa-clipboard-check"></i> 职业测评</a>
+        <a href="index.html#paths" class="secondary"><i class="fas fa-route"></i> 服务路径</a>
+      </div>
+    </div>
+
+  </main>
+
+</body>
+</html>

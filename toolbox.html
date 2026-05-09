@@ -25,6 +25,17 @@
             --glass-border: rgba(255,255,255,0.12);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
@@ -232,6 +243,131 @@
             border: 1px solid rgba(0,0,0,0.08);
         }
 
+        /* 付费学员密码入口（职业技能 / 价值观 / 生涯饼图 / 生涯画布） */
+        .tool-card--gated {
+            cursor: pointer;
+        }
+        .tool-card--gated .gate-badge {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            font-size: 15px;
+            color: var(--deep-blue);
+            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
+            border: 2px solid rgba(255,255,255,0.9);
+            box-shadow: 0 4px 12px rgba(10, 31, 46, 0.12);
+            pointer-events: none;
+        }
+        .tool-card--gated:focus-visible {
+            outline: 2px solid var(--gold-dark);
+            outline-offset: 3px;
+        }
+
+        #accessModal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 10001;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.72);
+            backdrop-filter: blur(8px);
+            padding: 20px;
+        }
+        .access-modal-box {
+            background: #fff;
+            border-radius: 24px;
+            padding: 32px 28px 28px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 24px 56px rgba(0,0,0,0.25);
+            border: 1px solid rgba(212,168,83,0.2);
+        }
+        .access-modal-box .access-close {
+            position: absolute;
+            top: 12px;
+            right: 14px;
+            background: none;
+            border: none;
+            font-size: 26px;
+            line-height: 1;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+        .access-modal-box .access-icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 14px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--slate) 0%, var(--steel) 100%);
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+        }
+        .access-modal-box h3 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .access-modal-box .access-desc {
+            font-size: 13px;
+            color: var(--text-body);
+            line-height: 1.75;
+            text-align: left;
+            margin-bottom: 18px;
+        }
+        .access-modal-box input[type="password"] {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(0,0,0,0.1);
+            font-size: 15px;
+            font-family: inherit;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+        }
+        .access-modal-box input[type="password"]:focus {
+            outline: none;
+            border-color: var(--gold-dark);
+            box-shadow: 0 0 0 3px rgba(212,168,83,0.2);
+        }
+        .access-modal-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .access-modal-actions button {
+            font-family: inherit;
+            padding: 12px 20px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+        }
+        .access-btn-primary {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--deep-blue);
+        }
+        .access-btn-ghost {
+            background: transparent;
+            color: var(--text-light);
+            border: 1px solid rgba(0,0,0,0.1) !important;
+        }
+
         /* ===== CTA ===== */
         .cta-card {
             background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);
@@ -368,26 +504,29 @@
         <span class="tool-badge badge-assessment">经典量表</span>
       </a>
 
-      <a href="value.html" class="tool-card animate-on-scroll delay-2">
+      <div class="tool-card tool-card--gated animate-on-scroll delay-2" role="button" tabindex="0" title="点击查看说明并输入学员密码" data-gate-url="value.html" data-gate-canvas="0" onclick="openPaidAccessGate(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPaidAccessGate(this);}">
+        <span class="gate-badge" aria-hidden="true"><i class="fas fa-lock"></i></span>
         <div class="tool-icon">⚖️</div>
         <h3>价值观测评</h3>
         <p>厘清什么对你真正重要，避免在错误的价值观里消耗人生</p>
         <span class="tool-badge badge-assessment">决策罗盘</span>
-      </a>
+      </div>
 
-      <a href="Skills.html" class="tool-card animate-on-scroll">
+      <div class="tool-card tool-card--gated animate-on-scroll" role="button" tabindex="0" title="点击查看说明并输入学员密码" data-gate-url="Skills.html" data-gate-canvas="0" onclick="openPaidAccessGate(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPaidAccessGate(this);}">
+        <span class="gate-badge" aria-hidden="true"><i class="fas fa-lock"></i></span>
         <div class="tool-icon">🛠️</div>
         <h3>职业技能测评</h3>
         <p>盘点可迁移技能与能力缺口，为转型或跃升找到抓手</p>
         <span class="tool-badge badge-assessment">能力盘点</span>
-      </a>
+      </div>
 
-      <a href="Life-pie-chart.html" class="tool-card animate-on-scroll delay-1">
+      <div class="tool-card tool-card--gated animate-on-scroll delay-1" role="button" tabindex="0" title="点击查看说明并输入学员密码" data-gate-url="Life-pie-chart.html" data-gate-canvas="0" onclick="openPaidAccessGate(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPaidAccessGate(this);}">
+        <span class="gate-badge" aria-hidden="true"><i class="fas fa-lock"></i></span>
         <div class="tool-icon">🥧</div>
         <h3>生涯饼图</h3>
-        <p>与测评同源：把时间与精力画成饼，看见失衡与可腾挪的空间，再对照职业目标做微调</p>
+        <p>把时间与精力画成饼，看见失衡与可腾挪的空间，再对照职业目标做微调</p>
         <span class="tool-badge badge-assessment">结构自测</span>
-      </a>
+      </div>
 
       <a href="upper_mgt.html" class="tool-card animate-on-scroll delay-2">
         <div class="tool-icon">📡</div>
@@ -420,17 +559,18 @@
           <span class="tool-badge badge-tool">立即使用</span>
         </a>
 
-        <a href="#" class="tool-card animate-on-scroll delay-2" onclick="alert('即将上线，敬请期待'); return false;">
+        <div class="tool-card tool-card--gated animate-on-scroll delay-2" role="button" tabindex="0" title="点击查看说明并输入学员密码" data-gate-url="" data-gate-canvas="1" onclick="openPaidAccessGate(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPaidAccessGate(this);}">
+          <span class="gate-badge" aria-hidden="true"><i class="fas fa-lock"></i></span>
           <div class="tool-icon">🎨</div>
           <h3>生涯画布</h3>
           <p>一页纸梳理你的职业资产、关键关系与下一步行动</p>
           <span class="tool-badge badge-soon">即将上线</span>
-        </a>
+        </div>
 
         <a href="3life.html" class="tool-card animate-on-scroll delay-1">
           <div class="tool-icon">📈</div>
           <h3>职场人生的三条路径</h3>
-          <p>动态对比三条收入曲线：打开页面即伴以背景音乐（可静音），看见「殊途同归」背后的选择与代价</p>
+          <p>动态对比三条收入曲线，看见「殊途同归」背后的选择与代价</p>
           <span class="tool-badge badge-tool">立即体验</span>
         </a>
 
@@ -459,6 +599,22 @@
     <i class="fas fa-comments"></i>
     免费咨询
   </a>
+
+  <!-- 付费学员访问验证 -->
+  <div id="accessModal" aria-modal="true" role="dialog" aria-labelledby="accessModalTitle">
+    <div class="access-modal-box">
+      <button type="button" class="access-close" onclick="closePaidAccessGate()" aria-label="关闭">&times;</button>
+      <div class="access-icon" aria-hidden="true"><i class="fas fa-user-lock"></i></div>
+      <h3 id="accessModalTitle">付费学员专属入口</h3>
+      <p class="access-desc">以下工具仅向已报名睿观<strong>测评解读</strong>或<strong>陪跑服务</strong>的付费学员开放。请先输入教练为你开通权限时提供的<strong>访问密码</strong>，验证通过后即可使用。<br><br>若你尚未开通，可先使用页内「预约诊断」或添加顾问微信，了解适合你的套餐与开通方式。</p>
+      <label for="accessPwdInput" class="visually-hidden">访问密码</label>
+      <input type="password" id="accessPwdInput" autocomplete="off" placeholder="请输入访问密码" maxlength="32">
+      <div class="access-modal-actions">
+        <button type="button" class="access-btn-primary" onclick="submitPaidAccessGate()">验证并进入</button>
+        <button type="button" class="access-btn-ghost" onclick="closePaidAccessGate()">取消</button>
+      </div>
+    </div>
+  </div>
 
   <!-- QR Modal -->
   <div id="qrModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(10px);">
@@ -497,6 +653,57 @@
     }
     document.getElementById('qrModal').addEventListener('click', (e) => {
       if (e.target === document.getElementById('qrModal')) closeQRModal();
+    });
+
+    const PAID_GATE_PASSWORD = '1299';
+    let paidGateTargetEl = null;
+
+    function openPaidAccessGate(el) {
+      paidGateTargetEl = el;
+      const m = document.getElementById('accessModal');
+      const pwd = document.getElementById('accessPwdInput');
+      if (pwd) pwd.value = '';
+      m.style.display = 'flex';
+      setTimeout(() => { if (pwd) pwd.focus(); }, 80);
+    }
+
+    function closePaidAccessGate() {
+      document.getElementById('accessModal').style.display = 'none';
+      paidGateTargetEl = null;
+      const pwd = document.getElementById('accessPwdInput');
+      if (pwd) pwd.value = '';
+    }
+
+    function submitPaidAccessGate() {
+      if (!paidGateTargetEl) return;
+      const raw = document.getElementById('accessPwdInput').value.trim();
+      if (raw !== PAID_GATE_PASSWORD) {
+        alert('密码不正确。请核对后重试，或联系教练确认你的学员权限是否已开通。');
+        return;
+      }
+      const url = paidGateTargetEl.getAttribute('data-gate-url') || '';
+      const isCanvas = paidGateTargetEl.getAttribute('data-gate-canvas') === '1';
+      closePaidAccessGate();
+      if (isCanvas) {
+        alert('「生涯画布」页面仍在打磨与内测中。若你已具备付费学员身份，可联系睿观生涯教练了解上线进展与优先体验方式。');
+        return;
+      }
+      if (url) window.location.href = url;
+    }
+
+    document.getElementById('accessModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('accessModal')) closePaidAccessGate();
+    });
+    document.getElementById('accessPwdInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        submitPaidAccessGate();
+      }
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.getElementById('accessModal').style.display === 'flex') {
+        closePaidAccessGate();
+      }
     });
   </script>
 

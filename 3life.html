@@ -488,7 +488,7 @@
     </style>
 </head>
 <body>
-    <audio id="bgMusic" src="images/music.wav" preload="auto" loop playsinline></audio>
+    <audio id="bgMusic" src="images/music.mp3" preload="auto" loop playsinline></audio>
     <div class="page-ui">
         <a href="toolbox.html">← 资源工具箱</a>
         <button type="button" id="musicToggle" aria-pressed="false" title="背景音乐">🔊 音乐</button>
@@ -637,6 +637,24 @@
         const questionArea = document.getElementById('questionArea');
         const ifButton = document.getElementById('ifButton');
         const revealText = document.getElementById('revealText');
+
+        const bgMusic = document.getElementById('bgMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        let musicUserMuted = false;
+
+        function tryPlayBgm() {
+            if (!bgMusic || musicUserMuted) return;
+            bgMusic.muted = false;
+            bgMusic.volume = 0.78;
+            var p = bgMusic.play();
+            if (p && typeof p.catch === 'function') {
+                p.catch(function () {});
+            }
+        }
+
+        function pauseBgm() {
+            if (bgMusic) bgMusic.pause();
+        }
 
         canvas.width = 1200;
         canvas.height = 750;
@@ -1006,11 +1024,16 @@
 
             isPlaying = false;
             cancelAnimationFrame(animationId);
+            pauseBgm();
             playBtn.innerHTML = '▶ 继续';
         }
 
         function resetAnimation() {
             pauseAnimation();
+            if (bgMusic) {
+                bgMusic.pause();
+                try { bgMusic.currentTime = 0; } catch (e) {}
+            }
             progressBar.style.width = '0%';
             timeIndicator.textContent = '00:00';
             questionArea.classList.remove('show');
@@ -1076,27 +1099,7 @@
         pauseBtn.addEventListener('click', pauseAnimation);
         resetBtn.addEventListener('click', resetAnimation);
 
-        // —— 背景音乐 images/music.wav：进入页面即尝试播放；多数浏览器需用户手势，故首次点击页面或点「播放」时再尝试 ——
-        const bgMusic = document.getElementById('bgMusic');
-        const musicToggle = document.getElementById('musicToggle');
-        let musicUserMuted = false;
-
-        function tryPlayBgm() {
-            if (!bgMusic || musicUserMuted) return;
-            bgMusic.volume = 0.78;
-            const p = bgMusic.play();
-            if (p && typeof p.catch === 'function') {
-                p.catch(function () { /* 自动播放被拦截时静默，等待用户点击 */ });
-            }
-        }
-
-        function pauseBgm() {
-            if (bgMusic) bgMusic.pause();
-        }
-
-        window.addEventListener('load', tryPlayBgm);
-        document.body.addEventListener('click', tryPlayBgm, { once: true });
-
+        // —— 背景音乐 images/music.wav：仅在点击「播放」或取消静音时播放（不在打开页面时自动播放） ——
         if (musicToggle) {
             musicToggle.addEventListener('click', function (e) {
                 e.stopPropagation();

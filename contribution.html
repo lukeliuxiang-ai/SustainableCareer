@@ -68,29 +68,6 @@
         }
         .top-link:hover { color: var(--gold-light); }
 
-        .deck-frame {
-            pointer-events: none;
-            position: fixed;
-            inset: 0;
-            z-index: 40;
-        }
-        .deck-colorpatch {
-            position: absolute;
-            top: max(48px, env(safe-area-inset-top));
-            left: 0;
-            max-height: min(20vh, 120px);
-            max-width: min(45vw, 300px);
-            object-fit: contain;
-        }
-        .deck-logo {
-            position: absolute;
-            top: max(52px, calc(8px + env(safe-area-inset-top)));
-            right: max(12px, env(safe-area-inset-right));
-            max-height: min(11vh, 80px);
-            max-width: min(36vw, 150px);
-            object-fit: contain;
-        }
-
         .shell {
             position: relative;
             z-index: 60;
@@ -445,11 +422,6 @@
     <div class="top-bar">
         <a href="toolbox.html" class="back-link"><i class="fas fa-arrow-left"></i> 资源工具箱</a>
         <a href="index.html" class="top-link">睿观首页</a>
-    </div>
-
-    <div class="deck-frame" aria-hidden="true">
-        <img class="deck-colorpatch" src="images/colorpatch.webp" alt="">
-        <img class="deck-logo" src="images/lh_logo.png" alt="Logo">
     </div>
 
     <div class="shell">

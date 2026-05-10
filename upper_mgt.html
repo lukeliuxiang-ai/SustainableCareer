@@ -74,6 +74,75 @@
         }
         .top-cta:hover { background: var(--gold-light); transform: scale(1.05); }
 
+        .top-bar-nav-cluster {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px 16px;
+            margin-left: auto;
+            justify-content: flex-end;
+            max-width: min(100%, 720px);
+        }
+        .top-nav-link {
+            color: rgba(255,255,255,0.85);
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .top-nav-link:hover { color: #fff; }
+        .top-bar .nav-dropdown { position: relative; }
+        .top-bar .nav-dropdown-toggle {
+            color: rgba(255,255,255,0.85);
+            font-size: 13px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            padding: 0;
+            font-family: inherit;
+        }
+        .top-bar .nav-dropdown-toggle:hover { color: #fff; }
+        .top-bar .nav-dropdown-toggle i { font-size: 11px; transition: transform 0.25s ease; }
+        .top-bar .nav-dropdown.open .nav-dropdown-toggle i { transform: rotate(180deg); }
+        .top-bar .nav-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            left: auto;
+            min-width: 210px;
+            padding: 10px;
+            background: rgba(10,31,46,0.92);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 14px;
+            box-shadow: 0 16px 36px rgba(0,0,0,0.25);
+            display: none;
+            z-index: 200;
+        }
+        .top-bar .nav-dropdown.open .nav-dropdown-menu { display: block; }
+        .top-bar .nav-dropdown-menu a {
+            display: block;
+            color: rgba(255,255,255,0.9);
+            font-size: 13px;
+            padding: 9px 11px;
+            border-radius: 9px;
+            text-decoration: none;
+            margin-bottom: 4px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.25s ease;
+        }
+        .top-bar .nav-dropdown-menu a:last-child { margin-bottom: 0; }
+        .top-bar .nav-dropdown-menu a:hover {
+            background: rgba(255,255,255,0.13);
+            color: #fff;
+            border-color: rgba(212,168,83,0.35);
+        }
+
         /* ===== HERO ===== */
         .hero {
             background: linear-gradient(135deg, var(--deep-blue) 0%, var(--navy) 50%, var(--slate) 100%);
@@ -614,9 +683,24 @@
         <a href="toolbox.html" class="back-link">
             <i class="fas fa-arrow-left"></i> 返回工具箱
         </a>
-        <a href="index.html" class="back-link" style="margin-left:auto;">
-            返回首页 <i class="fas fa-home" style="margin-left:6px;"></i>
-        </a>
+        <div class="top-bar-nav-cluster">
+            <a href="index.html#philosophy" class="top-nav-link">理念</a>
+            <a href="index.html#path-job" class="top-nav-link">服务路径</a>
+            <a href="Case_study.html" class="top-nav-link">成功案例</a>
+            <div class="nav-dropdown" id="assessmentDropdown">
+                <button type="button" class="nav-dropdown-toggle" id="assessmentDropdownToggle" aria-expanded="false">
+                    资源工具箱 <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="nav-dropdown-menu" id="assessmentDropdownMenu">
+                    <div style="padding: 6px 11px 4px; font-size: 11px; color: var(--gold); letter-spacing: 1px; font-weight: 600; text-transform: uppercase;">职业测评</div>
+                    <a href="AboutHA.html">Harrison测评</a>
+                    <a href="career_assessment.html">霍兰德测评</a>
+                    <a href="upper_mgt.html">向上管理测评</a>
+                    <div style="padding: 10px 11px 4px; font-size: 11px; color: var(--gold); letter-spacing: 1px; font-weight: 600; text-transform: uppercase; border-top: 1px solid rgba(255,255,255,0.08); margin-top: 6px;">工具箱</div>
+                    <a href="toolbox.html">全部工具</a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="hero">
@@ -982,6 +1066,24 @@
 
         // Initialize progress
         updateProgress();
+
+        (function () {
+            var assessmentDropdown = document.getElementById('assessmentDropdown');
+            var assessmentDropdownToggle = document.getElementById('assessmentDropdownToggle');
+            if (assessmentDropdown && assessmentDropdownToggle) {
+                assessmentDropdownToggle.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    var isOpen = assessmentDropdown.classList.toggle('open');
+                    assessmentDropdownToggle.setAttribute('aria-expanded', String(isOpen));
+                });
+                document.addEventListener('click', function (e) {
+                    if (!assessmentDropdown.contains(e.target)) {
+                        assessmentDropdown.classList.remove('open');
+                        assessmentDropdownToggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+        })();
     </script>
 
 </body>

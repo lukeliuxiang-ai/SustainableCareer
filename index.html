@@ -196,6 +196,7 @@
         .paths-header .section-desc { color: rgba(255,255,255,0.6); margin: 0 auto; }
         .path-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; position: relative; z-index: 2; }
         .path-card { background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 28px; padding: 40px 32px; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden; text-decoration: none; display: block; }
+        #path-job { scroll-margin-top: 96px; }
         .path-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--gold), var(--gold-light)); transform: scaleX(0); transition: transform 0.5s ease; }
         .path-card:hover::before { transform: scaleX(1); }
         .path-card:hover { background: rgba(255,255,255,0.12); border-color: rgba(212,168,83,0.3); transform: translateY(-12px); box-shadow: 0 30px 60px rgba(0,0,0,0.3); }
@@ -604,7 +605,7 @@
         </div>
 
         <div class="path-cards">
-            <a href="job_index.html" class="path-card animate-on-scroll">
+            <a href="job_index.html" class="path-card animate-on-scroll" id="path-job">
                 <div class="path-icon">🔍</div>
                 <h3>求职转型</h3>
                 <div class="path-subtitle">JOB TRANSITION</div>

@@ -34,6 +34,7 @@
             line-height: 1.7;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            padding-top: 56px;
         }
         img { max-width: 100%; height: auto; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
@@ -44,7 +45,7 @@
 
         /* ===== HERO ===== */
         .hero {
-            min-height: 100vh;
+            min-height: calc(100vh - 56px);
             background: linear-gradient(135deg, var(--deep-blue) 0%, var(--navy) 40%, var(--slate) 100%);
             position: relative;
             display: flex;
@@ -108,7 +109,7 @@
         .form-hint { font-size: 12px; color: var(--text-light); margin-top: 6px; }
 
         /* ===== QUIZ ===== */
-        .quiz-section { display: none; background: linear-gradient(180deg, var(--ivory) 0%, var(--cream) 100%); min-height: 100vh; padding: 100px 24px 80px; }
+        .quiz-section { display: none; background: linear-gradient(180deg, var(--ivory) 0%, var(--cream) 100%); min-height: 100vh; padding: 88px 24px 80px; }
         .quiz-container { max-width: 800px; margin: 0 auto; }
         .progress-container { background: #fff; border-radius: 16px; padding: 20px; margin-bottom: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
         .progress-bar { height: 8px; background: var(--ivory); border-radius: 4px; overflow: hidden; }
@@ -128,7 +129,7 @@
         .option-btn.selected .option-score { color: var(--gold-light); }
 
         /* ===== RESULT ===== */
-        .result-section { display: none; background: linear-gradient(180deg, var(--ivory) 0%, var(--cream) 100%); min-height: 100vh; padding: 100px 24px 80px; }
+        .result-section { display: none; background: linear-gradient(180deg, var(--ivory) 0%, var(--cream) 100%); min-height: 100vh; padding: 88px 24px 80px; }
         .result-container { max-width: 900px; margin: 0 auto; }
         .result-header { text-align: center; margin-bottom: 60px; }
         .result-code { font-family: 'Noto Serif SC', serif; font-size: 4rem; font-weight: 700; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 16px; }
@@ -218,29 +219,23 @@
             border-top: 1px solid var(--ivory);
         }
 
-        /* ===== TOP BAR ===== */
-        .top-bar {
-            background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);
-            padding: 12px 24px;
+        .site-unified-nav-left {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
+            gap: 10px;
+            flex-wrap: wrap;
         }
-        .top-bar a { text-decoration: none; }
-        .back-link {
+        .site-back-link {
             color: rgba(255,255,255,0.7);
             font-size: 13px;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 6px;
+            text-decoration: none;
             transition: color 0.3s;
         }
-        .back-link:hover { color: var(--gold); }
-        .top-cta {
+        .site-back-link:hover { color: var(--gold); }
+        .site-top-cta {
             background: var(--gold);
             color: var(--deep-blue);
             padding: 6px 16px;
@@ -251,8 +246,94 @@
             transition: all 0.3s;
             cursor: pointer;
             border: none;
+            font-family: inherit;
         }
-        .top-cta:hover { background: var(--gold-light); transform: scale(1.05); }
+        .site-top-cta:hover { background: var(--gold-light); transform: scale(1.05); }
+
+        .site-unified-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);
+            padding: 12px max(16px, env(safe-area-inset-right)) 12px max(16px, env(safe-area-inset-left));
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+            box-sizing: border-box;
+        }
+        .site-nav-cluster {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px 14px;
+            margin-left: auto;
+            justify-content: flex-end;
+            max-width: min(100%, 760px);
+        }
+        .site-nav-link {
+            color: rgba(255,255,255,0.85);
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .site-nav-link:hover { color: #fff; }
+        .site-unified-nav .nav-dropdown { position: relative; }
+        .site-unified-nav .nav-dropdown-toggle {
+            color: rgba(255,255,255,0.85);
+            font-size: 13px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            padding: 0;
+            font-family: inherit;
+        }
+        .site-unified-nav .nav-dropdown-toggle:hover { color: #fff; }
+        .site-unified-nav .nav-dropdown-toggle i { font-size: 11px; transition: transform 0.25s ease; }
+        .site-unified-nav .nav-dropdown.open .nav-dropdown-toggle i { transform: rotate(180deg); }
+        .site-unified-nav .nav-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            left: auto;
+            min-width: 210px;
+            padding: 10px;
+            background: rgba(10,31,46,0.92);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 14px;
+            box-shadow: 0 16px 36px rgba(0,0,0,0.25);
+            display: none;
+            z-index: 1001;
+        }
+        .site-unified-nav .nav-dropdown.open .nav-dropdown-menu { display: block; }
+        .site-unified-nav .nav-dropdown-menu a {
+            display: block;
+            color: rgba(255,255,255,0.9);
+            font-size: 13px;
+            padding: 9px 11px;
+            border-radius: 9px;
+            text-decoration: none;
+            margin-bottom: 4px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.25s ease;
+        }
+        .site-unified-nav .nav-dropdown-menu a:last-child { margin-bottom: 0; }
+        .site-unified-nav .nav-dropdown-menu a:hover {
+            background: rgba(255,255,255,0.13);
+            color: #fff;
+            border-color: rgba(212,168,83,0.35);
+        }
 
         /* ===== FLOATING CONSULT BUTTON ===== */
         .floating-consult {
@@ -464,7 +545,7 @@
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            .hero { min-height: 100svh; padding: 88px 16px 48px; }
+            .hero { min-height: calc(100svh - 56px); padding: 88px 16px 48px; }
             .hero-ring { display: none; }
             .hero h1 { font-size: 1.75rem; }
             .hero-content { padding-top: env(safe-area-inset-top, 0); }
@@ -491,6 +572,33 @@
     </style>
 </head>
 <body>
+
+    <div class="site-unified-nav">
+        <div class="site-unified-nav-left">
+            <a href="toolbox.html" class="site-back-link">
+                <i class="fas fa-arrow-left"></i> 返回工具箱
+            </a>
+            <button type="button" class="site-top-cta" onclick="showPayModal()">1299元体验</button>
+        </div>
+        <div class="site-nav-cluster">
+            <a href="index.html#philosophy" class="site-nav-link">理念</a>
+            <a href="index.html#path-job" class="site-nav-link">服务路径</a>
+            <a href="Case_study.html" class="site-nav-link">成功案例</a>
+            <div class="nav-dropdown" id="assessmentDropdown">
+                <button type="button" class="nav-dropdown-toggle" id="assessmentDropdownToggle" aria-expanded="false">
+                    资源工具箱 <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="nav-dropdown-menu" id="assessmentDropdownMenu">
+                    <div style="padding: 6px 11px 4px; font-size: 11px; color: var(--gold); letter-spacing: 1px; font-weight: 600; text-transform: uppercase;">职业测评</div>
+                    <a href="AboutHA.html">Harrison测评</a>
+                    <a href="career_assessment.html">霍兰德测评</a>
+                    <a href="upper_mgt.html">向上管理测评</a>
+                    <div style="padding: 10px 11px 4px; font-size: 11px; color: var(--gold); letter-spacing: 1px; font-weight: 600; text-transform: uppercase; border-top: 1px solid rgba(255,255,255,0.08); margin-top: 6px;">工具箱</div>
+                    <a href="toolbox.html">全部工具</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero" id="hero">
@@ -573,12 +681,6 @@
 
     <!-- Quiz Section -->
     <section class="quiz-section" id="quiz">
-        <div class="top-bar">
-            <a href="index.html" class="back-link">
-                <i class="fas fa-arrow-left"></i> 返回首页
-            </a>
-            <button class="top-cta" onclick="showPayModal()">1299元体验</button>
-        </div>
         <div class="quiz-container">
             <div class="progress-container">
                 <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
@@ -594,12 +696,6 @@
 
     <!-- Result Section -->
     <section class="result-section" id="result">
-        <div class="top-bar">
-            <a href="index.html" class="back-link">
-                <i class="fas fa-arrow-left"></i> 返回首页
-            </a>
-            <button class="top-cta" onclick="showPayModal()">1299元体验</button>
-        </div>
         <div class="result-container">
             <div class="result-header">
                 <div class="result-code-label">您的霍兰德职业兴趣代码</div>
@@ -1219,6 +1315,24 @@
                 closePayModal();
             }
         });
+
+        (function () {
+            var assessmentDropdown = document.getElementById('assessmentDropdown');
+            var assessmentDropdownToggle = document.getElementById('assessmentDropdownToggle');
+            if (assessmentDropdown && assessmentDropdownToggle) {
+                assessmentDropdownToggle.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    var isOpen = assessmentDropdown.classList.toggle('open');
+                    assessmentDropdownToggle.setAttribute('aria-expanded', String(isOpen));
+                });
+                document.addEventListener('click', function (e) {
+                    if (!assessmentDropdown.contains(e.target)) {
+                        assessmentDropdown.classList.remove('open');
+                        assessmentDropdownToggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+        })();
     </script>
 </body>
 </html>

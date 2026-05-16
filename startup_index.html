@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>创业导航陪跑手册 · 选对赛道选对人 | 睿观生涯</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -20,6 +20,10 @@
       --text-dark: #1e2a35;
       --text-body: #3d4f5f;
       --text-light: #6b7d8d;
+      --glass: rgba(255,255,255,0.08);
+      --glass-border: rgba(255,255,255,0.12);
+      --site-header-h: 128px;
+      --startup-scroll-margin: 110px;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -37,45 +41,127 @@
     .animate-on-scroll { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
     .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
 
-    /* ===== TOP BAR ===== */
-    .top-bar {
-      background: linear-gradient(135deg, var(--deep-blue) 0%, var(--slate) 100%);
-      padding: max(12px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 12px max(16px, env(safe-area-inset-left));
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .back-link {
-      color: rgba(255,255,255,0.7);
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    .back-link:hover { color: var(--gold); }
-    .top-cta {
+    /* ===== NAV（与 workplace_index 一致）===== */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; transition: all 0.4s ease; }
+    .nav.scrolled { background: rgba(10,31,46,0.95); backdrop-filter: blur(20px); box-shadow: 0 4px 30px rgba(0,0,0,0.2); }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit; }
+    .nav-logo-text { color: #fff; font-size: 18px; font-weight: 700; letter-spacing: 1px; }
+    .nav-logo-sub { color: var(--gold); font-size: 10px; letter-spacing: 3px; margin-top: 2px; }
+    .nav-links { display: flex; gap: 28px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+    .nav-links a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.3s; position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px; background: var(--gold); transition: width 0.3s; }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.nav-top-cta {
       background: var(--gold);
       color: var(--deep-blue);
       padding: 6px 16px;
       border-radius: 20px;
       font-size: 12px;
       font-weight: 700;
-      text-decoration: none;
-      transition: all 0.3s;
     }
-    .top-cta:hover { background: var(--gold-light); transform: scale(1.05); }
+    .nav-links a.nav-top-cta::after { display: none; }
+    .nav-links a.nav-top-cta:hover {
+      background: var(--gold-light);
+      color: var(--deep-blue);
+      transform: scale(1.05);
+    }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown-toggle {
+      color: rgba(255,255,255,0.85);
+      font-size: 14px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      padding: 0;
+      font-family: inherit;
+    }
+    .nav-dropdown-toggle:hover { color: #fff; }
+    .nav-dropdown-toggle i { font-size: 12px; transition: transform 0.25s ease; }
+    .nav-dropdown.open .nav-dropdown-toggle i { transform: rotate(180deg); }
+    .nav-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 14px);
+      left: 0;
+      min-width: 190px;
+      padding: 10px;
+      background: rgba(10,31,46,0.72);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 14px;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.25);
+      display: none;
+      z-index: 1100;
+    }
+    .nav-dropdown.open .nav-dropdown-menu { display: block; }
+    .nav-dropdown-menu a {
+      display: block;
+      color: rgba(255,255,255,0.9);
+      font-size: 13px;
+      padding: 9px 11px;
+      border-radius: 9px;
+      text-decoration: none;
+      margin-bottom: 4px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: all 0.25s ease;
+    }
+    .nav-dropdown-menu a:last-child { margin-bottom: 0; }
+    .nav-dropdown-menu a::after { display: none; }
+    .nav-dropdown-menu a:hover {
+      background: rgba(255,255,255,0.13);
+      color: #fff;
+      border-color: rgba(212,168,83,0.35);
+    }
+    .nav-mobile-toggle { display: none; color: #fff; font-size: 24px; cursor: pointer; }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(10,31,46,0.98);
+      z-index: 999;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+      gap: 6px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      padding: max(52px, calc(8px + env(safe-area-inset-top))) 20px max(24px, env(safe-area-inset-bottom));
+      box-sizing: border-box;
+    }
+    .mobile-menu.active { display: flex; }
+    .mobile-menu a {
+      color: #fff;
+      font-size: clamp(14px, 3.6vw, 16px);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 11px 14px;
+      border-radius: 10px;
+      text-align: center;
+      line-height: 1.35;
+    }
+    .mobile-menu a:active { background: rgba(255,255,255,0.08); }
+    .mobile-menu .close-btn {
+      position: absolute;
+      top: max(10px, env(safe-area-inset-top));
+      right: max(12px, env(safe-area-inset-right));
+      z-index: 1001;
+      color: #fff;
+      font-size: 28px;
+      cursor: pointer;
+      line-height: 1;
+      padding: 8px;
+    }
 
     /* ===== HERO MINI ===== */
     .hero-mini {
       background: linear-gradient(135deg, var(--deep-blue) 0%, var(--navy) 50%, var(--slate) 100%);
-      padding: 60px 24px 48px;
+      padding: calc(40px + var(--site-header-h)) 24px 48px;
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -115,8 +201,10 @@
       overflow-x: auto;
       border-bottom: 1px solid rgba(0,0,0,0.06);
       position: sticky;
-      top: 48px;
+      top: var(--site-header-h);
       z-index: 99;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
     }
     .quick-nav a {
       white-space: nowrap;
@@ -140,6 +228,9 @@
 
     /* ===== SECTION ===== */
     .section { margin-bottom: 56px; }
+    .section[id] {
+      scroll-margin-top: var(--startup-scroll-margin, 110px);
+    }
     .section-label {
       display: inline-flex;
       align-items: center;
@@ -191,14 +282,18 @@
     .qa-q {
       padding: 16px 20px;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 12px;
       cursor: pointer;
       user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      min-height: 48px;
+      box-sizing: border-box;
     }
     .q-icon {
       width: 28px;
       height: 28px;
+      margin-top: 2px;
       background: linear-gradient(135deg, var(--ivory) 0%, var(--cream) 100%);
       border-radius: 50%;
       display: flex;
@@ -216,11 +311,22 @@
       color: var(--text-dark);
       flex: 1;
       line-height: 1.5;
+      min-width: 0;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
     .qa-toggle {
       color: var(--text-light);
       font-size: 12px;
       transition: transform 0.3s;
+      flex-shrink: 0;
+      margin-top: 4px;
+      padding: 4px;
+    }
+    @media (min-width: 641px) {
+      .qa-q { align-items: center; min-height: 0; }
+      .q-icon { margin-top: 0; }
+      .qa-toggle { margin-top: 0; }
     }
     .qa-card.open .qa-toggle {
       transform: rotate(180deg);
@@ -236,9 +342,11 @@
       font-size: 14px;
       color: var(--text-body);
       line-height: 1.75;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
     .a-text strong { color: var(--gold-dark); font-weight: 600; }
-    .a-text ul { margin: 10px 0 10px 18px; }
+    .a-text ul { margin: 10px 0 10px 18px; padding-inline-start: 0; }
     .a-text li { margin-bottom: 6px; }
     .tip-box {
       background: linear-gradient(135deg, var(--ivory) 0%, #fff 100%);
@@ -325,31 +433,134 @@
     }
     .floating-cta:hover { transform: scale(1.05); }
 
+    @media (max-width: 768px) {
+      :root { --site-header-h: 76px; }
+      .nav { padding: 10px 14px; }
+      .nav-logo { gap: 8px; }
+      .nav-logo img { height: 56px !important; }
+      .nav-logo-text { font-size: 14px; letter-spacing: 0.2px; }
+      .nav-logo-sub { font-size: 9px; letter-spacing: 1px; margin-top: 0; }
+      .nav-links { display: none; }
+      .nav-mobile-toggle { display: block; }
+    }
+
     /* ===== RESPONSIVE ===== */
     @media (max-width: 640px) {
-      .hero-mini { padding: 40px 16px 28px; }
-      .content { padding: 28px 14px max(72px, calc(56px + env(safe-area-inset-bottom))); }
-      .qa-a { padding-left: 20px; }
-      .quick-nav { padding: 12px 14px; }
+      :root { --startup-scroll-margin: 120px; }
+      .hero-mini {
+        padding: calc(24px + var(--site-header-h)) max(16px, env(safe-area-inset-right)) 28px max(16px, env(safe-area-inset-left));
+      }
+      .hero-mini h1 { font-size: clamp(1.45rem, 5.2vw, 1.85rem); }
+      .hero-mini p { font-size: 0.95rem; padding: 0 4px; }
+      .quick-nav {
+        padding: 10px max(12px, env(safe-area-inset-right)) 10px max(12px, env(safe-area-inset-left));
+        gap: 6px;
+        scrollbar-width: none;
+      }
+      .quick-nav::-webkit-scrollbar { display: none; height: 0; width: 0; }
+      .quick-nav a {
+        padding: 10px 14px;
+        font-size: 12px;
+        min-height: 40px;
+        display: inline-flex;
+        align-items: center;
+      }
+      .content {
+        padding: 24px max(14px, env(safe-area-inset-right)) max(88px, calc(64px + env(safe-area-inset-bottom))) max(14px, env(safe-area-inset-left));
+      }
+      .section { margin-bottom: 44px; }
+      .section h2 { font-size: clamp(1.2rem, 4.5vw, 1.45rem); }
+      .section-quote {
+        padding: 12px 14px;
+        font-size: 13px;
+        margin-bottom: 18px;
+      }
+      .qa-q { padding: 14px 16px; gap: 10px; min-height: 52px; }
+      .q-icon { width: 26px; height: 26px; font-size: 12px; }
+      .q-text { font-size: 14px; }
+      .qa-a {
+        padding: 0 16px 16px 16px;
+        margin-top: 0;
+      }
+      .a-text { font-size: 15px; line-height: 1.78; }
+      .a-text ul { margin-left: 16px; }
+      .tip-box { padding: 10px 14px; font-size: 13px; margin: 12px 0; }
+      .cta-card { padding: 22px 18px; margin: 28px 0; border-radius: 16px; }
+      .cta-card h3 { font-size: 1.15rem; }
+      .cta-card p { font-size: 13px; }
+      .cta-btn {
+        padding: 12px 22px;
+        font-size: 13px;
+        width: 100%;
+        max-width: 320px;
+        justify-content: center;
+        box-sizing: border-box;
+      }
       .floating-cta {
         bottom: calc(12px + env(safe-area-inset-bottom));
-        right: 12px;
-        left: 12px;
+        right: max(12px, env(safe-area-inset-right));
+        left: max(12px, env(safe-area-inset-left));
         justify-content: center;
-        padding: 12px 16px;
+        padding: 14px 16px;
+        min-height: 48px;
         font-size: 13px;
+        box-sizing: border-box;
       }
+    }
+    @media (max-width: 380px) {
+      .quick-nav a { padding: 9px 11px; font-size: 11px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Bar -->
-  <div class="top-bar">
-    <a href="index.html" class="back-link">
-      <i class="fas fa-arrow-left"></i> 返回首页
+  <nav class="nav" id="navbar">
+    <a href="index.html" class="nav-logo">
+      <img src="images/Company logo.png" alt="睿观生涯教练" style="height:100px;width:auto;object-fit:contain;">
+      <div>
+        <div class="nav-logo-text">选对赛道跟对人</div>
+        <div class="nav-logo-sub">释放个人潜能，实现可持续职业发展</div>
+      </div>
     </a>
-    <a href="index.html#pricing" class="top-cta">1599元体验</a>
+    <div class="nav-links">
+      <a href="index.html#pricing" class="nav-top-cta">1599元体验</a>
+      <a href="index.html#philosophy">理念</a>
+      <a href="index.html#path-job">服务路径</a>
+      <a href="Case_study.html">成功案例</a>
+      <div class="nav-dropdown" id="assessmentDropdown">
+        <button type="button" class="nav-dropdown-toggle" id="assessmentDropdownToggle" aria-expanded="false">
+          资源工具箱 <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="nav-dropdown-menu" id="assessmentDropdownMenu">
+          <div style="padding: 6px 11px 4px; font-size: 11px; color: var(--gold); letter-spacing: 1px; font-weight: 600; text-transform: uppercase;">职业测评</div>
+          <a href="AboutHA.html">Harrison测评</a>
+          <a href="career_assessment.html">霍兰德测评</a>
+          <a href="upper_mgt.html">向上管理测评</a>
+          <div style="padding: 10px 11px 4px; font-size: 11px; color: var(--gold); letter-spacing: 1px; font-weight: 600; text-transform: uppercase; border-top: 1px solid rgba(255,255,255,0.08); margin-top: 6px;">工具箱</div>
+          <a href="toolbox.html">全部工具</a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-mobile-toggle" onclick="toggleMobileMenu()">
+      <i class="fas fa-bars"></i>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="close-btn" onclick="toggleMobileMenu()">
+      <i class="fas fa-times"></i>
+    </div>
+    <a href="index.html#pricing" onclick="toggleMobileMenu()">1599元体验</a>
+    <a href="index.html#philosophy" onclick="toggleMobileMenu()">理念</a>
+    <a href="index.html#path-job" onclick="toggleMobileMenu()">服务路径</a>
+    <a href="Case_study.html" onclick="toggleMobileMenu()">成功案例</a>
+    <div style="padding: 8px 14px 4px; font-size: 11px; color: var(--gold); letter-spacing: 1px; font-weight: 600;">职业测评</div>
+    <a href="AboutHA.html" onclick="toggleMobileMenu()">Harrison测评</a>
+    <a href="career_assessment.html" onclick="toggleMobileMenu()">霍兰德测评</a>
+    <a href="upper_mgt.html" onclick="toggleMobileMenu()">向上管理测评</a>
+    <div style="padding: 10px 14px 4px; font-size: 11px; color: var(--gold); letter-spacing: 1px; font-weight: 600; border-top: 1px solid rgba(255,255,255,0.08); margin-top: 6px;">工具箱</div>
+    <a href="toolbox.html" onclick="toggleMobileMenu()">全部工具</a>
+    <a href="index.html#cta" onclick="toggleMobileMenu()">预约诊断</a>
   </div>
 
   <!-- Hero Mini -->
@@ -424,7 +635,7 @@
       <h2>投入与回报 · 值不值</h2>
       <div class="section-quote">一次错误的方向决策，损失的远不止金钱，更是时间和团队的信心。</div>
 
-      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">创业导航服务多少钱？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><strong>标准定价1599元</strong>（含Harrison测评授权+完整报告+60分钟1对1教练解读+3天微信跟进）。<br>对创业者来说，这相当于一次团队聚餐的费用，但可能帮你避免一次百万级的错误决策。</div></div></div>
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">创业导航服务多少钱？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><strong>标准定价1599元</strong>（含Harrison测评授权+完整报告+75分钟1对1教练解读+3天微信跟进）。<br>对创业者来说，这相当于一次团队聚餐的费用，但可能帮你避免一次百万级的错误决策。</div></div></div>
 
       <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">能先体验再决定吗？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">可以。我们提供<strong>免费20分钟创业诊断通话</strong>，你可以先聊聊你的现状和困惑，确认是否适合再做决定。</div></div></div>
     </div>
@@ -455,6 +666,36 @@
   </a>
 
   <script>
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      if (!nav) return;
+      if (window.scrollY > 50) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    });
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      if (!menu) return;
+      const isActive = menu.classList.toggle('active');
+      document.body.style.overflow = isActive ? 'hidden' : '';
+    }
+
+    const assessmentDropdown = document.getElementById('assessmentDropdown');
+    const assessmentDropdownToggle = document.getElementById('assessmentDropdownToggle');
+    if (assessmentDropdown && assessmentDropdownToggle) {
+      assessmentDropdownToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = assessmentDropdown.classList.toggle('open');
+        assessmentDropdownToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+      document.addEventListener('click', (e) => {
+        if (!assessmentDropdown.contains(e.target)) {
+          assessmentDropdown.classList.remove('open');
+          assessmentDropdownToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
     // QA Toggle
     document.querySelectorAll('.qa-card').forEach(card => {
       const q = card.querySelector('.qa-q');
@@ -484,19 +725,52 @@
     }, { threshold: 0.1 });
     document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 
+    // Sticky offset: nav height + quick-nav for anchor & scroll-spy
+    function updateStartupLayoutVars() {
+      const bar = document.querySelector('.nav');
+      const qn = document.querySelector('.quick-nav');
+      if (bar) {
+        document.documentElement.style.setProperty('--site-header-h', bar.offsetHeight + 'px');
+      }
+      const hBar = bar?.offsetHeight ?? 128;
+      const hNav = qn?.offsetHeight ?? 48;
+      document.documentElement.style.setProperty('--startup-scroll-margin', hBar + hNav + 12 + 'px');
+    }
+
     // Active nav highlight
     const sections = document.querySelectorAll('.section[id]');
     const navLinks = document.querySelectorAll('.quick-nav a');
-    window.addEventListener('scroll', () => {
+    function stickyStackOffset() {
+      const bar = document.querySelector('.nav');
+      const qn = document.querySelector('.quick-nav');
+      return (bar?.offsetHeight ?? 128) + (qn?.offsetHeight ?? 48) + 12;
+    }
+    function updateNavActive() {
       let current = '';
+      const y = window.scrollY || document.documentElement.scrollTop;
+      const offset = stickyStackOffset();
       sections.forEach(section => {
         const sectionTop = section.offsetTop;
-        if (scrollY >= sectionTop - 100) current = section.getAttribute('id');
+        if (y >= sectionTop - offset) current = section.getAttribute('id');
       });
       navLinks.forEach(link => {
         link.classList.toggle('active', link.getAttribute('href') === '#' + current);
       });
+    }
+    function onStartupLayoutChange() {
+      updateStartupLayoutVars();
+      updateNavActive();
+    }
+    window.addEventListener('scroll', updateNavActive, { passive: true });
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        const m = document.getElementById('mobileMenu');
+        if (m) { m.classList.remove('active'); document.body.style.overflow = ''; }
+      }
+      onStartupLayoutChange();
     });
+    window.addEventListener('load', onStartupLayoutChange);
+    onStartupLayoutChange();
   </script>
 </body>
 </html>

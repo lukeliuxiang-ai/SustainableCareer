@@ -52,6 +52,20 @@
     .nav-links a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px; background: var(--gold); transition: width 0.3s; }
     .nav-links a:hover { color: #fff; }
     .nav-links a:hover::after { width: 100%; }
+    .nav-links a.nav-top-cta {
+      background: var(--gold);
+      color: var(--deep-blue);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .nav-links a.nav-top-cta::after { display: none; }
+    .nav-links a.nav-top-cta:hover {
+      background: var(--gold-light);
+      color: var(--deep-blue);
+      transform: scale(1.05);
+    }
     .nav-dropdown { position: relative; }
     .nav-dropdown-toggle {
       color: rgba(255,255,255,0.85);
@@ -439,6 +453,7 @@
       </div>
     </a>
     <div class="nav-links">
+      <a href="index.html#pricing" class="nav-top-cta">1599元体验</a>
       <a href="index.html#philosophy">理念</a>
       <a href="index.html#path-job">服务路径</a>
       <a href="Case_study.html">成功案例</a>
@@ -465,6 +480,7 @@
     <div class="close-btn" onclick="toggleMobileMenu()">
       <i class="fas fa-times"></i>
     </div>
+    <a href="index.html#pricing" onclick="toggleMobileMenu()">1599元体验</a>
     <a href="index.html#philosophy" onclick="toggleMobileMenu()">理念</a>
     <a href="index.html#path-job" onclick="toggleMobileMenu()">服务路径</a>
     <a href="Case_study.html" onclick="toggleMobileMenu()">成功案例</a>
@@ -474,7 +490,6 @@
     <a href="upper_mgt.html" onclick="toggleMobileMenu()">向上管理测评</a>
     <div style="padding: 10px 14px 4px; font-size: 11px; color: var(--gold); letter-spacing: 1px; font-weight: 600; border-top: 1px solid rgba(255,255,255,0.08); margin-top: 6px;">工具箱</div>
     <a href="toolbox.html" onclick="toggleMobileMenu()">全部工具</a>
-    <a href="#" onclick="toggleMobileMenu();showPayModal();return false;">1599元体验</a>
     <a href="index.html#cta" onclick="toggleMobileMenu()">预约诊断</a>
   </div>
 
@@ -534,7 +549,7 @@
       <div class="section-label">第三章</div>
       <h2>服务流程 · 每一步都清晰</h2>
 
-      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">购买后具体经历哪些步骤？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><ul><li>① 支付确认 → 1个工作日内联系，发测评链接</li><li>② 完成测评（约30分钟）</li><li>③ 报告生成（1-2个工作日）</li><li>④ 预约1对1咨询（60-75分钟，线上）</li><li>⑤ 获取转型方向报告 + 3天微信答疑</li></ul></div></div></div>
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">购买后具体经历哪些步骤？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><ul><li>① 支付确认 → 1个工作日内联系，发测评链接</li><li>② 完成测评（约30分钟）</li><li>③ 报告生成（1-2个工作日）</li><li>④ 预约1对1咨询（75分钟，线上）</li><li>⑤ 获取转型方向报告 + 3天微信答疑</li></ul></div></div></div>
 
       <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">顾问是什么背景？能理解我的行业吗？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">刘翔（Luke Liu）——Harrison官方认证测评师、GCDF全球职业规划师、RCC国际商务教练。10年500强外企HR管理 + 10年咨询经验，服务过IT互联网/制造业/医疗/高端服务业500+学员。大部分HR背景的求职教练只能对本行业提供辅导。而对于Luke Liu教练，由于受过GCDF全球职业规划师训练，凭借强大的Harrison工具，能萃取不同行业岗位当中的核心能力要求，跨行业辅导恰恰是其突出的优势与强项。</div></div></div>
 
@@ -558,7 +573,7 @@
       <h2>价格与决策 · 值不值这个钱</h2>
       <div class="section-quote">一次错误跳槽的机会成本 = 至少3个月薪资损失 ≈ 5-10万元</div>
 
-      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">Harrison测评解读服务如何收费？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><strong>标准定价1599元</strong>（含测评报告+60-75分钟1对1咨询+3天答疑）。<br>对30-50万年薪职场人，这相当于月薪的5%，但可能帮你避免一次5-10万的错误决策。</div></div></div>
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">Harrison测评解读服务如何收费？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><strong>标准定价1599元</strong>（含测评报告+75分钟1对1咨询+3天答疑）。<br>对30-50万年薪职场人，这相当于月薪的5%，但可能帮你避免一次5-10万的错误决策。</div></div></div>
 
       <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">有没有优惠？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><ul><li><strong>2人同行：1198元/人</strong></li><li><strong>3人同行：1128元/人</strong></li><li>学员推荐特惠价：1229元</li></ul></div></div></div>
 

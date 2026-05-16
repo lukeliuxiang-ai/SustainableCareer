@@ -51,6 +51,20 @@
     .nav-links a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px; background: var(--gold); transition: width 0.3s; }
     .nav-links a:hover { color: #fff; }
     .nav-links a:hover::after { width: 100%; }
+    .nav-links a.nav-top-cta {
+      background: var(--gold);
+      color: var(--deep-blue);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .nav-links a.nav-top-cta::after { display: none; }
+    .nav-links a.nav-top-cta:hover {
+      background: var(--gold-light);
+      color: var(--deep-blue);
+      transform: scale(1.05);
+    }
     .nav-dropdown { position: relative; }
     .nav-dropdown-toggle {
       color: rgba(255,255,255,0.85);
@@ -448,6 +462,7 @@
       </div>
     </a>
     <div class="nav-links">
+      <a href="index.html#pricing" class="nav-top-cta">1599元体验</a>
       <a href="index.html#philosophy">理念</a>
       <a href="index.html#path-job">服务路径</a>
       <a href="Case_study.html">成功案例</a>
@@ -474,6 +489,7 @@
     <div class="close-btn" onclick="toggleMobileMenu()">
       <i class="fas fa-times"></i>
     </div>
+    <a href="index.html#pricing" onclick="toggleMobileMenu()">1599元体验</a>
     <a href="index.html#philosophy" onclick="toggleMobileMenu()">理念</a>
     <a href="index.html#path-job" onclick="toggleMobileMenu()">服务路径</a>
     <a href="Case_study.html" onclick="toggleMobileMenu()">成功案例</a>
@@ -483,7 +499,6 @@
     <a href="upper_mgt.html" onclick="toggleMobileMenu()">向上管理测评</a>
     <div style="padding: 10px 14px 4px; font-size: 11px; color: var(--gold); letter-spacing: 1px; font-weight: 600; border-top: 1px solid rgba(255,255,255,0.08); margin-top: 6px;">工具箱</div>
     <a href="toolbox.html" onclick="toggleMobileMenu()">全部工具</a>
-    <a href="#" onclick="toggleMobileMenu();showPayModal();return false;">1599元体验</a>
     <a href="index.html#cta" onclick="toggleMobileMenu()">预约诊断</a>
   </div>
 
@@ -583,7 +598,7 @@
 
       <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我没有被裁员风险，但每天像在"搬砖"，感觉自己在退步，怎么办？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">这是很多优秀职场人的"体面困境"——<strong>工作稳定，但成长停滞</strong>。你对未来有高期许，说明你缺的是一个<strong>可以发力、看得见成长的方向</strong>。<div class="tip-box">测评会帮你找到那个方向：你可以在每周例会上刻意练习"结构化表达"，在跨部门协作中练习"影响力谈判"，用商业而非纯技术的眼光识别项目，<strong>有意识地在公司内部、公司外部以及行业里打造你的个人影响力</strong>。有了目标，每一件日常工作都是能力的修炼场。</div></div></div></div>
 
-      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我希望能让自己变得更有竞争力，但不知道从哪里开始。</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">从"看清自己"开始。我们的服务就是<strong>一份基于30年行为科学的专业测评 + 一次60分钟的教练解读</strong>。解读结束后，你会带走：<ul><li>📊 你的3-5个核心优势（别人很难复制的）</li><li>🎯 2-3个日常工作中可以立即开始练习的"抓手"</li><li>📈 一个初步的可持续职业发展目标</li></ul><strong>你不需要辞职，不需要转行，只需要在每天的工作中多一个视角、多一个练习</strong>。</div></div></div>
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">我希望能让自己变得更有竞争力，但不知道从哪里开始。</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">从"看清自己"开始。我们的服务就是<strong>一份基于30年行为科学的专业测评 + 一次75分钟的教练解读</strong>。解读结束后，你会带走：<ul><li>📊 你的3-5个核心优势（别人很难复制的）</li><li>🎯 2-3个日常工作中可以立即开始练习的"抓手"</li><li>📈 一个初步的可持续职业发展目标</li></ul><strong>你不需要辞职，不需要转行，只需要在每天的工作中多一个视角、多一个练习</strong>。</div></div></div>
     </div>
 
     <!-- 附加：年龄不是问题 -->
@@ -599,7 +614,7 @@
       <div class="section-label">第七章</div>
       <h2>💰 1599元 · 你能得到什么</h2>
 
-      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">1599元包含哪些服务？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><strong>✅ Harrison职业测评（特性报告） </strong><br><strong>✅ 领导力/潜力测评报告解读详解（PDF版，永久可查）</strong><br><strong>✅60-75分钟1对1教练深度解读（线上视频/语音）</strong><br><strong>✅ 2-3个日常工作中的"可练习抓手"建议</strong><br><strong>✅ 3天微信持续答疑</strong><br><strong>✅ 领取30万+高薪求职面试秘籍</strong><br>投资仅月薪的5%甚至更低<strong>就可以在日常工作中找到可持续职业发展的起点</strong>。</div></div></div>
+      <div class="qa-card"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">1599元包含哪些服务？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text"><strong>✅ Harrison职业测评（特性报告） </strong><br><strong>✅ 领导力/潜力测评报告解读详解（PDF版，永久可查）</strong><br><strong>✅ 75分钟1对1教练深度解读（线上视频/语音）</strong><br><strong>✅ 2-3个日常工作中的"可练习抓手"建议</strong><br><strong>✅ 3天微信持续答疑</strong><br><strong>✅ 领取30万+高薪求职面试秘籍</strong><br>投资仅月薪的5%甚至更低<strong>就可以在日常工作中找到可持续职业发展的起点</strong>。</div></div></div>
 
       <div class="qa-card" id="daily-grip"><div class="qa-q"><div class="q-icon">Q</div><div class="q-text">什么是"日常抓手"？能举个例子吗？</div><i class="fas fa-chevron-down qa-toggle"></i></div><div class="qa-a"><div class="a-text">"抓手"是你不需要换工作、不需要额外时间，在现有岗位上就能刻意练习的具体场景。<a href="#daily-grip" style="color:var(--gold-dark);text-decoration:underline;font-weight:600;">了解更多👉</a> 比如：<div class="grip-grid"><span class="grip-item">🗣️ 每周例会发言时练习"结论先行"</span><span class="grip-item">📈 在N+1和N+2都在场的情况下探讨公司战略层面的问题</span><span class="grip-item">🤝 与供应商谈判时练习"专业影响力表达"</span><span class="grip-item">🤝 处理员工冲突与客户投诉时练习"高情商沟通"</span></div>抓手本身可能事情不大，关键在于<strong>它与你未来的职业目标息息相关</strong>。有了职业目标，日复一日的工作就不再是"消耗"，<strong>而是"修炼"</strong>。</div></div></div>
      

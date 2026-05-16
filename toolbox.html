@@ -63,6 +63,20 @@
         .nav-links a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px; background: var(--gold); transition: width 0.3s; }
         .nav-links a:hover { color: #fff; }
         .nav-links a:hover::after { width: 100%; }
+        .nav-links a.nav-top-cta {
+            background: var(--gold);
+            color: var(--deep-blue);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .nav-links a.nav-top-cta::after { display: none; }
+        .nav-links a.nav-top-cta:hover {
+            background: var(--gold-light);
+            color: var(--deep-blue);
+            transform: scale(1.05);
+        }
         .nav-dropdown { position: relative; }
         .nav-dropdown-toggle {
             color: rgba(255,255,255,0.85);
@@ -559,6 +573,7 @@
       </div>
     </a>
     <div class="nav-links">
+      <a href="index.html#pricing" class="nav-top-cta">1599元体验</a>
       <a href="index.html#philosophy">理念</a>
       <a href="index.html#path-job">服务路径</a>
       <a href="Case_study.html">成功案例</a>
@@ -585,6 +600,7 @@
     <div class="close-btn" onclick="toggleMobileMenu()">
       <i class="fas fa-times"></i>
     </div>
+    <a href="index.html#pricing" onclick="toggleMobileMenu()">1599元体验</a>
     <a href="index.html#philosophy" onclick="toggleMobileMenu()">理念</a>
     <a href="index.html#path-job" onclick="toggleMobileMenu()">服务路径</a>
     <a href="Case_study.html" onclick="toggleMobileMenu()">成功案例</a>
